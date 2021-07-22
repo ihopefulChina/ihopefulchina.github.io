@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ihopefulchina.github.io</id>
     <title>Ihopeful Blog</title>
-    <updated>2021-07-22T06:14:00.383Z</updated>
+    <updated>2021-07-22T06:32:18.428Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ihopefulchina.github.io"/>
     <link rel="self" href="https://ihopefulchina.github.io/atom.xml"/>
@@ -10,6 +10,459 @@
     <logo>https://ihopefulchina.github.io/images/avatar.png</logo>
     <icon>https://ihopefulchina.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Ihopeful Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[封装腾讯即时通讯 for 小程序]]></title>
+        <id>https://ihopefulchina.github.io/IZbWBmM7v/</id>
+        <link href="https://ihopefulchina.github.io/IZbWBmM7v/">
+        </link>
+        <updated>2021-07-22T06:15:47.000Z</updated>
+        <summary type="html"><![CDATA[<p>适用小程序(Taro)接入腾讯即时通讯。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>适用小程序(Taro)接入腾讯即时通讯。</p>
+<!-- more -->
+<h3 id="参考资料">参考资料</h3>
+<ol>
+<li><a href="https://cloud.tencent.com/document/product/269/37411">SDK API（Web &amp; 小程序）</a></li>
+<li><a href="https://blog.csdn.net/weixin_42311676/article/details/105866973?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.add_param_isCf&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.add_param_isCf">微信小程序原生接入腾讯云im</a></li>
+<li><a href="https://blog.csdn.net/weixin_44622984/article/details/109626266">原生JS集成腾讯IM实时聊天/实时音视频</a></li>
+<li><a href="https://blog.csdn.net/qq_29789057/article/details/89396550?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242">微信小程序利用腾讯云IM即时通讯发送文字+表情开发）</a></li>
+</ol>
+<pre><code>import Taro from &quot;@tarojs/taro&quot;;
+import TIM from 'tim-wx-sdk';
+import COS from &quot;cos-wx-sdk-v5&quot;
+import TIMUploadPlugin from 'tim-upload-plugin';
+import roomStore from &quot;~/store/room&quot;;
+import timStore from '~/store/tim'
+//sdk
+import { timSDK } from &quot;~/config&quot;
+
+import { get } from &quot;~/components/request&quot;;
+
+const userInfo = (Taro.getStorageSync('userInfo')) as any;
+// 初始化
+const iminit_TIM = async () =&gt; {
+  const options = {
+    SDKAppID: timSDK // 接入时需要将0替换为您的即时通信 IM 应用的 SDKAppID
+  }
+  // 创建 SDK 实例，`TIM.create()`方法对于同一个 `SDKAppID` 只会返回同一份实例
+  const tim = TIM.create(options);// SDK 实例通常用 tim 表示
+  // 设置 SDK 日志输出级别，详细分级请参见 setLogLevel 接口的说明
+  // tim.setLogLevel(0); // 普通级别，日志量较多，接入时建议使用
+  tim.setLogLevel(1); // release 级别，SDK 输出关键信息，生产环境时建议使用
+  // 注册 COS SDK 插件
+  tim.registerPlugin({ 'cos-wx-sdk': COS })
+  tim.registerPlugin({ 'tim-upload-plugin': TIMUploadPlugin });
+  // 监听事件，例如：
+  tim.on(TIM.EVENT.SDK_READY, (event) =&gt; {
+    timStore.isImLogin = true
+    Taro.setStorageSync('isImLogin', true)
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('SDK_ready', event.name)
+    // 收到离线消息和会话列表同步完毕通知，接入侧可以调用 sendMessage 等需要鉴权的接口
+    // event.name - TIM.EVENT.SDK_READY
+  });
+
+  tim.on(TIM.EVENT.MESSAGE_RECEIVED, (event) =&gt; {
+    // 若同时收到多个会话 需要根据conversationID来判断是哪个人的会话
+    const msgarr = [] as any
+    const newMsgForm = event.data[0].conversationID // 定义会话键值
+    if (msgarr[newMsgForm]) {
+      msgarr[newMsgForm].push(event.data[0])
+    } else {
+      msgarr[newMsgForm] = [event.data[0]]
+    }
+    timStore.myMessages = msgarr
+    // 这里引入了一个监听器 （因为小程序没有类似vuex的状态管理器 当global里面的数据变化时不能及时同步到聊天页面 因此 这个监听器可以emit一个方法 到需要更新会话数据的页面 在那里进行赋值）
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('testFunc', msgarr, newMsgForm) // 详情页的函数
+    // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
+    // event.name - TIM.EVENT.MESSAGE_RECEIVED
+    // event.data - 存储 Message 对象的数组 - [Message]
+  })
+  tim.on(TIM.EVENT.MESSAGE_READ_BY_PEER, (event) =&gt; {
+    // SDK 收到对端已读消息的通知，即已读回执。使用前需要将 SDK 版本升级至 v2.7.0 或以上。仅支持单聊会话。
+    const msgarr = [] as any
+
+    const newMsgForm = event.data[0].conversationID // 定义会话键值
+    if (msgarr[newMsgForm]) {
+      msgarr[newMsgForm].push(event.data[0])
+    } else {
+      msgarr[newMsgForm] = [event.data[0]]
+    }
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('readItem', msgarr, newMsgForm) // 函数
+    // event.name - TIM.EVENT.MESSAGE_READ_BY_PEER
+    // event.data - event.data - 存储 Message 对象的数组 - [Message] - 每个 Message 对象的 isPeerRead 属性值为 true
+  });
+  tim.on(TIM.EVENT.CONVERSATION_LIST_UPDATED, (event) =&gt; {
+    // 更新当前所有会话列表
+    // 注意 这个函数在首次点击进入会话列表的时候也会执行 因此点击消息 可以显示当前的未读消息数（unreadCount表示未读数）
+    timStore.isImLogin &amp;&amp; initRecentContactList()
+    // 收到会话列表更新通知，可通过遍历 event.data 获取会话列表数据并渲染到页面
+    // event.name - TIM.EVENT.CONVERSATION_LIST_UPDATED
+    // event.data - 存储 Conversation 对象的数组 - [Conversation]
+  });
+
+  tim.on(TIM.EVENT.SDK_NOT_READY, (event) =&gt; {
+    timStore.isImLogin = false
+    Taro.setStorageSync('isImLogin', false)
+    loginIm_TIM(userInfo.adventureNo)
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('SDK_no_ready', event.name)
+    // 收到 SDK 进入 not ready 状态通知，此时 SDK 无法正常工作
+    // event.name - TIM.EVENT.SDK_NOT_READY
+  });
+
+  tim.on(TIM.EVENT.KICKED_OUT, (event) =&gt; {
+    Taro.setStorageSync('isImLogin', false)
+    timStore.isImLogin = false;
+    // 收到被踢下线通知
+    // event.name - TIM.EVENT.KICKED_OUT
+    // event.data.type - 被踢下线的原因，例如:
+    //    - TIM.TYPES.KICKED_OUT_MULT_ACCOUNT 多实例登录被踢
+    //    - TIM.TYPES.KICKED_OUT_MULT_DEVICE 多终端登录被踢
+    //    - TIM.TYPES.KICKED_OUT_USERSIG_EXPIRED 签名过期被踢
+  })
+  timStore.tim = tim;
+}
+// 登录
+const loginIm_TIM = userID =&gt; {
+  const id = userID ? userID : userInfo.adventureNo
+  if (!!id &amp;&amp; !timStore.isImLogin) {
+    // 开始登录
+    get(`/im/getUserSign?adventureNo=${id}`).then(res =&gt; {
+      Taro.setStorageSync('userSig', res.data)
+      const promise = timStore.tim.login({
+        userID: String(id),
+        userSig: res.data
+      });
+      promise.then((imResponse) =&gt; {
+        Taro.setStorageSync('isImLogin', true)
+        timStore.isImLogin = true
+        setTimeout(() =&gt; {
+          // 拉取会话列表
+          timStore.isImLogin &amp;&amp; initRecentContactList()
+        }, 1000);
+      }).catch((imError) =&gt; {
+        // Taro.showToast({
+        //   title: 'login error' + imError,
+        //   icon: 'none',
+        //   duration: 3000
+        // })
+      });
+    })
+  }
+}
+
+// 会话列表
+const initRecentContactList = () =&gt; {
+  const promise = timStore.tim.getConversationList();
+  if (!promise) {
+    // Taro.showToast({
+    //   title: 'SDK not ready',
+    //   icon: 'none',
+    //   duration: 3000
+    // })
+    return
+  }
+  let conversationList = [] as any
+  promise.then((imResponse) =&gt; {
+    // 如果最后一条消息是自定义消息的话，处理一下data
+    conversationList = imResponse.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
+    conversationList.forEach(event =&gt; {
+      if (event.lastMessage.type === 'TIMCustomElem') {
+        const data = event.lastMessage.payload.data
+        let new_data = ''
+        if (typeof (data) === 'string' &amp;&amp; data) {
+          new_data = JSON.parse(data)
+        }
+        event.lastMessage.payload.data = new_data
+      }
+    })
+    let number = 0
+    conversationList.forEach(ele =&gt; {
+      number = number + ele.unreadCount
+    })
+    // console.log('initRecentContactList', number)
+    //更新获取未读消息角标 采用了mbox方式传入
+    roomStore.updateRoomNum(number)
+    const list = conversationList as any
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('conversationList', list) // 函数
+    timStore.conversationList = list
+    Taro.setStorageSync('conversationList', list)
+  }).catch((imError) =&gt; {
+    // Taro.showToast({
+    //   title: 'getConversationList error:' + imError,
+    //   icon: 'none',
+    //   duration: 3000
+    // })
+  })
+}
+// 删除会话
+function deleteConversation_TIM(ID) {
+  const promise = timStore.tim.deleteConversation(ID);
+  promise.then((imResponse) =&gt; {
+    // 删除成功。
+    const { conversationID } = imResponse.data;// 被删除的会话 ID
+    const oldList = Taro.getStorageSync('conversationList')
+    const newList = oldList.filter((item: any) =&gt; conversationID !== item.conversationID)
+    Taro.setStorageSync('conversationList', newList)
+  })
+}
+
+export { iminit_TIM, loginIm_TIM, initRecentContactList, deleteConversation_TIM }
+</code></pre>
+<h3 id="获取列表">获取列表</h3>
+<p>hooks方式</p>
+<pre><code>const [list, setList] = useState([] as any);
+ useEffect(() =&gt; {
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.on(&quot;conversationList&quot;, (lists: any) =&gt; {
+      if (lists.length &gt; 0) {
+        timStore.isImLogin &amp;&amp;
+          setList(
+            lists ? lists : timStore.conversationList
+          );
+      }
+    });
+  }, []);
+</code></pre>
+<h3 id="获取聊天会话">获取聊天会话</h3>
+<pre><code> // 发送信息
+const [sendMsg, setSendMsg] = useState(&quot;&quot; as any);
+// im实时聊天数据
+const [toView, setToView] = useState(&quot;&quot; as any);
+// 用于续拉，分页续拉时需传入该字段。
+const [nextReqMessageID, setNextReqMessageID] = useState(&quot;&quot; as any);
+// 表示是否已经拉完所有消息。
+const [isCompleted, setIsCompleted] = useState(&quot;&quot; as any);
+
+// 消息列表
+const [myMessages, setmyMessages] = useState([] as any);
+const [more_text, setmore_text] = useState(&quot;&quot;);
+const [is_lock, setis_lock] = useState(true);
+
+// 语音操作
+const [title, settitle] = useState(&quot;正在录音&quot;);
+const [isRecording, setisRecording] = useState(false);
+// 拉取会话列表
+const getMsgList = () =&gt; {
+  const param = {
+      //sendId 为对方id
+    conversationID: &quot;C2C&quot; + sendId,
+    count: 15,
+    nextReqMessageID
+  };
+  const promise = timStore.tim.getMessageList(param);
+
+  promise
+    .then(imResponse =&gt; {
+      const messageList = imResponse.data.messageList; // 消息列表。
+      // 处理自定义的消息
+      messageList.forEach(event =&gt; {
+        if (event.type === &quot;TIMCustomElem&quot;) {
+          if (typeof event.payload.data === &quot;string&quot; &amp;&amp; event.payload.data) {
+            const new_data = JSON.parse(event.payload.data);
+            event.payload.data = new_data;
+          }
+        }
+      });
+      const newNextReqMessageID = imResponse.data.nextReqMessageID; // 用于续拉，分页续拉时需传入该字段。
+      const newIsCompleted = imResponse.data.isCompleted; // 表示是否已经拉完所有消息。
+      // 将某会话下所有未读消息已读上报
+      setMessageRead();
+      setmyMessages(messageList);
+      setIsCompleted(newIsCompleted);
+      setNextReqMessageID(newNextReqMessageID);
+      setmore_text(newIsCompleted ? &quot;没有更多了&quot; : &quot;下拉查看更多历史信息&quot;);
+      scrollToBottom(messageList.length - 1);
+    })
+    .catch(imError =&gt; {
+      // console.warn(&quot;getConversationList error:&quot;, imError); // 获取会话列表失败的相关信息
+    });
+};
+</code></pre>
+<h3 id="已读回执">已读回执</h3>
+<pre><code>// 已读回执
+  // @ts-ignore
+  // eslint-disable-next-line no-undef
+  wx.event.on(&quot;readItem&quot;, (ele, newMsgForm) =&gt; {
+    if (newMsgForm === `C2C${sendId}` &amp;&amp; timStore.isDetail) {
+      const newmsg = ele[`C2C${sendId}`];
+      const oldItems = deepCopy(myMessages);
+      if (newmsg) {
+        newmsg.forEach(event =&gt; {
+          if (event.type === &quot;TIMCustomElem&quot;) {
+            if (typeof event.payload.data === &quot;string&quot; &amp;&amp; event.payload.data) {
+              const new_data = JSON.parse(event.payload.data);
+              event.payload.data = new_data;
+            }
+          }
+        });
+        let newitems = oldItems.filter(
+          (item: any) =&gt; !newmsg.some((dom: any) =&gt; dom.ID === item.ID)
+        );
+        newitems = [...newitems, ...newmsg];
+        setmyMessages(newitems);
+        scrollToBottom(newitems.length - 1);
+      }
+    }
+  });
+</code></pre>
+<h3 id="接受到新消息">接受到新消息</h3>
+<pre><code> // @ts-ignore
+  // eslint-disable-next-line no-undef
+  wx.event.on(&quot;testFunc&quot;, (ele, newMsgForm) =&gt; {
+    if (newMsgForm === `C2C${sendId}` &amp;&amp; timStore.isDetail) {
+      const newmsg = ele[`C2C${sendId}`];
+      let oldMss = myMessages;
+      if (newmsg) {
+        newmsg.forEach(event =&gt; {
+          if (event.type === &quot;TIMCustomElem&quot;) {
+            if (
+              typeof event.payload.data === &quot;string&quot; &amp;&amp;
+              event.payload.data
+            ) {
+              const new_data = JSON.parse(event.payload.data);
+              event.payload.data = new_data;
+            }
+          }
+          if (!event.isRead) {
+            oldMss = [...oldMss, ...newmsg];
+          }
+        });
+        setmyMessages(oldMss);
+        scrollToBottom(oldMss.length - 1);
+      }
+      setMessageRead();
+    }
+  });
+</code></pre>
+<h3 id="设置已读上报">设置已读上报</h3>
+<pre><code>const setMessageRead = () =&gt; {
+    const promise = timStore.tim.setMessageRead({
+      conversationID: &quot;C2C&quot; + sendId
+    });
+    promise
+      .then(imResponse =&gt; {
+        initRecentContactList();
+        // 已读上报成功
+        let noready = 0;
+        const messages = myMessages as any;
+        messages.forEach(event =&gt; {
+          if (!event.isRead) {
+            noready++;
+          }
+        });
+        const number = Taro.getStorageSync(&quot;number_msg&quot;);
+        const newNumber = number - noready;
+        Taro.setStorageSync(&quot;number_msg&quot;, newNumber);
+        roomStore.updateRoomNum(newNumber);
+      })
+      .catch(imError =&gt; {
+        // 已读上报失败
+        // console.warn(&quot;setMessageRead error:&quot;, imError);
+      });
+  };
+</code></pre>
+<h3 id="发送文本消息">发送文本消息</h3>
+<pre><code> // 发送普通文本消息
+  const bindConfirm = () =&gt; {
+    if (is_lock) {
+      setis_lock(false);
+      if (sendMsg.length === 0) {
+        Taro.showToast({
+          title: &quot;消息不能为空!&quot;,
+          icon: &quot;none&quot;
+        });
+        setis_lock(true);
+        return;
+      }
+
+      const content = {
+        text: sendMsg
+      };
+
+      const options = {
+        to: sendId, // 消息的接收方
+        conversationType: TIM.TYPES.CONV_C2C, // 会话类型取值timStore.tim.TYPES.CONV_C2C或timStore.tim.TYPES.CONV_GROUP
+        payload: content // 消息内容的容器
+      };
+      // // 发送文本消息，Web 端与小程序端相同
+      // 1. 创建消息实例，接口返回的实例可以上屏
+      const message = timStore.tim.createTextMessage(options);
+      // 2. 发送消息
+      sendMessageFun(message, &quot;text&quot;);
+    }
+  };
+</code></pre>
+<h3 id="发送语音图片和视频消息">发送语音图片和视频消息</h3>
+<pre><code> // 发送语音消息
+const bindAudioMessage = res =&gt; {
+ // 4. 创建消息实例，接口返回的实例可以上屏
+ const message = timStore.tim.createAudioMessage({
+   to: sendId, // 消息的接收方
+   conversationType: TIM.TYPES.CONV_C2C,
+   payload: {
+     file: res
+   }
+ });
+ sendMessageFun(message, &quot;voice&quot;);
+};
+// 发送视频
+const createVideoMessage = res =&gt; {
+ // 2. 创建消息实例，接口返回的实例可以上屏
+ const message = timStore.tim.createVideoMessage({
+   to: sendId,
+   conversationType: TIM.TYPES.CONV_C2C,
+   payload: {
+     file: res
+   }
+ });
+ // 3. 发送消息
+ sendMessageFun(message, &quot;video&quot;);
+};
+// 发送图片
+const createImageMessage = res =&gt; {
+ const message = timStore.tim.createImageMessage({
+   to: sendId,
+   conversationType: TIM.TYPES.CONV_C2C,
+   payload: {
+     file: res
+   },
+   onProgress(event) {
+     setProgress(event);
+   }
+ });
+ sendMessageFun(message, &quot;image&quot;);
+};
+</code></pre>
+<h3 id="发送消息封装">发送消息封装</h3>
+<pre><code>const sendMessageFun = (message, type) =&gt; {
+    Taro.showLoading({ title: &quot;发送中&quot; });
+    const promise = timStore.tim.sendMessage(message);
+    promise.then(imResponse =&gt; {
+      // 发送成功
+      setMessageRead();
+      const messageList = myMessages as any;
+      messageList.push(imResponse.data.message);
+      setis_lock(true);
+      setmyMessages(messageList);
+      clearInput();
+      scrollToBottom(messageList.length - 1);
+      Taro.hideLoading({});
+    });
+  };
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[整理常用的正则表达式]]></title>
         <id>https://ihopefulchina.github.io/uZrLF_hmU/</id>
@@ -22708,78 +23161,6 @@ export const get_suffix = (fileName: string) =&gt; {
 <p>下载 React-Native IOS 运行依赖</p>
 <pre><code> react-native run-ios 
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[ React Native学习笔记· 3.交互]]></title>
-        <id>https://ihopefulchina.github.io/react-native-xue-xi-bi-ji-3jiao-hu/</id>
-        <link href="https://ihopefulchina.github.io/react-native-xue-xi-bi-ji-3jiao-hu/">
-        </link>
-        <updated>2021-02-07T08:39:57.000Z</updated>
-        <summary type="html"><![CDATA[<p>这部分文档，我看到有点云里雾里，后续上手需要翻阅一下。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>这部分文档，我看到有点云里雾里，后续上手需要翻阅一下。</p>
-<!-- more -->
-<ol>
-<li>处理触摸事件。<code>&lt;Button onPress={onPressButton}title=&quot;Press Me&quot;/&gt;</code> 长按是采用<code>onLongPress</code> 。</li>
-<li>React Navigation 这个 有点像Taro的Navigator, 后续翻阅文档<a href="https://reactnavigation.org/docs/getting-started">React Navigation</a>。</li>
-<li>动画 ，
-<ul>
-<li><code>Animated</code> 使用demo</li>
-</ul>
-</li>
-</ol>
-<pre><code>    import React, { useRef, useEffect } from 'react';
-    import { Animated, Text, View } from 'react-native';
-    const FadeInView = (props) =&gt; {
-    const fadeAnim = useRef(new Animated.Value(0)).current  // 透明度初始值设为0
-
-    React.useEffect(() =&gt; {
-        Animated.timing(                  // 随时间变化而执行动画
-        fadeAnim,                       // 动画中的变量值
-        {
-            toValue: 1,                   // 透明度最终变为1，即完全不透明
-            duration: 10000,              // 让动画持续一段时间
-        }
-        ).start();                        // 开始执行动画
-    }, [fadeAnim])
-
-    return (
-        &lt;Animated.View                 // 使用专门的可动画化的View组件
-        style={{
-            ...props.style,
-            opacity: fadeAnim,         // 将透明度绑定到动画变量值
-        }}
-        &gt;
-        {props.children}
-        &lt;/Animated.View&gt;
-    );
-    }
-
-    // 然后你就可以在组件中像使用`View`那样去使用`FadeInView`了
-    export default () =&gt; {
-    return (
-        &lt;View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}&gt;
-        &lt;FadeInView style={{width: 250, height: 50, backgroundColor: 'powderblue'}}&gt;
-            &lt;Text style={{fontSize: 28, textAlign: 'center', margin: 10}}&gt;Fading in&lt;/Text&gt;
-        &lt;/FadeInView&gt;
-        &lt;/View&gt;
-    )
-    }
-</code></pre>
-<ol start="4">
-<li>响应者的生命周期。<br>
-View.props.onStartShouldSetResponder: (evt) =&gt; true, - 在用户开始触摸的时候（手指刚刚接触屏幕的瞬间），是否愿意成为响应者？<br>
-View.props.onMoveShouldSetResponder: (evt) =&gt; true, - 如果 View 不是响应者，那么在每一个触摸点开始移动（没有停下也没有离开屏幕）时再询问一次：是否愿意响应触摸交互呢？<br>
-如果 View 返回 true，并开始尝试成为响应者，那么会触发下列事件之一:<br>
-View.props.onResponderGrant: (evt) =&gt; {} - View 现在要开始响应触摸事件了。这也是需要做高亮的时候，使用户知道他到底点到了哪里。<br>
-View.props.onResponderReject: (evt) =&gt; {} - 响应者现在“另有其人”而且暂时不会“放权”，请另作安排。<br>
-如果 View 已经开始响应触摸事件了，那么下列这些处理函数会被一一调用：<br>
-View.props.onResponderMove: (evt) =&gt; {} - 用户正在屏幕上移动手指时（没有停下也没有离开屏幕）。<br>
-View.props.onResponderRelease: (evt) =&gt; {} - 触摸操作结束时触发，比如&quot;touchUp&quot;（手指抬起离开屏幕）。<br>
-View.props.onResponderTerminationRequest: (evt) =&gt; true - 有其他组件请求接替响应者，当前的 View 是否“放权”？返回 true 的话则释放响应者权力。<br>
-View.props.onResponderTerminate: (evt) =&gt; {} - 响应者权力已经交出。这可能是由于其他 View 通过onResponderTerminationRequest请求的，也可能是由操作系统强制夺权（比如 iOS 上的控制中心或是通知中心）。</li>
-</ol>
 ]]></content>
     </entry>
 </feed>
