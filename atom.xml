@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ihopefulchina.github.io</id>
     <title>Ihopeful Blog</title>
-    <updated>2021-07-22T03:27:49.537Z</updated>
+    <updated>2021-07-22T05:42:37.975Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ihopefulchina.github.io"/>
     <link rel="self" href="https://ihopefulchina.github.io/atom.xml"/>
@@ -10,6 +10,274 @@
     <logo>https://ihopefulchina.github.io/images/avatar.png</logo>
     <icon>https://ihopefulchina.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Ihopeful Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[腾讯COS上传图片封装]]></title>
+        <id>https://ihopefulchina.github.io/oi4CnmXh7/</id>
+        <link href="https://ihopefulchina.github.io/oi4CnmXh7/">
+        </link>
+        <updated>2021-07-22T03:46:47.000Z</updated>
+        <summary type="html"><![CDATA[<p>cos-js-sdk-v5 封装 适用于微信浏览器H5环境</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>cos-js-sdk-v5 封装 适用于微信浏览器H5环境</p>
+<!-- more -->
+<h3 id="configts">config.ts</h3>
+<pre><code>import { genID, get_suffix } from '~/tools/tools';
+import { autobind } from 'core-decorators';
+import COS from 'cos-js-sdk-v5';
+
+const Bucket = 'Bucket值';
+const Region = 'Region值';
+
+@autobind
+export default class COSUpload {
+  private getOssToken: () =&gt; Promise&lt;any&gt;
+
+  constructor(config: {
+    getOssToken: () =&gt; Promise&lt;any&gt;
+  }) {
+    this.getOssToken = config.getOssToken;
+  }
+
+  /**
+   * 批量上传
+   * @param {Object} obj Bucket、Region、Body 详情查看cos文档
+   * @returns err || 批量上传filesData
+   */
+  uploadFiles(fileList: any) {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve, reject) =&gt; {
+      const { cos, content } = await this.getOss();
+      const files = await fileList.map((fileObject: any) =&gt; {
+        const file = fileObject.file ? fileObject.file : fileObject;
+        const fileName = `${content.requestId}${genID(3)}.${file.path ? get_suffix(file.path) : 'png'}`;
+        return {
+          Bucket: Bucket,
+          Region: Region,
+          Key: fileName,
+          StorageClass: 'STANDARD',
+          Body: file,
+        };
+      });
+      await cos.uploadFiles({
+        files,
+        SliceSize: 1024 * 1024 * 5,    /* 设置大于5MB采用分块上传 */
+      }, function (err: any, data: any) {
+        const val = (err || data);
+        const list = !err ? val.files.map((item: any) =&gt; `https://${item.data.Location}`
+        ) : [];
+        const newArr = list.filter((it: string) =&gt; it);
+        return err ? reject(err) : resolve(newArr);
+      });
+    });
+  }
+
+
+  private async getOss() {
+    const data = await this.getOssToken();
+    const content = data as any;
+    const credentials = data.credentials;
+    // console.log(window,wx);
+    const cos = new COS({
+      getAuthorization: function (options: any, callback: any) {
+        callback({
+          TmpSecretId: credentials.tmpSecretId,
+          TmpSecretKey: credentials.tmpSecretKey,
+          SecurityToken: credentials.sessionToken,
+          // 建议返回服务器时间作为签名的开始时间，避免用户浏览器本地时间偏差过大导致签名错误
+          StartTime: data.startTime, // 时间戳，单位秒，如：1580000000
+          ExpiredTime: data.expiredTime, // 时间戳，单位秒，如：1580000900
+        });
+      }
+    });
+
+    return {
+      cos,
+      content
+    };
+  }
+}
+</code></pre>
+<h3 id="indexts">index.ts</h3>
+<pre><code>import COSUpload from './config';
+import { get } from &quot;~/request&quot;;
+
+&lt;!-- get请求 --&gt;
+const { uploadFiles } = new COSUpload({
+  getOssToken: () =&gt; get(`xxx.com/tencent/cos-token`)
+});
+
+export { uploadFiles };
+</code></pre>
+<h3 id="引入文件内容">引入文件内容</h3>
+<pre><code>/**
+ * @description: 生成唯一id
+ * @param {number} length 数字长度
+ * @return {string} 
+ */
+export function genID(length = 3) {
+    return Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
+}
+
+//获取文件名称后缀
+export const get_suffix = (fileName: string) =&gt; {
+    const suffix = fileName.substring(fileName.lastIndexOf('.') + 1);
+    return suffix;
+};
+
+</code></pre>
+<h3 id="上传多张图片组件">上传多张图片组件</h3>
+<pre><code>/* 组件 -- 上传 */
+import React, { useState } from &quot;react&quot;;
+import WxImageViewer from &quot;react-wx-images-viewer&quot;;
+import { uploadFiles } from &quot;~/components/tencent&quot;;
+import { Toast } from &quot;antd-mobile&quot;;
+import Compressor from &quot;compressorjs&quot;;
+
+import styles from &quot;./index.module.less&quot;;
+
+interface IProps {
+  imgList?: string[];
+  onChange: (list: string[]) =&gt; void;
+  onDelete: (idx: number) =&gt; void;
+  progressChange?: (percent: number) =&gt; void;
+  count?: number;
+}
+
+const Index = ({ imgList = [], onChange, onDelete, count = 2 }: IProps) =&gt; {
+  const [showViewer, setShowViewer] = useState(false);
+  const [imgIndex, setImgIndex] = useState(0);
+
+  const onInputChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    const fileList = e.target.files;
+
+    if (imgList.length &lt; count) {
+      //代表还可以上传
+      if (fileList &amp;&amp; fileList.length &gt; 0) {
+        const newFileList = [] as any;
+        for (const key in fileList) {
+          if (Object.prototype.hasOwnProperty.call(fileList, key)) {
+            const element = fileList[key] as any;
+            element &amp;&amp; newFileList.push(element);
+          }
+        }
+        let paths = [];
+        if (imgList.length + newFileList.length &lt; count) {
+          paths = newFileList;
+        } else {
+          //数量超过了
+          const surplus = count - imgList.length;
+          paths = newFileList.slice(0, surplus);
+          // paths = newFileList.filter((item, index) =&gt; index &lt; surplus);
+        }
+
+        //压缩图片
+        const newPaths = paths.map((image: any) =&gt; {
+          let newImg = image;
+          new Compressor(image, {
+            quality: 0.5, // 0.6 can also be used, but its not recommended to go below.
+            success: (res) =&gt; (newImg = res),
+          });
+          return newImg;
+        });
+        Toast.loading(&quot;上传中...&quot;);
+        uploadFiles(newPaths).then((res: any) =&gt; {
+          onChange &amp;&amp; onChange([...imgList, ...res]);
+          Toast.hide();
+        });
+      }
+    }
+  };
+
+  return (
+    &lt;div className={styles.upload}&gt;
+      &lt;div className={styles.uploadList}&gt;
+        {imgList.map((item, index) =&gt; (
+          &lt;div
+            key={`${item}`}
+            className={styles.item}
+            onClick={(event) =&gt; {
+              event.stopPropagation();
+              setShowViewer(true);
+              setImgIndex(index);
+              document
+                .getElementsByTagName(&quot;body&quot;)[0]
+                .setAttribute(&quot;style&quot;, &quot;overflow:hidden&quot;); //给body添加overflow:hidden阻止遮罩层滚动主页面滚动
+            }}
+          &gt;
+            &lt;img
+              className={styles.img}
+              data-preview-proto={item}
+              src={item}
+              alt=&quot;上传图片&quot;
+            /&gt;
+            &lt;img
+              className={styles.del}
+              src={require(&quot;./images/del.png&quot;)}
+              alt=&quot;删除按钮&quot;
+              onClick={(event) =&gt; {
+                event.stopPropagation();
+                onDelete(index);
+              }}
+            /&gt;
+          &lt;/div&gt;
+        ))}
+
+        {imgList.length &lt; count &amp;&amp; (
+          &lt;div className={styles.uploadBtn}&gt;
+            &lt;input
+              type=&quot;file&quot;
+              name=&quot;image&quot;
+              accept=&quot;image/*&quot;
+              multiple={true}
+              className={styles.uploadInput}
+              onChange={onInputChange}
+            /&gt;
+            &lt;div className={styles.uploadPlus}&gt;
+              &lt;img src={require(&quot;./images/plus.png&quot;)} alt=&quot;加号&quot; /&gt;
+              &lt;span&gt;
+                ({imgList.length}/{count})
+              &lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        )}
+      &lt;/div&gt;
+      {showViewer ? (
+        &lt;WxImageViewer
+          onClose={() =&gt; {
+            setShowViewer(false);
+            document.getElementsByTagName(&quot;body&quot;)[0].removeAttribute(&quot;style&quot;);
+          }}
+          urls={imgList}
+          index={imgIndex}
+        /&gt;
+      ) : (
+        &quot;&quot;
+      )}
+    &lt;/div&gt;
+  );
+};
+export default Index;
+</code></pre>
+<h3 id="引用组件">引用组件</h3>
+<pre><code>import Upload from &quot;~/components/upload&quot;;
+&lt;Upload
+                  imgList={form.discoverServiceImgs}
+                  count={6}
+                  onChange={(imgs) =&gt;
+                    setForm({ ...form, discoverServiceImgs: imgs })
+                  }
+                  onDelete={(idx) =&gt;
+                    setForm({
+                      ...form,
+                      discoverServiceImgs: form.discoverServiceImgs.filter(
+                        (_value: any, _index: any) =&gt; _index !== idx
+                      ),
+                    })
+                  }
+                /&gt;
+        ```</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[整理常用 微信浏览器和小程序设备信息]]></title>
         <id>https://ihopefulchina.github.io/1-QwjXsr9/</id>
@@ -22439,68 +22707,6 @@ npm install -g yarn
 brew install cocoapods
 </code></pre>
 <p>详情地址: <a href="https://www.react-native.cn/docs/environment-setup">https://www.react-native.cn/docs/environment-setup</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[React Native学习笔记· 1. 官网入门基础]]></title>
-        <id>https://ihopefulchina.github.io/react-native-xue-xi-bi-ji-1-guan-wang-ru-men-ji-chu/</id>
-        <link href="https://ihopefulchina.github.io/react-native-xue-xi-bi-ji-1-guan-wang-ru-men-ji-chu/">
-        </link>
-        <updated>2021-02-07T05:54:53.000Z</updated>
-        <summary type="html"><![CDATA[<p>看了一下，部分内容有点像Taro(Taro借鉴react和rn), 官网推荐使用函数和class这2种方式写，考虑到react 开发团队转向hooks，所以我将都用函数式写。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>看了一下，部分内容有点像Taro(Taro借鉴react和rn), 官网推荐使用函数和class这2种方式写，考虑到react 开发团队转向hooks，所以我将都用函数式写。</p>
-<!-- more -->
-<p>不过也有几点不太一样：</p>
-<ol>
-<li>textInpnut等同于的Taro的input,onChangeText属性等同于onInput</li>
-</ol>
-<pre><code>&lt;TextInput
-    style={{height: 40}}
-    placeholder=&quot;Type here to translate!&quot;
-    onChangeText={text =&gt; setText(text)}
-    defaultValue={text}
-/&gt;
-</code></pre>
-<ol start="2">
-<li>有一个长列表概念，FlatList，需要2个属性，data和renderItem，字面意思，data是列表的数据源，而renderItem则从数据源中逐个解析数据，然后返回一个设定好格式的组件来渲染。不过感觉缺少双击回到顶部和下拉刷新等等功能，后续我尝试封装一下。</li>
-</ol>
-<pre><code>   &lt;FlatList
-        data={[]}
-        renderItem={({item}) =&gt; &lt;Text&gt;{item}&lt;/Text&gt;}
-      /&gt;
-</code></pre>
-<ol start="3">
-<li>
-<p>Platform模块。提供了一个检测当前运行平台的模块。<br>
--  <code>Platform.OS</code>  ， 在 iOS 上会返回ios，而在 Android 设备或模拟器上则会返回android。<br>
--   <code>Platform.select()</code>  , 它可以以 Platform.OS 为 key，从传入的对象中返回对应平台的值。  <code>Platform.select({os: () =&gt; require('ComponentIOS'), android: () =&gt; require('ComponentAndroid')})</code><br>
--   <code>Platform.Version</code> 在安卓表示 api level， ios表示表示当前系统版本</p>
-</li>
-<li>
-<p>特定平台扩展名。有点像Taro 在不同平台使用特定文件。React Native 会检测某个文件是否具有.ios.或是.android.的扩展名，然后根据当前运行的平台自动加载正确对应的文件。</p>
-</li>
-<li>
-<p><code>Button</code> 点击事件是<code>onPress</code>。</p>
-</li>
-<li>
-<p>定义样式：<code>const styles = StyleSheet.create({})</code>。</p>
-</li>
-<li>
-<p>定义宽高3种方式：</p>
-<ol>
-<li><code>&lt;View style={{width: 50, height: 50}} /&gt;</code> 无单位指定宽高。</li>
-<li><code>&lt;View style={{flex: 1}} /&gt;</code> felx 弹性布局宽高。</li>
-<li><code>&lt;View style={{width: '66%', height: '35%', }} /&gt;</code> 百分比方式</li>
-</ol>
-</li>
-<li>
-<p>布局采用flex的方式 <code>flexBox</code>。</p>
-</li>
-<li>
-<p><a href="https://www.react-native.cn/docs/components-and-apis">更多核心组件和api</a>。</p>
-</li>
-</ol>
 ]]></content>
     </entry>
 </feed>

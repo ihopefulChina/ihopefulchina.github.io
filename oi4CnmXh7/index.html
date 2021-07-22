@@ -8,7 +8,7 @@
 <meta name="keywords" content="ihopeful blog">
 <meta name="description" content="Sweat is the lubricant of success.">
 <meta name="theme-color" content="#000">
-<title>隐藏、禁止、删除Wordpress自带的更新和仪表盘 | Ihopeful Blog</title>
+<title>腾讯COS上传图片封装 | Ihopeful Blog</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1626932545435">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/mist.css">
@@ -29,8 +29,8 @@
 
 
 
-  <meta name="description" content="隐藏、禁止、删除Wordpress自带的更新和仪表盘" />
-  <meta name="keywords" content="WordPress,PHP" />
+  <meta name="description" content="腾讯COS上传图片封装" />
+  <meta name="keywords" content="JavaScript" />
 </head>
 
 <body>
@@ -178,7 +178,8 @@
       <div class="sidebar-body mist" id="sidebar_body">
         
           
-            
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper ">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -250,6 +251,203 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#configts">config.ts</a></li>
+<li><a href="#indexts">index.ts</a></li>
+<li><a href="#%E5%BC%95%E5%85%A5%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9">引入文件内容</a></li>
+<li><a href="#%E4%B8%8A%E4%BC%A0%E5%A4%9A%E5%BC%A0%E5%9B%BE%E7%89%87%E7%BB%84%E4%BB%B6">上传多张图片组件</a></li>
+<li><a href="#%E5%BC%95%E7%94%A8%E7%BB%84%E4%BB%B6">引用组件</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</div>
+
+<script>
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
+      }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
+    });
+  }
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
           
         
       </div>
@@ -337,8 +535,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://ihopefulchina.github.io/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/">
-      隐藏、禁止、删除Wordpress自带的更新和仪表盘
+    <a class="post-title-link" href="https://ihopefulchina.github.io/oi4CnmXh7/">
+      腾讯COS上传图片封装
     </a>
   </h1>
   <div class="post-meta">
@@ -346,7 +544,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2019-08-22</span>
+      <span>2021-07-22</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -355,14 +553,8 @@
       <span class="pc-show">分类于</span>
       
       
-      <a href="https://ihopefulchina.github.io/tag/wordpress/">
-        <span>WordPress</span>
-      </a>、
-      
-      
-      
-      <a href="https://ihopefulchina.github.io/tag/php/">
-        <span>PHP</span>
+      <a href="https://ihopefulchina.github.io/tag/Nhq4NKwx6/">
+        <span>JavaScript</span>
       </a>
       
       
@@ -371,60 +563,275 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2分钟</span>
+      <span>6分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>299<span class="pc-show">字数</span></span>
+      <span>922<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <pre><code>Wordpress 更新有点频繁，最恶心的地方是，一旦更新，很多东西都已经没有了，所以最好禁止wordpress更新，仪表盘我个人不喜欢它，所以隐藏，看官们可以选择保留
-</code></pre>
+              <p>cos-js-sdk-v5 封装 适用于微信浏览器H5环境</p>
 <!-- more -->
-<pre><code>
-function example_remove_dashboard_widgets() {
-        // Globalize the metaboxes array, this holds all the widgets for wp-admin
-	global $wp_meta_boxes;
-	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity']);
-	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now']);
-	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_recent_comments']);
-	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
-	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']);
-	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
-	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
-	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);
-	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']);
+<h3 id="configts">config.ts</h3>
+<pre><code>import { genID, get_suffix } from '~/tools/tools';
+import { autobind } from 'core-decorators';
+import COS from 'cos-js-sdk-v5';
+
+const Bucket = 'Bucket值';
+const Region = 'Region值';
+
+@autobind
+export default class COSUpload {
+  private getOssToken: () =&gt; Promise&lt;any&gt;
+
+  constructor(config: {
+    getOssToken: () =&gt; Promise&lt;any&gt;
+  }) {
+    this.getOssToken = config.getOssToken;
+  }
+
+  /**
+   * 批量上传
+   * @param {Object} obj Bucket、Region、Body 详情查看cos文档
+   * @returns err || 批量上传filesData
+   */
+  uploadFiles(fileList: any) {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve, reject) =&gt; {
+      const { cos, content } = await this.getOss();
+      const files = await fileList.map((fileObject: any) =&gt; {
+        const file = fileObject.file ? fileObject.file : fileObject;
+        const fileName = `${content.requestId}${genID(3)}.${file.path ? get_suffix(file.path) : 'png'}`;
+        return {
+          Bucket: Bucket,
+          Region: Region,
+          Key: fileName,
+          StorageClass: 'STANDARD',
+          Body: file,
+        };
+      });
+      await cos.uploadFiles({
+        files,
+        SliceSize: 1024 * 1024 * 5,    /* 设置大于5MB采用分块上传 */
+      }, function (err: any, data: any) {
+        const val = (err || data);
+        const list = !err ? val.files.map((item: any) =&gt; `https://${item.data.Location}`
+        ) : [];
+        const newArr = list.filter((it: string) =&gt; it);
+        return err ? reject(err) : resolve(newArr);
+      });
+    });
+  }
+
+
+  private async getOss() {
+    const data = await this.getOssToken();
+    const content = data as any;
+    const credentials = data.credentials;
+    // console.log(window,wx);
+    const cos = new COS({
+      getAuthorization: function (options: any, callback: any) {
+        callback({
+          TmpSecretId: credentials.tmpSecretId,
+          TmpSecretKey: credentials.tmpSecretKey,
+          SecurityToken: credentials.sessionToken,
+          // 建议返回服务器时间作为签名的开始时间，避免用户浏览器本地时间偏差过大导致签名错误
+          StartTime: data.startTime, // 时间戳，单位秒，如：1580000000
+          ExpiredTime: data.expiredTime, // 时间戳，单位秒，如：1580000900
+        });
+      }
+    });
+
+    return {
+      cos,
+      content
+    };
+  }
 }
-add_action('wp_dashboard_setup', 'example_remove_dashboard_widgets' );
-function change_footer_admin () {return '';}
-add_filter('admin_footer_text', 'change_footer_admin', 9999);
-function change_footer_version() {return '';}
-add_filter( 'update_footer', 'change_footer_version', 9999);
-function annointed_admin_bar_remove() {
-	global $wp_admin_bar;
-	/* Remove their stuff */
-	$wp_admin_bar-&gt;remove_menu('wp-logo');
-}
-add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
-add_filter('admin_title', 'wpdx_custom_admin_title', 10, 2);
-function wpdx_custom_admin_title($admin_title, $title){
-	return $title.' &amp;lsaquo; '.' 这里可以填写title名字';
-}
-add_filter('pre_site_transient_update_core', create_function('$a', &quot;return null;&quot;)); // 关闭核心提示
-add_filter('pre_site_transient_update_plugins', create_function('$a', &quot;return null;&quot;)); // 关闭插件提示
-add_filter('pre_site_transient_update_themes', create_function('$a', &quot;return null;&quot;)); // 关闭主题提示
-add_filter( 'automatic_updater_disabled', '__return_true' );//禁止自动更新
-remove_action('admin_init', '_maybe_update_core'); // 禁止检查更新
-remove_action('admin_init', '_maybe_update_plugins'); // 禁止更新插件
-remove_action('admin_init', '_maybe_update_themes'); // 禁止更新主题
-add_filter( 'wpcf7_validate_configuration', '__return_false' );
-add_filter( 'post_thumbnail_html', 'remove_width_attribute', 10 );
 </code></pre>
-<p>用上函数包含隐藏、禁止、删除Wordpress自带的更新和仪表盘，还有修改title名字</p>
+<h3 id="indexts">index.ts</h3>
+<pre><code>import COSUpload from './config';
+import { get } from &quot;~/request&quot;;
+
+&lt;!-- get请求 --&gt;
+const { uploadFiles } = new COSUpload({
+  getOssToken: () =&gt; get(`xxx.com/tencent/cos-token`)
+});
+
+export { uploadFiles };
+</code></pre>
+<h3 id="引入文件内容">引入文件内容</h3>
+<pre><code>/**
+ * @description: 生成唯一id
+ * @param {number} length 数字长度
+ * @return {string} 
+ */
+export function genID(length = 3) {
+    return Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
+}
+
+//获取文件名称后缀
+export const get_suffix = (fileName: string) =&gt; {
+    const suffix = fileName.substring(fileName.lastIndexOf('.') + 1);
+    return suffix;
+};
+
+</code></pre>
+<h3 id="上传多张图片组件">上传多张图片组件</h3>
+<pre><code>/* 组件 -- 上传 */
+import React, { useState } from &quot;react&quot;;
+import WxImageViewer from &quot;react-wx-images-viewer&quot;;
+import { uploadFiles } from &quot;~/components/tencent&quot;;
+import { Toast } from &quot;antd-mobile&quot;;
+import Compressor from &quot;compressorjs&quot;;
+
+import styles from &quot;./index.module.less&quot;;
+
+interface IProps {
+  imgList?: string[];
+  onChange: (list: string[]) =&gt; void;
+  onDelete: (idx: number) =&gt; void;
+  progressChange?: (percent: number) =&gt; void;
+  count?: number;
+}
+
+const Index = ({ imgList = [], onChange, onDelete, count = 2 }: IProps) =&gt; {
+  const [showViewer, setShowViewer] = useState(false);
+  const [imgIndex, setImgIndex] = useState(0);
+
+  const onInputChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    const fileList = e.target.files;
+
+    if (imgList.length &lt; count) {
+      //代表还可以上传
+      if (fileList &amp;&amp; fileList.length &gt; 0) {
+        const newFileList = [] as any;
+        for (const key in fileList) {
+          if (Object.prototype.hasOwnProperty.call(fileList, key)) {
+            const element = fileList[key] as any;
+            element &amp;&amp; newFileList.push(element);
+          }
+        }
+        let paths = [];
+        if (imgList.length + newFileList.length &lt; count) {
+          paths = newFileList;
+        } else {
+          //数量超过了
+          const surplus = count - imgList.length;
+          paths = newFileList.slice(0, surplus);
+          // paths = newFileList.filter((item, index) =&gt; index &lt; surplus);
+        }
+
+        //压缩图片
+        const newPaths = paths.map((image: any) =&gt; {
+          let newImg = image;
+          new Compressor(image, {
+            quality: 0.5, // 0.6 can also be used, but its not recommended to go below.
+            success: (res) =&gt; (newImg = res),
+          });
+          return newImg;
+        });
+        Toast.loading(&quot;上传中...&quot;);
+        uploadFiles(newPaths).then((res: any) =&gt; {
+          onChange &amp;&amp; onChange([...imgList, ...res]);
+          Toast.hide();
+        });
+      }
+    }
+  };
+
+  return (
+    &lt;div className={styles.upload}&gt;
+      &lt;div className={styles.uploadList}&gt;
+        {imgList.map((item, index) =&gt; (
+          &lt;div
+            key={`${item}`}
+            className={styles.item}
+            onClick={(event) =&gt; {
+              event.stopPropagation();
+              setShowViewer(true);
+              setImgIndex(index);
+              document
+                .getElementsByTagName(&quot;body&quot;)[0]
+                .setAttribute(&quot;style&quot;, &quot;overflow:hidden&quot;); //给body添加overflow:hidden阻止遮罩层滚动主页面滚动
+            }}
+          &gt;
+            &lt;img
+              className={styles.img}
+              data-preview-proto={item}
+              src={item}
+              alt=&quot;上传图片&quot;
+            /&gt;
+            &lt;img
+              className={styles.del}
+              src={require(&quot;./images/del.png&quot;)}
+              alt=&quot;删除按钮&quot;
+              onClick={(event) =&gt; {
+                event.stopPropagation();
+                onDelete(index);
+              }}
+            /&gt;
+          &lt;/div&gt;
+        ))}
+
+        {imgList.length &lt; count &amp;&amp; (
+          &lt;div className={styles.uploadBtn}&gt;
+            &lt;input
+              type=&quot;file&quot;
+              name=&quot;image&quot;
+              accept=&quot;image/*&quot;
+              multiple={true}
+              className={styles.uploadInput}
+              onChange={onInputChange}
+            /&gt;
+            &lt;div className={styles.uploadPlus}&gt;
+              &lt;img src={require(&quot;./images/plus.png&quot;)} alt=&quot;加号&quot; /&gt;
+              &lt;span&gt;
+                ({imgList.length}/{count})
+              &lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        )}
+      &lt;/div&gt;
+      {showViewer ? (
+        &lt;WxImageViewer
+          onClose={() =&gt; {
+            setShowViewer(false);
+            document.getElementsByTagName(&quot;body&quot;)[0].removeAttribute(&quot;style&quot;);
+          }}
+          urls={imgList}
+          index={imgIndex}
+        /&gt;
+      ) : (
+        &quot;&quot;
+      )}
+    &lt;/div&gt;
+  );
+};
+export default Index;
+</code></pre>
+<h3 id="引用组件">引用组件</h3>
+<pre><code>import Upload from &quot;~/components/upload&quot;;
+&lt;Upload
+                  imgList={form.discoverServiceImgs}
+                  count={6}
+                  onChange={(imgs) =&gt;
+                    setForm({ ...form, discoverServiceImgs: imgs })
+                  }
+                  onDelete={(idx) =&gt;
+                    setForm({
+                      ...form,
+                      discoverServiceImgs: form.discoverServiceImgs.filter(
+                        (_value: any, _index: any) =&gt; _index !== idx
+                      ),
+                    })
+                  }
+                /&gt;
+        ```</code></pre>
 
             </div>
             <div class="post-footer">
@@ -435,7 +842,7 @@ add_filter( 'post_thumbnail_html', 'remove_width_attribute', 10 );
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://ihopefulchina.github.io/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/" title="隐藏、禁止、删除Wordpress自带的更新和仪表盘">https://ihopefulchina.github.io/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/</a>
+      <a href="https://ihopefulchina.github.io/oi4CnmXh7/" title="腾讯COS上传图片封装">https://ihopefulchina.github.io/oi4CnmXh7/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -444,23 +851,17 @@ add_filter( 'post_thumbnail_html', 'remove_width_attribute', 10 );
   </ul>
   <div class="tags">
     
-      <a href="https://ihopefulchina.github.io/tag/wordpress/"># WordPress</a>
-    
-      <a href="https://ihopefulchina.github.io/tag/php/"># PHP</a>
+      <a href="https://ihopefulchina.github.io/tag/Nhq4NKwx6/"># JavaScript</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="移除、隐藏、删除Wordpres一些小工具和功能" href="https://ihopefulchina.github.io/yi-chu-yin-cang-shan-chu-wordpres-yi-xie-xiao-gong-ju-he-gong-neng/">移除、隐藏、删除Wordpres一些小工具和功能</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="移除、隐藏、删除Wordpres一些小工具和功能" href="https://ihopefulchina.github.io/yi-chu-yin-cang-shan-chu-wordpres-yi-xie-xiao-gong-ju-he-gong-neng/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="禁止删除某些页面" href="https://ihopefulchina.github.io/jin-zhi-shan-chu-mou-xie-ye-mian/">禁止删除某些页面</a>
-        <a class="nav-mobile-next" title="禁止删除某些页面" href="https://ihopefulchina.github.io/jin-zhi-shan-chu-mou-xie-ye-mian/">下一篇</a>
+        <a class="nav-pc-next" title="整理常用 微信浏览器和小程序设备信息" href="https://ihopefulchina.github.io/1-QwjXsr9/">整理常用 微信浏览器和小程序设备信息</a>
+        <a class="nav-mobile-next" title="整理常用 微信浏览器和小程序设备信息" href="https://ihopefulchina.github.io/1-QwjXsr9/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
