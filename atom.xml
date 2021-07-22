@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ihopefulchina.github.io</id>
     <title>Ihopeful Blog</title>
-    <updated>2021-07-22T06:48:15.830Z</updated>
+    <updated>2021-07-22T07:27:39.355Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ihopefulchina.github.io"/>
     <link rel="self" href="https://ihopefulchina.github.io/atom.xml"/>
@@ -10,6 +10,274 @@
     <logo>https://ihopefulchina.github.io/images/avatar.png</logo>
     <icon>https://ihopefulchina.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Ihopeful Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[小程序ScrollView跟Video组件的一些bug和解决心得]]></title>
+        <id>https://ihopefulchina.github.io/7gPzLK9XW/</id>
+        <link href="https://ihopefulchina.github.io/7gPzLK9XW/">
+        </link>
+        <updated>2021-07-22T06:50:57.000Z</updated>
+        <summary type="html"><![CDATA[<p>不知道有没有人遇到过这个bug: video组件进入全屏再退出后会自动返回顶部(目前已知ios)。<br>
+我在论坛里面也看到有人提过这个bug，官方态度是未解决。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>不知道有没有人遇到过这个bug: video组件进入全屏再退出后会自动返回顶部(目前已知ios)。<br>
+我在论坛里面也看到有人提过这个bug，官方态度是未解决。</p>
+<!-- more -->
+<h3 id="我整理了一下这个踩坑心得">我整理了一下这个踩坑心得：</h3>
+<ol>
+<li>一开始我并没有觉得这2个组件弄在一起会有什么bug（在ScrollView里面用Video组件）。</li>
+</ol>
+<p>讲道理这个非常常用，想要长列表，上拉加载和下拉刷新必须用这个组件，想要列表有视频必须用video组件。</p>
+<p>我写完后也没发现什么问题，除了有点卡顿问题，然后点开视频播放没问题，实机测试安卓设备也没有问题，但是在苹果设备全屏播放后退出全屏会顶到顶部（(灬ꈍ ꈍ灬)）什么奇怪的bug。</p>
+<p>我翻阅百度和论坛，没看的有什么好解决方法。<br>
+(video组件进入全屏再退出后会自动返回顶部(目前已知ios))[https://developers.weixin.qq.com/community/develop/doc/00062e9d6fcef0425c29302e15b000]<br>
+(小程序视频退出全屏产生问题)[https://developers.weixin.qq.com/community/develop/doc/0000c273af02f8d1deb8a460351400]</p>
+<ol>
+<li>我尝试了下面评论里面的一个方案：</li>
+</ol>
+<pre><code>提供一个曲线救国方案：
+
+1 监听页面的onPageScroll事件，实时全局保存scrollTop
+
+2 监听video的bindfullscreenchange事件（视频进入和退出全屏时触发），当进入全屏，再记录一个值videoScrollTop，将1中的scrollTop设置给它
+
+3 退出全屏时，wx.pageScrollTo({scrollTop: videoScrollTop})
+</code></pre>
+<p>我尝试了一下，并不完美，会一瞬间顶到顶部。</p>
+<pre><code>  const resRef = ref.current as any;
+  const changeScrollTop = blo =&gt; {
+    if (blo) {
+      wx.setStorageSync(&quot;videoScrollTop&quot;, resRef.getScrollTop());
+    } else {
+      resRef.scrollToTop(wx.getStorageSync(&quot;videoScrollTop&quot;));
+    }
+  };
+
+  //封装上拉加载下拉刷新里面
+   /**
+   * 滚动到顶部
+   */
+  scrollToTop(top = 0) {
+      //跳转到目标top
+    this.setState({ scrollTop: top + Math.random() * 0.001 });
+  }
+
+  //视频
+  &lt;Video
+                          onFullscreenChange={event =&gt; {
+                            wx.setStorageSync(&quot;conditionalRefresh&quot;, false);
+                            changeScrollTop(event.detail.fullScreen);
+                          }}
+                          src={img.url}
+                        /&gt;
+</code></pre>
+<p>我放弃了这个方案。</p>
+<ol start="3">
+<li>
+<p>进入拉锯战。我尝试了很多，比如通过动画方式掩盖一瞬间顶到顶部。上面的方法补丁。但是体验很不友好，我放弃了。</p>
+<p>在某天我灵光一现，我想到了在Video的父级再加一个ScrollView，然后在浏览容器固定高度。用魔法打败魔法。。哈哈哈哈，尝试了一下，发现是可以的，但是我开心没2分钟，发现很卡很卡，根本没办法浏览。</p>
+</li>
+<li>
+<p>以上我都准备放弃了，在心里骂了一万遍小程序开发团队！！！我翻阅小程序官方文档，我突然发现了官方自带下拉刷新和上拉加载。</p>
+</li>
+<li>
+<p>开干，我弃掉ScrollView，采用官方下拉刷新和上拉加载。<br>
+我用Taro Hooks，你们可以用原生写。</p>
+</li>
+</ol>
+<pre><code>import Taro, {
+  usePullDownRefresh,
+  useReachBottom,
+  usePageScroll,
+  useScope
+} from &quot;@tarojs/taro&quot;;
+
+//私有获取封装的列表useGetList，可以采用自己的方式
+ // 获取数据列表
+const { noData, state, noMore, list, fetchList, setList } = useGetList(
+    [] as any,
+    `xxx`,
+    { isDebance: true }
+  );
+
+  const onRefresh = useCallback(() =&gt; fetchList(1), [fetchList]);
+
+  usePullDownRefresh(() =&gt; {
+    onRefresh();
+    Taro.stopPullDownRefresh();
+    Taro.hideNavigationBarLoading();
+  });
+
+  useReachBottom(() =&gt; {
+    if (!noMore) {
+      fetchList();
+    }
+  });
+
+
+  // 视频播放
+  const [videoIndex, setVideoIndex] = useState(-1 as any);
+
+  // 播放视频
+  const videoPlay = idx =&gt; {
+    if (videoIndex &lt;= 0) {
+      // 没有播放时播放视频
+      setVideoIndex(idx);
+      const videoContext = Taro.createVideoContext(&quot;video&quot; + idx);
+      videoContext.play();
+    } else {
+      // 停止正在播放的视频
+      const videoContextPrev = Taro.createVideoContext(&quot;video&quot; + videoIndex);
+      videoContextPrev.stop();
+      // 将点击视频进行播放
+      setVideoIndex(idx);
+      const videoContextCurrent = Taro.createVideoContext(&quot;video&quot; + idx);
+      videoContextCurrent.play();
+    }
+  };
+
+  const stopPlay = idx =&gt; {
+    const videoContextPre = Taro.createVideoContext(&quot;index&quot; + idx);
+    videoContextPre.pause();
+  };
+  const scope = useScope();
+  const windowHeight = Taro.getSystemInfoSync().windowHeight; // 可视区域高度
+  usePageScroll(() =&gt; {
+    // eslint-disable-next-line no-undef
+
+    if (videoIndex &gt;= 0 &amp;&amp; !isFullscreen) {
+      const id = videoIndex;
+      selectRect(&quot;#item&quot; + id, scope).then(rect =&gt; {
+        // 我查询的是包裹视频的元素，可根据需求
+        const top = rect.top; // 距离顶部高度
+        const bottom = rect.bottom;
+        const vh = rect.height; // 元素高度
+        if (top &lt; 0 || bottom &gt; vh + windowHeight) {
+          // 当视频距离顶部为零，测了下，这个为0，视频不可见。
+          setVideoIndex(-1);
+        }
+      });
+    }
+  });
+
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const onFullscreenChange = blo =&gt; {
+    setIsFullscreen(blo);
+  };
+
+
+
+//视频组件
+&lt;View className={styles.itemVideoBox}&gt;
+                        {idx === videoIndex &amp;&amp; (
+                          &lt;Video
+                            className={styles.video}
+                            src={img.url}
+                            autoplay
+                            onPause={event =&gt; {
+                              event.stopPropagation();
+                              stopPlay(idx);
+                            }}
+                            onFullscreenChange={event =&gt; {
+                              event.stopPropagation();
+                              onFullscreenChange(event.detail.fullScreen);
+                            }}
+                            id={`video${idx}`}
+                          /&gt;
+                        )}
+                        {idx !== videoIndex &amp;&amp; (
+                          &lt;View
+                            key={`${&quot;id&quot; + index}`}
+                            className={styles.posterImgBlock}
+                            onClick={event =&gt; {
+                              event.stopPropagation();
+                              videoPlay(idx);
+                            }}
+                          &gt;
+                            &lt;Image
+                              src={
+                                img.thumb
+                                  ? img.thumb
+                                  : &quot;默认封面图地址&quot;
+                              }
+                              mode=&quot;aspectFill&quot;
+                              lazyLoad
+                            /&gt;
+
+                            &lt;Image
+                              className={styles.palyBtn}
+                              src='播放按钮'
+                              mode=&quot;aspectFill&quot;
+                              lazyLoad
+                            /&gt;
+                          &lt;/View&gt;
+                        )}
+                      &lt;/View&gt;
+
+</code></pre>
+<h4 id="less-不要设置高度">less 不要设置高度</h4>
+<pre><code>page {
+  overflow: auto !important;
+}
+.posterImgNone {
+  display: none;
+}
+.posterImgBlock {
+  display: block;
+}
+.itemVideoBox {
+  position: relative;
+}
+.posterImgBlock,
+.posterImgNone {
+  margin-bottom: 3px;
+  width: 100%;
+  height: 200px;
+  margin-right: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  image,
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+  }
+  .palyBtn {
+    width: 60px;
+    height: 60px;
+    border-radius: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -30px;
+    margin-left: -30px;
+  }
+}
+</code></pre>
+<pre><code>/**
+ * 查询元素大小
+ *
+ * @export
+ * @param {string} name
+ * @param {*} scope
+ * @returns
+ */
+export function selectRect(name: string, scope: any) {
+    return new Promise&lt;wx.NodesRef.BoundingClientRectCallbackResult&gt;((resolve) =&gt; {
+        setTimeout(() =&gt; {
+            const query = wx.createSelectorQuery().in(scope);
+            query.select(name).boundingClientRect((res) =&gt; {
+                resolve(res as wx.NodesRef.BoundingClientRectCallbackResult);
+            }).exec();
+        }, 0)
+    });
+}
+</code></pre>
+<p>我随便加上了列表视频 及 滑过该视频 停止播放。<br>
+大功告成！</p>
+<p>至此是遇到了这个大坑过程，以及解决心得。希望能给你们一些帮助。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[列表上拉加载下拉刷新]]></title>
         <id>https://ihopefulchina.github.io/2n5d2sjoi/</id>
@@ -23214,23 +23482,6 @@ export const get_suffix = (fileName: string) =&gt; {
 <p>作者是 <a href="https://mobile.twitter.com/dan_abramov">Dan Abramov</a> , Facebook React 核心开发，Redux 作者</p>
 <h3 id="博客地址">博客地址</h3>
 <p><a href="https://overreacted.io/zh-hans/how-are-function-components-different-from-classes/">https://overreacted.io/zh-hans/how-are-function-components-different-from-classes/</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[useEffect 完整指南]]></title>
-        <id>https://ihopefulchina.github.io/hmJz132Dl/</id>
-        <link href="https://ihopefulchina.github.io/hmJz132Dl/">
-        </link>
-        <updated>2021-02-09T06:33:23.000Z</updated>
-        <summary type="html"><![CDATA[<p>最近看了一篇blog文章，作者是 <a href="https://mobile.twitter.com/dan_abramov">Dan Abramov</a> , Facebook React 核心开发，Redux 作者，他这篇博客写的非常好，很详情介绍了useEffect，推荐大家去看看。</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>最近看了一篇blog文章，作者是 <a href="https://mobile.twitter.com/dan_abramov">Dan Abramov</a> , Facebook React 核心开发，Redux 作者，他这篇博客写的非常好，很详情介绍了useEffect，推荐大家去看看。</p>
-<!-- more -->
-<blockquote>
-<p>目前为止，useEffect主要用于数据请求。但是数据请求准确说并不是一个同步问题。因为我们的依赖经常是[]所以这一点尤其明显。那我们究竟在同步什么？</p>
-</blockquote>
-<h3 id="博客地址">博客地址</h3>
-<p><a href="https://overreacted.io/zh-hans/a-complete-guide-to-useeffect/">https://overreacted.io/zh-hans/a-complete-guide-to-useeffect/</a></p>
 ]]></content>
     </entry>
 </feed>

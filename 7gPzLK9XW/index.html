@@ -8,7 +8,7 @@
 <meta name="keywords" content="ihopeful blog">
 <meta name="description" content="Sweat is the lubricant of success.">
 <meta name="theme-color" content="#000">
-<title> React Native学习笔记· 3.交互 | Ihopeful Blog</title>
+<title>小程序ScrollView跟Video组件的一些bug和解决心得 | Ihopeful Blog</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1626938850821">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/mist.css">
@@ -29,8 +29,8 @@
 
 
 
-  <meta name="description" content=" React Native学习笔记· 3.交互" />
-  <meta name="keywords" content="React Native" />
+  <meta name="description" content="小程序ScrollView跟Video组件的一些bug和解决心得" />
+  <meta name="keywords" content="微信小程序" />
 </head>
 
 <body>
@@ -178,7 +178,8 @@
       <div class="sidebar-body mist" id="sidebar_body">
         
           
-            
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper ">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -250,6 +251,203 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E6%88%91%E6%95%B4%E7%90%86%E4%BA%86%E4%B8%80%E4%B8%8B%E8%BF%99%E4%B8%AA%E8%B8%A9%E5%9D%91%E5%BF%83%E5%BE%97">我整理了一下这个踩坑心得：</a>
+<ul>
+<li><a href="#less-%E4%B8%8D%E8%A6%81%E8%AE%BE%E7%BD%AE%E9%AB%98%E5%BA%A6">less 不要设置高度</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+</div>
+
+<script>
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
+      }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
+    });
+  }
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
           
         
       </div>
@@ -337,8 +535,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://ihopefulchina.github.io/react-native-xue-xi-bi-ji-3jiao-hu/">
-       React Native学习笔记· 3.交互
+    <a class="post-title-link" href="https://ihopefulchina.github.io/7gPzLK9XW/">
+      小程序ScrollView跟Video组件的一些bug和解决心得
     </a>
   </h1>
   <div class="post-meta">
@@ -346,7 +544,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2021-02-07</span>
+      <span>2021-07-22</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -355,8 +553,8 @@
       <span class="pc-show">分类于</span>
       
       
-      <a href="https://ihopefulchina.github.io/tag/ReactNative/">
-        <span>React Native</span>
+      <a href="https://ihopefulchina.github.io/tag/mp.weixin/">
+        <span>微信小程序</span>
       </a>
       
       
@@ -365,79 +563,274 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>3分钟</span>
+      <span>6分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>644<span class="pc-show">字数</span></span>
+      <span>1264<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <p>这部分文档，我看到有点云里雾里，后续上手需要翻阅一下。</p>
+              <p>不知道有没有人遇到过这个bug: video组件进入全屏再退出后会自动返回顶部(目前已知ios)。<br>
+我在论坛里面也看到有人提过这个bug，官方态度是未解决。</p>
 <!-- more -->
+<h3 id="我整理了一下这个踩坑心得">我整理了一下这个踩坑心得：</h3>
 <ol>
-<li>处理触摸事件。<code>&lt;Button onPress={onPressButton}title=&quot;Press Me&quot;/&gt;</code> 长按是采用<code>onLongPress</code> 。</li>
-<li>React Navigation 这个 有点像Taro的Navigator, 后续翻阅文档<a href="https://reactnavigation.org/docs/getting-started">React Navigation</a>。</li>
-<li>动画 ，
-<ul>
-<li><code>Animated</code> 使用demo</li>
-</ul>
+<li>一开始我并没有觉得这2个组件弄在一起会有什么bug（在ScrollView里面用Video组件）。</li>
+</ol>
+<p>讲道理这个非常常用，想要长列表，上拉加载和下拉刷新必须用这个组件，想要列表有视频必须用video组件。</p>
+<p>我写完后也没发现什么问题，除了有点卡顿问题，然后点开视频播放没问题，实机测试安卓设备也没有问题，但是在苹果设备全屏播放后退出全屏会顶到顶部（(灬ꈍ ꈍ灬)）什么奇怪的bug。</p>
+<p>我翻阅百度和论坛，没看的有什么好解决方法。<br>
+(video组件进入全屏再退出后会自动返回顶部(目前已知ios))[https://developers.weixin.qq.com/community/develop/doc/00062e9d6fcef0425c29302e15b000]<br>
+(小程序视频退出全屏产生问题)[https://developers.weixin.qq.com/community/develop/doc/0000c273af02f8d1deb8a460351400]</p>
+<ol>
+<li>我尝试了下面评论里面的一个方案：</li>
+</ol>
+<pre><code>提供一个曲线救国方案：
+
+1 监听页面的onPageScroll事件，实时全局保存scrollTop
+
+2 监听video的bindfullscreenchange事件（视频进入和退出全屏时触发），当进入全屏，再记录一个值videoScrollTop，将1中的scrollTop设置给它
+
+3 退出全屏时，wx.pageScrollTo({scrollTop: videoScrollTop})
+</code></pre>
+<p>我尝试了一下，并不完美，会一瞬间顶到顶部。</p>
+<pre><code>  const resRef = ref.current as any;
+  const changeScrollTop = blo =&gt; {
+    if (blo) {
+      wx.setStorageSync(&quot;videoScrollTop&quot;, resRef.getScrollTop());
+    } else {
+      resRef.scrollToTop(wx.getStorageSync(&quot;videoScrollTop&quot;));
+    }
+  };
+
+  //封装上拉加载下拉刷新里面
+   /**
+   * 滚动到顶部
+   */
+  scrollToTop(top = 0) {
+      //跳转到目标top
+    this.setState({ scrollTop: top + Math.random() * 0.001 });
+  }
+
+  //视频
+  &lt;Video
+                          onFullscreenChange={event =&gt; {
+                            wx.setStorageSync(&quot;conditionalRefresh&quot;, false);
+                            changeScrollTop(event.detail.fullScreen);
+                          }}
+                          src={img.url}
+                        /&gt;
+</code></pre>
+<p>我放弃了这个方案。</p>
+<ol start="3">
+<li>
+<p>进入拉锯战。我尝试了很多，比如通过动画方式掩盖一瞬间顶到顶部。上面的方法补丁。但是体验很不友好，我放弃了。</p>
+<p>在某天我灵光一现，我想到了在Video的父级再加一个ScrollView，然后在浏览容器固定高度。用魔法打败魔法。。哈哈哈哈，尝试了一下，发现是可以的，但是我开心没2分钟，发现很卡很卡，根本没办法浏览。</p>
+</li>
+<li>
+<p>以上我都准备放弃了，在心里骂了一万遍小程序开发团队！！！我翻阅小程序官方文档，我突然发现了官方自带下拉刷新和上拉加载。</p>
+</li>
+<li>
+<p>开干，我弃掉ScrollView，采用官方下拉刷新和上拉加载。<br>
+我用Taro Hooks，你们可以用原生写。</p>
 </li>
 </ol>
-<pre><code>    import React, { useRef, useEffect } from 'react';
-    import { Animated, Text, View } from 'react-native';
-    const FadeInView = (props) =&gt; {
-    const fadeAnim = useRef(new Animated.Value(0)).current  // 透明度初始值设为0
+<pre><code>import Taro, {
+  usePullDownRefresh,
+  useReachBottom,
+  usePageScroll,
+  useScope
+} from &quot;@tarojs/taro&quot;;
 
-    React.useEffect(() =&gt; {
-        Animated.timing(                  // 随时间变化而执行动画
-        fadeAnim,                       // 动画中的变量值
-        {
-            toValue: 1,                   // 透明度最终变为1，即完全不透明
-            duration: 10000,              // 让动画持续一段时间
+//私有获取封装的列表useGetList，可以采用自己的方式
+ // 获取数据列表
+const { noData, state, noMore, list, fetchList, setList } = useGetList(
+    [] as any,
+    `xxx`,
+    { isDebance: true }
+  );
+
+  const onRefresh = useCallback(() =&gt; fetchList(1), [fetchList]);
+
+  usePullDownRefresh(() =&gt; {
+    onRefresh();
+    Taro.stopPullDownRefresh();
+    Taro.hideNavigationBarLoading();
+  });
+
+  useReachBottom(() =&gt; {
+    if (!noMore) {
+      fetchList();
+    }
+  });
+
+
+  // 视频播放
+  const [videoIndex, setVideoIndex] = useState(-1 as any);
+
+  // 播放视频
+  const videoPlay = idx =&gt; {
+    if (videoIndex &lt;= 0) {
+      // 没有播放时播放视频
+      setVideoIndex(idx);
+      const videoContext = Taro.createVideoContext(&quot;video&quot; + idx);
+      videoContext.play();
+    } else {
+      // 停止正在播放的视频
+      const videoContextPrev = Taro.createVideoContext(&quot;video&quot; + videoIndex);
+      videoContextPrev.stop();
+      // 将点击视频进行播放
+      setVideoIndex(idx);
+      const videoContextCurrent = Taro.createVideoContext(&quot;video&quot; + idx);
+      videoContextCurrent.play();
+    }
+  };
+
+  const stopPlay = idx =&gt; {
+    const videoContextPre = Taro.createVideoContext(&quot;index&quot; + idx);
+    videoContextPre.pause();
+  };
+  const scope = useScope();
+  const windowHeight = Taro.getSystemInfoSync().windowHeight; // 可视区域高度
+  usePageScroll(() =&gt; {
+    // eslint-disable-next-line no-undef
+
+    if (videoIndex &gt;= 0 &amp;&amp; !isFullscreen) {
+      const id = videoIndex;
+      selectRect(&quot;#item&quot; + id, scope).then(rect =&gt; {
+        // 我查询的是包裹视频的元素，可根据需求
+        const top = rect.top; // 距离顶部高度
+        const bottom = rect.bottom;
+        const vh = rect.height; // 元素高度
+        if (top &lt; 0 || bottom &gt; vh + windowHeight) {
+          // 当视频距离顶部为零，测了下，这个为0，视频不可见。
+          setVideoIndex(-1);
         }
-        ).start();                        // 开始执行动画
-    }, [fadeAnim])
-
-    return (
-        &lt;Animated.View                 // 使用专门的可动画化的View组件
-        style={{
-            ...props.style,
-            opacity: fadeAnim,         // 将透明度绑定到动画变量值
-        }}
-        &gt;
-        {props.children}
-        &lt;/Animated.View&gt;
-    );
+      });
     }
+  });
 
-    // 然后你就可以在组件中像使用`View`那样去使用`FadeInView`了
-    export default () =&gt; {
-    return (
-        &lt;View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}&gt;
-        &lt;FadeInView style={{width: 250, height: 50, backgroundColor: 'powderblue'}}&gt;
-            &lt;Text style={{fontSize: 28, textAlign: 'center', margin: 10}}&gt;Fading in&lt;/Text&gt;
-        &lt;/FadeInView&gt;
-        &lt;/View&gt;
-    )
-    }
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const onFullscreenChange = blo =&gt; {
+    setIsFullscreen(blo);
+  };
+
+
+
+//视频组件
+&lt;View className={styles.itemVideoBox}&gt;
+                        {idx === videoIndex &amp;&amp; (
+                          &lt;Video
+                            className={styles.video}
+                            src={img.url}
+                            autoplay
+                            onPause={event =&gt; {
+                              event.stopPropagation();
+                              stopPlay(idx);
+                            }}
+                            onFullscreenChange={event =&gt; {
+                              event.stopPropagation();
+                              onFullscreenChange(event.detail.fullScreen);
+                            }}
+                            id={`video${idx}`}
+                          /&gt;
+                        )}
+                        {idx !== videoIndex &amp;&amp; (
+                          &lt;View
+                            key={`${&quot;id&quot; + index}`}
+                            className={styles.posterImgBlock}
+                            onClick={event =&gt; {
+                              event.stopPropagation();
+                              videoPlay(idx);
+                            }}
+                          &gt;
+                            &lt;Image
+                              src={
+                                img.thumb
+                                  ? img.thumb
+                                  : &quot;默认封面图地址&quot;
+                              }
+                              mode=&quot;aspectFill&quot;
+                              lazyLoad
+                            /&gt;
+
+                            &lt;Image
+                              className={styles.palyBtn}
+                              src='播放按钮'
+                              mode=&quot;aspectFill&quot;
+                              lazyLoad
+                            /&gt;
+                          &lt;/View&gt;
+                        )}
+                      &lt;/View&gt;
+
 </code></pre>
-<ol start="4">
-<li>响应者的生命周期。<br>
-View.props.onStartShouldSetResponder: (evt) =&gt; true, - 在用户开始触摸的时候（手指刚刚接触屏幕的瞬间），是否愿意成为响应者？<br>
-View.props.onMoveShouldSetResponder: (evt) =&gt; true, - 如果 View 不是响应者，那么在每一个触摸点开始移动（没有停下也没有离开屏幕）时再询问一次：是否愿意响应触摸交互呢？<br>
-如果 View 返回 true，并开始尝试成为响应者，那么会触发下列事件之一:<br>
-View.props.onResponderGrant: (evt) =&gt; {} - View 现在要开始响应触摸事件了。这也是需要做高亮的时候，使用户知道他到底点到了哪里。<br>
-View.props.onResponderReject: (evt) =&gt; {} - 响应者现在“另有其人”而且暂时不会“放权”，请另作安排。<br>
-如果 View 已经开始响应触摸事件了，那么下列这些处理函数会被一一调用：<br>
-View.props.onResponderMove: (evt) =&gt; {} - 用户正在屏幕上移动手指时（没有停下也没有离开屏幕）。<br>
-View.props.onResponderRelease: (evt) =&gt; {} - 触摸操作结束时触发，比如&quot;touchUp&quot;（手指抬起离开屏幕）。<br>
-View.props.onResponderTerminationRequest: (evt) =&gt; true - 有其他组件请求接替响应者，当前的 View 是否“放权”？返回 true 的话则释放响应者权力。<br>
-View.props.onResponderTerminate: (evt) =&gt; {} - 响应者权力已经交出。这可能是由于其他 View 通过onResponderTerminationRequest请求的，也可能是由操作系统强制夺权（比如 iOS 上的控制中心或是通知中心）。</li>
-</ol>
+<h4 id="less-不要设置高度">less 不要设置高度</h4>
+<pre><code>page {
+  overflow: auto !important;
+}
+.posterImgNone {
+  display: none;
+}
+.posterImgBlock {
+  display: block;
+}
+.itemVideoBox {
+  position: relative;
+}
+.posterImgBlock,
+.posterImgNone {
+  margin-bottom: 3px;
+  width: 100%;
+  height: 200px;
+  margin-right: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  image,
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+  }
+  .palyBtn {
+    width: 60px;
+    height: 60px;
+    border-radius: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -30px;
+    margin-left: -30px;
+  }
+}
+</code></pre>
+<pre><code>/**
+ * 查询元素大小
+ *
+ * @export
+ * @param {string} name
+ * @param {*} scope
+ * @returns
+ */
+export function selectRect(name: string, scope: any) {
+    return new Promise&lt;wx.NodesRef.BoundingClientRectCallbackResult&gt;((resolve) =&gt; {
+        setTimeout(() =&gt; {
+            const query = wx.createSelectorQuery().in(scope);
+            query.select(name).boundingClientRect((res) =&gt; {
+                resolve(res as wx.NodesRef.BoundingClientRectCallbackResult);
+            }).exec();
+        }, 0)
+    });
+}
+</code></pre>
+<p>我随便加上了列表视频 及 滑过该视频 停止播放。<br>
+大功告成！</p>
+<p>至此是遇到了这个大坑过程，以及解决心得。希望能给你们一些帮助。</p>
 
             </div>
             <div class="post-footer">
@@ -448,7 +841,7 @@ View.props.onResponderTerminate: (evt) =&gt; {} - 响应者权力已经交出。
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://ihopefulchina.github.io/react-native-xue-xi-bi-ji-3jiao-hu/" title=" React Native学习笔记· 3.交互">https://ihopefulchina.github.io/react-native-xue-xi-bi-ji-3jiao-hu/</a>
+      <a href="https://ihopefulchina.github.io/7gPzLK9XW/" title="小程序ScrollView跟Video组件的一些bug和解决心得">https://ihopefulchina.github.io/7gPzLK9XW/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -457,21 +850,17 @@ View.props.onResponderTerminate: (evt) =&gt; {} - 响应者权力已经交出。
   </ul>
   <div class="tags">
     
-      <a href="https://ihopefulchina.github.io/tag/ReactNative/"># React Native</a>
+      <a href="https://ihopefulchina.github.io/tag/mp.weixin/"># 微信小程序</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="React Native学习笔记· 4.运行环境的一些坑" href="https://ihopefulchina.github.io/fSipHF4wD/">React Native学习笔记· 4.运行环境的一些坑</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="React Native学习笔记· 4.运行环境的一些坑" href="https://ihopefulchina.github.io/fSipHF4wD/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="React Native学习笔记· 2. 环境搭建" href="https://ihopefulchina.github.io/react-native-xue-xi-bi-ji-2-huan-jing-da-jian/">React Native学习笔记· 2. 环境搭建</a>
-        <a class="nav-mobile-next" title="React Native学习笔记· 2. 环境搭建" href="https://ihopefulchina.github.io/react-native-xue-xi-bi-ji-2-huan-jing-da-jian/">下一篇</a>
+        <a class="nav-pc-next" title="列表上拉加载下拉刷新" href="https://ihopefulchina.github.io/2n5d2sjoi/">列表上拉加载下拉刷新</a>
+        <a class="nav-mobile-next" title="列表上拉加载下拉刷新" href="https://ihopefulchina.github.io/2n5d2sjoi/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
