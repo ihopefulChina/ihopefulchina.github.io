@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ihopefulchina.github.io</id>
     <title>Ihopeful Blog</title>
-    <updated>2021-07-22T06:32:18.428Z</updated>
+    <updated>2021-07-22T06:43:31.340Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ihopefulchina.github.io"/>
     <link rel="self" href="https://ihopefulchina.github.io/atom.xml"/>
@@ -10,6 +10,102 @@
     <logo>https://ihopefulchina.github.io/images/avatar.png</logo>
     <icon>https://ihopefulchina.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Ihopeful Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[列表上拉加载下拉刷新]]></title>
+        <id>https://ihopefulchina.github.io/2n5d2sjoi/</id>
+        <link href="https://ihopefulchina.github.io/2n5d2sjoi/">
+        </link>
+        <updated>2021-07-22T06:37:15.000Z</updated>
+        <summary type="html"><![CDATA[<p>上拉加载下拉刷新采用react-weui组件, 适用于微信浏览器环境（别的环境没测试）。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>上拉加载下拉刷新采用react-weui组件, 适用于微信浏览器环境（别的环境没测试）。</p>
+<!-- more -->
+<pre><code>/* 上拉加载下拉刷新 */
+import React, { useCallback } from &quot;react&quot;;
+import { useGetList } from &quot;~/hooks&quot;;
+import NoData from &quot;~/components/noData&quot;;
+// @ts-ignore
+import { PullToRefresh, InfiniteLoader } from &quot;react-weui&quot;;
+
+import styles from &quot;./index.module.less&quot;;
+
+interface IProps {
+  url?: string;
+  itemContent?: any;
+  noDataContent?: any;
+}
+
+const PageRefresh = ({
+  url = &quot;&quot;,
+  itemContent = {} as any,
+  noDataContent = {} as any,
+}: IProps) =&gt; {
+  // 获取数据列表(封装的获取请求)
+  const { noData, noMore, list, fetchList } = useGetList([], url, {
+    isMount: true,
+  });
+  const onRefresh = useCallback(() =&gt; fetchList(1), [fetchList]);
+  return (
+    &lt;div className={styles.refresh}&gt;
+      {noData ? (
+        &lt;NoData {...noDataContent} /&gt;
+      ) : (
+        &lt;PullToRefresh
+          onRefresh={(resolve: any) =&gt; {
+            onRefresh();
+            setTimeout(() =&gt; {
+              resolve();
+            }, 1000);
+          }}
+        &gt;
+          &lt;InfiniteLoader
+            loaderDefaultIcon=&quot;没有更多了...&quot;
+            onLoadMore={(resolve: any, finish: any) =&gt; {
+              if (noMore) {
+                finish();
+              } else {
+                fetchList();
+                finish();
+              }
+            }}
+          &gt;
+            {list.map((item: any) =&gt; {
+              return &lt;div key={item.id}&gt;{itemContent(item)}&lt;/div&gt;;
+            })}
+          &lt;/InfiniteLoader&gt;
+        &lt;/PullToRefresh&gt;
+      )}
+    &lt;/div&gt;
+  );
+};
+export default PageRefresh;
+</code></pre>
+<h3 id="引用组件">引用组件</h3>
+<pre><code>import PageRefresh from &quot;~/components/pageRefresh&quot;;
+&lt;PageRefresh
+        url=&quot;/payInfo&quot;
+        itemContent={(item: any) =&gt; (
+          &lt;div
+            key={item.id}
+            className={styles.item}
+            onClick={() =&gt;
+              history.push(xxx`)
+            }
+          &gt;
+            &lt;Item item={item} /&gt;
+          &lt;/div&gt;
+        )}
+        noDataContent={{
+          title: &quot;暂无消费记录&quot;,
+          img: require(&quot;~/images/customerConsumption_noData.png&quot;),
+          paddingTop: 350,
+          width: 398,
+          height: 270,
+        }}
+      /&gt;
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[封装腾讯即时通讯 for 小程序]]></title>
         <id>https://ihopefulchina.github.io/IZbWBmM7v/</id>
@@ -23135,32 +23231,6 @@ export const get_suffix = (fileName: string) =&gt; {
 </blockquote>
 <h3 id="博客地址">博客地址</h3>
 <p><a href="https://overreacted.io/zh-hans/a-complete-guide-to-useeffect/">https://overreacted.io/zh-hans/a-complete-guide-to-useeffect/</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[React Native学习笔记· 4.运行环境的一些坑]]></title>
-        <id>https://ihopefulchina.github.io/fSipHF4wD/</id>
-        <link href="https://ihopefulchina.github.io/fSipHF4wD/">
-        </link>
-        <updated>2021-02-08T05:40:16.000Z</updated>
-        <summary type="html"><![CDATA[<p>解决 React-Native mac 运行报错 error Failed to build iOS project. We ran &quot;xcodebuild&quot; command but it exited with error code 65. To debug build logs further, consider building your app with Xcode.app, by opening xxx.xcworkspace</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>解决 React-Native mac 运行报错 error Failed to build iOS project. We ran &quot;xcodebuild&quot; command but it exited with error code 65. To debug build logs further, consider building your app with Xcode.app, by opening xxx.xcworkspace</p>
-<!-- more -->
-<h3 id="解决方法">解决方法</h3>
-<p>参考:<a href="https://github.com/facebook/react-native/issues/20774">https://github.com/facebook/react-native/issues/20774</a></p>
-<p>删除项目依赖包以及 yarn 缓存</p>
-<pre><code>rm -rf node_modules &amp;&amp; yarn cache clean
-</code></pre>
-<p>重新装包</p>
-<pre><code>yarn install
-</code></pre>
-<p>清除 React-Native 缓存</p>
-<pre><code>rm -rf ~/.rncache
-</code></pre>
-<p>下载 React-Native IOS 运行依赖</p>
-<pre><code> react-native run-ios 
-</code></pre>
 ]]></content>
     </entry>
 </feed>

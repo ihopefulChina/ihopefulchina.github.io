@@ -8,7 +8,7 @@
 <meta name="keywords" content="ihopeful blog">
 <meta name="description" content="Sweat is the lubricant of success.">
 <meta name="theme-color" content="#000">
-<title>Vue学习(七): 简易计算器案例 | Ihopeful Blog</title>
+<title>列表上拉加载下拉刷新 | Ihopeful Blog</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1626936088599">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/mist.css">
@@ -29,8 +29,8 @@
 
 
 
-  <meta name="description" content="Vue学习(七): 简易计算器案例" />
-  <meta name="keywords" content="Vue" />
+  <meta name="description" content="列表上拉加载下拉刷新" />
+  <meta name="keywords" content="JavaScript" />
 </head>
 
 <body>
@@ -261,8 +261,7 @@
 <ul>
 <li>
 <ul>
-<li><a href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%E5%86%99%E6%B3%95">第一种写法</a></li>
-<li><a href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%E6%9C%89%E7%82%B9%E6%8A%95%E6%9C%BA%E5%8F%96%E5%B7%A7%E6%AD%A3%E5%BC%8F%E5%BC%80%E5%8F%91%E4%B8%AD%E6%9C%80%E5%A5%BD%E4%B8%8D%E8%A6%81%E8%BF%99%E6%A0%B7%E6%93%8D%E4%BD%9C">第二种有点投机取巧，正式开发中，最好不要这样操作</a></li>
+<li><a href="#%E5%BC%95%E7%94%A8%E7%BB%84%E4%BB%B6">引用组件</a></li>
 </ul>
 </li>
 </ul>
@@ -532,8 +531,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://ihopefulchina.github.io/vue-xue-xi-qi-jian-yi-ji-suan-qi-an-li/">
-      Vue学习(七): 简易计算器案例
+    <a class="post-title-link" href="https://ihopefulchina.github.io/2n5d2sjoi/">
+      列表上拉加载下拉刷新
     </a>
   </h1>
   <div class="post-meta">
@@ -541,7 +540,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2019-09-03</span>
+      <span>2021-07-22</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -550,8 +549,8 @@
       <span class="pc-show">分类于</span>
       
       
-      <a href="https://ihopefulchina.github.io/tag/aaJMlrtyK/">
-        <span>Vue</span>
+      <a href="https://ihopefulchina.github.io/tag/Nhq4NKwx6/">
+        <span>JavaScript</span>
       </a>
       
       
@@ -560,120 +559,102 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>4分钟</span>
+      <span>2分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>579<span class="pc-show">字数</span></span>
+      <span>270<span class="pc-show">字数</span></span>
     </span>
     
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <p>简易计算器案例很简陋，目的是为了加深学习v-model 数据双向绑定</p>
+              <p>上拉加载下拉刷新采用react-weui组件, 适用于微信浏览器环境（别的环境没测试）。</p>
 <!-- more -->
-<h3 id="第一种写法">第一种写法</h3>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
-    &lt;title&gt;Document&lt;/title&gt;
-    &lt;script src=&quot;./vue.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div id=&quot;app&quot;&gt;
-        &lt;input type=&quot;text&quot; v-model=&quot;n1&quot;&gt;
-        &lt;select v-model=&quot;opt&quot;&gt;
-            &lt;option value=&quot;+&quot;&gt;+&lt;/option&gt;
-            &lt;option value=&quot;-&quot;&gt;-&lt;/option&gt;
-            &lt;option value=&quot;*&quot;&gt;*&lt;/option&gt;
-            &lt;option value=&quot;/&quot;&gt;/&lt;/option&gt;
-        &lt;/select&gt;
-        &lt;input type=&quot;text&quot; v-model=&quot;n2&quot;&gt;
-        &lt;input type=&quot;button&quot; value=&quot;=&quot; @click=&quot;calc&quot;&gt;
-        &lt;input type=&quot;text&quot; v-model=&quot;result&quot;&gt;
+<pre><code>/* 上拉加载下拉刷新 */
+import React, { useCallback } from &quot;react&quot;;
+import { useGetList } from &quot;~/hooks&quot;;
+import NoData from &quot;~/components/noData&quot;;
+// @ts-ignore
+import { PullToRefresh, InfiniteLoader } from &quot;react-weui&quot;;
+
+import styles from &quot;./index.module.less&quot;;
+
+interface IProps {
+  url?: string;
+  itemContent?: any;
+  noDataContent?: any;
+}
+
+const PageRefresh = ({
+  url = &quot;&quot;,
+  itemContent = {} as any,
+  noDataContent = {} as any,
+}: IProps) =&gt; {
+  // 获取数据列表(封装的获取请求)
+  const { noData, noMore, list, fetchList } = useGetList([], url, {
+    isMount: true,
+  });
+  const onRefresh = useCallback(() =&gt; fetchList(1), [fetchList]);
+  return (
+    &lt;div className={styles.refresh}&gt;
+      {noData ? (
+        &lt;NoData {...noDataContent} /&gt;
+      ) : (
+        &lt;PullToRefresh
+          onRefresh={(resolve: any) =&gt; {
+            onRefresh();
+            setTimeout(() =&gt; {
+              resolve();
+            }, 1000);
+          }}
+        &gt;
+          &lt;InfiniteLoader
+            loaderDefaultIcon=&quot;没有更多了...&quot;
+            onLoadMore={(resolve: any, finish: any) =&gt; {
+              if (noMore) {
+                finish();
+              } else {
+                fetchList();
+                finish();
+              }
+            }}
+          &gt;
+            {list.map((item: any) =&gt; {
+              return &lt;div key={item.id}&gt;{itemContent(item)}&lt;/div&gt;;
+            })}
+          &lt;/InfiniteLoader&gt;
+        &lt;/PullToRefresh&gt;
+      )}
     &lt;/div&gt;
-    &lt;script&gt;
-    var vm = new Vue({
-        el: '#app',
-        data:{
-            n1: 0,
-            n2: 0,
-            result: 0,
-            opt:'+'
-        },
-        methods:{
-            calc(){//计算器算数的方法
-                //逻辑:
-                //拿到n1,opt,n2值,this.result值计算
-                switch(this.opt){
-                    case '+':
-                        this.result= parseInt(this.n1) + parseInt(this.n2)
-                        break;
-                    case '-':
-                        this.result= parseInt(this.n1) - parseInt(this.n2)
-                        break;
-                    case '*':
-                        this.result= parseInt(this.n1) * parseInt(this.n2)
-                        break;
-                    case '/':
-                        this.result= parseInt(this.n1) / parseInt(this.n2)
-                        break;
-                }
-            }
-        }
-    })
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+  );
+};
+export default PageRefresh;
 </code></pre>
-<h3 id="第二种有点投机取巧正式开发中最好不要这样操作">第二种有点投机取巧，正式开发中，最好不要这样操作</h3>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
-    &lt;title&gt;Document&lt;/title&gt;
-    &lt;script src=&quot;./vue.js&quot;&gt;&lt;/script&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;div id=&quot;app&quot;&gt;
-        &lt;input type=&quot;text&quot; v-model=&quot;n1&quot;&gt;
-        &lt;select v-model=&quot;opt&quot;&gt;
-            &lt;option value=&quot;+&quot;&gt;+&lt;/option&gt;
-            &lt;option value=&quot;-&quot;&gt;-&lt;/option&gt;
-            &lt;option value=&quot;*&quot;&gt;*&lt;/option&gt;
-            &lt;option value=&quot;/&quot;&gt;/&lt;/option&gt;
-        &lt;/select&gt;
-        &lt;input type=&quot;text&quot; v-model=&quot;n2&quot;&gt;
-        &lt;input type=&quot;button&quot; value=&quot;=&quot; @click=&quot;calc&quot;&gt;
-        &lt;input type=&quot;text&quot; v-model=&quot;result&quot;&gt;
-    &lt;/div&gt;
-    &lt;script&gt;
-    var vm = new Vue({
-        el: '#app',
-        data:{
-            n1: 0,
-            n2: 0,
-            result: 0,
-            opt:'+'
-        },
-        methods:{
-            calc(){//计算器算数的方法
-                //逻辑:
-                //拿到n1,opt,n2值,this.result值计算
-                var codeStr = 'parseInt(this.n1) ' +  this.opt + ' parseInt(this.n2)'
-                this.result= eval(codeStr)
+<h3 id="引用组件">引用组件</h3>
+<pre><code>import PageRefresh from &quot;~/components/pageRefresh&quot;;
+&lt;PageRefresh
+        url=&quot;/payInfo&quot;
+        itemContent={(item: any) =&gt; (
+          &lt;div
+            key={item.id}
+            className={styles.item}
+            onClick={() =&gt;
+              history.push(xxx`)
             }
-        }
-    })
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+          &gt;
+            &lt;Item item={item} /&gt;
+          &lt;/div&gt;
+        )}
+        noDataContent={{
+          title: &quot;暂无消费记录&quot;,
+          img: require(&quot;~/images/customerConsumption_noData.png&quot;),
+          paddingTop: 350,
+          width: 398,
+          height: 270,
+        }}
+      /&gt;
 </code></pre>
 
             </div>
@@ -685,7 +666,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://ihopefulchina.github.io/vue-xue-xi-qi-jian-yi-ji-suan-qi-an-li/" title="Vue学习(七): 简易计算器案例">https://ihopefulchina.github.io/vue-xue-xi-qi-jian-yi-ji-suan-qi-an-li/</a>
+      <a href="https://ihopefulchina.github.io/2n5d2sjoi/" title="列表上拉加载下拉刷新">https://ihopefulchina.github.io/2n5d2sjoi/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -694,21 +675,17 @@
   </ul>
   <div class="tags">
     
-      <a href="https://ihopefulchina.github.io/tag/aaJMlrtyK/"># Vue</a>
+      <a href="https://ihopefulchina.github.io/tag/Nhq4NKwx6/"># JavaScript</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title=" Vue学习(八): Vue中的使用样式" href="https://ihopefulchina.github.io/vue-xue-xi-ba-vue-zhong-de-shi-yong-yang-shi/"> Vue学习(八): Vue中的使用样式</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title=" Vue学习(八): Vue中的使用样式" href="https://ihopefulchina.github.io/vue-xue-xi-ba-vue-zhong-de-shi-yong-yang-shi/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="Vue学习(六): v-model实现表单元素的数据双向绑定" href="https://ihopefulchina.github.io/vue-xue-xi-wu-v-model-shi-xian-biao-dan-yuan-su-de-shu-ju-shuang-xiang-bang-ding/">Vue学习(六): v-model实现表单元素的数据双向绑定</a>
-        <a class="nav-mobile-next" title="Vue学习(六): v-model实现表单元素的数据双向绑定" href="https://ihopefulchina.github.io/vue-xue-xi-wu-v-model-shi-xian-biao-dan-yuan-su-de-shu-ju-shuang-xiang-bang-ding/">下一篇</a>
+        <a class="nav-pc-next" title="封装腾讯即时通讯 for 小程序" href="https://ihopefulchina.github.io/IZbWBmM7v/">封装腾讯即时通讯 for 小程序</a>
+        <a class="nav-mobile-next" title="封装腾讯即时通讯 for 小程序" href="https://ihopefulchina.github.io/IZbWBmM7v/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
