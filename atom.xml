@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ihopefulchina.github.io</id>
     <title>Ihopeful Blog</title>
-    <updated>2021-07-22T07:38:06.678Z</updated>
+    <updated>2021-07-22T09:04:34.954Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ihopefulchina.github.io"/>
     <link rel="self" href="https://ihopefulchina.github.io/atom.xml"/>
@@ -29,8 +29,8 @@
 <p>讲道理这个非常常用，想要长列表，上拉加载和下拉刷新必须用这个组件，想要列表有视频必须用video组件。</p>
 <p>我写完后也没发现什么问题，除了有点卡顿问题，然后点开视频播放没问题，实机测试安卓设备也没有问题，但是在苹果设备全屏播放后退出全屏会顶到顶部（(灬ꈍ ꈍ灬)）什么奇怪的bug。</p>
 <p>我翻阅百度和论坛，没看的有什么好解决方法。<br>
-(video组件进入全屏再退出后会自动返回顶部(目前已知ios))[https://developers.weixin.qq.com/community/develop/doc/00062e9d6fcef0425c29302e15b000]<br>
-(小程序视频退出全屏产生问题)[https://developers.weixin.qq.com/community/develop/doc/0000c273af02f8d1deb8a460351400]</p>
+<a href="https://developers.weixin.qq.com/community/develop/doc/00062e9d6fcef0425c29302e15b000">video组件进入全屏再退出后会自动返回顶部(目前已知ios)</a><br>
+<a href="https://developers.weixin.qq.com/community/develop/doc/0000c273af02f8d1deb8a460351400">小程序视频退出全屏产生问题</a></p>
 <ol>
 <li>我尝试了下面评论里面的一个方案：</li>
 </ol>
