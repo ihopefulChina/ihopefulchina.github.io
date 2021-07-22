@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ihopefulchina.github.io</id>
     <title>Ihopeful Blog</title>
-    <updated>2021-07-22T09:04:34.954Z</updated>
+    <updated>2021-07-22T09:11:56.663Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ihopefulchina.github.io"/>
     <link rel="self" href="https://ihopefulchina.github.io/atom.xml"/>
@@ -31,9 +31,7 @@
 <p>我翻阅百度和论坛，没看的有什么好解决方法。<br>
 <a href="https://developers.weixin.qq.com/community/develop/doc/00062e9d6fcef0425c29302e15b000">video组件进入全屏再退出后会自动返回顶部(目前已知ios)</a><br>
 <a href="https://developers.weixin.qq.com/community/develop/doc/0000c273af02f8d1deb8a460351400">小程序视频退出全屏产生问题</a></p>
-<ol>
-<li>我尝试了下面评论里面的一个方案：</li>
-</ol>
+<p>我尝试了下面评论里面的一个方案：</p>
 <pre><code>提供一个曲线救国方案：
 
 1 监听页面的onPageScroll事件，实时全局保存scrollTop
@@ -71,7 +69,7 @@
                         /&gt;
 </code></pre>
 <p>我放弃了这个方案。</p>
-<ol start="3">
+<ol>
 <li>
 <p>进入拉锯战。我尝试了很多，比如通过动画方式掩盖一瞬间顶到顶部。上面的方法补丁。但是体验很不友好，我放弃了。</p>
 <p>在某天我灵光一现，我想到了在Video的父级再加一个ScrollView，然后在浏览容器固定高度。用魔法打败魔法。。哈哈哈哈，尝试了一下，发现是可以的，但是我开心没2分钟，发现很卡很卡，根本没办法浏览。</p>
