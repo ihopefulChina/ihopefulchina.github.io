@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://ihopefulchina.github.io</id>
     <title>Ihopeful Blog</title>
-    <updated>2021-07-23T03:02:24.615Z</updated>
+    <updated>2021-07-23T09:08:05.770Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://ihopefulchina.github.io"/>
     <link rel="self" href="https://ihopefulchina.github.io/atom.xml"/>
@@ -273,6 +273,7 @@ export function selectRect(name: string, scope: any) {
 </code></pre>
 <p>我随便加上了列表视频 及 滑过该视频 停止播放。<br>
 大功告成！</p>
+<p>贴下github代码：<a href="https://github.com/ihopefulChina/fix-scrollview-video-bug">https://github.com/ihopefulChina/fix-scrollview-video-bug</a></p>
 <p>至此是遇到了这个大坑过程，以及解决心得。希望能给你们一些帮助。</p>
 ]]></content>
     </entry>
