@@ -1,0 +1,257 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>获取当前分类下的所有子分类 | Ihopeful Blog</title>
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739675214488">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="获取当前分类下的所有子分类 | Ihopeful Blog - Atom Feed" href="https://ihopefulchina.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="一般用于taxonomy分类页面，比如产品products，下面有a这个分类，a下面有a-1,a-2,a-3...
+如何在进入a分类这个页面的时候，输出这个a下面的子分类？
+
+解决思路:
+1.首先通过get_categories获取所有分类..." />
+    <meta name="keywords" content="WordPress,PHP" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ihopefulchina.github.io">
+  <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739675214488" alt="">
+  </a>
+  <h1 class="site-title">
+    Ihopeful Blog
+  </h1>
+  <p class="site-description">
+    Sweat is the lubricant of success.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              获取当前分类下的所有子分类
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-08-22
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://ihopefulchina.github.io/tag/wordpress/" class="post-tag">
+                  # WordPress
+                </a>
+              
+                <a href="https://ihopefulchina.github.io/tag/php/" class="post-tag">
+                  # PHP
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://ihopefulchina.github.io/post-images/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>一般用于taxonomy分类页面，比如产品products，下面有a这个分类，a下面有a-1,a-2,a-3...</p>
+<p>如何在进入a分类这个页面的时候，输出这个a下面的子分类？</p>
+<!-- more -->
+<p>解决思路:<br>
+1.首先通过<code>get_categories</code>获取所有分类的slug和id</p>
+<pre><code>$test = get_categories(&quot;taxonomy=product&amp;hide_empty=0&quot;);
+						$cats=array(); 
+						foreach($test as $tmpcat){
+							if($tmpcat-&gt;parent==0){
+								$cats[$tmpcat-&gt;term_id]['slug']=$tmpcat-&gt;slug;
+								$cats[$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
+							}
+						}
+</code></pre>
+<p>3.然后切割分组当前url，判断slug是否等于当前的url</p>
+<pre><code>$uri=explode('/',$_SERVER['REQUEST_URI']);
+</code></pre>
+<p>5.等于的话，再根据<code>get_categories</code>加上child_of=，最后foreach输出所有分类。</p>
+<pre><code>foreach($cats as $key=&gt;$val){
+							if($cats[$key]['slug']==$uri[2]){
+								$id = $cats[$key]['term_id'];
+								$cate = get_categories(&quot;depth=0&amp;hide_empty=0&amp;title_li=&amp;orderby=ID&amp;order=ASC&amp;taxonomy=product&amp;child_of=$id&quot;);
+								foreach ($cate as $key =&gt; $value) {?&gt;
+									&lt;div class=&quot;swiper-slide&quot;&gt;
+										&lt;li class=&quot;cat-item&lt;?php if($value-&gt;slug == $uri[3]){ echo ' current-cat';}?&gt;&quot;&gt;&lt;a href=&quot;/products/&lt;?php echo $uri[2];?&gt;/&lt;?php echo $value-&gt;slug; ?&gt;/&quot;&gt;&lt;?php echo $value-&gt;name;?&gt;&lt;/a&gt;&lt;/li&gt;
+									&lt;/div&gt;
+								&lt;?php }
+							}
+						}
+</code></pre>
+<p>完整的</p>
+<pre><code>&lt;?php 
+						$test = get_categories(&quot;taxonomy=product&amp;hide_empty=0&quot;);
+						$cats=array(); 
+						foreach($test as $tmpcat){
+							if($tmpcat-&gt;parent==0){
+								$cats[$tmpcat-&gt;term_id]['slug']=$tmpcat-&gt;slug;
+								$cats[$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
+							}
+						}
+						foreach($cats as $key=&gt;$val){
+							if($cats[$key]['slug']==$uri[2]){
+								$id = $cats[$key]['term_id'];
+								$cate = get_categories(&quot;depth=0&amp;hide_empty=0&amp;title_li=&amp;orderby=ID&amp;order=ASC&amp;taxonomy=product&amp;child_of=$id&quot;);
+								foreach ($cate as $key =&gt; $value) {?&gt;
+									&lt;div class=&quot;swiper-slide&quot;&gt;
+										&lt;li class=&quot;cat-item&lt;?php if($value-&gt;slug == $uri[3]){ echo ' current-cat';}?&gt;&quot;&gt;&lt;a href=&quot;/products/&lt;?php echo $uri[2];?&gt;/&lt;?php echo $value-&gt;slug; ?&gt;/&quot;&gt;&lt;?php echo $value-&gt;name;?&gt;&lt;/a&gt;&lt;/li&gt;
+									&lt;/div&gt;
+								&lt;?php }
+							}
+						}
+						?&gt;
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ihopefulchina.github.io/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/">
+              <h3 class="post-title">
+                如何解决页面/文章/详情页需要不同样式、模板的问题？
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '71e97ed99597f66a9dd0',
+    clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+    repo: 'ihopefulchina.github.io',
+    owner: 'ihopefulChina',
+    admin: ['ihopefulChina'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,211 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>解决同一张图片，需要在不同尺寸提供不同的水印 | Ihopeful Blog</title>
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739675214488">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="解决同一张图片，需要在不同尺寸提供不同的水印 | Ihopeful Blog - Atom Feed" href="https://ihopefulchina.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="客户需要上传同一张图片，需要在不同尺寸提供不同的水印，我看了、尝试了很多插件，发现基本都不支持多个水印，2个插件组合会出现兼容性问题，只能生效其中一个。
+
+我查阅官方文档，也未找到答案，苦恼如何解决这个问题的时候，找到了Awesome Wa..." />
+    <meta name="keywords" content="WordPress,PHP" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ihopefulchina.github.io">
+  <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739675214488" alt="">
+  </a>
+  <h1 class="site-title">
+    Ihopeful Blog
+  </h1>
+  <p class="site-description">
+    Sweat is the lubricant of success.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              解决同一张图片，需要在不同尺寸提供不同的水印
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-07-01
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://ihopefulchina.github.io/tag/wordpress/" class="post-tag">
+                  # WordPress
+                </a>
+              
+                <a href="https://ihopefulchina.github.io/tag/php/" class="post-tag">
+                  # PHP
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://ihopefulchina.github.io/post-images/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>客户需要上传同一张图片，需要在不同尺寸提供不同的水印，我看了、尝试了很多插件，发现基本都不支持多个水印，2个插件组合会出现兼容性问题，只能生效其中一个。</p>
+<!-- more -->
+<p>我查阅官方文档，也未找到答案，苦恼如何解决这个问题的时候，找到了<a href="https://wordpress.org/plugins/awesome-watermark/">Awesome Watermark</a>这个插件，这个是唯一一个支持不同尺寸实现不同水印的要求。</p>
+<p>但这个插件有几个问题:<br>
+1.siteurl和home的地址必须写域名地址,不能是斜杠。<br>
+2.操作很不友好，不适用小白用户。<br>
+3.水印大小很固定，只能是Full Size，Large，Medium，Medium Large，Thumbnail。</p>
+<p>但瑕不掩瑜，这是唯一一个解决这个问题的插件。</p>
+<p>需要注意:最好选择水印图片的时候，什么尺寸的水印，选择什么尺寸大小。</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ihopefulchina.github.io/guan-yu-ji-yu-wordpress-de-qi-ye-wang-zhan-da-jian-yi-xie-gan-xiang/">
+              <h3 class="post-title">
+                关于基于Wordpress的企业网站搭建一些感想
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '71e97ed99597f66a9dd0',
+    clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+    repo: 'ihopefulchina.github.io',
+    owner: 'ihopefulChina',
+    admin: ['ihopefulChina'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

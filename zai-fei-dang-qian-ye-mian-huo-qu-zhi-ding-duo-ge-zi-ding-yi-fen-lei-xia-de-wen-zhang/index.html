@@ -1,0 +1,238 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>在非当前页面获取指定多个自定义分类下的文章 | Ihopeful Blog</title>
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739675214488">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="在非当前页面获取指定多个自定义分类下的文章 | Ihopeful Blog - Atom Feed" href="https://ihopefulchina.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="在非当前页面，我们获取指定分类就有点困难，ACF插件能解决这个问题，ACF插件是我最常用的插件,用ACF插件定义一个真假按钮，然后判断即可，以下为Demo。
+
+仅供参考（提供一种思路）
+&lt;?php
+$args=array(
+	'ord..." />
+    <meta name="keywords" content="WordPress,PHP" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ihopefulchina.github.io">
+  <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739675214488" alt="">
+  </a>
+  <h1 class="site-title">
+    Ihopeful Blog
+  </h1>
+  <p class="site-description">
+    Sweat is the lubricant of success.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              在非当前页面获取指定多个自定义分类下的文章
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-08-22
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://ihopefulchina.github.io/tag/wordpress/" class="post-tag">
+                  # WordPress
+                </a>
+              
+                <a href="https://ihopefulchina.github.io/tag/php/" class="post-tag">
+                  # PHP
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://ihopefulchina.github.io/post-images/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>在非当前页面，我们获取指定分类就有点困难，ACF插件能解决这个问题，<a href="https://www.advancedcustomfields.com/">ACF插件</a>是我最常用的插件,用ACF插件定义一个真假按钮，然后判断即可，以下为Demo。</p>
+<!-- more -->
+<p>仅供参考（提供一种思路）</p>
+<pre><code>&lt;?php
+$args=array(
+	'order' =&gt; 'ASC', //顺序
+	'numberposts' =&gt; -1,
+	'post_type' =&gt; 'products',
+	'meta_key' =&gt; 'product_btn',// ACF 插件定义一个真假按钮
+	'meta_value' =&gt; '1',// 1为真，0为假
+	'posts_per_page'=&gt;-1,
+);
+$arms = array_merge($args, $wp_query-&gt;query);
+query_posts($arms)?&gt;
+&lt;?php if (have_posts()) : ?&gt;
+	&lt;?php while (have_posts()) : the_post(); ?&gt;
+		&lt;div class=&quot;swiper-slide&quot;&gt;
+			&lt;?php
+			// 用于图片使用ACF重复器的时候，获取第一张图片
+			if( have_rows('product_photo',$post-&gt;ID) ):
+				while ( have_rows('product_photo',$post-&gt;ID) ) : the_row();
+					$image = get_sub_field('product_photo');
+					echo '&lt;img src=&quot;'.$image['sizes']['medium'].'&quot; alt=&quot;'.$image['title'].'&quot; /&gt;';
+					break;
+				endwhile; 
+			endif;
+			?&gt;
+			&lt;a class=&quot;product-title&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;&lt;?php the_title(); ?&gt;&lt;/a&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;?php endwhile; ?&gt;
+&lt;?php endif; wp_reset_query();?&gt;
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ihopefulchina.github.io/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/">
+              <h3 class="post-title">
+                获取指定分类的所有子分类链接、Description、Slug、自定义字段
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '71e97ed99597f66a9dd0',
+    clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+    repo: 'ihopefulchina.github.io',
+    owner: 'ihopefulChina',
+    admin: ['ihopefulChina'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

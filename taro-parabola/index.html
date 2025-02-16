@@ -1,0 +1,312 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Taro Parabola | Ihopeful Blog</title>
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739675214488">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Taro Parabola | Ihopeful Blog - Atom Feed" href="https://ihopefulchina.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="taro-parabola
+基于Taro3、React的H5和微信小程序添加到购物车抛物线动画组件
+
+
+安装
+npm install taro-parabola
+
+导入组件
+import Parabola from 'taro-parabo..." />
+    <meta name="keywords" content="微信小程序,React" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ihopefulchina.github.io">
+  <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739675214488" alt="">
+  </a>
+  <h1 class="site-title">
+    Ihopeful Blog
+  </h1>
+  <p class="site-description">
+    Sweat is the lubricant of success.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Taro Parabola
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-07-01
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://ihopefulchina.github.io/tag/mp.weixin/" class="post-tag">
+                  # 微信小程序
+                </a>
+              
+                <a href="https://ihopefulchina.github.io/tag/react/" class="post-tag">
+                  # React
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://ihopefulchina.github.io/post-images/taro-parabola.gif" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="taro-parabola">taro-parabola</h1>
+<p>基于Taro3、React的H5和微信小程序添加到购物车抛物线动画组件</p>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1656646769406.gif" alt="" loading="lazy"></figure>
+<h1 id="安装">安装</h1>
+<pre><code class="language-bash">npm install taro-parabola
+</code></pre>
+<h1 id="导入组件">导入组件</h1>
+<pre><code class="language-js">import Parabola from 'taro-parabola'
+</code></pre>
+<h1 id="参数说明">参数说明</h1>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>类型</th>
+<th>必传</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cartX</code></td>
+<td>购物车 所在坐标的x值</td>
+<td>number</td>
+<td>是</td>
+<td><code>screenWidth</code></td>
+</tr>
+<tr>
+<td><code>cartY</code></td>
+<td>购物车 所在坐标的y值</td>
+<td>number</td>
+<td>是</td>
+<td><code>screenHeight - 60</code></td>
+</tr>
+<tr>
+<td><code>onChange</code></td>
+<td>点击回调方法</td>
+<td>Function</td>
+<td>否</td>
+<td><code>() =&gt; void</code></td>
+</tr>
+<tr>
+<td><code>parabolaStyle</code></td>
+<td>抛物线样式</td>
+<td>React.CSSProperties</td>
+<td>否</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="使用">使用</h1>
+<pre><code class="language-jsx">import { FC, memo, useEffect, useState } from 'react'
+import Parabola from 'taro-parabola'
+import Taro from '@tarojs/taro'
+
+import { View } from '@tarojs/components'
+
+ const list = [1, 2, 3, 4, 5]
+const Component: FC = () =&gt; {
+  const [cartInfo, setCartInfo] = useState({} as any)
+
+  useEffect(() =&gt; {
+    Taro.nextTick(() =&gt; {
+      Taro.createSelectorQuery()
+        .select(`#cart`)
+        .boundingClientRect(info =&gt; {
+          setCartInfo(info)
+        })
+        .exec()
+    })
+  }, [])
+
+  return (
+    &lt;&gt;
+      {list.map(item =&gt; (
+        &lt;Parabola
+          cartX={cartInfo.left}
+          cartY={cartInfo.top}
+          parabolaStyle={{ width: '15px', height: '15px', backgroundColor: '#333' }}
+          onChange={() =&gt; {}}
+          key={item}
+        &gt;
+          {item}
+        &lt;/Parabola&gt;
+      ))}
+      &lt;View id=&quot;cart&quot;&gt;我是购物车&lt;/View&gt;
+    &lt;/&gt;
+  )
+}
+
+const Mall = memo(Component)
+export default Mall
+
+
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#taro-parabola">taro-parabola</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#%E5%AF%BC%E5%85%A5%E7%BB%84%E4%BB%B6">导入组件</a></li>
+<li><a href="#%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E">参数说明</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8">使用</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ihopefulchina.github.io/IZbWBmM7v/">
+              <h3 class="post-title">
+                封装腾讯即时通讯 for 小程序
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '71e97ed99597f66a9dd0',
+    clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+    repo: 'ihopefulchina.github.io',
+    owner: 'ihopefulChina',
+    admin: ['ihopefulChina'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

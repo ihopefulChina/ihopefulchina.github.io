@@ -1,0 +1,212 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>页面Url结尾添加斜杠&#34;/&#34; | Ihopeful Blog</title>
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739675214488">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="页面Url结尾添加斜杠&#34;/&#34; | Ihopeful Blog - Atom Feed" href="https://ihopefulchina.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="Wordpress 自带不支持 某些页面Url结尾添加斜杠&quot;/&quot;，例如产品总页，Wordpress 输出的地址是 xxx.com/products ,但是符合静态页面Url规则的话，需要在结尾加斜杠，
+
+添加functi..." />
+    <meta name="keywords" content="WordPress,PHP" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ihopefulchina.github.io">
+  <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739675214488" alt="">
+  </a>
+  <h1 class="site-title">
+    Ihopeful Blog
+  </h1>
+  <p class="site-description">
+    Sweat is the lubricant of success.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              页面Url结尾添加斜杠&#34;/&#34;
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-08-22
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://ihopefulchina.github.io/tag/wordpress/" class="post-tag">
+                  # WordPress
+                </a>
+              
+                <a href="https://ihopefulchina.github.io/tag/php/" class="post-tag">
+                  # PHP
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://ihopefulchina.github.io/post-images/ye-mian-url-jie-wei-tian-jia-xie-gang.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>Wordpress 自带不支持 某些页面Url结尾添加斜杠&quot;/&quot;，例如产品总页，Wordpress 输出的地址是 xxx.com/products ,但是符合静态页面Url规则的话，需要在结尾加斜杠，</p>
+<!-- more -->
+<p>添加function函数即可。</p>
+<pre><code>function nice_trailingslashit($string, $type_of_url) {
+	if ( $type_of_url != 'single' &amp;&amp; $type_of_url != 'page' )
+		$string = trailingslashit($string);
+	return $string;
+}
+add_filter('user_trailingslashit', 'nice_trailingslashit', 10, 2);
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ihopefulchina.github.io/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/">
+              <h3 class="post-title">
+                修改Wordpress登录后跳转指定页面
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '71e97ed99597f66a9dd0',
+    clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+    repo: 'ihopefulchina.github.io',
+    owner: 'ihopefulChina',
+    admin: ['ihopefulChina'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

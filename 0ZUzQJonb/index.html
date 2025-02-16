@@ -1,0 +1,291 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>taro SwipeCell 滑动单元格组件 | Ihopeful Blog</title>
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739675214488">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="taro SwipeCell 滑动单元格组件 | Ihopeful Blog - Atom Feed" href="https://ihopefulchina.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="基于Taro3、React的 taro SwipeCell 滑动单元格组件
+复用性很低，主要提供一个思路， 使用ScrollView 会有在部分真机设备有兼容性问题；使用MovableView方式页面滑动就会有问题，目前这样思路是最优解决方..." />
+    <meta name="keywords" content="Taro,微信小程序,JavaScript" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ihopefulchina.github.io">
+  <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739675214488" alt="">
+  </a>
+  <h1 class="site-title">
+    Ihopeful Blog
+  </h1>
+  <p class="site-description">
+    Sweat is the lubricant of success.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              taro SwipeCell 滑动单元格组件
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-08-15
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://ihopefulchina.github.io/tag/taro/" class="post-tag">
+                  # Taro
+                </a>
+              
+                <a href="https://ihopefulchina.github.io/tag/mp.weixin/" class="post-tag">
+                  # 微信小程序
+                </a>
+              
+                <a href="https://ihopefulchina.github.io/tag/Nhq4NKwx6/" class="post-tag">
+                  # JavaScript
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://ihopefulchina.github.io/post-images/0ZUzQJonb.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h3 id="基于taro3-react的-taro-swipecell-滑动单元格组件">基于Taro3、React的 taro SwipeCell 滑动单元格组件</h3>
+<h4 id="复用性很低主要提供一个思路-使用scrollview-会有在部分真机设备有兼容性问题使用movableview方式页面滑动就会有问题目前这样思路是最优解决方案">复用性很低，主要提供一个思路， 使用ScrollView 会有在部分真机设备有兼容性问题；使用MovableView方式页面滑动就会有问题，目前这样思路是最优解决方案。</h4>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1660545280598.png" alt="" loading="lazy"></figure>
+<h1 id="安装">安装</h1>
+<pre><code class="language-bash">npm install taro-swipe-cell
+</code></pre>
+<h1 id="导入组件">导入组件</h1>
+<pre><code class="language-js">import MySwipeCell from 'taro-swipe-cell'
+</code></pre>
+<h1 id="参数说明">参数说明</h1>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>类型</th>
+<th>必传</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deleteItem</code></td>
+<td>删除事件</td>
+<td>Function</td>
+<td>是</td>
+<td><code>() =&gt; void</code></td>
+</tr>
+<tr>
+<td><code>children</code></td>
+<td>children</td>
+<td>React.children</td>
+<td>是</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="使用">使用</h1>
+<pre><code class="language-jsx">import { FC, memo } from 'react'
+import MySwipeCell from 'taro-swipe-cell'
+import Taro from '@tarojs/taro'
+
+import { View } from '@tarojs/components'
+
+
+const Component: FC = () =&gt; {
+ // 删除当前item
+  const delItem = item =&gt; {
+  }
+
+  return (
+    &lt;&gt;
+       &lt;MySwipeCell deleteItem={() =&gt; delItem(item)}&gt;
+        &lt;View className={styles.item}&gt;
+          1111
+        &lt;/View&gt;
+      &lt;/MySwipeCell&gt;
+    &lt;/&gt;
+  )
+}
+
+const Mall = memo(Component)
+export default Mall
+
+
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E5%9F%BA%E4%BA%8Etaro3-react%E7%9A%84-taro-swipecell-%E6%BB%91%E5%8A%A8%E5%8D%95%E5%85%83%E6%A0%BC%E7%BB%84%E4%BB%B6">基于Taro3、React的 taro SwipeCell 滑动单元格组件</a>
+<ul>
+<li><a href="#%E5%A4%8D%E7%94%A8%E6%80%A7%E5%BE%88%E4%BD%8E%E4%B8%BB%E8%A6%81%E6%8F%90%E4%BE%9B%E4%B8%80%E4%B8%AA%E6%80%9D%E8%B7%AF-%E4%BD%BF%E7%94%A8scrollview-%E4%BC%9A%E6%9C%89%E5%9C%A8%E9%83%A8%E5%88%86%E7%9C%9F%E6%9C%BA%E8%AE%BE%E5%A4%87%E6%9C%89%E5%85%BC%E5%AE%B9%E6%80%A7%E9%97%AE%E9%A2%98%E4%BD%BF%E7%94%A8movableview%E6%96%B9%E5%BC%8F%E9%A1%B5%E9%9D%A2%E6%BB%91%E5%8A%A8%E5%B0%B1%E4%BC%9A%E6%9C%89%E9%97%AE%E9%A2%98%E7%9B%AE%E5%89%8D%E8%BF%99%E6%A0%B7%E6%80%9D%E8%B7%AF%E6%98%AF%E6%9C%80%E4%BC%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">复用性很低，主要提供一个思路， 使用ScrollView 会有在部分真机设备有兼容性问题；使用MovableView方式页面滑动就会有问题，目前这样思路是最优解决方案。</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#%E5%AF%BC%E5%85%A5%E7%BB%84%E4%BB%B6">导入组件</a></li>
+<li><a href="#%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E">参数说明</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8">使用</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ihopefulchina.github.io/odFd8wVk4/">
+              <h3 class="post-title">
+                huangpengfei-js-tools
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '71e97ed99597f66a9dd0',
+    clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+    repo: 'ihopefulchina.github.io',
+    owner: 'ihopefulChina',
+    admin: ['ihopefulChina'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

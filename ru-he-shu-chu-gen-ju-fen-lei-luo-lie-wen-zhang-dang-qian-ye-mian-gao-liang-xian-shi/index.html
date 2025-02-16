@@ -1,0 +1,265 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>如何输出根据分类罗列文章，当前页面高亮显示 | Ihopeful Blog</title>
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739675214488">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="如何输出根据分类罗列文章，当前页面高亮显示 | Ihopeful Blog - Atom Feed" href="https://ihopefulchina.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="我之前有写过类似这个功能，这次写的全一点，高亮显示实现功能也是用到这个$uri=explode('/',$_SERVER['REQUEST_URI']);
+我贴一下代码，你们可以参考一下，个人暂时未找到更好的方法，有什么好的方法，可以在下面..." />
+    <meta name="keywords" content="WordPress,PHP" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ihopefulchina.github.io">
+  <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739675214488" alt="">
+  </a>
+  <h1 class="site-title">
+    Ihopeful Blog
+  </h1>
+  <p class="site-description">
+    Sweat is the lubricant of success.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              如何输出根据分类罗列文章，当前页面高亮显示
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-08-22
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://ihopefulchina.github.io/tag/wordpress/" class="post-tag">
+                  # WordPress
+                </a>
+              
+                <a href="https://ihopefulchina.github.io/tag/php/" class="post-tag">
+                  # PHP
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://ihopefulchina.github.io/post-images/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>我之前有写过类似这个功能，这次写的全一点，高亮显示实现功能也是用到这个<code>$uri=explode('/',$_SERVER['REQUEST_URI']);</code></p>
+<p>我贴一下代码，你们可以参考一下，个人暂时未找到更好的方法，有什么好的方法，可以在下面评论，我们探讨一下。</p>
+<!-- more -->
+<pre><code>$uri=explode('/',$_SERVER['REQUEST_URI']);
+&lt;?php
+					$categories = get_categories(&quot;hierarchical=1&amp;taxonomy=video&amp;hide_empty=0&quot;);
+					$cats=array();
+					foreach($categories as $tmpcat){
+						if($tmpcat-&gt;parent&gt;0){
+							$cats[$tmpcat-&gt;parent]['child'][$tmpcat-&gt;term_id]['name']=$tmpcat-&gt;name;
+							$cats[$tmpcat-&gt;parent]['child'][$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
+						}else{
+							$cats[$tmpcat-&gt;term_id]['name']=$tmpcat-&gt;name;
+							$cats[$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
+						}
+					}
+					ksort($cats);
+					foreach($cats as $key=&gt;$val){?&gt;
+						&lt;li class=&quot;cat-item&quot;&gt;
+							&lt;i class=&quot;fas fa-angle-down&quot;&gt;&lt;/i&gt;&lt;a&gt;&lt;?php echo $val[&quot;name&quot;]; ?&gt;&lt;/a&gt;
+							&lt;ul class=&quot;children&quot;&gt;
+								&lt;?php foreach($val[&quot;child&quot;] as $cat){ ?&gt;
+									&lt;li class=&quot;cat-item&quot;&gt;
+										&lt;a&lt;?php if (ucwords(str_replace('-',' ',$uri[3])) == $cat[&quot;name&quot;] ) {echo ' class=&quot;opeth&quot;';}?&gt;&gt;&lt;?php echo $cat[&quot;name&quot;]; ?&gt;&lt;/a&gt;
+										&lt;?php
+										$posts_array = get_posts(
+											array(
+												'posts_per_page' =&gt; 3,
+												'post_type' =&gt; 'videos',
+												'tax_query' =&gt; array(
+													array(
+														'taxonomy' =&gt; 'video',
+														'field' =&gt; 'term_id',
+														'terms' =&gt; $cat['term_id'],
+													)
+												)
+											)
+										);
+										if ($posts_array){?&gt;
+											&lt;ul class=&quot;children&quot;&gt;
+												&lt;?php
+												foreach( $posts_array as $post ){ 
+													$youtube = substr(basename(get_field('add_link')),8); 
+													$a =  substr(strrchr(rtrim(get_permalink(), '/'), '/'), 1);?&gt;
+													&lt;li&lt;?php if ($uri[4] == $a ) {echo ' class=&quot;opeth&quot;';} ?&gt;&gt;
+														&lt;div class=&quot;list-video&quot;&gt;
+															&lt;div class=&quot;col-md-4&quot;&gt;
+																&lt;iframe width=&quot;100%&quot; height=&quot;45px&quot; src=&quot;https://www.youtube.com/embed/&lt;?php echo $youtube;?&gt;&quot; frameborder=&quot;0&quot; showinfo=&quot;0&quot;&gt;&lt;/iframe&gt;
+															&lt;/div&gt;
+															&lt;div class=&quot;col-md-8&quot;&gt;
+																&lt;a href=&quot;&lt;?php echo get_permalink(); ?&gt;&quot;&gt;&lt;?php echo get_the_title(); ?&gt;&lt;/a&gt;
+															&lt;/div&gt;
+															&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+														&lt;/div&gt;
+													&lt;/li&gt;
+												&lt;?php } ?&gt;
+											&lt;/ul&gt;
+										&lt;?php } ?&gt;
+									&lt;/li&gt;
+								&lt;?php } ?&gt;
+							&lt;/ul&gt;
+						&lt;/li&gt;
+					&lt;?php } ?&gt;
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ihopefulchina.github.io/ru-he-yong-tag-fang-shi-chuan-lian-zi-ding-yi-fen-lei-shi-xian-xiang-guan-wen-zhang-chuan-lian-gong-neng/">
+              <h3 class="post-title">
+                如何用TAG方式串联自定义分类(实现相关文章串联功能)
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '71e97ed99597f66a9dd0',
+    clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+    repo: 'ihopefulchina.github.io',
+    owner: 'ihopefulChina',
+    admin: ['ihopefulChina'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

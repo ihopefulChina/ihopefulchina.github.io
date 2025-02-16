@@ -1,0 +1,1423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://ihopefulchina.github.io</id>
+    <title>Ihopeful Blog</title>
+    <updated>2025-02-16T03:07:07.211Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://ihopefulchina.github.io"/>
+    <link rel="self" href="https://ihopefulchina.github.io/atom.xml"/>
+    <subtitle>Sweat is the lubricant of success.</subtitle>
+    <logo>https://ihopefulchina.github.io/images/avatar.png</logo>
+    <icon>https://ihopefulchina.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2025, Ihopeful Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[👉👉👉爬蓝湖原型目录结构]]></title>
+        <id>https://ihopefulchina.github.io/qn_PbZX5g6/</id>
+        <link href="https://ihopefulchina.github.io/qn_PbZX5g6/">
+        </link>
+        <updated>2025-02-14T09:47:03.000Z</updated>
+        <summary type="html"><![CDATA[<p>本插件用于爬 蓝湖原型目录结构，导出csv文件，可以用于飞书等 开发项目在线文档。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>本插件用于爬 蓝湖原型目录结构，导出csv文件，可以用于飞书等 开发项目在线文档。</p>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739674155883.png" alt="" loading="lazy"></figure>
+<p>原型<br>
+<img src="https://ihopefulchina.github.io/post-images/1739526995167.png" alt="" loading="lazy"></p>
+<p>在公司发现一个痛点, 需求是这样的:</p>
+<ul>
+<li>蓝湖原型，需要按照目录下来，然后生成飞书在线开发文档</li>
+<li>传统上，只能手动copy</li>
+</ul>
+<p>针对以上，写一个油猴脚本插件 <a href="https://greasyfork.org/zh-CN/scripts/513139-%E7%88%AC%E8%93%9D%E6%B9%96%E5%8E%9F%E5%9E%8B%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84">爬蓝湖原型目录结构</a></p>
+<h4 id="主要特性">主要特性</h4>
+<p>生成csv文件， 任务模块copy3份, 3种任务类型：[接口开发, 页面开发, 接口联调] ，如果有其他自定义，自行调整。<br>
+现已支持按钮拖拽，并缓存top，right位置信息，解决遮挡原型问题。<br>
+改成生成csv格式文件，兼容性更强，可以在飞书新建一个多维表格，然后选择导入Excel生成的文件。</p>
+<h4 id="后续支持">后续支持</h4>
+<p>支持数据类型更丰富，比如添加开发人员信息</p>
+<p>生成的Excel<br>
+<img src="https://ihopefulchina.github.io/post-images/1739527027563.png" alt="" loading="lazy"></p>
+<p>导入到飞书<br>
+<img src="https://ihopefulchina.github.io/post-images/1739674155883.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[自定义Hooks: useMutate - 简单的获取数据方法的一个封装]]></title>
+        <id>https://ihopefulchina.github.io/481vcXjEdn/</id>
+        <link href="https://ihopefulchina.github.io/481vcXjEdn/">
+        </link>
+        <updated>2024-03-15T02:52:26.000Z</updated>
+        <summary type="html"><![CDATA[<p>在写React 项目业务过程中，经常写一些 相似的代码逻辑。<br>
+比如我需要在进入页面请求接口数据</p>
+<p>传统上我们请求接口获取数据，大概类似这样：</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在写React 项目业务过程中，经常写一些 相似的代码逻辑。<br>
+比如我需要在进入页面请求接口数据</p>
+<p>传统上我们请求接口获取数据，大概类似这样：</p>
+<!-- more -->
+<pre><code>  /** 数据 */
+  const [detail, setDetail] = useState(defaultData)
+  /** 请求数据 */
+  const mutate = async () =&gt; {
+    try {
+      const { data } = await config.getData({ ...params })
+      setDetail(data)
+    } catch (error) {}
+  }
+
+  useEffect(() =&gt; {
+    mutate()
+  }, [])
+</code></pre>
+<p>对于这类相关的业务逻辑，我写了一个自定义hooks</p>
+<pre><code>/** hooks - 对于简单的获取数据方法的一个封装 */
+import { useState, useRef, useEffect, useMemo } from 'react'
+
+interface IMutateOption&lt;T&gt; {
+  /** 默认数据 */
+  defaultData?: T
+
+  /** 额外传递参数 */
+  params?: Record&lt;string, any&gt;
+
+  /** 初始是否发出请求 */
+  initRequest?: boolean
+
+  /** 获取数据 */
+  getData: (data: Record&lt;string, any&gt;) =&gt; Promise&lt;{ data?: T }&gt;
+
+  /** 数据格式化 */
+  dataFormat?(data?: T): any
+
+  /** 请求成功后的回调 */
+  successCallback?(data?: T): void
+}
+
+export function useMutate&lt;T&gt;(config: IMutateOption&lt;T&gt;) {
+  const { defaultData, params, initRequest = true } = config
+
+  /** 数据 */
+  const [detail, setDetail] = useState(defaultData)
+  /** 是否初始化 */
+  const isInit = useRef(initRequest)
+
+  let loading = false
+
+  /** 请求数据 */
+  const mutate = async () =&gt; {
+    try {
+      loading = true
+
+      const { data } = await config.getData({ ...params })
+      const newData = config.dataFormat ? config.dataFormat(data) : data
+
+      setDetail(newData)
+      config?.successCallback?.(newData)
+      return newData
+    } catch (error) {
+      setDetail({})
+    } finally {
+      loading = false
+    }
+  }
+
+  /** 初始请求 */
+  useEffect(() =&gt; {
+    if (!isInit.current) {
+      isInit.current = true
+    } else {
+      mutate()
+    }
+  }, [])
+
+  /** 暂无数据 */
+  const noData = useMemo(() =&gt; {
+    if (detail !== undefined) {
+      if (detail instanceof Array) {
+        return detail.length === 0
+      } else if (detail instanceof Object) {
+        return Object.keys(detail).length === 0
+      }
+    }
+    return false
+  }, [detail])
+
+  return { mutate, detail, setDetail, noData, loading }
+}
+</code></pre>
+<p>获取数据类似逻辑简单封装</p>
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739674966401.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[uniapp_template ]]></title>
+        <id>https://ihopefulchina.github.io/uniapp_template /</id>
+        <link href="https://ihopefulchina.github.io/uniapp_template /">
+        </link>
+        <updated>2023-11-24T02:37:20.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="uni-app-vue3-vite4-pinia2-typescript-基础框架">🌈 uni-app Vue3 Vite4 pinia2 TypeScript 基础框架</h1>
+<p>uni-app Vue3 Vite4 pinia2 TypeScript 基础框架</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="uni-app-vue3-vite4-pinia2-typescript-基础框架">🌈 uni-app Vue3 Vite4 pinia2 TypeScript 基础框架</h1>
+<p>uni-app Vue3 Vite4 pinia2 TypeScript 基础框架</p>
+<!-- more -->
+<h3 id="git-地址">git 地址</h3>
+<pre><code class="language-shell">git@github.com:ihopefulChina/uniapp_template.git
+</code></pre>
+<h3 id="项目地址">项目地址</h3>
+<pre><code class="language-shell">https://github.com/ihopefulChina/uniapp_template
+</code></pre>
+<h2 id="目录结构">目录结构</h2>
+<pre><code class="language-shell">.
+├─ src
+│   ├─assets # 静态资源目录
+│   │
+│   ├─components # 组件目录
+│   │   ├─ Components
+│   │   │    ├─index.vue
+│   │   │    └─prpos.ts
+│   │   └─...
+│   │
+│   ├─enums # 枚举/常量
+│   │   ├─ cacheEnum.ts
+│   │   └─...
+│   │
+│   ├─pages # 页面
+│   │   ├─ index
+│   │   │    └─index.vue
+│   │   └─...
+│   │
+│   ├─request # 接口相关
+│   │
+│   ├─state # 状态管理模式(pinia)
+│   │   ├─ modules # 数据模块
+│   │   │    ├─auth.ts
+│   │   │    └─...
+│   │   │
+│   │   └─ index.ts
+│   │
+│   ├─static # 静态公共文件
+│   │   ├─ images # 图片
+│   │   │    ├─avatar.png
+│   │   │    └─...
+│   │   │
+│   │   └─ ...
+│   │
+│   ├─types # 类型文件
+│   │   ├─ http.d.ts
+│   │   └─ ...
+│   │
+│   └─utils # 工具类
+│
+├─ .eslintignore
+├─ .eslintrc.js
+├─ .gitignore
+├─ .prettierignore
+├─ .prettierrc.js
+├─ favicon.ico
+├─ index.html
+├─ package.json
+├─ pnpm-lock.yaml
+├─ README.md
+├─ tree.txt
+├─ tsconfig.json
+└─ vite.config.ts
+
+</code></pre>
+<h2 id="安装使用">安装使用</h2>
+<ul>
+<li>安装依赖</li>
+</ul>
+<pre><code class="language-bash">pnpm install
+</code></pre>
+<ul>
+<li>运行</li>
+</ul>
+<pre><code class="language-bash"># 其他端请查看 package.json script
+pnpm dev:h5
+</code></pre>
+<ul>
+<li>打包</li>
+</ul>
+<pre><code class="language-bash"># 其他端请查看 package.json script
+pnpm build:h5
+</code></pre>
+<ul>
+<li>更新依赖到最新（新手请忽略）</li>
+</ul>
+<pre><code class="language-bash">pnpm up
+# 打开HBuilder X alpha桌面程序--&gt;点击上面的帮助--&gt;历次更新说明--&gt;获取最新版本号（如：3.7.2.20230217-alpha）
+npx @dcloudio/uvm 3.7.2.20230217-alpha
+</code></pre>
+<h3 id="mac-m1-arm-芯片-运行报错">Mac m1 ARM 芯片 运行报错</h3>
+<pre><code class="language-bash">pnpm add @esbuild/darwin-x64@0.17.19 -D
+</code></pre>
+<h3 id="提交类型">提交类型</h3>
+<table>
+<thead>
+<tr>
+<th>提交类型</th>
+<th>标题</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>feat</code></td>
+<td>特征</td>
+<td>新功能、新特性</td>
+</tr>
+<tr>
+<td><code>fix</code></td>
+<td>Bug 修复</td>
+<td>bug 修复</td>
+</tr>
+<tr>
+<td><code>docs</code></td>
+<td>文档</td>
+<td>仅文档更改</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>风格</td>
+<td>不影响代码含义的更改（空格、格式、缺少分号等）</td>
+</tr>
+<tr>
+<td><code>refactor</code></td>
+<td>代码重构</td>
+<td>重构，在不影响代码内部行为，功能下的代码修改</td>
+</tr>
+<tr>
+<td><code>perf</code></td>
+<td>性能改进</td>
+<td>更改代码，以提高性能</td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>测试</td>
+<td>添加缺失的测试或纠正现有的测试</td>
+</tr>
+<tr>
+<td><code>build</code></td>
+<td>构建</td>
+<td>影响构建系统或外部依赖项的更改（示例范围：gulp、broccoli、npm）</td>
+</tr>
+<tr>
+<td><code>ci</code></td>
+<td>持续集成</td>
+<td>对我们的 CI 配置文件和脚本的更改（示例范围：Travis、Circle、BrowserStack、SauceLabs）</td>
+</tr>
+<tr>
+<td><code>chore</code></td>
+<td>其他文件修改</td>
+<td>不修改 src 或测试文件的其他更改</td>
+</tr>
+<tr>
+<td><code>revert</code></td>
+<td>还原</td>
+<td>恢复之前的提交</td>
+</tr>
+<tr>
+<td><code>release</code></td>
+<td>发布新版本</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>workflow</code></td>
+<td>工作流相关文件修改</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="提交别名">提交别名</h3>
+<table>
+<thead>
+<tr>
+<th>提交类型</th>
+<th>映射到</th>
+<th>标题</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>initial</code></td>
+<td><code>feat</code></td>
+<td>最初的</td>
+<td>初始提交</td>
+</tr>
+<tr>
+<td><code>dependencies</code></td>
+<td><code>fix</code></td>
+<td>依赖项</td>
+<td>更新依赖项</td>
+</tr>
+<tr>
+<td><code>peerDependencies</code></td>
+<td><code>fix</code></td>
+<td>对等依赖</td>
+<td>更新对等依赖项</td>
+</tr>
+<tr>
+<td><code>devDependencies</code></td>
+<td><code>chore</code></td>
+<td>开发依赖</td>
+<td>更新开发依赖</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>fix</code></td>
+<td>元数据</td>
+<td>更新元数据（package.json）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="快捷别名提示">快捷别名提示</h3>
+<ol>
+<li>resolve a conflict：解决冲突</li>
+<li>merge branch：合并分支</li>
+<li>feat: [...] : 添加的新功能说明</li>
+<li>fix: [...] : 修复的 bug 说明</li>
+<li>initial project：初始化项目</li>
+<li>style: [...] : 修改的样式范围</li>
+<li>perf：[...] : 优化的范围</li>
+<li>release : 发布新版本</li>
+<li>docs: 文档修改</li>
+<li>refactor： 代码重构</li>
+<li>revert： 还原之前的版本</li>
+<li>dependencies： 依赖项修改</li>
+<li>devDependencies： 开发依赖修改</li>
+<li>review：复习，回顾</li>
+<li>strengthen: 加强，巩固</li>
+</ol>
+<h3 id="参考资料">参考资料</h3>
+<ul>
+<li><a href="https://v3.cn.vuejs.org/guide/introduction.html">Vue3.0 官方文档</a></li>
+<li><a href="https://docs.qq.com/doc/DZG5yRHdzbnhYQlNC">uni-app + vue3 开发文档</a></li>
+<li><a href="https://uniapp.dcloud.io/frame?id=vue-support">uni-app 官方文档</a></li>
+<li><a href="https://vue3.tuniaokj.com/zh-CN/">TuniaoUI 官方组件库</a></li>
+<li><a href="https://pinia.vuejs.org/introduction.html">pinia</a></li>
+</ul>
+<!-- more -->
+<!-- more -->
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[taro SwipeCell 滑动单元格组件]]></title>
+        <id>https://ihopefulchina.github.io/0ZUzQJonb/</id>
+        <link href="https://ihopefulchina.github.io/0ZUzQJonb/">
+        </link>
+        <updated>2022-08-15T06:27:50.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="基于taro3-react的-taro-swipecell-滑动单元格组件">基于Taro3、React的 taro SwipeCell 滑动单元格组件</h3>
+<h4 id="复用性很低主要提供一个思路-使用scrollview-会有在部分真机设备有兼容性问题使用movableview方式页面滑动就会有问题目前这样思路是最优解决方案">复用性很低，主要提供一个思路， 使用ScrollView 会有在部分真机设备有兼容性问题；使用MovableView方式页面滑动就会有问题，目前这样思路是最优解决方案。</h4>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="基于taro3-react的-taro-swipecell-滑动单元格组件">基于Taro3、React的 taro SwipeCell 滑动单元格组件</h3>
+<h4 id="复用性很低主要提供一个思路-使用scrollview-会有在部分真机设备有兼容性问题使用movableview方式页面滑动就会有问题目前这样思路是最优解决方案">复用性很低，主要提供一个思路， 使用ScrollView 会有在部分真机设备有兼容性问题；使用MovableView方式页面滑动就会有问题，目前这样思路是最优解决方案。</h4>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1660545280598.png" alt="" loading="lazy"></figure>
+<h1 id="安装">安装</h1>
+<pre><code class="language-bash">npm install taro-swipe-cell
+</code></pre>
+<h1 id="导入组件">导入组件</h1>
+<pre><code class="language-js">import MySwipeCell from 'taro-swipe-cell'
+</code></pre>
+<h1 id="参数说明">参数说明</h1>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>类型</th>
+<th>必传</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>deleteItem</code></td>
+<td>删除事件</td>
+<td>Function</td>
+<td>是</td>
+<td><code>() =&gt; void</code></td>
+</tr>
+<tr>
+<td><code>children</code></td>
+<td>children</td>
+<td>React.children</td>
+<td>是</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="使用">使用</h1>
+<pre><code class="language-jsx">import { FC, memo } from 'react'
+import MySwipeCell from 'taro-swipe-cell'
+import Taro from '@tarojs/taro'
+
+import { View } from '@tarojs/components'
+
+
+const Component: FC = () =&gt; {
+ // 删除当前item
+  const delItem = item =&gt; {
+  }
+
+  return (
+    &lt;&gt;
+       &lt;MySwipeCell deleteItem={() =&gt; delItem(item)}&gt;
+        &lt;View className={styles.item}&gt;
+          1111
+        &lt;/View&gt;
+      &lt;/MySwipeCell&gt;
+    &lt;/&gt;
+  )
+}
+
+const Mall = memo(Component)
+export default Mall
+
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[huangpengfei-js-tools]]></title>
+        <id>https://ihopefulchina.github.io/odFd8wVk4/</id>
+        <link href="https://ihopefulchina.github.io/odFd8wVk4/">
+        </link>
+        <updated>2022-08-09T05:41:01.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="huangpengfei-js-tools">huangpengfei-js-tools</h1>
+<p>整理工作中常用的JavaScript、Taro、Hooks方法合集</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="huangpengfei-js-tools">huangpengfei-js-tools</h1>
+<p>整理工作中常用的JavaScript、Taro、Hooks方法合集</p>
+<!-- more -->
+<h1 id="安装">安装</h1>
+<pre><code class="language-bash">npm install huangpengfei-js-tools
+</code></pre>
+<h1 id="引入方法">引入方法</h1>
+<pre><code class="language-js">import { xxx } from 'huangpengfei-js-tools'
+</code></pre>
+<h1 id="用例">用例</h1>
+<pre><code class="language-jsx">/* 组件 -- 官方多列选择器使用 */
+import { memo } from 'react'
+import Taro from '@tarojs/taro'
+import { Picker } from '@tarojs/components'
+import { useFile2Txt, useMultiSelectorTree } from 'huangpengfei-js-tools'
+
+interface IProps {
+  children: any
+  onChange: any
+  value: any
+  disabled?: boolean
+}
+
+const Component = ({ children, value, onChange, disabled }: IProps) =&gt; {
+  const rangeKey = 'value'
+  const { nodes = [] as any } = useFile2Txt(jsonUrl)
+  const { valueIndex, range, onColumnChange, onCancel } = useMultiSelectorTree({ value, list: nodes, depth: 3, rangeKey })
+
+  // 点击
+  const onChangeCity = event =&gt; {
+    const { value: values } = event?.detail
+    if (onChange) {
+      const item = values.map((it, index) =&gt; {
+        return range[index][it]
+      })
+      onChange(item)
+    }
+  }
+
+  return (
+    &lt;Picker
+      mode=&quot;multiSelector&quot;
+      range={range}
+      value={valueIndex}
+      disabled={disabled}
+      onCancel={onCancel}
+      onColumnChange={onColumnChange}
+      onChange={onChangeCity}
+      rangeKey={rangeKey}
+    &gt;
+      {children}
+    &lt;/Picker&gt;
+  )
+}
+
+export default memo(Component)
+
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Taro Parabola]]></title>
+        <id>https://ihopefulchina.github.io/taro-parabola/</id>
+        <link href="https://ihopefulchina.github.io/taro-parabola/">
+        </link>
+        <updated>2022-07-01T03:38:57.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="taro-parabola">taro-parabola</h1>
+<p>基于Taro3、React的H5和微信小程序添加到购物车抛物线动画组件</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="taro-parabola">taro-parabola</h1>
+<p>基于Taro3、React的H5和微信小程序添加到购物车抛物线动画组件</p>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1656646769406.gif" alt="" loading="lazy"></figure>
+<h1 id="安装">安装</h1>
+<pre><code class="language-bash">npm install taro-parabola
+</code></pre>
+<h1 id="导入组件">导入组件</h1>
+<pre><code class="language-js">import Parabola from 'taro-parabola'
+</code></pre>
+<h1 id="参数说明">参数说明</h1>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>类型</th>
+<th>必传</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cartX</code></td>
+<td>购物车 所在坐标的x值</td>
+<td>number</td>
+<td>是</td>
+<td><code>screenWidth</code></td>
+</tr>
+<tr>
+<td><code>cartY</code></td>
+<td>购物车 所在坐标的y值</td>
+<td>number</td>
+<td>是</td>
+<td><code>screenHeight - 60</code></td>
+</tr>
+<tr>
+<td><code>onChange</code></td>
+<td>点击回调方法</td>
+<td>Function</td>
+<td>否</td>
+<td><code>() =&gt; void</code></td>
+</tr>
+<tr>
+<td><code>parabolaStyle</code></td>
+<td>抛物线样式</td>
+<td>React.CSSProperties</td>
+<td>否</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="使用">使用</h1>
+<pre><code class="language-jsx">import { FC, memo, useEffect, useState } from 'react'
+import Parabola from 'taro-parabola'
+import Taro from '@tarojs/taro'
+
+import { View } from '@tarojs/components'
+
+ const list = [1, 2, 3, 4, 5]
+const Component: FC = () =&gt; {
+  const [cartInfo, setCartInfo] = useState({} as any)
+
+  useEffect(() =&gt; {
+    Taro.nextTick(() =&gt; {
+      Taro.createSelectorQuery()
+        .select(`#cart`)
+        .boundingClientRect(info =&gt; {
+          setCartInfo(info)
+        })
+        .exec()
+    })
+  }, [])
+
+  return (
+    &lt;&gt;
+      {list.map(item =&gt; (
+        &lt;Parabola
+          cartX={cartInfo.left}
+          cartY={cartInfo.top}
+          parabolaStyle={{ width: '15px', height: '15px', backgroundColor: '#333' }}
+          onChange={() =&gt; {}}
+          key={item}
+        &gt;
+          {item}
+        &lt;/Parabola&gt;
+      ))}
+      &lt;View id=&quot;cart&quot;&gt;我是购物车&lt;/View&gt;
+    &lt;/&gt;
+  )
+}
+
+const Mall = memo(Component)
+export default Mall
+
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[封装腾讯即时通讯 for 小程序]]></title>
+        <id>https://ihopefulchina.github.io/IZbWBmM7v/</id>
+        <link href="https://ihopefulchina.github.io/IZbWBmM7v/">
+        </link>
+        <updated>2021-07-22T06:15:47.000Z</updated>
+        <summary type="html"><![CDATA[<p>适用小程序(Taro)接入腾讯即时通讯。<br>
+贴下Github地址：<a href="https://github.com/ihopefulChina/tim-for-weapp-Taro">https://github.com/ihopefulChina/tim-for-weapp-Taro</a></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>适用小程序(Taro)接入腾讯即时通讯。<br>
+贴下Github地址：<a href="https://github.com/ihopefulChina/tim-for-weapp-Taro">https://github.com/ihopefulChina/tim-for-weapp-Taro</a></p>
+<!-- more -->
+<h3 id="参考资料">参考资料</h3>
+<ol>
+<li><a href="https://cloud.tencent.com/document/product/269/37411">SDK API（Web &amp; 小程序）</a></li>
+<li><a href="https://blog.csdn.net/weixin_42311676/article/details/105866973?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.add_param_isCf&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.add_param_isCf">微信小程序原生接入腾讯云im</a></li>
+<li><a href="https://blog.csdn.net/weixin_44622984/article/details/109626266">原生JS集成腾讯IM实时聊天/实时音视频</a></li>
+<li><a href="https://blog.csdn.net/qq_29789057/article/details/89396550?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242">微信小程序利用腾讯云IM即时通讯发送文字+表情开发）</a></li>
+</ol>
+<pre><code>import Taro from &quot;@tarojs/taro&quot;;
+import TIM from 'tim-wx-sdk';
+import COS from &quot;cos-wx-sdk-v5&quot;
+import TIMUploadPlugin from 'tim-upload-plugin';
+import roomStore from &quot;~/store/room&quot;;
+import timStore from '~/store/tim'
+//sdk
+import { timSDK } from &quot;~/config&quot;
+
+import { get } from &quot;~/components/request&quot;;
+
+const userInfo = (Taro.getStorageSync('userInfo')) as any;
+// 初始化
+const iminit_TIM = async () =&gt; {
+  const options = {
+    SDKAppID: timSDK // 接入时需要将0替换为您的即时通信 IM 应用的 SDKAppID
+  }
+  // 创建 SDK 实例，`TIM.create()`方法对于同一个 `SDKAppID` 只会返回同一份实例
+  const tim = TIM.create(options);// SDK 实例通常用 tim 表示
+  // 设置 SDK 日志输出级别，详细分级请参见 setLogLevel 接口的说明
+  // tim.setLogLevel(0); // 普通级别，日志量较多，接入时建议使用
+  tim.setLogLevel(1); // release 级别，SDK 输出关键信息，生产环境时建议使用
+  // 注册 COS SDK 插件
+  tim.registerPlugin({ 'cos-wx-sdk': COS })
+  tim.registerPlugin({ 'tim-upload-plugin': TIMUploadPlugin });
+  // 监听事件，例如：
+  tim.on(TIM.EVENT.SDK_READY, (event) =&gt; {
+    timStore.isImLogin = true
+    Taro.setStorageSync('isImLogin', true)
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('SDK_ready', event.name)
+    // 收到离线消息和会话列表同步完毕通知，接入侧可以调用 sendMessage 等需要鉴权的接口
+    // event.name - TIM.EVENT.SDK_READY
+  });
+
+  tim.on(TIM.EVENT.MESSAGE_RECEIVED, (event) =&gt; {
+    // 若同时收到多个会话 需要根据conversationID来判断是哪个人的会话
+    const msgarr = [] as any
+    const newMsgForm = event.data[0].conversationID // 定义会话键值
+    if (msgarr[newMsgForm]) {
+      msgarr[newMsgForm].push(event.data[0])
+    } else {
+      msgarr[newMsgForm] = [event.data[0]]
+    }
+    timStore.myMessages = msgarr
+    // 这里引入了一个监听器 （因为小程序没有类似vuex的状态管理器 当global里面的数据变化时不能及时同步到聊天页面 因此 这个监听器可以emit一个方法 到需要更新会话数据的页面 在那里进行赋值）
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('testFunc', msgarr, newMsgForm) // 详情页的函数
+    // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
+    // event.name - TIM.EVENT.MESSAGE_RECEIVED
+    // event.data - 存储 Message 对象的数组 - [Message]
+  })
+  tim.on(TIM.EVENT.MESSAGE_READ_BY_PEER, (event) =&gt; {
+    // SDK 收到对端已读消息的通知，即已读回执。使用前需要将 SDK 版本升级至 v2.7.0 或以上。仅支持单聊会话。
+    const msgarr = [] as any
+
+    const newMsgForm = event.data[0].conversationID // 定义会话键值
+    if (msgarr[newMsgForm]) {
+      msgarr[newMsgForm].push(event.data[0])
+    } else {
+      msgarr[newMsgForm] = [event.data[0]]
+    }
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('readItem', msgarr, newMsgForm) // 函数
+    // event.name - TIM.EVENT.MESSAGE_READ_BY_PEER
+    // event.data - event.data - 存储 Message 对象的数组 - [Message] - 每个 Message 对象的 isPeerRead 属性值为 true
+  });
+  tim.on(TIM.EVENT.CONVERSATION_LIST_UPDATED, (event) =&gt; {
+    // 更新当前所有会话列表
+    // 注意 这个函数在首次点击进入会话列表的时候也会执行 因此点击消息 可以显示当前的未读消息数（unreadCount表示未读数）
+    timStore.isImLogin &amp;&amp; initRecentContactList()
+    // 收到会话列表更新通知，可通过遍历 event.data 获取会话列表数据并渲染到页面
+    // event.name - TIM.EVENT.CONVERSATION_LIST_UPDATED
+    // event.data - 存储 Conversation 对象的数组 - [Conversation]
+  });
+
+  tim.on(TIM.EVENT.SDK_NOT_READY, (event) =&gt; {
+    timStore.isImLogin = false
+    Taro.setStorageSync('isImLogin', false)
+    loginIm_TIM(userInfo.adventureNo)
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('SDK_no_ready', event.name)
+    // 收到 SDK 进入 not ready 状态通知，此时 SDK 无法正常工作
+    // event.name - TIM.EVENT.SDK_NOT_READY
+  });
+
+  tim.on(TIM.EVENT.KICKED_OUT, (event) =&gt; {
+    Taro.setStorageSync('isImLogin', false)
+    timStore.isImLogin = false;
+    // 收到被踢下线通知
+    // event.name - TIM.EVENT.KICKED_OUT
+    // event.data.type - 被踢下线的原因，例如:
+    //    - TIM.TYPES.KICKED_OUT_MULT_ACCOUNT 多实例登录被踢
+    //    - TIM.TYPES.KICKED_OUT_MULT_DEVICE 多终端登录被踢
+    //    - TIM.TYPES.KICKED_OUT_USERSIG_EXPIRED 签名过期被踢
+  })
+  timStore.tim = tim;
+}
+// 登录
+const loginIm_TIM = userID =&gt; {
+  const id = userID ? userID : userInfo.adventureNo
+  if (!!id &amp;&amp; !timStore.isImLogin) {
+    // 开始登录
+    get(`/im/getUserSign?adventureNo=${id}`).then(res =&gt; {
+      Taro.setStorageSync('userSig', res.data)
+      const promise = timStore.tim.login({
+        userID: String(id),
+        userSig: res.data
+      });
+      promise.then((imResponse) =&gt; {
+        Taro.setStorageSync('isImLogin', true)
+        timStore.isImLogin = true
+        setTimeout(() =&gt; {
+          // 拉取会话列表
+          timStore.isImLogin &amp;&amp; initRecentContactList()
+        }, 1000);
+      }).catch((imError) =&gt; {
+        // Taro.showToast({
+        //   title: 'login error' + imError,
+        //   icon: 'none',
+        //   duration: 3000
+        // })
+      });
+    })
+  }
+}
+
+// 会话列表
+const initRecentContactList = () =&gt; {
+  const promise = timStore.tim.getConversationList();
+  if (!promise) {
+    // Taro.showToast({
+    //   title: 'SDK not ready',
+    //   icon: 'none',
+    //   duration: 3000
+    // })
+    return
+  }
+  let conversationList = [] as any
+  promise.then((imResponse) =&gt; {
+    // 如果最后一条消息是自定义消息的话，处理一下data
+    conversationList = imResponse.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
+    conversationList.forEach(event =&gt; {
+      if (event.lastMessage.type === 'TIMCustomElem') {
+        const data = event.lastMessage.payload.data
+        let new_data = ''
+        if (typeof (data) === 'string' &amp;&amp; data) {
+          new_data = JSON.parse(data)
+        }
+        event.lastMessage.payload.data = new_data
+      }
+    })
+    let number = 0
+    conversationList.forEach(ele =&gt; {
+      number = number + ele.unreadCount
+    })
+    // console.log('initRecentContactList', number)
+    //更新获取未读消息角标 采用了mbox方式传入
+    roomStore.updateRoomNum(number)
+    const list = conversationList as any
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('conversationList', list) // 函数
+    timStore.conversationList = list
+    Taro.setStorageSync('conversationList', list)
+  }).catch((imError) =&gt; {
+    // Taro.showToast({
+    //   title: 'getConversationList error:' + imError,
+    //   icon: 'none',
+    //   duration: 3000
+    // })
+  })
+}
+// 删除会话
+function deleteConversation_TIM(ID) {
+  const promise = timStore.tim.deleteConversation(ID);
+  promise.then((imResponse) =&gt; {
+    // 删除成功。
+    const { conversationID } = imResponse.data;// 被删除的会话 ID
+    const oldList = Taro.getStorageSync('conversationList')
+    const newList = oldList.filter((item: any) =&gt; conversationID !== item.conversationID)
+    Taro.setStorageSync('conversationList', newList)
+  })
+}
+
+export { iminit_TIM, loginIm_TIM, initRecentContactList, deleteConversation_TIM }
+</code></pre>
+<h3 id="获取列表">获取列表</h3>
+<p>hooks方式</p>
+<pre><code>const [list, setList] = useState([] as any);
+ useEffect(() =&gt; {
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.on(&quot;conversationList&quot;, (lists: any) =&gt; {
+      if (lists.length &gt; 0) {
+        timStore.isImLogin &amp;&amp;
+          setList(
+            lists ? lists : timStore.conversationList
+          );
+      }
+    });
+  }, []);
+</code></pre>
+<h3 id="获取聊天会话">获取聊天会话</h3>
+<pre><code> // 发送信息
+const [sendMsg, setSendMsg] = useState(&quot;&quot; as any);
+// im实时聊天数据
+const [toView, setToView] = useState(&quot;&quot; as any);
+// 用于续拉，分页续拉时需传入该字段。
+const [nextReqMessageID, setNextReqMessageID] = useState(&quot;&quot; as any);
+// 表示是否已经拉完所有消息。
+const [isCompleted, setIsCompleted] = useState(&quot;&quot; as any);
+
+// 消息列表
+const [myMessages, setmyMessages] = useState([] as any);
+const [more_text, setmore_text] = useState(&quot;&quot;);
+const [is_lock, setis_lock] = useState(true);
+
+// 语音操作
+const [title, settitle] = useState(&quot;正在录音&quot;);
+const [isRecording, setisRecording] = useState(false);
+// 拉取会话列表
+const getMsgList = () =&gt; {
+  const param = {
+      //sendId 为对方id
+    conversationID: &quot;C2C&quot; + sendId,
+    count: 15,
+    nextReqMessageID
+  };
+  const promise = timStore.tim.getMessageList(param);
+
+  promise
+    .then(imResponse =&gt; {
+      const messageList = imResponse.data.messageList; // 消息列表。
+      // 处理自定义的消息
+      messageList.forEach(event =&gt; {
+        if (event.type === &quot;TIMCustomElem&quot;) {
+          if (typeof event.payload.data === &quot;string&quot; &amp;&amp; event.payload.data) {
+            const new_data = JSON.parse(event.payload.data);
+            event.payload.data = new_data;
+          }
+        }
+      });
+      const newNextReqMessageID = imResponse.data.nextReqMessageID; // 用于续拉，分页续拉时需传入该字段。
+      const newIsCompleted = imResponse.data.isCompleted; // 表示是否已经拉完所有消息。
+      // 将某会话下所有未读消息已读上报
+      setMessageRead();
+      setmyMessages(messageList);
+      setIsCompleted(newIsCompleted);
+      setNextReqMessageID(newNextReqMessageID);
+      setmore_text(newIsCompleted ? &quot;没有更多了&quot; : &quot;下拉查看更多历史信息&quot;);
+      scrollToBottom(messageList.length - 1);
+    })
+    .catch(imError =&gt; {
+      // console.warn(&quot;getConversationList error:&quot;, imError); // 获取会话列表失败的相关信息
+    });
+};
+</code></pre>
+<h3 id="已读回执">已读回执</h3>
+<pre><code>// 已读回执
+  // @ts-ignore
+  // eslint-disable-next-line no-undef
+  wx.event.on(&quot;readItem&quot;, (ele, newMsgForm) =&gt; {
+    if (newMsgForm === `C2C${sendId}` &amp;&amp; timStore.isDetail) {
+      const newmsg = ele[`C2C${sendId}`];
+      const oldItems = deepCopy(myMessages);
+      if (newmsg) {
+        newmsg.forEach(event =&gt; {
+          if (event.type === &quot;TIMCustomElem&quot;) {
+            if (typeof event.payload.data === &quot;string&quot; &amp;&amp; event.payload.data) {
+              const new_data = JSON.parse(event.payload.data);
+              event.payload.data = new_data;
+            }
+          }
+        });
+        let newitems = oldItems.filter(
+          (item: any) =&gt; !newmsg.some((dom: any) =&gt; dom.ID === item.ID)
+        );
+        newitems = [...newitems, ...newmsg];
+        setmyMessages(newitems);
+        scrollToBottom(newitems.length - 1);
+      }
+    }
+  });
+</code></pre>
+<h3 id="接受到新消息">接受到新消息</h3>
+<pre><code> // @ts-ignore
+  // eslint-disable-next-line no-undef
+  wx.event.on(&quot;testFunc&quot;, (ele, newMsgForm) =&gt; {
+    if (newMsgForm === `C2C${sendId}` &amp;&amp; timStore.isDetail) {
+      const newmsg = ele[`C2C${sendId}`];
+      let oldMss = myMessages;
+      if (newmsg) {
+        newmsg.forEach(event =&gt; {
+          if (event.type === &quot;TIMCustomElem&quot;) {
+            if (
+              typeof event.payload.data === &quot;string&quot; &amp;&amp;
+              event.payload.data
+            ) {
+              const new_data = JSON.parse(event.payload.data);
+              event.payload.data = new_data;
+            }
+          }
+          if (!event.isRead) {
+            oldMss = [...oldMss, ...newmsg];
+          }
+        });
+        setmyMessages(oldMss);
+        scrollToBottom(oldMss.length - 1);
+      }
+      setMessageRead();
+    }
+  });
+</code></pre>
+<h3 id="设置已读上报">设置已读上报</h3>
+<pre><code>const setMessageRead = () =&gt; {
+    const promise = timStore.tim.setMessageRead({
+      conversationID: &quot;C2C&quot; + sendId
+    });
+    promise
+      .then(imResponse =&gt; {
+        initRecentContactList();
+        // 已读上报成功
+        let noready = 0;
+        const messages = myMessages as any;
+        messages.forEach(event =&gt; {
+          if (!event.isRead) {
+            noready++;
+          }
+        });
+        const number = Taro.getStorageSync(&quot;number_msg&quot;);
+        const newNumber = number - noready;
+        Taro.setStorageSync(&quot;number_msg&quot;, newNumber);
+        roomStore.updateRoomNum(newNumber);
+      })
+      .catch(imError =&gt; {
+        // 已读上报失败
+        // console.warn(&quot;setMessageRead error:&quot;, imError);
+      });
+  };
+</code></pre>
+<h3 id="发送文本消息">发送文本消息</h3>
+<pre><code> // 发送普通文本消息
+  const bindConfirm = () =&gt; {
+    if (is_lock) {
+      setis_lock(false);
+      if (sendMsg.length === 0) {
+        Taro.showToast({
+          title: &quot;消息不能为空!&quot;,
+          icon: &quot;none&quot;
+        });
+        setis_lock(true);
+        return;
+      }
+
+      const content = {
+        text: sendMsg
+      };
+
+      const options = {
+        to: sendId, // 消息的接收方
+        conversationType: TIM.TYPES.CONV_C2C, // 会话类型取值timStore.tim.TYPES.CONV_C2C或timStore.tim.TYPES.CONV_GROUP
+        payload: content // 消息内容的容器
+      };
+      // // 发送文本消息，Web 端与小程序端相同
+      // 1. 创建消息实例，接口返回的实例可以上屏
+      const message = timStore.tim.createTextMessage(options);
+      // 2. 发送消息
+      sendMessageFun(message, &quot;text&quot;);
+    }
+  };
+</code></pre>
+<h3 id="发送语音图片和视频消息">发送语音图片和视频消息</h3>
+<pre><code> // 发送语音消息
+const bindAudioMessage = res =&gt; {
+ // 4. 创建消息实例，接口返回的实例可以上屏
+ const message = timStore.tim.createAudioMessage({
+   to: sendId, // 消息的接收方
+   conversationType: TIM.TYPES.CONV_C2C,
+   payload: {
+     file: res
+   }
+ });
+ sendMessageFun(message, &quot;voice&quot;);
+};
+// 发送视频
+const createVideoMessage = res =&gt; {
+ // 2. 创建消息实例，接口返回的实例可以上屏
+ const message = timStore.tim.createVideoMessage({
+   to: sendId,
+   conversationType: TIM.TYPES.CONV_C2C,
+   payload: {
+     file: res
+   }
+ });
+ // 3. 发送消息
+ sendMessageFun(message, &quot;video&quot;);
+};
+// 发送图片
+const createImageMessage = res =&gt; {
+ const message = timStore.tim.createImageMessage({
+   to: sendId,
+   conversationType: TIM.TYPES.CONV_C2C,
+   payload: {
+     file: res
+   },
+   onProgress(event) {
+     setProgress(event);
+   }
+ });
+ sendMessageFun(message, &quot;image&quot;);
+};
+</code></pre>
+<h3 id="发送消息封装">发送消息封装</h3>
+<pre><code>const sendMessageFun = (message, type) =&gt; {
+    Taro.showLoading({ title: &quot;发送中&quot; });
+    const promise = timStore.tim.sendMessage(message);
+    promise.then(imResponse =&gt; {
+      // 发送成功
+      setMessageRead();
+      const messageList = myMessages as any;
+      messageList.push(imResponse.data.message);
+      setis_lock(true);
+      setmyMessages(messageList);
+      clearInput();
+      scrollToBottom(messageList.length - 1);
+      Taro.hideLoading({});
+    });
+  };
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[腾讯COS上传图片封装]]></title>
+        <id>https://ihopefulchina.github.io/oi4CnmXh7/</id>
+        <link href="https://ihopefulchina.github.io/oi4CnmXh7/">
+        </link>
+        <updated>2021-07-22T03:46:47.000Z</updated>
+        <summary type="html"><![CDATA[<p>cos-js-sdk-v5 封装 适用于微信浏览器H5环境<br>
+Github地址：<a href="https://github.com/ihopefulChina/Tencent-COS-uploads-picture">https://github.com/ihopefulChina/Tencent-COS-uploads-picture</a></p>
+]]></summary>
+        <content type="html"><![CDATA[<p>cos-js-sdk-v5 封装 适用于微信浏览器H5环境<br>
+Github地址：<a href="https://github.com/ihopefulChina/Tencent-COS-uploads-picture">https://github.com/ihopefulChina/Tencent-COS-uploads-picture</a></p>
+<!-- more -->
+<h3 id="configts">config.ts</h3>
+<pre><code>import { genID, get_suffix } from '~/tools/tools';
+import { autobind } from 'core-decorators';
+import COS from 'cos-js-sdk-v5';
+
+const Bucket = 'Bucket值';
+const Region = 'Region值';
+
+@autobind
+export default class COSUpload {
+  private getOssToken: () =&gt; Promise&lt;any&gt;
+
+  constructor(config: {
+    getOssToken: () =&gt; Promise&lt;any&gt;
+  }) {
+    this.getOssToken = config.getOssToken;
+  }
+
+  /**
+   * 批量上传
+   * @param {Object} obj Bucket、Region、Body 详情查看cos文档
+   * @returns err || 批量上传filesData
+   */
+  uploadFiles(fileList: any) {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve, reject) =&gt; {
+      const { cos, content } = await this.getOss();
+      const files = await fileList.map((fileObject: any) =&gt; {
+        const file = fileObject.file ? fileObject.file : fileObject;
+        const fileName = `${content.requestId}${genID(3)}.${file.path ? get_suffix(file.path) : 'png'}`;
+        return {
+          Bucket: Bucket,
+          Region: Region,
+          Key: fileName,
+          StorageClass: 'STANDARD',
+          Body: file,
+        };
+      });
+      await cos.uploadFiles({
+        files,
+        SliceSize: 1024 * 1024 * 5,    /* 设置大于5MB采用分块上传 */
+      }, function (err: any, data: any) {
+        const val = (err || data);
+        const list = !err ? val.files.map((item: any) =&gt; `https://${item.data.Location}`
+        ) : [];
+        const newArr = list.filter((it: string) =&gt; it);
+        return err ? reject(err) : resolve(newArr);
+      });
+    });
+  }
+
+
+  private async getOss() {
+    const data = await this.getOssToken();
+    const content = data as any;
+    const credentials = data.credentials;
+    // console.log(window,wx);
+    const cos = new COS({
+      getAuthorization: function (options: any, callback: any) {
+        callback({
+          TmpSecretId: credentials.tmpSecretId,
+          TmpSecretKey: credentials.tmpSecretKey,
+          SecurityToken: credentials.sessionToken,
+          // 建议返回服务器时间作为签名的开始时间，避免用户浏览器本地时间偏差过大导致签名错误
+          StartTime: data.startTime, // 时间戳，单位秒，如：1580000000
+          ExpiredTime: data.expiredTime, // 时间戳，单位秒，如：1580000900
+        });
+      }
+    });
+
+    return {
+      cos,
+      content
+    };
+  }
+}
+</code></pre>
+<h3 id="indexts">index.ts</h3>
+<pre><code>import COSUpload from './config';
+import { get } from &quot;~/request&quot;;
+
+&lt;!-- get请求 --&gt;
+const { uploadFiles } = new COSUpload({
+  getOssToken: () =&gt; get(`xxx.com/tencent/cos-token`)
+});
+
+export { uploadFiles };
+</code></pre>
+<h3 id="引入文件内容">引入文件内容</h3>
+<pre><code>/**
+ * @description: 生成唯一id
+ * @param {number} length 数字长度
+ * @return {string} 
+ */
+export function genID(length = 3) {
+    return Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
+}
+
+//获取文件名称后缀
+export const get_suffix = (fileName: string) =&gt; {
+    const suffix = fileName.substring(fileName.lastIndexOf('.') + 1);
+    return suffix;
+};
+
+</code></pre>
+<h3 id="上传多张图片组件">上传多张图片组件</h3>
+<pre><code>/* 组件 -- 上传 */
+import React, { useState } from &quot;react&quot;;
+import WxImageViewer from &quot;react-wx-images-viewer&quot;;
+import { uploadFiles } from &quot;~/components/tencent&quot;;
+import { Toast } from &quot;antd-mobile&quot;;
+import Compressor from &quot;compressorjs&quot;;
+
+import styles from &quot;./index.module.less&quot;;
+
+interface IProps {
+  imgList?: string[];
+  onChange: (list: string[]) =&gt; void;
+  onDelete: (idx: number) =&gt; void;
+  progressChange?: (percent: number) =&gt; void;
+  count?: number;
+}
+
+const Index = ({ imgList = [], onChange, onDelete, count = 2 }: IProps) =&gt; {
+  const [showViewer, setShowViewer] = useState(false);
+  const [imgIndex, setImgIndex] = useState(0);
+
+  const onInputChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    const fileList = e.target.files;
+
+    if (imgList.length &lt; count) {
+      //代表还可以上传
+      if (fileList &amp;&amp; fileList.length &gt; 0) {
+        const newFileList = [] as any;
+        for (const key in fileList) {
+          if (Object.prototype.hasOwnProperty.call(fileList, key)) {
+            const element = fileList[key] as any;
+            element &amp;&amp; newFileList.push(element);
+          }
+        }
+        let paths = [];
+        if (imgList.length + newFileList.length &lt; count) {
+          paths = newFileList;
+        } else {
+          //数量超过了
+          const surplus = count - imgList.length;
+          paths = newFileList.slice(0, surplus);
+          // paths = newFileList.filter((item, index) =&gt; index &lt; surplus);
+        }
+
+        //压缩图片
+        const newPaths = paths.map((image: any) =&gt; {
+          let newImg = image;
+          new Compressor(image, {
+            quality: 0.5, // 0.6 can also be used, but its not recommended to go below.
+            success: (res) =&gt; (newImg = res),
+          });
+          return newImg;
+        });
+        Toast.loading(&quot;上传中...&quot;);
+        uploadFiles(newPaths).then((res: any) =&gt; {
+          onChange &amp;&amp; onChange([...imgList, ...res]);
+          Toast.hide();
+        });
+      }
+    }
+  };
+
+  return (
+    &lt;div className={styles.upload}&gt;
+      &lt;div className={styles.uploadList}&gt;
+        {imgList.map((item, index) =&gt; (
+          &lt;div
+            key={`${item}`}
+            className={styles.item}
+            onClick={(event) =&gt; {
+              event.stopPropagation();
+              setShowViewer(true);
+              setImgIndex(index);
+              document
+                .getElementsByTagName(&quot;body&quot;)[0]
+                .setAttribute(&quot;style&quot;, &quot;overflow:hidden&quot;); //给body添加overflow:hidden阻止遮罩层滚动主页面滚动
+            }}
+          &gt;
+            &lt;img
+              className={styles.img}
+              data-preview-proto={item}
+              src={item}
+              alt=&quot;上传图片&quot;
+            /&gt;
+            &lt;img
+              className={styles.del}
+              src={require(&quot;./images/del.png&quot;)}
+              alt=&quot;删除按钮&quot;
+              onClick={(event) =&gt; {
+                event.stopPropagation();
+                onDelete(index);
+              }}
+            /&gt;
+          &lt;/div&gt;
+        ))}
+
+        {imgList.length &lt; count &amp;&amp; (
+          &lt;div className={styles.uploadBtn}&gt;
+            &lt;input
+              type=&quot;file&quot;
+              name=&quot;image&quot;
+              accept=&quot;image/*&quot;
+              multiple={true}
+              className={styles.uploadInput}
+              onChange={onInputChange}
+            /&gt;
+            &lt;div className={styles.uploadPlus}&gt;
+              &lt;img src={require(&quot;./images/plus.png&quot;)} alt=&quot;加号&quot; /&gt;
+              &lt;span&gt;
+                ({imgList.length}/{count})
+              &lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        )}
+      &lt;/div&gt;
+      {showViewer ? (
+        &lt;WxImageViewer
+          onClose={() =&gt; {
+            setShowViewer(false);
+            document.getElementsByTagName(&quot;body&quot;)[0].removeAttribute(&quot;style&quot;);
+          }}
+          urls={imgList}
+          index={imgIndex}
+        /&gt;
+      ) : (
+        &quot;&quot;
+      )}
+    &lt;/div&gt;
+  );
+};
+export default Index;
+</code></pre>
+<h3 id="引用组件">引用组件</h3>
+<pre><code>import Upload from &quot;~/components/upload&quot;;
+&lt;Upload
+                  imgList={form.discoverServiceImgs}
+                  count={6}
+                  onChange={(imgs) =&gt;
+                    setForm({ ...form, discoverServiceImgs: imgs })
+                  }
+                  onDelete={(idx) =&gt;
+                    setForm({
+                      ...form,
+                      discoverServiceImgs: form.discoverServiceImgs.filter(
+                        (_value: any, _index: any) =&gt; _index !== idx
+                      ),
+                    })
+                  }
+                /&gt;
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[函数式组件与类组件有何不同？]]></title>
+        <id>https://ihopefulchina.github.io/dBAsSzkYF/</id>
+        <link href="https://ihopefulchina.github.io/dBAsSzkYF/">
+        </link>
+        <updated>2021-02-09T07:05:53.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>函数式组件捕获了渲染所用的值。（Function components capture the rendered values.）</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>函数式组件捕获了渲染所用的值。（Function components capture the rendered values.）</p>
+</blockquote>
+<!-- more -->
+<p>作者是 <a href="https://mobile.twitter.com/dan_abramov">Dan Abramov</a> , Facebook React 核心开发，Redux 作者</p>
+<h3 id="博客地址">博客地址</h3>
+<p><a href="https://overreacted.io/zh-hans/how-are-function-components-different-from-classes/">https://overreacted.io/zh-hans/how-are-function-components-different-from-classes/</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[useEffect 完整指南]]></title>
+        <id>https://ihopefulchina.github.io/hmJz132Dl/</id>
+        <link href="https://ihopefulchina.github.io/hmJz132Dl/">
+        </link>
+        <updated>2021-02-09T06:33:23.000Z</updated>
+        <summary type="html"><![CDATA[<p>最近看了一篇blog文章，作者是 <a href="https://mobile.twitter.com/dan_abramov">Dan Abramov</a> , Facebook React 核心开发，Redux 作者，他这篇博客写的非常好，很详情介绍了useEffect，推荐大家去看看。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>最近看了一篇blog文章，作者是 <a href="https://mobile.twitter.com/dan_abramov">Dan Abramov</a> , Facebook React 核心开发，Redux 作者，他这篇博客写的非常好，很详情介绍了useEffect，推荐大家去看看。</p>
+<!-- more -->
+<blockquote>
+<p>目前为止，useEffect主要用于数据请求。但是数据请求准确说并不是一个同步问题。因为我们的依赖经常是[]所以这一点尤其明显。那我们究竟在同步什么？</p>
+</blockquote>
+<h3 id="博客地址">博客地址</h3>
+<p><a href="https://overreacted.io/zh-hans/a-complete-guide-to-useeffect/">https://overreacted.io/zh-hans/a-complete-guide-to-useeffect/</a></p>
+]]></content>
+    </entry>
+</feed>

@@ -1,0 +1,270 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>如何用TAG方式串联自定义分类(实现相关文章串联功能) | Ihopeful Blog</title>
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739675214488">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="如何用TAG方式串联自定义分类(实现相关文章串联功能) | Ihopeful Blog - Atom Feed" href="https://ihopefulchina.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="遇到过一个奇葩的客户，让我通过TAG的方式，获取自定义分类的相关文章。
+例如:某产品写了a这个tag标签，某新闻、案例、应用等等都有一个一样是a标签，然后如何在这个产品详情页，输出含有a标签的相关新闻、相关案例、相关应用等等。
+最后如果没有..." />
+    <meta name="keywords" content="WordPress,PHP" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://ihopefulchina.github.io">
+  <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739675214488" alt="">
+  </a>
+  <h1 class="site-title">
+    Ihopeful Blog
+  </h1>
+  <p class="site-description">
+    Sweat is the lubricant of success.
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              如何用TAG方式串联自定义分类(实现相关文章串联功能)
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-08-22
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+                <a href="https://ihopefulchina.github.io/tag/wordpress/" class="post-tag">
+                  # WordPress
+                </a>
+              
+                <a href="https://ihopefulchina.github.io/tag/php/" class="post-tag">
+                  # PHP
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://ihopefulchina.github.io/post-images/ru-he-yong-tag-fang-shi-chuan-lian-zi-ding-yi-fen-lei-shi-xian-xiang-guan-wen-zhang-chuan-lian-gong-neng.png" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>遇到过一个奇葩的客户，让我通过TAG的方式，获取自定义分类的相关文章。</p>
+<p>例如:某产品写了a这个tag标签，某新闻、案例、应用等等都有一个一样是a标签，然后如何在这个产品详情页，输出含有a标签的相关新闻、相关案例、相关应用等等。</p>
+<p>最后如果没有这个标签的话，后台有通过手动添加功能填写</p>
+<!-- more -->
+<p>听到这里估计大家都蒙了，Wordprss不支持这个功能，没有插件支持这个功能，经过一系列摸索，我解决了这个问题，这里给大家解决思路。</p>
+<ol>
+<li>首先在自定义分类添加tag标签<code>'taxonomies' =&gt; array('post_tag')</code>，<a href="https://codex.wordpress.org/Function_Reference/register_post_type">官方文档</a>。</li>
+<li>添加完成后，需要用到<a href="https://www.advancedcustomfields.com/resources/relationship/">ACF插件的关系</a>，这个是如果没有这个标签的话，后台有通过手动添加功能填写功能<br>
+<img src="https://ihopefulchina.github.io/post-images/1566453582276.png" alt="" loading="lazy"><br>
+3.在前台填写判断，如果ACF关系的值为空的话，输出标签串联的相关文章，不为空的话，为手动添加的相关文章。<br>
+Demo:</li>
+</ol>
+<pre><code>&lt;?php 
+		/**
+		 * Related Applications
+		 */
+		$posts = get_field('related-applications');
+		if( $posts ): ?&gt;
+		&lt;div class=&quot;product_details_left_applications product_details_left_standards&quot;&gt;
+			&lt;div class=&quot;product_details_left_applications_title&quot;&gt;Related Applications&lt;/div&gt;
+			&lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;
+			&lt;?php foreach( $posts as $id ):
+				$image = get_field('application-image',$id);
+				if(empty($image)) $image['sizes']['thumbnail']='/wp-content/themes/lisun/img/default-100x100.jpg';
+			?&gt;
+			&lt;div class=&quot;product_details_left_applications_list&quot;&gt;
+				&lt;div class=&quot;product_details_left_applications_list_left&quot;&gt;
+					&lt;img src=&quot;&lt;?php echo $image['sizes']['thumbnail']; ?&gt;&quot;/&gt;
+				&lt;/div&gt;
+				&lt;div class=&quot;product_details_left_applications_list_right&quot;&gt;
+					&lt;a href=&quot;&lt;?php echo get_the_permalink($id); ?&gt;&quot;&gt;&lt;i class=&quot;fas fa-chevron-right&quot;&gt;&lt;/i&gt;&lt;?php echo get_the_title($id); ?&gt;&lt;/a&gt;
+				&lt;/div&gt;
+				&lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;
+			&lt;/div&gt;&lt;?php endforeach; ?&gt;
+		&lt;/div&gt;
+		&lt;?php else:
+			$args = array(
+				'posts_per_page' =&gt; 5,
+				'post_type' =&gt; 'applications',
+				'tax_query' =&gt; array(
+					array(
+						'taxonomy' =&gt; 'post_tag',
+						'field' =&gt; 'slug',
+						'terms' =&gt; $tags,
+					)
+				)
+			);
+			$posts = get_posts( $args );if($posts):
+		?&gt;
+		&lt;div class=&quot;product_details_left_applications product_details_left_standards&quot;&gt;
+			&lt;div class=&quot;product_details_left_applications_title&quot;&gt;Related Applications&lt;/div&gt;
+			&lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;
+			&lt;?php foreach( $posts as $post ):
+				$image = get_field('application-image',$post-&gt;ID);
+				if(empty($image)) $image['sizes']['thumbnail']='/wp-content/themes/lisun/img/default-100x100.jpg';
+			?&gt;
+			&lt;div class=&quot;product_details_left_applications_list&quot;&gt;
+				&lt;div class=&quot;product_details_left_applications_list_left&quot;&gt;
+					&lt;img src=&quot;&lt;?php echo $image['sizes']['thumbnail']; ?&gt;&quot;/&gt;
+				&lt;/div&gt;
+				&lt;div class=&quot;product_details_left_applications_list_right&quot;&gt;
+					&lt;a href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;&lt;i class=&quot;fas fa-chevron-right&quot;&gt;&lt;/i&gt;&lt;?php the_title(); ?&gt;&lt;/a&gt;
+				&lt;/div&gt;
+				&lt;div class=&quot;clear&quot;&gt;&lt;/div&gt;
+			&lt;/div&gt;&lt;?php endforeach; wp_reset_postdata(); ?&gt;
+		&lt;/div&gt;&lt;?php endif; endif; ?&gt;
+</code></pre>
+<p>以上代码需要懂点PHP和Wordpress，有疑问，可以联系我。</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://ihopefulchina.github.io/ye-mian-shi-xian-lei-si-yu-tao-bao-de-tu-chuang-gong-neng/">
+              <h3 class="post-title">
+                页面实现类似于淘宝的图窗功能
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '71e97ed99597f66a9dd0',
+    clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+    repo: 'ihopefulchina.github.io',
+    owner: 'ihopefulChina',
+    admin: ['ihopefulChina'],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  
+  <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
