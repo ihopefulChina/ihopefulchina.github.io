@@ -1,0 +1,267 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>PHP | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739949710217">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739949710217" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+
+        <div class="current-tag-container">
+          <h2 class="title">
+            <i class="icon icon-pricetags-outline"></i> PHP
+          </h2> 
+        </div>
+
+        
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin/">
+        <h2 class="post-title">解决同一张图片，需要在不同尺寸提供不同的水印</h2>
+      </a>
+      <div class="post-abstract">
+        <p>客户需要上传同一张图片，需要在不同尺寸提供不同的水印，我看了、尝试了很多插件，发现基本都不支持多个水印，2个插件组合会出现兼容性问题，只能生效其中一个。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2019-07-01</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                WordPress
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/php/">
+                PHP
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/wordpress-theme-zhu-ti-jie-gou-jie-xi/">
+        <h2 class="post-title">Wordpress theme主题结构解析</h2>
+      </a>
+      <div class="post-abstract">
+        <p>Wordpress定制站，结构不复杂，了解更多建议去多看看官方文档，下面这个图片是我的定制站需要的文件结构。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2019-04-09</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                WordPress
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/php/">
+                PHP
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/wordpress-theme-zhu-ti-jie-gou-jie-xi/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/wordpress-theme-zhu-ti-jie-gou-jie-xi.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/wordpress-han-shu-dai-ma-mo-kuai-hua/">
+        <h2 class="post-title">WordPress函数代码模块化</h2>
+      </a>
+      <div class="post-abstract">
+        <p>函数模块化，以简单、简洁、简约的方式添加代码片段到您的站点。再也没有必要去编辑主题的 functions.php 文件。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2019-03-20</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                WordPress
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/php/">
+                PHP
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/wordpress-han-shu-dai-ma-mo-kuai-hua/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/wordpress-han-shu-dai-ma-mo-kuai-hua.jpg')">
+        </div>
+      </a>
+    
+  </section>
+
+
+<div class="pagination-container">
+  
+    <a href="https://ihopefulchina.github.io/tag/php/page/2/" class="prev"><i class="icon-arrow-ios-back-outline"></i> 上一页</a>
+  
+  
+</div>
+
+
+      </div>
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

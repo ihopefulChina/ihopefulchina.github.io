@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数 | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739949710217">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739949710217" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/p9E7d0w867.png')">
+            </div>
+          
+          <h2 class="post-title">自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2024-06-12</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/react/">
+                    React
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>在 React 中，我们经常需要获取和处理 URL 中的查询参数。特别是在单页应用（SPA）中，路由参数的管理和转换非常常见。为了提高代码的复用性和可维护性，我们可以使用 React 的 Hook 来封装这类逻辑，确保代码简洁、易于维护。通过实现一个自定义的 useRouterParams Hook 来演示如何获取 URL 中的查询参数，并根据需求进行解析和转换。</p>
+<!-- more -->
+<h3 id="背景">背景</h3>
+<p>在前端开发中，路由查询参数（Query Parameters）是非常常见的。例如，在一个电商平台中，可能会通过 URL 的查询参数来传递过滤条件（如类别、价格区间等）。对于多页面应用（MPA）或单页面应用（SPA），获取和处理这些参数是必不可少的操作。</p>
+<p>React 官方提供的 useLocation 和 useHistory 钩子可以帮助我们访问路由，但它们默认只返回完整的 URL 信息，没有直接提供对查询参数的处理。因此，我们需要编写一个自定义 Hook 来简化这个过程。</p>
+<h3 id="实现思路">实现思路</h3>
+<p>我们希望创建一个 useRouterParams 的 Hook，它具有以下功能：<br>
+•	获取当前页面的查询参数。<br>
+•	可以选择对查询参数进行转换（例如，转换为数值类型或枚举类型）。<br>
+•	提供一种简便的方式来访问和管理查询参数。</p>
+<h3 id="代码实现">代码实现</h3>
+<p>下面是 useRouterParams Hook 的实现代码：</p>
+<pre><code>import { useMemo } from 'react'
+
+export type DefaultParams = Partial&lt;Record&lt;string, string&gt;&gt;
+
+/**
+ * 获取路由参数。
+ * 这个钩子允许开发者类型化路由参数，并可选地提供一个解析函数来处理参数。
+ *
+ * @param option.parseFn 解析函数。默认路由参数都是string类型。有些时候你需要转换成其他类型(数值/枚举)等。你可以通过传递这个参数来处理参数。
+ *
+ */
+export function useRouterParams&lt;T = DefaultParams&gt;(
+  option: {
+    transform?: (data: T) =&gt; T
+  } = {}
+) {
+  const url = new URL(window.location.href)
+
+  const params = getQueryParams(url?.href) as T
+
+  const _param = useMemo(() =&gt; {
+    // 计算key
+    let cparam: T = params as T
+
+    try {
+      if (option.transform) cparam = option.transform(cparam)
+    } catch (event) {
+      // eslint-disable-next-line no-console
+      console.error('parseFn 执行失败:', event)
+    }
+
+    return { ...params, ...cparam } as T
+  }, [params])
+
+  return [_param as T] as const
+}
+
+// 正则表达式提取查询字符串
+function getQueryParams(url: string): Record&lt;string, string&gt; {
+  const queryString = url.split('?')[1] || ''
+  const params: Record&lt;string, string&gt; = {}
+
+  // 匹配所有的 key=value 对
+  queryString.replace(/([^=&amp;]+)=([^&amp;]*)/g, (_match, key, value) =&gt; {
+    params[decodeURIComponent(key)] = decodeURIComponent(value)
+    return ''
+  })
+
+  return params
+}
+
+</code></pre>
+<h3 id="简单实例">简单实例</h3>
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739774334205.png" alt="" loading="lazy"></figure>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/mHHMm1wDV3/">
+              <h3 class="post-title">
+                下一篇：自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

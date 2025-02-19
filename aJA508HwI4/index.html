@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装 | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739949710217">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739949710217" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/aJA508HwI4.png')">
+            </div>
+          
+          <h2 class="post-title">自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2024-10-17</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/aaJMlrtyK/">
+                    Vue
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。</p>
+<!-- more -->
+<h3 id="背景">背景</h3>
+<p>在前端开发中，数据的请求和展示是常见的功能。为了避免在每个组件中重复相似的代码，我们可以将数据请求的逻辑抽象成一个可复用的 Hook。useMutate Hook 的目标就是封装数据请求、处理无数据状态和格式化数据的逻辑，帮助我们简化代码并提高开发效率。</p>
+<h3 id="需求分析">需求分析</h3>
+<p>我们需要实现以下功能：<br>
+1.	数据请求： 向服务器请求数据。<br>
+2.	数据格式化： 支持自定义的数据格式化函数。<br>
+3.	请求成功回调： 请求成功后触发回调，方便后续操作。<br>
+4.	无数据状态管理： 判断返回数据是否为空，并更新 noData 状态。</p>
+<h3 id="代码实现">代码实现</h3>
+<p>下面是我们实现的 useMutate Hook：</p>
+<pre><code>import { onMounted, ref } from 'vue';
+import { useLockFn } from './useLockFn';
+
+interface IMutateOption&lt;T&gt; {
+    /** 默认数据 */
+    defaultData?: T;
+
+    /** 额外传递参数 */
+    params?: Record&lt;string, any&gt;;
+
+    /** 初始是否发出请求 */
+    initRequest?: boolean;
+
+    /** 获取数据 */
+    getData: (data: Record&lt;string, any&gt;) =&gt; Promise&lt;{ data?: T }&gt;;
+
+    /** 数据格式化 */
+    dataFormat?(data?: T): any;
+
+    /** 请求成功后的回调 */
+    successCallback?(data?: T): void;
+}
+
+export function useMutate&lt;T&gt;(config: IMutateOption&lt;T&gt;) {
+    const { defaultData, params, initRequest = true } = config;
+    const detail = ref&lt;T | undefined&gt;(defaultData);
+    const noData = ref&lt;boolean&gt;();
+    const isInit = ref(initRequest);
+
+    const mutate = useLockFn(async () =&gt; {
+        try {
+            const { data } = await config.getData({ ...params });
+            const newData = config.dataFormat ? config.dataFormat(data) : data;
+
+            detail.value = newData;
+            config?.successCallback?.(newData);
+
+            /**暂无数据 */
+            let blo = false;
+
+            if (newData !== undefined) {
+                if (newData instanceof Array) {
+                    blo = newData.length === 0;
+                } else if (newData instanceof Object) {
+                    blo = Object.keys(newData).length === 0;
+                }
+            } else {
+                blo = true;
+            }
+
+            noData.value = blo;
+        } catch (error) {
+            console.log(error);
+            noData.value = true;
+        }
+    }, 500);
+
+    onMounted(() =&gt; {
+        if (!isInit.value) {
+            isInit.value = true;
+        } else {
+            mutate();
+        }
+    });
+
+    return { mutate, detail, noData };
+}
+</code></pre>
+<h3 id="使用示例">使用示例</h3>
+<pre><code>const { detail, mutate, noData } = useMutate({
+    getData: () =&gt; api['/wechat/api/outWorkOrder/express/{id}_GET'](1),
+});
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739756542887.png" alt="" loading="lazy"></figure>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/vrE64S-kvU/">
+              <h3 class="post-title">
+                下一篇：自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

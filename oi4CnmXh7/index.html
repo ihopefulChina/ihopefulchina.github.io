@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>腾讯COS上传图片封装 | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739949710217">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739949710217" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/oi4CnmXh7.jpeg')">
+            </div>
+          
+          <h2 class="post-title">腾讯COS上传图片封装</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2021-07-22</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/Nhq4NKwx6/">
+                    JavaScript
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>cos-js-sdk-v5 封装 适用于微信浏览器H5环境<br>
+Github地址：<a href="https://github.com/ihopefulChina/Tencent-COS-uploads-picture">https://github.com/ihopefulChina/Tencent-COS-uploads-picture</a></p>
+<!-- more -->
+<h3 id="configts">config.ts</h3>
+<pre><code>import { genID, get_suffix } from '~/tools/tools';
+import { autobind } from 'core-decorators';
+import COS from 'cos-js-sdk-v5';
+
+const Bucket = 'Bucket值';
+const Region = 'Region值';
+
+@autobind
+export default class COSUpload {
+  private getOssToken: () =&gt; Promise&lt;any&gt;
+
+  constructor(config: {
+    getOssToken: () =&gt; Promise&lt;any&gt;
+  }) {
+    this.getOssToken = config.getOssToken;
+  }
+
+  /**
+   * 批量上传
+   * @param {Object} obj Bucket、Region、Body 详情查看cos文档
+   * @returns err || 批量上传filesData
+   */
+  uploadFiles(fileList: any) {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve, reject) =&gt; {
+      const { cos, content } = await this.getOss();
+      const files = await fileList.map((fileObject: any) =&gt; {
+        const file = fileObject.file ? fileObject.file : fileObject;
+        const fileName = `${content.requestId}${genID(3)}.${file.path ? get_suffix(file.path) : 'png'}`;
+        return {
+          Bucket: Bucket,
+          Region: Region,
+          Key: fileName,
+          StorageClass: 'STANDARD',
+          Body: file,
+        };
+      });
+      await cos.uploadFiles({
+        files,
+        SliceSize: 1024 * 1024 * 5,    /* 设置大于5MB采用分块上传 */
+      }, function (err: any, data: any) {
+        const val = (err || data);
+        const list = !err ? val.files.map((item: any) =&gt; `https://${item.data.Location}`
+        ) : [];
+        const newArr = list.filter((it: string) =&gt; it);
+        return err ? reject(err) : resolve(newArr);
+      });
+    });
+  }
+
+
+  private async getOss() {
+    const data = await this.getOssToken();
+    const content = data as any;
+    const credentials = data.credentials;
+    // console.log(window,wx);
+    const cos = new COS({
+      getAuthorization: function (options: any, callback: any) {
+        callback({
+          TmpSecretId: credentials.tmpSecretId,
+          TmpSecretKey: credentials.tmpSecretKey,
+          SecurityToken: credentials.sessionToken,
+          // 建议返回服务器时间作为签名的开始时间，避免用户浏览器本地时间偏差过大导致签名错误
+          StartTime: data.startTime, // 时间戳，单位秒，如：1580000000
+          ExpiredTime: data.expiredTime, // 时间戳，单位秒，如：1580000900
+        });
+      }
+    });
+
+    return {
+      cos,
+      content
+    };
+  }
+}
+</code></pre>
+<h3 id="indexts">index.ts</h3>
+<pre><code>import COSUpload from './config';
+import { get } from &quot;~/request&quot;;
+
+&lt;!-- get请求 --&gt;
+const { uploadFiles } = new COSUpload({
+  getOssToken: () =&gt; get(`xxx.com/tencent/cos-token`)
+});
+
+export { uploadFiles };
+</code></pre>
+<h3 id="引入文件内容">引入文件内容</h3>
+<pre><code>/**
+ * @description: 生成唯一id
+ * @param {number} length 数字长度
+ * @return {string} 
+ */
+export function genID(length = 3) {
+    return Number(Math.random().toString().substr(3, length) + Date.now()).toString(36);
+}
+
+//获取文件名称后缀
+export const get_suffix = (fileName: string) =&gt; {
+    const suffix = fileName.substring(fileName.lastIndexOf('.') + 1);
+    return suffix;
+};
+
+</code></pre>
+<h3 id="上传多张图片组件">上传多张图片组件</h3>
+<pre><code>/* 组件 -- 上传 */
+import React, { useState } from &quot;react&quot;;
+import WxImageViewer from &quot;react-wx-images-viewer&quot;;
+import { uploadFiles } from &quot;~/components/tencent&quot;;
+import { Toast } from &quot;antd-mobile&quot;;
+import Compressor from &quot;compressorjs&quot;;
+
+import styles from &quot;./index.module.less&quot;;
+
+interface IProps {
+  imgList?: string[];
+  onChange: (list: string[]) =&gt; void;
+  onDelete: (idx: number) =&gt; void;
+  progressChange?: (percent: number) =&gt; void;
+  count?: number;
+}
+
+const Index = ({ imgList = [], onChange, onDelete, count = 2 }: IProps) =&gt; {
+  const [showViewer, setShowViewer] = useState(false);
+  const [imgIndex, setImgIndex] = useState(0);
+
+  const onInputChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    const fileList = e.target.files;
+
+    if (imgList.length &lt; count) {
+      //代表还可以上传
+      if (fileList &amp;&amp; fileList.length &gt; 0) {
+        const newFileList = [] as any;
+        for (const key in fileList) {
+          if (Object.prototype.hasOwnProperty.call(fileList, key)) {
+            const element = fileList[key] as any;
+            element &amp;&amp; newFileList.push(element);
+          }
+        }
+        let paths = [];
+        if (imgList.length + newFileList.length &lt; count) {
+          paths = newFileList;
+        } else {
+          //数量超过了
+          const surplus = count - imgList.length;
+          paths = newFileList.slice(0, surplus);
+          // paths = newFileList.filter((item, index) =&gt; index &lt; surplus);
+        }
+
+        //压缩图片
+        const newPaths = paths.map((image: any) =&gt; {
+          let newImg = image;
+          new Compressor(image, {
+            quality: 0.5, // 0.6 can also be used, but its not recommended to go below.
+            success: (res) =&gt; (newImg = res),
+          });
+          return newImg;
+        });
+        Toast.loading(&quot;上传中...&quot;);
+        uploadFiles(newPaths).then((res: any) =&gt; {
+          onChange &amp;&amp; onChange([...imgList, ...res]);
+          Toast.hide();
+        });
+      }
+    }
+  };
+
+  return (
+    &lt;div className={styles.upload}&gt;
+      &lt;div className={styles.uploadList}&gt;
+        {imgList.map((item, index) =&gt; (
+          &lt;div
+            key={`${item}`}
+            className={styles.item}
+            onClick={(event) =&gt; {
+              event.stopPropagation();
+              setShowViewer(true);
+              setImgIndex(index);
+              document
+                .getElementsByTagName(&quot;body&quot;)[0]
+                .setAttribute(&quot;style&quot;, &quot;overflow:hidden&quot;); //给body添加overflow:hidden阻止遮罩层滚动主页面滚动
+            }}
+          &gt;
+            &lt;img
+              className={styles.img}
+              data-preview-proto={item}
+              src={item}
+              alt=&quot;上传图片&quot;
+            /&gt;
+            &lt;img
+              className={styles.del}
+              src={require(&quot;./images/del.png&quot;)}
+              alt=&quot;删除按钮&quot;
+              onClick={(event) =&gt; {
+                event.stopPropagation();
+                onDelete(index);
+              }}
+            /&gt;
+          &lt;/div&gt;
+        ))}
+
+        {imgList.length &lt; count &amp;&amp; (
+          &lt;div className={styles.uploadBtn}&gt;
+            &lt;input
+              type=&quot;file&quot;
+              name=&quot;image&quot;
+              accept=&quot;image/*&quot;
+              multiple={true}
+              className={styles.uploadInput}
+              onChange={onInputChange}
+            /&gt;
+            &lt;div className={styles.uploadPlus}&gt;
+              &lt;img src={require(&quot;./images/plus.png&quot;)} alt=&quot;加号&quot; /&gt;
+              &lt;span&gt;
+                ({imgList.length}/{count})
+              &lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        )}
+      &lt;/div&gt;
+      {showViewer ? (
+        &lt;WxImageViewer
+          onClose={() =&gt; {
+            setShowViewer(false);
+            document.getElementsByTagName(&quot;body&quot;)[0].removeAttribute(&quot;style&quot;);
+          }}
+          urls={imgList}
+          index={imgIndex}
+        /&gt;
+      ) : (
+        &quot;&quot;
+      )}
+    &lt;/div&gt;
+  );
+};
+export default Index;
+</code></pre>
+<h3 id="引用组件">引用组件</h3>
+<pre><code>import Upload from &quot;~/components/upload&quot;;
+&lt;Upload
+                  imgList={form.discoverServiceImgs}
+                  count={6}
+                  onChange={(imgs) =&gt;
+                    setForm({ ...form, discoverServiceImgs: imgs })
+                  }
+                  onDelete={(idx) =&gt;
+                    setForm({
+                      ...form,
+                      discoverServiceImgs: form.discoverServiceImgs.filter(
+                        (_value: any, _index: any) =&gt; _index !== idx
+                      ),
+                    })
+                  }
+                /&gt;
+
+</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/dBAsSzkYF/">
+              <h3 class="post-title">
+                下一篇：函数式组件与类组件有何不同？
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

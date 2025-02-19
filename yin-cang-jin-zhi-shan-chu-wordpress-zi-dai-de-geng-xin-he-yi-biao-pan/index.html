@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>隐藏、禁止、删除Wordpress自带的更新和仪表盘 | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739949710217">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739949710217" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan.png')">
+            </div>
+          
+          <h2 class="post-title">隐藏、禁止、删除Wordpress自带的更新和仪表盘</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2019-08-22</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                    WordPress
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ihopefulchina.github.io/tag/php/">
+                    PHP
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <pre><code>Wordpress 更新有点频繁，最恶心的地方是，一旦更新，很多东西都已经没有了，所以最好禁止wordpress更新，仪表盘我个人不喜欢它，所以隐藏，看官们可以选择保留
+</code></pre>
+<!-- more -->
+<pre><code>
+function example_remove_dashboard_widgets() {
+        // Globalize the metaboxes array, this holds all the widgets for wp-admin
+	global $wp_meta_boxes;
+	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity']);
+	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now']);
+	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_recent_comments']);
+	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
+	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']);
+	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
+	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
+	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);
+	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']);
+}
+add_action('wp_dashboard_setup', 'example_remove_dashboard_widgets' );
+function change_footer_admin () {return '';}
+add_filter('admin_footer_text', 'change_footer_admin', 9999);
+function change_footer_version() {return '';}
+add_filter( 'update_footer', 'change_footer_version', 9999);
+function annointed_admin_bar_remove() {
+	global $wp_admin_bar;
+	/* Remove their stuff */
+	$wp_admin_bar-&gt;remove_menu('wp-logo');
+}
+add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
+add_filter('admin_title', 'wpdx_custom_admin_title', 10, 2);
+function wpdx_custom_admin_title($admin_title, $title){
+	return $title.' &amp;lsaquo; '.' 这里可以填写title名字';
+}
+add_filter('pre_site_transient_update_core', create_function('$a', &quot;return null;&quot;)); // 关闭核心提示
+add_filter('pre_site_transient_update_plugins', create_function('$a', &quot;return null;&quot;)); // 关闭插件提示
+add_filter('pre_site_transient_update_themes', create_function('$a', &quot;return null;&quot;)); // 关闭主题提示
+add_filter( 'automatic_updater_disabled', '__return_true' );//禁止自动更新
+remove_action('admin_init', '_maybe_update_core'); // 禁止检查更新
+remove_action('admin_init', '_maybe_update_plugins'); // 禁止更新插件
+remove_action('admin_init', '_maybe_update_themes'); // 禁止更新主题
+add_filter( 'wpcf7_validate_configuration', '__return_false' );
+add_filter( 'post_thumbnail_html', 'remove_width_attribute', 10 );
+</code></pre>
+<p>用上函数包含隐藏、禁止、删除Wordpress自带的更新和仪表盘，还有修改title名字</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/jin-zhi-shan-chu-mou-xie-ye-mian/">
+              <h3 class="post-title">
+                下一篇：禁止删除某些页面
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

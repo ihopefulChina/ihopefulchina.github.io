@@ -1,0 +1,1549 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://ihopefulchina.github.io</id>
+    <title>ihopeful Blog</title>
+    <updated>2025-02-19T07:21:51.212Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://ihopefulchina.github.io"/>
+    <link rel="self" href="https://ihopefulchina.github.io/atom.xml"/>
+    <subtitle>Sweat is the lubricant of success.</subtitle>
+    <logo>https://ihopefulchina.github.io/images/avatar.png</logo>
+    <icon>https://ihopefulchina.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2025, ihopeful Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[👉👉👉爬蓝湖原型目录结构]]></title>
+        <id>https://ihopefulchina.github.io/qn_PbZX5g6/</id>
+        <link href="https://ihopefulchina.github.io/qn_PbZX5g6/">
+        </link>
+        <updated>2025-02-14T09:47:03.000Z</updated>
+        <summary type="html"><![CDATA[<p>本插件用于爬 蓝湖原型目录结构，导出csv文件，可以用于飞书等 开发项目在线文档。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>本插件用于爬 蓝湖原型目录结构，导出csv文件，可以用于飞书等 开发项目在线文档。</p>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739674155883.png" alt="" loading="lazy"></figure>
+<p>原型<br>
+<img src="https://ihopefulchina.github.io/post-images/1739526995167.png" alt="" loading="lazy"></p>
+<p>在公司发现一个痛点, 需求是这样的:</p>
+<ul>
+<li>蓝湖原型，需要按照目录下来，然后生成飞书在线开发文档</li>
+<li>传统上，只能手动copy</li>
+</ul>
+<p>针对以上，写一个油猴脚本插件 <a href="https://greasyfork.org/zh-CN/scripts/513139-%E7%88%AC%E8%93%9D%E6%B9%96%E5%8E%9F%E5%9E%8B%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84">爬蓝湖原型目录结构</a></p>
+<h4 id="主要特性">主要特性</h4>
+<p>生成csv文件， 任务模块copy3份, 3种任务类型：[接口开发, 页面开发, 接口联调] ，如果有其他自定义，自行调整。<br>
+现已支持按钮拖拽，并缓存top，right位置信息，解决遮挡原型问题。<br>
+改成生成csv格式文件，兼容性更强，可以在飞书新建一个多维表格，然后选择导入Excel生成的文件。</p>
+<h4 id="后续支持">后续支持</h4>
+<p>支持数据类型更丰富，比如添加开发人员信息</p>
+<p>生成的Excel<br>
+<img src="https://ihopefulchina.github.io/post-images/1739527027563.png" alt="" loading="lazy"></p>
+<p>导入到飞书<br>
+<img src="https://ihopefulchina.github.io/post-images/1739674155883.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能]]></title>
+        <id>https://ihopefulchina.github.io/4PEcn6ZhYy/</id>
+        <link href="https://ihopefulchina.github.io/4PEcn6ZhYy/">
+        </link>
+        <updated>2024-12-20T01:32:47.000Z</updated>
+        <summary type="html"><![CDATA[<p>在 Vue 3 中，我们可以通过自定义 Hook 来将业务逻辑从组件中抽离出来，使得我们的组件更加简洁和易于维护。今天，我们将介绍如何实现一个自定义的 PullToRefresh Hook，该 Hook 可以帮助我们在列表组件中轻松实现下拉刷新和上拉加载更多功能。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在 Vue 3 中，我们可以通过自定义 Hook 来将业务逻辑从组件中抽离出来，使得我们的组件更加简洁和易于维护。今天，我们将介绍如何实现一个自定义的 PullToRefresh Hook，该 Hook 可以帮助我们在列表组件中轻松实现下拉刷新和上拉加载更多功能。</p>
+<!-- more -->
+<h3 id="背景">背景</h3>
+<p>在许多移动端应用或 Web 应用中，下拉刷新和上拉加载更多功能是非常常见的交互方式。为了实现这一功能，我们需要管理分页状态、加载状态、数据合并等多个方面的逻辑。通过使用 Vue 3 的组合式 API（Composition API），我们可以将这些逻辑封装成一个通用的 Hook，使得代码更加复用和易于维护。</p>
+<ol>
+<li>需求分析</li>
+</ol>
+<p>我们需要实现以下功能：<br>
+•	支持下拉刷新和上拉加载更多。<br>
+•	支持分页加载，每次请求时，都会返回一页的数据。<br>
+•	支持数据的去重处理，防止加载重复的数据。<br>
+•	支持刷新时清空旧数据。<br>
+•	支持自定义数据格式化。<br>
+•	支持刷新完成后的回调，以便处理列表数据。</p>
+<ol start="2">
+<li>代码实现</li>
+</ol>
+<p>下面是我们实现的 usePullToRefresh Hook 代码：</p>
+<pre><code>import { computed, onMounted, ref } from 'vue';
+import { useLockFn } from '~/hooks';
+import { removeRepetition } from '~/utils';
+
+export enum PullToRefreshState {
+    /**
+     * 普通状态
+     */
+    none,
+    /**
+     * 刷新中
+     */
+    refreshing,
+    /**
+     * 添加中
+     */
+    pushing,
+}
+
+export interface IPullRefreshHookRefreshParams {
+    /**
+     * 刷新时是否清空旧数组
+     *
+     * @default false
+     */
+    clearList?: boolean;
+}
+
+interface IUsePullToRefreshOption&lt;T&gt; {
+    /** 默认数据 */
+    defaultData?: T[];
+    /** 默认初始插入数据 */
+    defaultInsertData?: T[];
+    dataKey?: string;
+    /** 初始是否发出请求 */
+    initRequest?: boolean;
+
+    /** 获取数据 */
+    getData: (data: Record&lt;string, any&gt; &amp; { pageNum: number }) =&gt; Promise&lt;{ data?: { list?: T[]; isLastPage?: boolean; total?: number } }&gt;;
+
+    /** 数据格式化 */
+    dataFormat?(data: T[]): any[];
+
+    /** 获取数据完成回调，返回本次数据 */
+    onAfterLoad?(data: T[], currentParams: Record&lt;string, any&gt; &amp; { pageNum: number }, total: number, isLastPage: boolean): void;
+    /** 获取数据完成回调，返回当前list、currentParams */
+    customSpliceList?(list: T[], currentParams: Record&lt;string, any&gt; &amp; { pageNum: number }): void;
+}
+
+export default function usePullToRefresh&lt;T&gt;(config: IUsePullToRefreshOption&lt;T&gt;) {
+    const { defaultData = [], dataKey = 'id' } = config;
+    const list = ref&lt;any[]&gt;(defaultData);
+    const total = ref&lt;number&gt;(0);
+    const noMore = ref&lt;boolean&gt;(false);
+
+    const pullToRefreshState = ref&lt;PullToRefreshState&gt;(PullToRefreshState.refreshing);
+    const requestId = ref&lt;number&gt;(0);
+    const pageNum = ref&lt;number&gt;(0);
+
+    const getListData = useLockFn(async (num?: number) =&gt; {
+        if (num !== undefined) {
+            pageNum.value = num;
+        } else {
+            pageNum.value++;
+        }
+
+        if (pageNum.value === 1) {
+            pullToRefreshState.value = PullToRefreshState.refreshing;
+            // setData([]);
+        } else {
+            pullToRefreshState.value = PullToRefreshState.pushing;
+        }
+
+        try {
+            const currentRequestId = ++requestId.value;
+            const currentParams = { pageNum: pageNum.value, pageSize: 10 };
+
+            const { data = {} } = await config.getData(currentParams);
+            if (currentRequestId !== requestId.value) {
+                return;
+            }
+            // eslint-disable-next-line prefer-const
+            let { list: dataList = [], isLastPage } = data;
+
+            dataList = config.dataFormat ? config.dataFormat(dataList) : dataList;
+
+            if (config.onAfterLoad) {
+                config.onAfterLoad(dataList, currentParams, data?.total || -1, !!isLastPage);
+            }
+
+            if (pageNum.value === 1) {
+                list.value = (config.defaultInsertData ? [...config.defaultInsertData, ...dataList] : dataList) || [];
+            } else {
+                dataList = removeRepetition((list.value || [])?.concat(dataList), dataKey);
+                list.value = dataList;
+            }
+
+            if (config.customSpliceList) {
+                config.customSpliceList(dataList, currentParams);
+            }
+            total.value = data?.total || -1;
+            noMore.value = isLastPage !== undefined ? !!isLastPage : data?.total !== -1 ? dataList?.length &gt;= (data?.total || -1) : true;
+        } catch (error) {
+            if (pageNum.value === 1) {
+                list.value = [];
+            }
+        }
+        pullToRefreshState.value = PullToRefreshState.none;
+    });
+
+    /**
+     * 更新某条数据的值
+     *
+     * @param updatedata
+     */
+    function updateById(updatedata: T, key = 'id') {
+        const newList = [...list.value]?.map((value) =&gt; {
+            if ((value as any)[key] === (updatedata as any)[key]) {
+                /** 改成替换更新 */
+                return { ...updatedata };
+            }
+            return { ...value };
+        });
+
+        list.value = [...newList];
+    }
+
+    /**
+     * 删除某条数据的值
+     *
+     * @param id
+     */
+    function deleteById(id: number | string, key = 'id') {
+        list.value = list.value?.filter((item) =&gt; `${item[key]}` !== `${id}`);
+    }
+
+    /**
+     * 更新列表中的数据
+     *
+     * @param {T} data 需要更新的数据
+     * @param {(string | ((item: T, index: number) =&gt; boolean))} compare 比对逻辑
+     */
+    function updateLisItem(data: T, compare: string | ((item: T, index: number) =&gt; boolean)) {
+        const isString = typeof compare === 'string';
+        list.value = list.value?.map((value, index) =&gt; {
+            if (isString) {
+                return (value as any)[compare] === (data as any)[compare] ? { ...value, ...data } : value;
+            }
+            return compare(value, index) ? { ...value, ...data } : value;
+        });
+    }
+
+    onMounted(() =&gt; {
+        if (config?.initRequest !== false) {
+            getListData();
+        }
+    });
+
+    function onRefresh(refreshParams?: IPullRefreshHookRefreshParams) {
+        if (refreshParams?.clearList) {
+            list.value = [];
+        }
+        getListData(1);
+    }
+
+    const isEmpty = computed(() =&gt; list?.value.length === 0 &amp;&amp; pullToRefreshState?.value === PullToRefreshState.none);
+
+    return {
+        list,
+        setList: list.value,
+        total,
+        updateById,
+        pageNum,
+        updateLisItem,
+        deleteByIndex: (index: number) =&gt; (list.value = list.value?.filter((__, idx) =&gt; idx !== index)),
+        /** 根据传入的标识删除对应的数据，传入标识值和标识字段，默认id */
+        deleteById,
+        state: pullToRefreshState,
+        noMore,
+        onRefresh,
+        isEmpty,
+        onReachBottom: () =&gt; getListData(),
+    };
+}
+</code></pre>
+<h3 id="使用实例">使用实例</h3>
+<pre><code>// 列表数据
+const pullToProps = useMMPullToRefresh&lt;UpWorkHistoryPageVO&gt;({
+    initRequest: false,
+    getData: (params) =&gt; {
+        if (type.value === EStaffBillPermission.REPAIR) {
+            return api['/wechat/api/repairWorkOrderSignHistory/page_GET']({ ...params, id: pageQuery?.value?.id });
+        }
+        return api['/wechat/api/upWorkOrder/historyPage_GET']({ ...params, id: pageQuery?.value?.id, type: ESignInType.SIGN_IN });
+    },
+});
+const { list, isEmpty } = toRefs(pullToProps);
+
+&lt;PullToRefresh
+                :noMore=&quot;pullToProps?.noMore&quot;
+                :state=&quot;pullToProps?.state&quot;
+                :isEmpty=&quot;pullToProps?.isEmpty&quot;
+                @onRefresh=&quot;pullToProps?.onRefresh&quot;
+                @onReachBottom=&quot;pullToProps?.onReachBottom&quot;
+                refresherBackground=&quot;#fff&quot;
+            &gt;
+                &lt;view class=&quot;list&quot; v-if=&quot;list &amp;&amp; list?.length &gt; 0&quot;&gt;
+                    &lt;view class=&quot;item&quot; v-for=&quot;item in list&quot; :key=&quot;item?.id&quot;&gt;
+                        &lt;Item :item=&quot;item&quot; :type=&quot;type&quot; /&gt;
+                    &lt;/view&gt;
+                &lt;/view&gt;
+                &lt;view v-else-if=&quot;isEmpty&quot;&gt;
+                    &lt;Empty marginTop=&quot;440&quot; :emptyStr=&quot;t('common.no_data')&quot; /&gt;
+                &lt;/view&gt;
+            &lt;/PullToRefresh&gt;
+        ```
+PullToRefresh 组件源码(仅供参考，相关逻辑根据项目实际业务场景)
+</code></pre>
+<script lang="ts" setup>
+import { CSSProperties, ComputedRef, Ref, computed, getCurrentInstance, onMounted, ref, toRefs } from 'vue';
+import Gap from '~/components/common/gap/Gap.vue';
+import { useLockFn } from '~/hooks';
+import { useSystemInfo } from '~/state/useSystemInfo';
+import TnLoadmore from '~/uni_modules/tuniaoui-vue3/components/loadmore/src/loadmore.vue';
+import { selectRect } from '~/utils/uniApi';
+import { MMPullToRefreshState } from './const';
+
+/** 设置自定义下拉刷新阈值 */
+const REFRESHER_THRESHOLD = 45;
+
+interface IMMPullToRefreshProps {
+    /** 刷新状态 */
+    state: Ref<MMPullToRefreshState>;
+    /** 没有更多 */
+    noMore: Ref<boolean>;
+    /** 是否显示没有更多文案，默认显示 */
+    hiddeNoMoreText?: boolean;
+    /** 是否空数据 */
+    isEmpty?: ComputedRef<boolean>;
+    /** 列表高度 */
+    height?: number;
+    /** styles */
+    styles?: CSSProperties;
+    /** isTab */
+    isTab?: boolean;
+    /** 背景颜色 */
+    refresherBackground?: string;
+    /** 底部空间高度 rpx */
+    footerSpace?: number;
+    /** 页面滚动回掉 */
+    onScroll?: (e: any) => void;
+}
+
+/** 子传父事件 */
+const emits = defineEmits<{
+    (e: 'onRefresh'): void;
+    (e: 'onReachBottom'): void;
+}>();
+const systemInfo = useSystemInfo();
+const instance = getCurrentInstance(); // 获取组件实例
+
+/** 父传子参数 */
+const props = defineProps<IMMPullToRefreshProps>();
+const { noMore, state, isEmpty } = toRefs(props);
+
+/** 列表高度计算 */
+const scollViewHeight = ref<number>();
+const calculateScrollViewHeight = async () => {
+    let scrollViewHeight = props?.height;
+    try {
+        if (!scrollViewHeight) {
+            const topViewRes: any = await selectRect('#MMPullToRefreshTop', instance!);
+
+            scrollViewHeight = systemInfo?.screenHeight - topViewRes?.top;
+        }
+    } catch (error) {
+        console.warn(error);
+    }
+
+    scollViewHeight.value = props?.isTab && scrollViewHeight ? scrollViewHeight - systemInfo?.tabbarHeight : scrollViewHeight;
+};
+onMounted(() => {
+    calculateScrollViewHeight();
+});
+
+/** 加载更多status */
+const status = computed<'loading' | 'nomore' | undefined>(() => {
+    if (state?.value === MMPullToRefreshState.pushing) {
+        return 'loading';
+    } else if (state.value !== MMPullToRefreshState.refreshing && noMore) {
+        return 'nomore';
+    }
+    return undefined;
+});
+
+/** 开启自定义下拉刷新 */
+// const refresherTriggered = computed(() => state?.value === MMPullToRefreshState.refreshing);
+const refresherTriggered = ref<boolean>(false);
+/** 刷新列表 */
+const refresherrefresh = useLockFn(async () => {
+    refresherTriggered.value = true;
+    if (state.value === MMPullToRefreshState.none) {
+        emits('onRefresh');
+        setTimeout(() => {
+            refresherTriggered.value = false;
+        }, 500);
+    }
+});
+
+const onScroll = (event: any) => {
+    props.onScroll?.(event);
+};
+
+/** 下拉更多 */
+const scrolltolower = () => {
+    if (!noMore?.value) {
+        emits('onReachBottom');
+    }
+};
+</script>
+<template>
+    <view class="MMPullToRefresh" :style="{ height: `${scollViewHeight}px` }">
+        <view id="MMPullToRefreshTop" />
+        <!-- <view class="pullHead" v-if="refresherTriggered">
+            <TnLoadmore size="36" status="loading" color="#999" :loadingText="false" loadingIconMode="flower" />
+        </view> -->
+        <scroll-view
+            scrollY
+            scrollWithAnimation
+            enableBackToTop
+            refresherEnabled
+            refresherDefaultStyle="black"
+            :refresherThreshold="REFRESHER_THRESHOLD"
+            :refresherTriggered="refresherTriggered"
+            :refresherBackground="props?.refresherBackground ?? '#fff'"
+            @refresherrefresh="refresherrefresh"
+            @scrolltolower="scrolltolower"
+            @scroll="onScroll"
+            class="simplePullToRefresh"
+            :style="{ ...props.styles }"
+        >
+            <!-- <slot name="refresher">
+                <view class="pullHead">
+                    <TnLoadmore size="36" status="loading" color="#999" :loadingText="false" loadingIconMode="flower" />
+                </view>
+            </slot> -->
+            <slot></slot>
+<pre><code>        &lt;view class=&quot;noMore&quot; v-if=&quot;!isEmpty &amp;&amp; (status !== 'nomore' || (status === 'nomore' &amp;&amp; !props.hiddeNoMoreText))&quot;&gt;
+            &lt;TnLoadmore :status=&quot;status&quot; v-if=&quot;status&quot; color=&quot;#999&quot; loadingIconMode=&quot;flower&quot; /&gt;
+        &lt;/view&gt;
+        &lt;Gap :height=&quot;props?.footerSpace&quot; v-if=&quot;props?.footerSpace&quot; :styles=&quot;{ width: '100%' }&quot; /&gt;
+    &lt;/scroll-view&gt;
+&lt;/view&gt;
+</code></pre>
+</template>
+<style lang="scss" scoped>
+@import './index.scss';
+</style>
+<pre><code>
+![](https://ihopefulchina.github.io/post-images/1739756274673.png)
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装]]></title>
+        <id>https://ihopefulchina.github.io/aJA508HwI4/</id>
+        <link href="https://ihopefulchina.github.io/aJA508HwI4/">
+        </link>
+        <updated>2024-10-17T05:39:42.000Z</updated>
+        <summary type="html"><![CDATA[<p>在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。</p>
+<!-- more -->
+<h3 id="背景">背景</h3>
+<p>在前端开发中，数据的请求和展示是常见的功能。为了避免在每个组件中重复相似的代码，我们可以将数据请求的逻辑抽象成一个可复用的 Hook。useMutate Hook 的目标就是封装数据请求、处理无数据状态和格式化数据的逻辑，帮助我们简化代码并提高开发效率。</p>
+<h3 id="需求分析">需求分析</h3>
+<p>我们需要实现以下功能：<br>
+1.	数据请求： 向服务器请求数据。<br>
+2.	数据格式化： 支持自定义的数据格式化函数。<br>
+3.	请求成功回调： 请求成功后触发回调，方便后续操作。<br>
+4.	无数据状态管理： 判断返回数据是否为空，并更新 noData 状态。</p>
+<h3 id="代码实现">代码实现</h3>
+<p>下面是我们实现的 useMutate Hook：</p>
+<pre><code>import { onMounted, ref } from 'vue';
+import { useLockFn } from './useLockFn';
+
+interface IMutateOption&lt;T&gt; {
+    /** 默认数据 */
+    defaultData?: T;
+
+    /** 额外传递参数 */
+    params?: Record&lt;string, any&gt;;
+
+    /** 初始是否发出请求 */
+    initRequest?: boolean;
+
+    /** 获取数据 */
+    getData: (data: Record&lt;string, any&gt;) =&gt; Promise&lt;{ data?: T }&gt;;
+
+    /** 数据格式化 */
+    dataFormat?(data?: T): any;
+
+    /** 请求成功后的回调 */
+    successCallback?(data?: T): void;
+}
+
+export function useMutate&lt;T&gt;(config: IMutateOption&lt;T&gt;) {
+    const { defaultData, params, initRequest = true } = config;
+    const detail = ref&lt;T | undefined&gt;(defaultData);
+    const noData = ref&lt;boolean&gt;();
+    const isInit = ref(initRequest);
+
+    const mutate = useLockFn(async () =&gt; {
+        try {
+            const { data } = await config.getData({ ...params });
+            const newData = config.dataFormat ? config.dataFormat(data) : data;
+
+            detail.value = newData;
+            config?.successCallback?.(newData);
+
+            /**暂无数据 */
+            let blo = false;
+
+            if (newData !== undefined) {
+                if (newData instanceof Array) {
+                    blo = newData.length === 0;
+                } else if (newData instanceof Object) {
+                    blo = Object.keys(newData).length === 0;
+                }
+            } else {
+                blo = true;
+            }
+
+            noData.value = blo;
+        } catch (error) {
+            console.log(error);
+            noData.value = true;
+        }
+    }, 500);
+
+    onMounted(() =&gt; {
+        if (!isInit.value) {
+            isInit.value = true;
+        } else {
+            mutate();
+        }
+    });
+
+    return { mutate, detail, noData };
+}
+</code></pre>
+<h3 id="使用示例">使用示例</h3>
+<pre><code>const { detail, mutate, noData } = useMutate({
+    getData: () =&gt; api['/wechat/api/outWorkOrder/express/{id}_GET'](1),
+});
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739756542887.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装]]></title>
+        <id>https://ihopefulchina.github.io/vrE64S-kvU/</id>
+        <link href="https://ihopefulchina.github.io/vrE64S-kvU/">
+        </link>
+        <updated>2024-08-06T07:26:46.000Z</updated>
+        <summary type="html"><![CDATA[<p>在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— useProTableRequest，并深入讲解其工作原理和如何在项目中使用。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— useProTableRequest，并深入讲解其工作原理和如何在项目中使用。</p>
+<!-- more -->
+<h3 id="功能概述">功能概述</h3>
+<p>useProTableRequest 是一个用于处理表格数据请求的自定义 Hook，主要包括以下功能：<br>
+•	数据请求：从服务器获取数据，并支持分页、排序和筛选功能。<br>
+•	数据缓存：缓存请求的参数和数据，方便在用户返回该页面时恢复表格状态（如分页、筛选等）。<br>
+•	参数格式化：可以自定义格式化请求参数和返回的数据</p>
+<h3 id="代码code">代码code</h3>
+<pre><code>import { ActionType, ProFormInstance, RequestData } from '@ant-design/pro-components'
+import { SortOrder } from 'antd/lib/table/interface'
+import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
+
+type Params&lt;U&gt; = U &amp; {
+  pageSize?: number
+  current?: number
+  keyword?: string
+}
+
+type Sort = Record&lt;string, SortOrder&gt;
+
+type Filter = Record&lt;string, React.ReactText[] | null&gt;
+
+type Fn&lt;U, T&gt; = (
+  params: any,
+  sort: Sort,
+  filter: Filter
+) =&gt; Promise&lt;{ code?: number; msg?: string; data?: { list?: T[]; total?: number } }&gt;
+
+export interface IUseProTableRequestOption&lt;T, U = T&gt; {
+
+  /** 需要缓存的目标链接地址
+   *  目的: 缓存列表页的请求参数，例如分页、排序、搜索等参数，方便详情回列表页时自动恢复
+   *  @example [routeNames.userManagementUserListUserDetail]
+   */
+  cacheUrls?: string[]
+  /**
+   * 格式化数据
+   * 你可以对返回的数据做一些处理
+   */
+  dataFormat?: (data: T[]) =&gt; U[]
+  /**
+   * 格式化参数
+   *
+   * 前置处理请求参数。如果你需要传递给导出时。这会很有用
+   * @param params 将要传递给接口的参数
+   */
+  paramsFormat?(params: any): any
+}
+
+/**
+ * antd pro table请求封装钩子
+ * @param fn
+ * @param option
+ * @returns
+ */
+export default function useProTableRequest&lt;T, U extends Record&lt;string, any&gt; = {}&gt;(
+  fn: Fn&lt;U, T&gt;,
+  option: IUseProTableRequestOption&lt;T&gt; = {}
+) {
+  const { dataFormat, cacheUrls } = option
+
+  // Table action 的引用，便于自定义触发
+  const actionRef = useRef&lt;ActionType&gt;()
+
+  const formRef = useRef&lt;ProFormInstance&gt;()
+  // 缓存请求参数
+  const requestParams = useRef&lt;Record&lt;string, any&gt;&gt;({})
+  // 数据缓存参数
+  const dataSourceRef = useRef&lt;T[]&gt;([])
+
+  /** 缓存参数 */
+  const _cacheData = useRef&lt;any&gt;(undefined)
+  /** 缓存key */
+  const cacheKey = genCacheKey()
+  /** 当前是否需要缓存 */
+  const needCache = !!cacheUrls?.length
+
+  // 表格请求
+  const tableRequst = useCallback(async (params: Params&lt;U&gt;, sort: Sort, filter: Filter) =&gt; {
+    const { current, ...rest } = params as Record&lt;string, any&gt;
+    const newParams: any = { ...rest, pageNum: current ?? params?.pageNum ?? 1 }
+
+    // 重置数据
+    let total = 0
+    let data: T[] = []
+
+    requestParams.current = option.paramsFormat ? option.paramsFormat(newParams) : newParams
+
+    try {
+      // 参数长度过长不处理
+      if (JSON.stringify(requestParams.current).length &lt; 1000) {
+        const res = await fn(requestParams.current, sort, filter)
+        // 如果当前列表为空并且pageNum不为1.则重新发起请求
+        if (!res.data?.list?.length &amp;&amp; requestParams.current.pageNum !== 1) {
+          setTimeout(() =&gt; {
+            actionRef.current?.reload(true)
+          })
+        }
+        const { list = [] as T[] } = res.data || {}
+        total = res.data?.total || 0
+        data = dataFormat ? dataFormat(list) : list
+        // 缓存数据
+        _cacheData.current = { ...requestParams.current }
+
+        dataSourceRef.current = data
+      }
+    } catch (error) {}
+    // }
+
+    return { data, success: true, total } as Partial&lt;RequestData&lt;T&gt;&gt;
+  }, [])
+
+  /** 恢复缓存 */
+  const restoreCache = () =&gt; {
+    if (needCache) {
+      const cacheString = window.sessionStorage.getItem(cacheKey)
+
+      if (cacheString) {
+        try {
+          const cacheParams = JSON.parse(cacheString)
+
+          /** 恢复请求参数 */
+          _cacheData.current = cacheParams
+          /** 恢复搜索表单 */
+          formRef.current?.setFieldsValue(cacheParams)
+          /** 恢复分页信息 */
+          actionRef.current?.setPageInfo?.({
+            current: cacheParams?.current ?? cacheParams?.pageNum ?? 1,
+            pageSize: cacheParams?.pageSize
+          })
+        } catch (error) {
+        } finally {
+          window.sessionStorage.removeItem(cacheKey) // 清除缓存数据
+        }
+      }
+    }
+  }
+  useLayoutEffect(() =&gt; {
+    restoreCache()
+  }, [])
+  /**
+   * 表格数据缓存处理
+   */
+  useEffect(() =&gt; {
+    return () =&gt; {
+      if (!needCache) {
+        return
+      }
+
+      // 组件卸载时将数据缓存至sessionStorage
+      const to = pick(window.location, ['hash', 'href', 'protocol', 'port', 'search', 'pathname', 'hostname'])
+
+      const toCache = cacheUrls?.some((url) =&gt; to?.href?.includes(url))
+      if (toCache) {
+        window.sessionStorage.setItem(cacheKey, JSON.stringify(_cacheData.current))
+      }
+    }
+  }, [])
+
+  return {
+    formRef,
+    actionRef,
+    /**
+     * 表格请求
+     */
+    request: tableRequst,
+    /**
+     * 表格query参数
+     */
+    params: requestParams,
+
+    /**
+     * 表格数据缓存
+     */
+    dataSource: dataSourceRef
+  }
+}
+
+/**
+ * 从对象中选择指定的属性
+ * @param obj
+ * @param keys
+ * @returns
+ */
+function pick&lt;T extends Object, K extends keyof T&gt;(obj: T, keys: K[]): Pick&lt;T, K&gt; {
+  const result = {} as Pick&lt;T, K&gt;
+  keys.forEach((key) =&gt; {
+    if (key in obj) {
+      result[key] = obj[key]
+    }
+  })
+  return result
+}
+
+/**
+ * 生成缓存键值
+ * @param key key
+ * @returns
+ */
+function genCacheKey(key?: string | ((ok: string) =&gt; string)) {
+  const hostKey = encodeURIComponent(window.location.href.replace(/http(s)?:\/\//, ''))
+  if (typeof key === 'function') {
+    return key(hostKey)
+  }
+  return key || hostKey
+}
+</code></pre>
+<h3 id="简单实例">简单实例</h3>
+<pre><code> const { request, actionRef, formRef } = useProTableRequest(api['/admin/mall/banner/queryList_GET'])
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739777358410.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[插件: 自动生成 Vue 3 项目中的路由配置]]></title>
+        <id>https://ihopefulchina.github.io/ZxMrztTo35/</id>
+        <link href="https://ihopefulchina.github.io/ZxMrztTo35/">
+        </link>
+        <updated>2024-07-17T08:50:37.000Z</updated>
+        <summary type="html"><![CDATA[<p>在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。</p>
+<!-- more -->
+<p>我写了一个如何通过自动化脚本生成 Vue 3 项目的路由配置文件。具体来说，将根据 pages.json 文件动态生成路由映射，并且支持分包和 tabBar 配置。</p>
+<h3 id="背景">背景</h3>
+<p>在某些小程序框架（如 Taro 或 WeChat 小程序）中，路由配置是通过 pages.json 文件来维护的。这个文件定义了页面的路径、tabBar 配置、分包等信息。为了提高开发效率，我们希望能够自动从 pages.json 文件中读取这些信息，并生成对应的路由配置文件，而不需要手动去编写。</p>
+<h3 id="实现思路">实现思路</h3>
+<p>我们可以编写一个 Node.js 脚本，它会：<br>
+1.	读取 pages.json 文件。<br>
+2.	提取主包和分包的页面路由信息。<br>
+3.	生成符合 Vue 3 项目路由要求的配置。<br>
+4.	自动生成一个 TypeScript 文件来保存路由映射。</p>
+<h3 id="代码实现">代码实现</h3>
+<p>我们通过以下脚本实现自动生成路由配置的功能：</p>
+<pre><code>
+/* eslint-disable id-length */
+/* eslint-disable @typescript-eslint/no-var-requires */
+const fs = require('fs');
+const pagesJson = require('../src/pages.json');
+
+const tabBar = (pagesJson?.tabBar ?? [])?.list.map((item) =&gt; ({ url: `/${item.pagePath}` }));
+
+const mainPages = pagesJson?.pages?.map((it) =&gt; ({ name: it.name || '', path: it.path }));
+
+const subPackages = [];
+/** 获取分包的路由 */
+pagesJson?.subPackages
+    ?.map((it) =&gt; {
+        if (it.pages) {
+            return it.pages.map((vl) =&gt; ({ name: vl.name || '', path: it.root + '/' + vl.path }));
+        }
+    })
+    ?.map((it) =&gt; {
+        if (it) {
+            subPackages.push(...it);
+        }
+    });
+const pages = [...mainPages, ...subPackages]; // 所有路由
+
+const tab = '  ';
+let str = `
+/**
+ * 页面路由映射.
+ * 请不要在此文件添加任何代码。因为生成后会全量覆盖
+ * 运行 npm run route 或者 yarn route 自动生成
+ */
+
+export const routeNames = {\n`;
+
+str += pages
+    .map(({ name, path }, index) =&gt; {
+        const key = path.replace(/^\//, '').replace(/\/([a-zA-Z0-9])/g, (_m, p) =&gt; p.toUpperCase());
+        return `${tab}${tab}/** ${name} */\n${tab}${tab}${key}: '/${path}'${index !== pages.length - 1 ? ',' : ''}`;
+    })
+    .join('\n');
+
+str += '\n};\n\n';
+
+if (tabBar.length) {
+    str +=
+        'export const tabbar = ' +
+        JSON.stringify(tabBar, undefined, 4)
+            .replace(/&quot;(.+)&quot;:/g, '$1:')
+            .replace(/: &quot;(.+)&quot;/g, &quot;:'$1'&quot;);
+    str += ';\n\n';
+}
+
+fs.writeFile('./src/routes.ts', str, (error) =&gt; {
+    // 创建失败
+    if (error) {
+        console.log(`生成失败❌：${error}`);
+    }
+    // 创建成功
+    console.log('🎉🎉🎉🎉路由生成✅');
+});
+
+</code></pre>
+<h3 id="如何使用">如何使用</h3>
+<ol>
+<li>将上述脚本文件保存为 generate-routes.js，并放置在项目的根目录中。</li>
+<li>在 package.json 中添加一个脚本命令来执行这个脚本：</li>
+</ol>
+<pre><code>       &quot;scripts&quot;: {
+       &quot;route&quot;: &quot;node generate-routes.js&quot;
+       }
+</code></pre>
+<ol start="3">
+<li>运行命令生成路由配置：<br>
+<code>        npm run route    </code></li>
+</ol>
+<h3 id="总结">总结</h3>
+<p>通过这个自动化脚本，我们能够轻松地根据 pages.json 文件生成项目中的路由配置。这大大提高了开发效率，避免了手动维护路由的繁琐工作。每当 pages.json 文件更新时，我们只需重新运行脚本，路由配置就会自动更新。<br>
+<img src="https://ihopefulchina.github.io/post-images/1739757236685.png" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[🙋🙋🙋AvatarCropper: 头像裁剪组件]]></title>
+        <id>https://ihopefulchina.github.io/7dtD7wCIDd/</id>
+        <link href="https://ihopefulchina.github.io/7dtD7wCIDd/">
+        </link>
+        <updated>2024-07-09T06:51:15.000Z</updated>
+        <summary type="html"><![CDATA[<p>在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。</p>
+<!-- more -->
+<h3 id="组件概述">组件概述</h3>
+<p>AvatarCropper 是一个用户自定义的头像裁剪工具，允许用户选择图片进行裁剪，支持缩放、旋转、拖动等操作。组件的功能包括：<br>
+•	选择图片进行裁剪。<br>
+•	支持缩放和旋转图像。<br>
+•	在画布上实时显示裁剪效果。<br>
+•	裁剪完成后，可以返回裁剪后的图片或文件路径。</p>
+<h3 id="组件属性解析">组件属性解析</h3>
+<p>AvatarCropper 的一些常见属性：<br>
+•	maxZoom：最大缩放倍数，控制裁剪区域的最大缩放程度。<br>
+•	space：裁剪框与画布边缘的空隙，避免裁剪框被画布边界限制。<br>
+•	toolbar：裁剪工具栏的内容，可以自定义显示的按钮。<br>
+•	toolbarPosition：工具栏的位置，支持 top 或 bottom。<br>
+•	editText：显示在裁剪工具栏的编辑文字。<br>
+•	sizeType 和 sourceType：允许选择图片的类型和来源。<br>
+•	shape：裁剪框的形状，支持 square 或 round。<br>
+•	onConfirm：裁剪完成后的回调函数，传递裁剪后的图片路径。<br>
+•	onCancel：取消裁剪的回调函数。</p>
+<h3 id="代码">代码</h3>
+<p>index.less code</p>
+<pre><code>.avatar-cropper {
+  position: relative;
+  display: flex;
+
+  &amp;-edit-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 1;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &amp;-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; // 隐藏原生上传按钮
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  &amp;-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 1000;
+    &amp;-canvas,
+    &amp;-cut-canvas {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    &amp;-cut-canvas {
+      z-index: 0;
+    }
+
+    &amp;-toolbar {
+      position: absolute;
+      bottom: 30px;
+      left: 0;
+      width: 100%;
+      z-index: 2;
+
+      &amp;.top {
+        top: 0;
+        bottom: inherit;
+      }
+
+      &amp;-flex {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &amp;-item {
+        // flex: 1;
+        color: #fff;
+        padding: 10px 30px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    &amp;-highlight {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background-color: transparent;
+
+      .highlight {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: transparent;
+        // box-shadow: 0 0 1000px 1000px rgba(0, 0, 0, 0.6);
+      }
+    }
+  }
+
+  &amp;.round {
+    .nut-avatar-cropper-edit-text {
+      border-radius: 50%;
+    }
+  }
+}
+
+[dir='rtl'] .avatar-cropper,
+.nut-rtl .avatar-cropper {
+  &amp;-edit-text {
+    left: auto;
+    right: 0;
+  }
+
+  &amp;-input {
+    left: auto;
+    right: 0;
+  }
+
+  &amp;-popup {
+    left: auto;
+    right: 0;
+
+    &amp;-canvas,
+    &amp;-cut-canvas {
+      left: auto;
+      right: 0;
+    }
+
+    &amp;-toolbar {
+      left: auto;
+      right: 0;
+    }
+
+    &amp;-highlight {
+      left: auto;
+      right: 0;
+
+      .highlight {
+        left: auto;
+        right: 50%;
+        transform: translate(50%, -50%);
+      }
+    }
+  }
+}
+
+.canvans-btn {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+</code></pre>
+<p>index.tsx code</p>
+<pre><code>import { AvatarCropper } from './avatarcropper'
+
+export type {
+  AvatarCropperProps,
+  AvatarCropperToolbarPosition,
+  AvatarCropperSizeType,
+  AvatarCropperSourceType,
+  AvatarCropperShape
+} from './avatarcropper'
+export default AvatarCropper
+</code></pre>
+<p>type.ts code</p>
+<pre><code>import type { CSSProperties, ReactNode } from 'react'
+
+export interface BasicComponent {
+  className?: string
+  style?: CSSProperties
+  children?: ReactNode
+  id?: string
+}
+
+export const ComponentDefaults = {
+  className: '',
+  style: {}
+}
+</code></pre>
+<p>use-touch.ts code</p>
+<pre><code>import React, { useRef } from 'react'
+
+const MIN_DISTANCE = 10
+
+type Direction = '' | 'vertical' | 'horizontal'
+
+function getDirection(x: number, y: number) {
+  if (x &gt; y &amp;&amp; x &gt; MIN_DISTANCE) {
+    return 'horizontal'
+  }
+  if (y &gt; x &amp;&amp; y &gt; MIN_DISTANCE) {
+    return 'vertical'
+  }
+  return ''
+}
+
+export function useTouch() {
+  const startX = useRef(0)
+  const startY = useRef(0)
+  const deltaX = useRef(0)
+  const deltaY = useRef(0)
+  const delta = useRef(0)
+  const offsetX = useRef(0)
+  const offsetY = useRef(0)
+  const direction = useRef&lt;Direction&gt;('')
+  const last = useRef(false)
+  const velocity = useRef(0)
+  const touchTime = useRef&lt;number&gt;(Date.now())
+
+  const isVertical = () =&gt; direction.current === 'vertical'
+  const isHorizontal = () =&gt; direction.current === 'horizontal'
+
+  const reset = () =&gt; {
+    touchTime.current = Date.now()
+    deltaX.current = 0
+    deltaY.current = 0
+    offsetX.current = 0
+    offsetY.current = 0
+    delta.current = 0
+    direction.current = ''
+    last.current = false
+  }
+
+  const start = (event: React.TouchEvent&lt;HTMLElement&gt;) =&gt; {
+    reset()
+    touchTime.current = Date.now()
+    startX.current = event.touches[0].clientX
+    startY.current = event.touches[0].clientY
+  }
+
+  const move = (event: React.TouchEvent&lt;HTMLElement&gt;) =&gt; {
+    const touch = event.touches[0]
+    // Fix: Safari back will set clientX to negative number
+    deltaX.current = touch.clientX &lt; 0 ? 0 : touch.clientX - startX.current
+    deltaY.current = touch.clientY - startY.current
+    offsetX.current = Math.abs(deltaX.current)
+    offsetY.current = Math.abs(deltaY.current)
+    delta.current = isVertical() ? deltaY.current : deltaX.current
+
+    if (!direction.current) {
+      direction.current = getDirection(offsetX.current, offsetY.current)
+    }
+  }
+  const end = (event: React.TouchEvent&lt;HTMLElement&gt;) =&gt; {
+    last.current = true
+    velocity.current = Math.sqrt(deltaX.current ** 2 + deltaY.current ** 2) / (Date.now() - touchTime.current)
+  }
+
+  return {
+    end,
+    move,
+    start,
+    reset,
+    touchTime,
+    startX,
+    startY,
+    deltaX,
+    deltaY,
+    delta,
+    offsetX,
+    offsetY,
+    direction,
+    isVertical,
+    isHorizontal,
+    last
+  }
+}
+</code></pre>
+<p>utils.ts code</p>
+<pre><code>export const isObject = (val: unknown): val is Record&lt;any, any&gt; =&gt; val !== null &amp;&amp; typeof val === 'object'
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const isFunction = (val: unknown): val is Function =&gt; typeof val === 'function'
+
+export const isPromise = &lt;T = any&gt;(val: unknown): val is Promise&lt;T&gt; =&gt; {
+  return isObject(val) &amp;&amp; isFunction(val.then) &amp;&amp; isFunction(val.catch)
+}
+
+export const upperCaseFirst = (str: string) =&gt; {
+  str = str.toLowerCase()
+  str = str.replace(/\b\w+\b/g, (word) =&gt; word.substring(0, 1).toUpperCase() + word.substring(1))
+  return str
+}
+
+export const clamp = (num: number, min: number, max: number): number =&gt; Math.min(Math.max(num, min), max)
+
+export function preventDefault(event: React.TouchEvent&lt;HTMLElement&gt; | TouchEvent, isStopPropagation?: boolean) {
+  if (typeof event.cancelable !== 'boolean' || event.cancelable) {
+    event.preventDefault()
+  }
+
+  if (isStopPropagation) {
+    event.stopPropagation()
+  }
+}
+</code></pre>
+<h3 id="简单实例">简单实例</h3>
+<pre><code>&lt;AvatarCropper shape=&quot;round&quot; onConfirm={cutImage}&gt;
+        &lt;View className={styles.headImgCenter}&gt;
+          {!!headImg &amp;&amp; &lt;Image className={styles.headImg} src={headImg ?? ''} mode=&quot;aspectFill&quot; /&gt;}
+        &lt;/View&gt;
+      &lt;/AvatarCropper&gt;
+</code></pre>
+<h3 id="todo">TODO</h3>
+<p>相关核心逻辑</p>
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739775430071.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数]]></title>
+        <id>https://ihopefulchina.github.io/p9E7d0w867/</id>
+        <link href="https://ihopefulchina.github.io/p9E7d0w867/">
+        </link>
+        <updated>2024-06-12T06:36:43.000Z</updated>
+        <summary type="html"><![CDATA[<p>在 React 中，我们经常需要获取和处理 URL 中的查询参数。特别是在单页应用（SPA）中，路由参数的管理和转换非常常见。为了提高代码的复用性和可维护性，我们可以使用 React 的 Hook 来封装这类逻辑，确保代码简洁、易于维护。通过实现一个自定义的 useRouterParams Hook 来演示如何获取 URL 中的查询参数，并根据需求进行解析和转换。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在 React 中，我们经常需要获取和处理 URL 中的查询参数。特别是在单页应用（SPA）中，路由参数的管理和转换非常常见。为了提高代码的复用性和可维护性，我们可以使用 React 的 Hook 来封装这类逻辑，确保代码简洁、易于维护。通过实现一个自定义的 useRouterParams Hook 来演示如何获取 URL 中的查询参数，并根据需求进行解析和转换。</p>
+<!-- more -->
+<h3 id="背景">背景</h3>
+<p>在前端开发中，路由查询参数（Query Parameters）是非常常见的。例如，在一个电商平台中，可能会通过 URL 的查询参数来传递过滤条件（如类别、价格区间等）。对于多页面应用（MPA）或单页面应用（SPA），获取和处理这些参数是必不可少的操作。</p>
+<p>React 官方提供的 useLocation 和 useHistory 钩子可以帮助我们访问路由，但它们默认只返回完整的 URL 信息，没有直接提供对查询参数的处理。因此，我们需要编写一个自定义 Hook 来简化这个过程。</p>
+<h3 id="实现思路">实现思路</h3>
+<p>我们希望创建一个 useRouterParams 的 Hook，它具有以下功能：<br>
+•	获取当前页面的查询参数。<br>
+•	可以选择对查询参数进行转换（例如，转换为数值类型或枚举类型）。<br>
+•	提供一种简便的方式来访问和管理查询参数。</p>
+<h3 id="代码实现">代码实现</h3>
+<p>下面是 useRouterParams Hook 的实现代码：</p>
+<pre><code>import { useMemo } from 'react'
+
+export type DefaultParams = Partial&lt;Record&lt;string, string&gt;&gt;
+
+/**
+ * 获取路由参数。
+ * 这个钩子允许开发者类型化路由参数，并可选地提供一个解析函数来处理参数。
+ *
+ * @param option.parseFn 解析函数。默认路由参数都是string类型。有些时候你需要转换成其他类型(数值/枚举)等。你可以通过传递这个参数来处理参数。
+ *
+ */
+export function useRouterParams&lt;T = DefaultParams&gt;(
+  option: {
+    transform?: (data: T) =&gt; T
+  } = {}
+) {
+  const url = new URL(window.location.href)
+
+  const params = getQueryParams(url?.href) as T
+
+  const _param = useMemo(() =&gt; {
+    // 计算key
+    let cparam: T = params as T
+
+    try {
+      if (option.transform) cparam = option.transform(cparam)
+    } catch (event) {
+      // eslint-disable-next-line no-console
+      console.error('parseFn 执行失败:', event)
+    }
+
+    return { ...params, ...cparam } as T
+  }, [params])
+
+  return [_param as T] as const
+}
+
+// 正则表达式提取查询字符串
+function getQueryParams(url: string): Record&lt;string, string&gt; {
+  const queryString = url.split('?')[1] || ''
+  const params: Record&lt;string, string&gt; = {}
+
+  // 匹配所有的 key=value 对
+  queryString.replace(/([^=&amp;]+)=([^&amp;]*)/g, (_match, key, value) =&gt; {
+    params[decodeURIComponent(key)] = decodeURIComponent(value)
+    return ''
+  })
+
+  return params
+}
+
+</code></pre>
+<h3 id="简单实例">简单实例</h3>
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739774334205.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用]]></title>
+        <id>https://ihopefulchina.github.io/mHHMm1wDV3/</id>
+        <link href="https://ihopefulchina.github.io/mHHMm1wDV3/">
+        </link>
+        <updated>2024-05-08T01:45:15.000Z</updated>
+        <summary type="html"><![CDATA[<p>在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。</p>
+<p>为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文将介绍如何使用 Vue 3 中的 ref 和 async 函数来实现一个 useLockFn 自定义 Hook，它可以防止在短时间内重复执行一个异步操作。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。</p>
+<p>为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文将介绍如何使用 Vue 3 中的 ref 和 async 函数来实现一个 useLockFn 自定义 Hook，它可以防止在短时间内重复执行一个异步操作。</p>
+<!-- more -->
+<h3 id="需求分析">需求分析</h3>
+<p>有些操作可能会被频繁触发，比如：<br>
+•	用户多次点击按钮发起网络请求。<br>
+•	连续调用同一个函数导致重复操作（例如，表单提交、数据保存等）。</p>
+<p>为了避免这种重复操作，我们需要引入 锁机制，确保同一时刻只执行一次函数。</p>
+<h3 id="uselockfn-的实现">useLockFn 的实现</h3>
+<p>useLockFn 是一个高阶函数，它接受一个异步函数 fn 和一个可选的延迟 delay（默认为 600 毫秒）。它返回一个新函数，该函数会：<br>
+•	防止在指定的延迟时间内重复调用。<br>
+•	在异步操作完成前，锁住该函数，避免重复执行。</p>
+<pre><code>import { ref } from 'vue';
+
+type ArgsAny = any[];
+
+type Fn = (...args: ArgsAny) =&gt; Promise&lt;any&gt;;
+
+export const useLockFn = (fn: Fn, delay = 600) =&gt; {
+    const lock = ref(false);
+    const lastDate = ref();
+
+    return async (...args: ArgsAny) =&gt; {
+        if (lock.value) return;
+        const nowDate = new Date();
+
+        if (lastDate?.value &amp;&amp; nowDate.getTime() - lastDate?.value.getTime() &lt;= delay) {
+            return;
+        }
+        lastDate.value = nowDate;
+
+        lock.value = true;
+        try {
+            const ret = await fn(...args);
+            lock.value = false;
+            return ret;
+        } catch (error) {
+            lock.value = false;
+            throw error;
+        }
+    };
+};
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739756837494.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[自定义Hooks: useRowSelection - ProTable 选择项配置hooks]]></title>
+        <id>https://ihopefulchina.github.io/KIr9bupcA9/</id>
+        <link href="https://ihopefulchina.github.io/KIr9bupcA9/">
+        </link>
+        <updated>2024-04-01T01:21:53.000Z</updated>
+        <summary type="html"><![CDATA[<p>在写基于Antd Pro 后台业务的时候，发现一个高频业务场景需求：<br>
+表格列表多选item的时候，没办法跨分页选择。</p>
+<p>我写一个自定义Hooks，支持跨分页选择。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在写基于Antd Pro 后台业务的时候，发现一个高频业务场景需求：<br>
+表格列表多选item的时候，没办法跨分页选择。</p>
+<p>我写一个自定义Hooks，支持跨分页选择。</p>
+<!-- more -->
+<pre><code>import { TableProps } from 'antd'
+import { useState } from 'react'
+
+export interface UseRowSelectionResult&lt;T&gt; {
+  /** key */
+  rowKey: string
+  /** 选择项配置 */
+  rowSelection?:
+    | (TableProps&lt;T&gt;['rowSelection'] &amp; {
+        alwaysShowAlert?: boolean
+      })
+    | false
+  /** 选择项选中id合集 */
+  selectedRowKeys: number[]
+  /** 批量选择items */
+  selectedRows: T[]
+  /** 选择项更新 */
+  setSelectedRows: (list: T[]) =&gt; void
+}
+
+export interface UseRowSelectionParams&lt;T&gt; {
+  /**  @name 选择项Key值 */
+  rowKey?: string
+  /** @name 选择项配置 */
+  rowSelection?: TableProps&lt;T&gt;['rowSelection']
+  /** 选中项更新 */
+  onChange?: (list: T[], ids: number[]) =&gt; void
+}
+/** hooks - ProTable 选择项配置hooks */
+export function useRowSelection&lt;T&gt;(props?: UseRowSelectionParams&lt;T&gt;): UseRowSelectionResult&lt;T&gt; {
+  const rowKey = props?.rowKey ?? 'id'
+
+  const rowSelection = props?.rowSelection
+
+  /** 批量选择items */
+  const [selectedRows, setSelectedRows] = useState&lt;T[]&gt;([])
+
+  /** 选择项选中id合集 */
+  const selectedRowKeys = (selectedRows || []).map((row) =&gt; row[rowKey])
+
+  /** 选择项配置 */
+  const newRowSelection = {
+    ...rowSelection,
+    type: rowSelection?.type ?? 'checkbox',
+    selectedRowKeys,
+
+    onSelect: (item: any, blo) =&gt; {
+      if (blo) {
+        if (rowSelection?.type === 'radio') {
+          setSelectedRows([{ ...item }])
+        } else {
+          setSelectedRows([...selectedRows, { ...item }])
+        }
+      } else {
+        setSelectedRows(selectedRows.filter((row) =&gt; row[rowKey] !== item?.[rowKey]))
+      }
+    },
+    onSelectAll: (blo, rows, changeRows) =&gt; {
+      if (blo) {
+        setSelectedRows([...selectedRows, ...changeRows])
+      } else {
+        if (selectedRows?.length) {
+          const newList = selectedRows?.filter((item) =&gt; !changeRows?.find((row) =&gt; row[rowKey] === item[rowKey]))
+          setSelectedRows(newList)
+        } else {
+          setSelectedRows([])
+        }
+      }
+    },
+    onChange: (selectedRowKeys, selectedRows, info) =&gt; {
+      if (info?.type === 'none') {
+        setSelectedRows(selectedRows)
+        props?.onChange?.(selectedRowKeys, selectedRows)
+      }
+    }
+  }
+
+  return {
+    /** key */
+    rowKey,
+    /** 选择项配置 */
+    rowSelection: newRowSelection,
+    /** 选择项选中id合集 */
+    selectedRowKeys,
+    /** 批量选择items */
+    selectedRows,
+    /** 选择项更新 */
+    setSelectedRows
+  }
+}
+</code></pre>
+<h3 id="使用方法实例">使用方法实例:</h3>
+<pre><code> /** ProTable 选择项配置 */
+  const { rowSelection, selectedRows, setSelectedRows } = useRowSelection&lt;MallCouponTemplateResVO&gt;({
+    ...props.rowSelectionProps
+  })
+
+  &lt;ProTable  rowSelection={rowSelection} /&gt;
+
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739755620925.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[自定义Hooks: useMutate - 简单的获取数据方法的一个封装]]></title>
+        <id>https://ihopefulchina.github.io/481vcXjEdn/</id>
+        <link href="https://ihopefulchina.github.io/481vcXjEdn/">
+        </link>
+        <updated>2024-03-15T02:52:26.000Z</updated>
+        <summary type="html"><![CDATA[<p>在写React 项目业务过程中，经常写一些 相似的代码逻辑。<br>
+比如我需要在进入页面请求接口数据</p>
+<p>传统上我们请求接口获取数据，大概类似这样：</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>在写React 项目业务过程中，经常写一些 相似的代码逻辑。<br>
+比如我需要在进入页面请求接口数据</p>
+<p>传统上我们请求接口获取数据，大概类似这样：</p>
+<!-- more -->
+<pre><code>  /** 数据 */
+  const [detail, setDetail] = useState(defaultData)
+  /** 请求数据 */
+  const mutate = async () =&gt; {
+    try {
+      const { data } = await config.getData({ ...params })
+      setDetail(data)
+    } catch (error) {}
+  }
+
+  useEffect(() =&gt; {
+    mutate()
+  }, [])
+</code></pre>
+<p>对于这类相关的业务逻辑，我写了一个自定义hooks</p>
+<pre><code>/** hooks - 对于简单的获取数据方法的一个封装 */
+import { useState, useRef, useEffect, useMemo } from 'react'
+
+interface IMutateOption&lt;T&gt; {
+  /** 默认数据 */
+  defaultData?: T
+
+  /** 额外传递参数 */
+  params?: Record&lt;string, any&gt;
+
+  /** 初始是否发出请求 */
+  initRequest?: boolean
+
+  /** 获取数据 */
+  getData: (data: Record&lt;string, any&gt;) =&gt; Promise&lt;{ data?: T }&gt;
+
+  /** 数据格式化 */
+  dataFormat?(data?: T): any
+
+  /** 请求成功后的回调 */
+  successCallback?(data?: T): void
+}
+
+export function useMutate&lt;T&gt;(config: IMutateOption&lt;T&gt;) {
+  const { defaultData, params, initRequest = true } = config
+
+  /** 数据 */
+  const [detail, setDetail] = useState(defaultData)
+  /** 是否初始化 */
+  const isInit = useRef(initRequest)
+
+  let loading = false
+
+  /** 请求数据 */
+  const mutate = async () =&gt; {
+    try {
+      loading = true
+
+      const { data } = await config.getData({ ...params })
+      const newData = config.dataFormat ? config.dataFormat(data) : data
+
+      setDetail(newData)
+      config?.successCallback?.(newData)
+      return newData
+    } catch (error) {
+      setDetail({})
+    } finally {
+      loading = false
+    }
+  }
+
+  /** 初始请求 */
+  useEffect(() =&gt; {
+    if (!isInit.current) {
+      isInit.current = true
+    } else {
+      mutate()
+    }
+  }, [])
+
+  /** 暂无数据 */
+  const noData = useMemo(() =&gt; {
+    if (detail !== undefined) {
+      if (detail instanceof Array) {
+        return detail.length === 0
+      } else if (detail instanceof Object) {
+        return Object.keys(detail).length === 0
+      }
+    }
+    return false
+  }, [detail])
+
+  return { mutate, detail, setDetail, noData, loading }
+}
+</code></pre>
+<p>获取数据类似逻辑简单封装</p>
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739674966401.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+</feed>

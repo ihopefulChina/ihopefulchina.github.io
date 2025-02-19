@@ -1,0 +1,547 @@
+
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739949710217">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739949710217" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        
+        
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/">
+        <h2 class="post-title">如何输出根据分类罗列文章，当前页面高亮显示</h2>
+      </a>
+      <div class="post-abstract">
+        <p>我之前有写过类似这个功能，这次写的全一点，高亮显示实现功能也是用到这个<code>$uri=explode('/',$_SERVER['REQUEST_URI']);</code></p>
+<p>我贴一下代码，你们可以参考一下，个人暂时未找到更好的方法，有什么好的方法，可以在下面评论，我们探讨一下。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2019-08-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                WordPress
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/php/">
+                PHP
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/ru-he-yong-tag-fang-shi-chuan-lian-zi-ding-yi-fen-lei-shi-xian-xiang-guan-wen-zhang-chuan-lian-gong-neng/">
+        <h2 class="post-title">如何用TAG方式串联自定义分类(实现相关文章串联功能)</h2>
+      </a>
+      <div class="post-abstract">
+        <p>遇到过一个奇葩的客户，让我通过TAG的方式，获取自定义分类的相关文章。</p>
+<p>例如:某产品写了a这个tag标签，某新闻、案例、应用等等都有一个一样是a标签，然后如何在这个产品详情页，输出含有a标签的相关新闻、相关案例、相关应用等等。</p>
+<p>最后如果没有这个标签的话，后台有通过手动添加功能填写</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2019-08-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                WordPress
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/php/">
+                PHP
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/ru-he-yong-tag-fang-shi-chuan-lian-zi-ding-yi-fen-lei-shi-xian-xiang-guan-wen-zhang-chuan-lian-gong-neng/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/ru-he-yong-tag-fang-shi-chuan-lian-zi-ding-yi-fen-lei-shi-xian-xiang-guan-wen-zhang-chuan-lian-gong-neng.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/ye-mian-shi-xian-lei-si-yu-tao-bao-de-tu-chuang-gong-neng/">
+        <h2 class="post-title">页面实现类似于淘宝的图窗功能</h2>
+      </a>
+      <div class="post-abstract">
+        <p>解决思路:</p>
+<ol>
+<li>前台的功能通过JS插件实现。</li>
+<li>图片获取通过自定义字段功能获取。</li>
+</ol>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2019-08-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                WordPress
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/php/">
+                PHP
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/ye-mian-shi-xian-lei-si-yu-tao-bao-de-tu-chuang-gong-neng/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/ye-mian-shi-xian-lei-si-yu-tao-bao-de-tu-chuang-gong-neng.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/">
+        <h2 class="post-title">在非当前页面获取指定多个自定义分类下的文章</h2>
+      </a>
+      <div class="post-abstract">
+        <p>在非当前页面，我们获取指定分类就有点困难，ACF插件能解决这个问题，<a href="https://www.advancedcustomfields.com/">ACF插件</a>是我最常用的插件,用ACF插件定义一个真假按钮，然后判断即可，以下为Demo。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2019-08-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                WordPress
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/php/">
+                PHP
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/">
+        <h2 class="post-title">获取指定分类的所有子分类链接、Description、Slug、自定义字段</h2>
+      </a>
+      <div class="post-abstract">
+        <p>Wordpress很难获取指定分类下的所有子分类。这需要我们绕路获取。<br>
+以下的方法适用于任何页面来获取所有子分类，仅供参考，如果不懂，可以联系我，或者多看几遍官方文档。<br>
+分类的标题、Description、Slug是Wordpress自带函数可以直接获取，自定义字段和链接需要通过ID的方式获取。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2019-08-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                WordPress
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/php/">
+                PHP
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/jie-jue-wordpress-zi-ding-yi-er-ji-mu-lu-he-san-ji-mu-lu-cai-yong-bu-tong-de-yang-shi/">
+        <h2 class="post-title">解决Wordpress自定义二级目录和三级目录采用不同的样式</h2>
+      </a>
+      <div class="post-abstract">
+        <p>Wordpress自定义分类结构采用的是archive-&gt;taxonomy-&gt;single,其中archive是自定义分类的总页面，taxonomy是子分类，子分类的下面分类，single是自定义分类下的文章。</p>
+<p>层级很清晰，但有一个问题，如果二级目录和三级目录采用不同的样式(taxonomy页面)，怎么办？</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2019-08-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                WordPress
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/php/">
+                PHP
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/jie-jue-wordpress-zi-ding-yi-er-ji-mu-lu-he-san-ji-mu-lu-cai-yong-bu-tong-de-yang-shi/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/jie-jue-wordpress-zi-ding-yi-er-ji-mu-lu-he-san-ji-mu-lu-cai-yong-bu-tong-de-yang-shi.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan/">
+        <h2 class="post-title">Wordpress如何添加顶级菜单，和移除、隐藏顶级菜单？</h2>
+      </a>
+      <div class="post-abstract">
+        <p>Wordpress后台有很多我们必须要的功能，客户会误点等之类的原因，所以我们需要隐藏一些自定义菜单，但是隐藏顶级菜单，可能下面某一个子菜单是我们需要的。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2019-08-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                WordPress
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/php/">
+                PHP
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/yi-chu-yin-cang-shan-chu-wordpres-yi-xie-xiao-gong-ju-he-gong-neng/">
+        <h2 class="post-title">移除、隐藏、删除Wordpres一些小工具和功能</h2>
+      </a>
+      <div class="post-abstract">
+        <p>Wordpress 有些功能不适用定制站(客户可能会乱点到)，所以需要隐藏掉，比如顶部工具栏。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2019-08-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                WordPress
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/php/">
+                PHP
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/yi-chu-yin-cang-shan-chu-wordpres-yi-xie-xiao-gong-ju-he-gong-neng/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/yi-chu-yin-cang-shan-chu-wordpres-yi-xie-xiao-gong-ju-he-gong-neng.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/">
+        <h2 class="post-title">隐藏、禁止、删除Wordpress自带的更新和仪表盘</h2>
+      </a>
+      <div class="post-abstract">
+        <pre><code>Wordpress 更新有点频繁，最恶心的地方是，一旦更新，很多东西都已经没有了，所以最好禁止wordpress更新，仪表盘我个人不喜欢它，所以隐藏，看官们可以选择保留
+</code></pre>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2019-08-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                WordPress
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/php/">
+                PHP
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/jin-zhi-shan-chu-mou-xie-ye-mian/">
+        <h2 class="post-title">禁止删除某些页面</h2>
+      </a>
+      <div class="post-abstract">
+        <p>Wordpress的页面，很多是网站构建重要组成部分、网站的基本框架，有部分客户手贱/不小心删除掉页面，导致页面需要重新挂上。</p>
+<p>重新挂上，难保客户继续删除掉，所以，需要禁止删除某些页面。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2019-08-22</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                WordPress
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/php/">
+                PHP
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/jin-zhi-shan-chu-mou-xie-ye-mian/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/jin-zhi-shan-chu-mou-xie-ye-mian.png')">
+        </div>
+      </a>
+    
+  </section>
+
+
+<div class="pagination-container">
+  
+    <a href="https://ihopefulchina.github.io/page/2/" class="prev"><i class="icon-arrow-ios-back-outline"></i> 上一页</a>
+  
+  
+    <a href="https://ihopefulchina.github.io/page/4/" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
+  
+</div>
+
+
+      </div>
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>Wordpress如何添加顶级菜单，和移除、隐藏顶级菜单？ | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1739949710217">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1739949710217" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan.png')">
+            </div>
+          
+          <h2 class="post-title">Wordpress如何添加顶级菜单，和移除、隐藏顶级菜单？</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2019-08-22</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                    WordPress
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ihopefulchina.github.io/tag/php/">
+                    PHP
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>Wordpress后台有很多我们必须要的功能，客户会误点等之类的原因，所以我们需要隐藏一些自定义菜单，但是隐藏顶级菜单，可能下面某一个子菜单是我们需要的。</p>
+<!-- more -->
+<p>首先我们先隐藏菜单，这里分为2种隐藏，一种是自带的，</p>
+<p>隐藏自带的写这段函数即可</p>
+<pre><code>show_admin_bar(false);
+add_filter('show_admin_bar', '__return_false');
+//关闭后台菜单和删除wordpress自带一些功能
+//__('Dashboard') ： 控制板菜单
+//__('Posts') ： 文章
+//__('Media') ： 媒体
+//__('Links') ： 链接
+//__('Pages') ： 页面
+//__('Comments') ： 评论
+//__('Appearance') ： 外观
+//__('Plugins') ： 插件
+//__('Users') ： 用户
+//__('Tools') ： 工具
+//__('Settings') ： 设置
+remove_action('welcome_panel', 'wp_welcome_panel');
+
+function remove_menus() {
+	global $menu;
+	$restricted = array(
+		__('Posts'),
+		__('Links'),
+		__('Comments'),
+		__('Dashboard'),
+		__('Tools'),
+		__('Appearance'),
+		__('Plugins') ,
+		// __('Pages'),
+		__('Users'),
+		__('Settings')
+
+	);
+	end ($menu);
+	while (prev($menu)){
+		$value = explode(' ',$menu[key($menu)][0]);
+		if(strpos($value[0], '&lt;') === FALSE) {
+			if(in_array($value[0] != NULL ? $value[0]:&quot;&quot; , $restricted)){
+				unset($menu[key($menu)]);
+			}
+		}else {
+			$value2 = explode('&lt;', $value[0]);
+			if(in_array($value2[0] != NULL ? $value2[0]:&quot;&quot; , $restricted)){
+				unset($menu[key($menu)]);
+			}
+		}
+	}
+}
+if (is_admin()){
+	add_action('admin_menu', 'remove_menus');
+}
+function wp_hide_nag() {
+	remove_action( 'admin_notices', 'update_nag', 3 );
+}
+add_action('admin_menu','wp_hide_nag');
+</code></pre>
+<p>可以选择隐藏哪些菜单，上面有提示，修改即可。</p>
+<p>另外一种是隐藏第三方的菜单:</p>
+<pre><code>function hide_edit_menu()
+{
+ remove_menu_page('edit.php?post_type=acf-field-group');
+}
+add_action('admin_menu', 'hide_edit_menu', 999);
+</code></pre>
+<p>修改里面的URL<code>'edit.php?post_type=acf-field-group'</code> 即可。</p>
+<p>然后是如何添加顶级菜单，这里已添加导航栏菜单为例。</p>
+<pre><code>add_action('admin_menu', 'register_custom_menu_page');
+function register_custom_menu_page() {
+    add_menu_page('自定义菜单标题', '导航栏菜单', 'administrator', '/nav-menus.php','', 'dashicons-admin-links', 20);
+}
+</code></pre>
+<p>修改title和URL即可。</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/yi-chu-yin-cang-shan-chu-wordpres-yi-xie-xiao-gong-ju-he-gong-neng/">
+              <h3 class="post-title">
+                下一篇：移除、隐藏、删除Wordpres一些小工具和功能
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
