@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>如何在导航栏添加图片？ | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1750291852418">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1750291852418" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/ru-he-zai-dao-hang-lan-tian-jia-tu-pian.png')">
+            </div>
+          
+          <h2 class="post-title">如何在导航栏添加图片？</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2019-08-22</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                    WordPress
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ihopefulchina.github.io/tag/php/">
+                    PHP
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>很多客户有在导航栏添加产品图片的需求，Wordpress不支持这一项，需要我们去创建和自定义。</p>
+<!-- more -->
+<p>function函数添加这个即可</p>
+<pre><code>add_filter('wp_nav_menu_objects', 'my_wp_nav_menu_objects', 10, 2);
+function my_wp_nav_menu_objects( $items, $args ) {
+	foreach( $items as &amp;$item ) {
+		$img = get_field('nav_product', $item);
+		if( $img ) {
+			$item-&gt;title = '&lt;img src=&quot;'.$img.'&quot;&gt;'.$item-&gt;title;
+		}
+	}
+	return $items;
+}
+</code></pre>
+<p>其中<code> $item-&gt;title = '&lt;img src=&quot;'.$img.'&quot;&gt;'.$item-&gt;title;</code>意思是在title添加图片，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>m</mi><mi>g</mi><mi mathvariant="normal">来</mi><mi mathvariant="normal">着</mi></mrow><annotation encoding="application/x-tex">img 来着</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord cjk_fallback">来</span><span class="mord cjk_fallback">着</span></span></span></span>img = get_field('nav_product', $item);，这个是ACF插件创建的自定义分类</p>
+<p>前台header.php里面的导航栏 不需要修改任何地方，因为已经注入了图片。</p>
+<pre><code>if (has_nav_menu('primary')) {
+							wp_nav_menu(array(
+								'theme_location' =&gt; 'primary',
+								'menu'              =&gt; 'primary',
+								'depth'             =&gt; 0,
+								'container'         =&gt; '',
+								'container_class'   =&gt; '',
+								'menu_class'        =&gt; 'nav navbar-nav',
+								'items_wrap'        =&gt; '&lt;ul class=&quot;%2$s&quot;&gt;%3$s&lt;/ul&gt;'
+							));
+						}
+
+	```</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/wordpress-tian-jia-zi-ding-yi-fen-lei/">
+              <h3 class="post-title">
+                下一篇：Wordpress 添加自定义分类
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

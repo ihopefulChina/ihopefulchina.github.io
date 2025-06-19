@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>自定义Hooks: useMutate - 简单的获取数据方法的一个封装 | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1750291852418">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1750291852418" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/481vcXjEdn.png')">
+            </div>
+          
+          <h2 class="post-title">自定义Hooks: useMutate - 简单的获取数据方法的一个封装</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2024-03-15</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/react/">
+                    React
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>在写React 项目业务过程中，经常写一些 相似的代码逻辑。<br>
+比如我需要在进入页面请求接口数据</p>
+<p>传统上我们请求接口获取数据，大概类似这样：</p>
+<!-- more -->
+<pre><code>  /** 数据 */
+  const [detail, setDetail] = useState(defaultData)
+  /** 请求数据 */
+  const mutate = async () =&gt; {
+    try {
+      const { data } = await config.getData({ ...params })
+      setDetail(data)
+    } catch (error) {}
+  }
+
+  useEffect(() =&gt; {
+    mutate()
+  }, [])
+</code></pre>
+<p>对于这类相关的业务逻辑，我写了一个自定义hooks</p>
+<pre><code>/** hooks - 对于简单的获取数据方法的一个封装 */
+import { useState, useRef, useEffect, useMemo } from 'react'
+
+interface IMutateOption&lt;T&gt; {
+  /** 默认数据 */
+  defaultData?: T
+
+  /** 额外传递参数 */
+  params?: Record&lt;string, any&gt;
+
+  /** 初始是否发出请求 */
+  initRequest?: boolean
+
+  /** 获取数据 */
+  getData: (data: Record&lt;string, any&gt;) =&gt; Promise&lt;{ data?: T }&gt;
+
+  /** 数据格式化 */
+  dataFormat?(data?: T): any
+
+  /** 请求成功后的回调 */
+  successCallback?(data?: T): void
+}
+
+export function useMutate&lt;T&gt;(config: IMutateOption&lt;T&gt;) {
+  const { defaultData, params, initRequest = true } = config
+
+  /** 数据 */
+  const [detail, setDetail] = useState(defaultData)
+  /** 是否初始化 */
+  const isInit = useRef(initRequest)
+
+  let loading = false
+
+  /** 请求数据 */
+  const mutate = async () =&gt; {
+    try {
+      loading = true
+
+      const { data } = await config.getData({ ...params })
+      const newData = config.dataFormat ? config.dataFormat(data) : data
+
+      setDetail(newData)
+      config?.successCallback?.(newData)
+      return newData
+    } catch (error) {
+      setDetail({})
+    } finally {
+      loading = false
+    }
+  }
+
+  /** 初始请求 */
+  useEffect(() =&gt; {
+    if (!isInit.current) {
+      isInit.current = true
+    } else {
+      mutate()
+    }
+  }, [])
+
+  /** 暂无数据 */
+  const noData = useMemo(() =&gt; {
+    if (detail !== undefined) {
+      if (detail instanceof Array) {
+        return detail.length === 0
+      } else if (detail instanceof Object) {
+        return Object.keys(detail).length === 0
+      }
+    }
+    return false
+  }, [detail])
+
+  return { mutate, detail, setDetail, noData, loading }
+}
+</code></pre>
+<p>获取数据类似逻辑简单封装</p>
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739674966401.png" alt="" loading="lazy"></figure>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/uniapp_template /">
+              <h3 class="post-title">
+                下一篇：uniapp-template 
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

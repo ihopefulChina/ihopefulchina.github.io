@@ -1,0 +1,219 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>关于基于Wordpress的企业网站搭建一些感想 | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1750291852418">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1750291852418" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/guan-yu-ji-yu-wordpress-de-qi-ye-wang-zhan-da-jian-yi-xie-gan-xiang.png')">
+            </div>
+          
+          <h2 class="post-title">关于基于Wordpress的企业网站搭建一些感想</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2019-05-09</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                    WordPress
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>感叹于Wordpress的强大，Wordpress 能让一个网站快速搭建完成，但成也萧何败萧何，做的越久，越发现Wordpress还是把你束缚在Blog里面，本质上Wordprss上还是一个博客系统，强行基于Wordpress搭建网站还是会有些错乱，数据调用和查相关文档，还是要基于博客系统的思维来完成，这是一种扭曲的状态。</p>
+<!-- more -->
+<p>丰富的插件，和优秀的贡献开发者，让Wordpress的生态环境在未来很长时间在blog领域有长足的发展，对，仅限于Blog领域，官网和外贸网站的搭建还是欠缺点火候。</p>
+<p>历经1年多时间，忙于为各类客户搭建官网和外贸网站，因为公司规模较小，我直接面对客户，在摸索和开发的过程中，发现甲方拥有很多奇思妙想，很多一开始感觉无法通过wordpress系统完成的，<br>
+经过摸索、迭代，最终客户大部分功能都可以实现，实现的方式不一样，有的是现成的插件实现，有的需要修改wordpress源码，有的需要通过wordpress的php实现，等等。<br>
+基于疲于不同客户很多功能雷同或相似，我迫切需要模块化代码，模块化自定义字段，模块化流程。公司规模较小，没人帮我，我选择自己找和摸索，最终找到了。这样让我的网站编写进程速度大大加快。<br>
+<strong>模块化的想法付出实施已经有半年了，现在回来有一些对wordpress感想：</strong></p>
+<ul>
+<li>1.wordpress能做下去，但国内太小众了，全球有很多网站是基于wordpress搭建的，国外的论坛讨论平台很活跃，国内我找了几个大点的论坛，也死气沉沉的，国内环境太小众，很多时候都是去外网看英文解决问题。</li>
+<li>2.臃肿，不适合大型网站，大型企业开发网站，只能偏向于小型企业、外贸网站等等。</li>
+<li>3.一次自定义深度开发，不适合长期获取更新wordpress系统。</li>
+<li>4.开发速度很快，一般企业网站和外贸网站，一个星期足以完成和交付网站(不包括客户满意度、沟通等等)。</li>
+<li>5.上手很快，入门很简单，但想要了解更多，比如搭建企业站，自定义函数等等，就需要很多时间去学习这套系统。</li>
+<li>6.本质上这是PHP+Mysql的开发环境，逻辑上跟自己开发基于PHP后台的效果是一样的，就是给套了一个壳。</li>
+</ul>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/wordpress-theme-zhu-ti-jie-gou-jie-xi/">
+              <h3 class="post-title">
+                下一篇：Wordpress theme主题结构解析
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

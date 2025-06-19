@@ -1,0 +1,325 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>Vue | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1750291852418">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1750291852418" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+
+        <div class="current-tag-container">
+          <h2 class="title">
+            <i class="icon icon-pricetags-outline"></i> Vue
+          </h2> 
+        </div>
+
+        
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/4PEcn6ZhYy/">
+        <h2 class="post-title">自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能</h2>
+      </a>
+      <div class="post-abstract">
+        <p>在 Vue 3 中，我们可以通过自定义 Hook 来将业务逻辑从组件中抽离出来，使得我们的组件更加简洁和易于维护。今天，我们将介绍如何实现一个自定义的 PullToRefresh Hook，该 Hook 可以帮助我们在列表组件中轻松实现下拉刷新和上拉加载更多功能。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2024-12-20</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/aaJMlrtyK/">
+                Vue
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/4PEcn6ZhYy/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/4PEcn6ZhYy.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/aJA508HwI4/">
+        <h2 class="post-title">自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装</h2>
+      </a>
+      <div class="post-abstract">
+        <p>在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2024-10-17</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/aaJMlrtyK/">
+                Vue
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/aJA508HwI4/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/aJA508HwI4.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/ZxMrztTo35/">
+        <h2 class="post-title">插件: 自动生成 Vue 3 项目中的路由配置</h2>
+      </a>
+      <div class="post-abstract">
+        <p>在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2024-07-17</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/aaJMlrtyK/">
+                Vue
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/ZxMrztTo35/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/ZxMrztTo35.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/mHHMm1wDV3/">
+        <h2 class="post-title">自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用</h2>
+      </a>
+      <div class="post-abstract">
+        <p>在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。</p>
+<p>为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文将介绍如何使用 Vue 3 中的 ref 和 async 函数来实现一个 useLockFn 自定义 Hook，它可以防止在短时间内重复执行一个异步操作。</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2024-05-08</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/aaJMlrtyK/">
+                Vue
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/mHHMm1wDV3/">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/mHHMm1wDV3.png')">
+        </div>
+      </a>
+    
+  </section>
+
+<section class="post-item">
+    <div class="content">
+      <a href="https://ihopefulchina.github.io/uniapp_template /">
+        <h2 class="post-title">uniapp-template </h2>
+      </a>
+      <div class="post-abstract">
+        <h1 id="uni-app-vue3-vite4-pinia2-typescript-基础框架">🌈 uni-app Vue3 Vite4 pinia2 TypeScript 基础框架</h1>
+<p>花了一点时间，弄了基础框架，方便些Uniapp项目快速生产<br>
+uni-app Vue3 Vite4 pinia2 TypeScript 基础框架</p>
+
+      </div>
+      <div class="post-info">
+        <span><i class="icon icon-calendar-outline"></i> 2023-11-24</span>
+        
+          <span>
+            <i class="icon icon-pricetags-outline"></i>
+            
+              <a href="https://ihopefulchina.github.io/tag/aaJMlrtyK/">
+                Vue
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/typescipt/">
+                Type Script
+                
+                  ，
+                
+              </a>
+            
+              <a href="https://ihopefulchina.github.io/tag/mp.weixin/">
+                微信小程序
+                
+              </a>
+            
+          </span>
+        
+      </div>
+    </div>
+    
+      <a href="https://ihopefulchina.github.io/uniapp_template /">
+        <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/uniapp_template .png')">
+        </div>
+      </a>
+    
+  </section>
+
+
+<div class="pagination-container">
+  
+  
+</div>
+
+
+      </div>
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

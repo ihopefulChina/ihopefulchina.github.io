@@ -1,0 +1,461 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>uniapp-template  | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1750291852418">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1750291852418" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/uniapp_template .png')">
+            </div>
+          
+          <h2 class="post-title">uniapp-template </h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-11-24</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/aaJMlrtyK/">
+                    Vue
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ihopefulchina.github.io/tag/typescipt/">
+                    Type Script
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ihopefulchina.github.io/tag/mp.weixin/">
+                    微信小程序
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <h1 id="uni-app-vue3-vite4-pinia2-typescript-基础框架">🌈 uni-app Vue3 Vite4 pinia2 TypeScript 基础框架</h1>
+<p>花了一点时间，弄了基础框架，方便些Uniapp项目快速生产<br>
+uni-app Vue3 Vite4 pinia2 TypeScript 基础框架</p>
+<!-- more -->
+<h3 id="git-地址">git 地址</h3>
+<pre><code class="language-shell">git@github.com:ihopefulChina/uniapp_template.git
+</code></pre>
+<h3 id="项目地址">项目地址</h3>
+<pre><code class="language-shell">https://github.com/ihopefulChina/uniapp-template
+</code></pre>
+<h2 id="目录结构">目录结构</h2>
+<pre><code class="language-shell">.
+├─ src
+│   ├─assets # 静态资源目录
+│   │
+│   ├─components # 组件目录
+│   │   ├─ Components
+│   │   │    ├─index.vue
+│   │   │    └─prpos.ts
+│   │   └─...
+│   │
+│   ├─enums # 枚举/常量
+│   │   ├─ cacheEnum.ts
+│   │   └─...
+│   │
+│   ├─pages # 页面
+│   │   ├─ index
+│   │   │    └─index.vue
+│   │   └─...
+│   │
+│   ├─request # 接口相关
+│   │
+│   ├─state # 状态管理模式(pinia)
+│   │   ├─ modules # 数据模块
+│   │   │    ├─auth.ts
+│   │   │    └─...
+│   │   │
+│   │   └─ index.ts
+│   │
+│   ├─static # 静态公共文件
+│   │   ├─ images # 图片
+│   │   │    ├─avatar.png
+│   │   │    └─...
+│   │   │
+│   │   └─ ...
+│   │
+│   ├─types # 类型文件
+│   │   ├─ http.d.ts
+│   │   └─ ...
+│   │
+│   └─utils # 工具类
+│
+├─ .eslintignore
+├─ .eslintrc.js
+├─ .gitignore
+├─ .prettierignore
+├─ .prettierrc.js
+├─ favicon.ico
+├─ index.html
+├─ package.json
+├─ pnpm-lock.yaml
+├─ README.md
+├─ tree.txt
+├─ tsconfig.json
+└─ vite.config.ts
+
+</code></pre>
+<h2 id="安装使用">安装使用</h2>
+<ul>
+<li>安装依赖</li>
+</ul>
+<pre><code class="language-bash">pnpm install
+</code></pre>
+<ul>
+<li>运行</li>
+</ul>
+<pre><code class="language-bash"># 其他端请查看 package.json script
+pnpm dev:h5
+</code></pre>
+<ul>
+<li>打包</li>
+</ul>
+<pre><code class="language-bash"># 其他端请查看 package.json script
+pnpm build:h5
+</code></pre>
+<ul>
+<li>更新依赖到最新（新手请忽略）</li>
+</ul>
+<pre><code class="language-bash">pnpm up
+# 打开HBuilder X alpha桌面程序--&gt;点击上面的帮助--&gt;历次更新说明--&gt;获取最新版本号（如：3.7.2.20230217-alpha）
+npx @dcloudio/uvm 3.7.2.20230217-alpha
+</code></pre>
+<h3 id="mac-m1-arm-芯片-运行报错">Mac m1 ARM 芯片 运行报错</h3>
+<pre><code class="language-bash">pnpm add @esbuild/darwin-x64@0.17.19 -D
+</code></pre>
+<h3 id="提交类型">提交类型</h3>
+<table>
+<thead>
+<tr>
+<th>提交类型</th>
+<th>标题</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>feat</code></td>
+<td>特征</td>
+<td>新功能、新特性</td>
+</tr>
+<tr>
+<td><code>fix</code></td>
+<td>Bug 修复</td>
+<td>bug 修复</td>
+</tr>
+<tr>
+<td><code>docs</code></td>
+<td>文档</td>
+<td>仅文档更改</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>风格</td>
+<td>不影响代码含义的更改（空格、格式、缺少分号等）</td>
+</tr>
+<tr>
+<td><code>refactor</code></td>
+<td>代码重构</td>
+<td>重构，在不影响代码内部行为，功能下的代码修改</td>
+</tr>
+<tr>
+<td><code>perf</code></td>
+<td>性能改进</td>
+<td>更改代码，以提高性能</td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>测试</td>
+<td>添加缺失的测试或纠正现有的测试</td>
+</tr>
+<tr>
+<td><code>build</code></td>
+<td>构建</td>
+<td>影响构建系统或外部依赖项的更改（示例范围：gulp、broccoli、npm）</td>
+</tr>
+<tr>
+<td><code>ci</code></td>
+<td>持续集成</td>
+<td>对我们的 CI 配置文件和脚本的更改（示例范围：Travis、Circle、BrowserStack、SauceLabs）</td>
+</tr>
+<tr>
+<td><code>chore</code></td>
+<td>其他文件修改</td>
+<td>不修改 src 或测试文件的其他更改</td>
+</tr>
+<tr>
+<td><code>revert</code></td>
+<td>还原</td>
+<td>恢复之前的提交</td>
+</tr>
+<tr>
+<td><code>release</code></td>
+<td>发布新版本</td>
+<td>-</td>
+</tr>
+<tr>
+<td><code>workflow</code></td>
+<td>工作流相关文件修改</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="提交别名">提交别名</h3>
+<table>
+<thead>
+<tr>
+<th>提交类型</th>
+<th>映射到</th>
+<th>标题</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>initial</code></td>
+<td><code>feat</code></td>
+<td>最初的</td>
+<td>初始提交</td>
+</tr>
+<tr>
+<td><code>dependencies</code></td>
+<td><code>fix</code></td>
+<td>依赖项</td>
+<td>更新依赖项</td>
+</tr>
+<tr>
+<td><code>peerDependencies</code></td>
+<td><code>fix</code></td>
+<td>对等依赖</td>
+<td>更新对等依赖项</td>
+</tr>
+<tr>
+<td><code>devDependencies</code></td>
+<td><code>chore</code></td>
+<td>开发依赖</td>
+<td>更新开发依赖</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td><code>fix</code></td>
+<td>元数据</td>
+<td>更新元数据（package.json）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="快捷别名提示">快捷别名提示</h3>
+<ol>
+<li>resolve a conflict：解决冲突</li>
+<li>merge branch：合并分支</li>
+<li>feat: [...] : 添加的新功能说明</li>
+<li>fix: [...] : 修复的 bug 说明</li>
+<li>initial project：初始化项目</li>
+<li>style: [...] : 修改的样式范围</li>
+<li>perf：[...] : 优化的范围</li>
+<li>release : 发布新版本</li>
+<li>docs: 文档修改</li>
+<li>refactor： 代码重构</li>
+<li>revert： 还原之前的版本</li>
+<li>dependencies： 依赖项修改</li>
+<li>devDependencies： 开发依赖修改</li>
+<li>review：复习，回顾</li>
+<li>strengthen: 加强，巩固</li>
+</ol>
+<h3 id="参考资料">参考资料</h3>
+<ul>
+<li><a href="https://v3.cn.vuejs.org/guide/introduction.html">Vue3.0 官方文档</a></li>
+<li><a href="https://docs.qq.com/doc/DZG5yRHdzbnhYQlNC">uni-app + vue3 开发文档</a></li>
+<li><a href="https://uniapp.dcloud.io/frame?id=vue-support">uni-app 官方文档</a></li>
+<li><a href="https://vue3.tuniaokj.com/zh-CN/">TuniaoUI 官方组件库</a></li>
+<li><a href="https://pinia.vuejs.org/introduction.html">pinia</a></li>
+</ul>
+<!-- more -->
+<!-- more -->
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/0ZUzQJonb/">
+              <h3 class="post-title">
+                下一篇：taro SwipeCell 滑动单元格组件
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

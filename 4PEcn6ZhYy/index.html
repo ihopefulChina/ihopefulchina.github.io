@@ -1,0 +1,583 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能 | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1750291852418">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1750291852418" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/4PEcn6ZhYy.png')">
+            </div>
+          
+          <h2 class="post-title">自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2024-12-20</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/aaJMlrtyK/">
+                    Vue
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>在 Vue 3 中，我们可以通过自定义 Hook 来将业务逻辑从组件中抽离出来，使得我们的组件更加简洁和易于维护。今天，我们将介绍如何实现一个自定义的 PullToRefresh Hook，该 Hook 可以帮助我们在列表组件中轻松实现下拉刷新和上拉加载更多功能。</p>
+<!-- more -->
+<h3 id="背景">背景</h3>
+<p>在许多移动端应用或 Web 应用中，下拉刷新和上拉加载更多功能是非常常见的交互方式。为了实现这一功能，我们需要管理分页状态、加载状态、数据合并等多个方面的逻辑。通过使用 Vue 3 的组合式 API（Composition API），我们可以将这些逻辑封装成一个通用的 Hook，使得代码更加复用和易于维护。</p>
+<ol>
+<li>需求分析</li>
+</ol>
+<p>我们需要实现以下功能：<br>
+•	支持下拉刷新和上拉加载更多。<br>
+•	支持分页加载，每次请求时，都会返回一页的数据。<br>
+•	支持数据的去重处理，防止加载重复的数据。<br>
+•	支持刷新时清空旧数据。<br>
+•	支持自定义数据格式化。<br>
+•	支持刷新完成后的回调，以便处理列表数据。</p>
+<ol start="2">
+<li>代码实现</li>
+</ol>
+<p>下面是我们实现的 usePullToRefresh Hook 代码：</p>
+<pre><code>import { computed, onMounted, ref } from 'vue';
+import { useLockFn } from '~/hooks';
+import { removeRepetition } from '~/utils';
+
+export enum PullToRefreshState {
+    /**
+     * 普通状态
+     */
+    none,
+    /**
+     * 刷新中
+     */
+    refreshing,
+    /**
+     * 添加中
+     */
+    pushing,
+}
+
+export interface IPullRefreshHookRefreshParams {
+    /**
+     * 刷新时是否清空旧数组
+     *
+     * @default false
+     */
+    clearList?: boolean;
+}
+
+interface IUsePullToRefreshOption&lt;T&gt; {
+    /** 默认数据 */
+    defaultData?: T[];
+    /** 默认初始插入数据 */
+    defaultInsertData?: T[];
+    dataKey?: string;
+    /** 初始是否发出请求 */
+    initRequest?: boolean;
+
+    /** 获取数据 */
+    getData: (data: Record&lt;string, any&gt; &amp; { pageNum: number }) =&gt; Promise&lt;{ data?: { list?: T[]; isLastPage?: boolean; total?: number } }&gt;;
+
+    /** 数据格式化 */
+    dataFormat?(data: T[]): any[];
+
+    /** 获取数据完成回调，返回本次数据 */
+    onAfterLoad?(data: T[], currentParams: Record&lt;string, any&gt; &amp; { pageNum: number }, total: number, isLastPage: boolean): void;
+    /** 获取数据完成回调，返回当前list、currentParams */
+    customSpliceList?(list: T[], currentParams: Record&lt;string, any&gt; &amp; { pageNum: number }): void;
+}
+
+export default function usePullToRefresh&lt;T&gt;(config: IUsePullToRefreshOption&lt;T&gt;) {
+    const { defaultData = [], dataKey = 'id' } = config;
+    const list = ref&lt;any[]&gt;(defaultData);
+    const total = ref&lt;number&gt;(0);
+    const noMore = ref&lt;boolean&gt;(false);
+
+    const pullToRefreshState = ref&lt;PullToRefreshState&gt;(PullToRefreshState.refreshing);
+    const requestId = ref&lt;number&gt;(0);
+    const pageNum = ref&lt;number&gt;(0);
+
+    const getListData = useLockFn(async (num?: number) =&gt; {
+        if (num !== undefined) {
+            pageNum.value = num;
+        } else {
+            pageNum.value++;
+        }
+
+        if (pageNum.value === 1) {
+            pullToRefreshState.value = PullToRefreshState.refreshing;
+            // setData([]);
+        } else {
+            pullToRefreshState.value = PullToRefreshState.pushing;
+        }
+
+        try {
+            const currentRequestId = ++requestId.value;
+            const currentParams = { pageNum: pageNum.value, pageSize: 10 };
+
+            const { data = {} } = await config.getData(currentParams);
+            if (currentRequestId !== requestId.value) {
+                return;
+            }
+            // eslint-disable-next-line prefer-const
+            let { list: dataList = [], isLastPage } = data;
+
+            dataList = config.dataFormat ? config.dataFormat(dataList) : dataList;
+
+            if (config.onAfterLoad) {
+                config.onAfterLoad(dataList, currentParams, data?.total || -1, !!isLastPage);
+            }
+
+            if (pageNum.value === 1) {
+                list.value = (config.defaultInsertData ? [...config.defaultInsertData, ...dataList] : dataList) || [];
+            } else {
+                dataList = removeRepetition((list.value || [])?.concat(dataList), dataKey);
+                list.value = dataList;
+            }
+
+            if (config.customSpliceList) {
+                config.customSpliceList(dataList, currentParams);
+            }
+            total.value = data?.total || -1;
+            noMore.value = isLastPage !== undefined ? !!isLastPage : data?.total !== -1 ? dataList?.length &gt;= (data?.total || -1) : true;
+        } catch (error) {
+            if (pageNum.value === 1) {
+                list.value = [];
+            }
+        }
+        pullToRefreshState.value = PullToRefreshState.none;
+    });
+
+    /**
+     * 更新某条数据的值
+     *
+     * @param updatedata
+     */
+    function updateById(updatedata: T, key = 'id') {
+        const newList = [...list.value]?.map((value) =&gt; {
+            if ((value as any)[key] === (updatedata as any)[key]) {
+                /** 改成替换更新 */
+                return { ...updatedata };
+            }
+            return { ...value };
+        });
+
+        list.value = [...newList];
+    }
+
+    /**
+     * 删除某条数据的值
+     *
+     * @param id
+     */
+    function deleteById(id: number | string, key = 'id') {
+        list.value = list.value?.filter((item) =&gt; `${item[key]}` !== `${id}`);
+    }
+
+    /**
+     * 更新列表中的数据
+     *
+     * @param {T} data 需要更新的数据
+     * @param {(string | ((item: T, index: number) =&gt; boolean))} compare 比对逻辑
+     */
+    function updateLisItem(data: T, compare: string | ((item: T, index: number) =&gt; boolean)) {
+        const isString = typeof compare === 'string';
+        list.value = list.value?.map((value, index) =&gt; {
+            if (isString) {
+                return (value as any)[compare] === (data as any)[compare] ? { ...value, ...data } : value;
+            }
+            return compare(value, index) ? { ...value, ...data } : value;
+        });
+    }
+
+    onMounted(() =&gt; {
+        if (config?.initRequest !== false) {
+            getListData();
+        }
+    });
+
+    function onRefresh(refreshParams?: IPullRefreshHookRefreshParams) {
+        if (refreshParams?.clearList) {
+            list.value = [];
+        }
+        getListData(1);
+    }
+
+    const isEmpty = computed(() =&gt; list?.value.length === 0 &amp;&amp; pullToRefreshState?.value === PullToRefreshState.none);
+
+    return {
+        list,
+        setList: list.value,
+        total,
+        updateById,
+        pageNum,
+        updateLisItem,
+        deleteByIndex: (index: number) =&gt; (list.value = list.value?.filter((__, idx) =&gt; idx !== index)),
+        /** 根据传入的标识删除对应的数据，传入标识值和标识字段，默认id */
+        deleteById,
+        state: pullToRefreshState,
+        noMore,
+        onRefresh,
+        isEmpty,
+        onReachBottom: () =&gt; getListData(),
+    };
+}
+</code></pre>
+<h3 id="使用实例">使用实例</h3>
+<pre><code>// 列表数据
+const pullToProps = useMMPullToRefresh&lt;UpWorkHistoryPageVO&gt;({
+    initRequest: false,
+    getData: (params) =&gt; {
+        if (type.value === EStaffBillPermission.REPAIR) {
+            return api['/wechat/api/repairWorkOrderSignHistory/page_GET']({ ...params, id: pageQuery?.value?.id });
+        }
+        return api['/wechat/api/upWorkOrder/historyPage_GET']({ ...params, id: pageQuery?.value?.id, type: ESignInType.SIGN_IN });
+    },
+});
+const { list, isEmpty } = toRefs(pullToProps);
+
+&lt;PullToRefresh
+                :noMore=&quot;pullToProps?.noMore&quot;
+                :state=&quot;pullToProps?.state&quot;
+                :isEmpty=&quot;pullToProps?.isEmpty&quot;
+                @onRefresh=&quot;pullToProps?.onRefresh&quot;
+                @onReachBottom=&quot;pullToProps?.onReachBottom&quot;
+                refresherBackground=&quot;#fff&quot;
+            &gt;
+                &lt;view class=&quot;list&quot; v-if=&quot;list &amp;&amp; list?.length &gt; 0&quot;&gt;
+                    &lt;view class=&quot;item&quot; v-for=&quot;item in list&quot; :key=&quot;item?.id&quot;&gt;
+                        &lt;Item :item=&quot;item&quot; :type=&quot;type&quot; /&gt;
+                    &lt;/view&gt;
+                &lt;/view&gt;
+                &lt;view v-else-if=&quot;isEmpty&quot;&gt;
+                    &lt;Empty marginTop=&quot;440&quot; :emptyStr=&quot;t('common.no_data')&quot; /&gt;
+                &lt;/view&gt;
+            &lt;/PullToRefresh&gt;
+        ```
+PullToRefresh 组件源码(仅供参考，相关逻辑根据项目实际业务场景)
+</code></pre>
+<script lang="ts" setup>
+import { CSSProperties, ComputedRef, Ref, computed, getCurrentInstance, onMounted, ref, toRefs } from 'vue';
+import Gap from '~/components/common/gap/Gap.vue';
+import { useLockFn } from '~/hooks';
+import { useSystemInfo } from '~/state/useSystemInfo';
+import TnLoadmore from '~/uni_modules/tuniaoui-vue3/components/loadmore/src/loadmore.vue';
+import { selectRect } from '~/utils/uniApi';
+import { MMPullToRefreshState } from './const';
+
+/** 设置自定义下拉刷新阈值 */
+const REFRESHER_THRESHOLD = 45;
+
+interface IMMPullToRefreshProps {
+    /** 刷新状态 */
+    state: Ref<MMPullToRefreshState>;
+    /** 没有更多 */
+    noMore: Ref<boolean>;
+    /** 是否显示没有更多文案，默认显示 */
+    hiddeNoMoreText?: boolean;
+    /** 是否空数据 */
+    isEmpty?: ComputedRef<boolean>;
+    /** 列表高度 */
+    height?: number;
+    /** styles */
+    styles?: CSSProperties;
+    /** isTab */
+    isTab?: boolean;
+    /** 背景颜色 */
+    refresherBackground?: string;
+    /** 底部空间高度 rpx */
+    footerSpace?: number;
+    /** 页面滚动回掉 */
+    onScroll?: (e: any) => void;
+}
+
+/** 子传父事件 */
+const emits = defineEmits<{
+    (e: 'onRefresh'): void;
+    (e: 'onReachBottom'): void;
+}>();
+const systemInfo = useSystemInfo();
+const instance = getCurrentInstance(); // 获取组件实例
+
+/** 父传子参数 */
+const props = defineProps<IMMPullToRefreshProps>();
+const { noMore, state, isEmpty } = toRefs(props);
+
+/** 列表高度计算 */
+const scollViewHeight = ref<number>();
+const calculateScrollViewHeight = async () => {
+    let scrollViewHeight = props?.height;
+    try {
+        if (!scrollViewHeight) {
+            const topViewRes: any = await selectRect('#MMPullToRefreshTop', instance!);
+
+            scrollViewHeight = systemInfo?.screenHeight - topViewRes?.top;
+        }
+    } catch (error) {
+        console.warn(error);
+    }
+
+    scollViewHeight.value = props?.isTab && scrollViewHeight ? scrollViewHeight - systemInfo?.tabbarHeight : scrollViewHeight;
+};
+onMounted(() => {
+    calculateScrollViewHeight();
+});
+
+/** 加载更多status */
+const status = computed<'loading' | 'nomore' | undefined>(() => {
+    if (state?.value === MMPullToRefreshState.pushing) {
+        return 'loading';
+    } else if (state.value !== MMPullToRefreshState.refreshing && noMore) {
+        return 'nomore';
+    }
+    return undefined;
+});
+
+/** 开启自定义下拉刷新 */
+// const refresherTriggered = computed(() => state?.value === MMPullToRefreshState.refreshing);
+const refresherTriggered = ref<boolean>(false);
+/** 刷新列表 */
+const refresherrefresh = useLockFn(async () => {
+    refresherTriggered.value = true;
+    if (state.value === MMPullToRefreshState.none) {
+        emits('onRefresh');
+        setTimeout(() => {
+            refresherTriggered.value = false;
+        }, 500);
+    }
+});
+
+const onScroll = (event: any) => {
+    props.onScroll?.(event);
+};
+
+/** 下拉更多 */
+const scrolltolower = () => {
+    if (!noMore?.value) {
+        emits('onReachBottom');
+    }
+};
+</script>
+<template>
+    <view class="MMPullToRefresh" :style="{ height: `${scollViewHeight}px` }">
+        <view id="MMPullToRefreshTop" />
+        <!-- <view class="pullHead" v-if="refresherTriggered">
+            <TnLoadmore size="36" status="loading" color="#999" :loadingText="false" loadingIconMode="flower" />
+        </view> -->
+        <scroll-view
+            scrollY
+            scrollWithAnimation
+            enableBackToTop
+            refresherEnabled
+            refresherDefaultStyle="black"
+            :refresherThreshold="REFRESHER_THRESHOLD"
+            :refresherTriggered="refresherTriggered"
+            :refresherBackground="props?.refresherBackground ?? '#fff'"
+            @refresherrefresh="refresherrefresh"
+            @scrolltolower="scrolltolower"
+            @scroll="onScroll"
+            class="simplePullToRefresh"
+            :style="{ ...props.styles }"
+        >
+            <!-- <slot name="refresher">
+                <view class="pullHead">
+                    <TnLoadmore size="36" status="loading" color="#999" :loadingText="false" loadingIconMode="flower" />
+                </view>
+            </slot> -->
+            <slot></slot>
+<pre><code>        &lt;view class=&quot;noMore&quot; v-if=&quot;!isEmpty &amp;&amp; (status !== 'nomore' || (status === 'nomore' &amp;&amp; !props.hiddeNoMoreText))&quot;&gt;
+            &lt;TnLoadmore :status=&quot;status&quot; v-if=&quot;status&quot; color=&quot;#999&quot; loadingIconMode=&quot;flower&quot; /&gt;
+        &lt;/view&gt;
+        &lt;Gap :height=&quot;props?.footerSpace&quot; v-if=&quot;props?.footerSpace&quot; :styles=&quot;{ width: '100%' }&quot; /&gt;
+    &lt;/scroll-view&gt;
+&lt;/view&gt;
+</code></pre>
+</template>
+<style lang="scss" scoped>
+@import './index.scss';
+</style>
+<pre><code>
+![](https://ihopefulchina.github.io/post-images/1739756274673.png)
+</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/aJA508HwI4/">
+              <h3 class="post-title">
+                下一篇：自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

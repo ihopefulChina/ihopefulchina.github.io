@@ -1,0 +1,542 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>🙋🙋🙋AvatarCropper: 头像裁剪组件 | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1750291852418">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1750291852418" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/7dtD7wCIDd.png')">
+            </div>
+          
+          <h2 class="post-title">🙋🙋🙋AvatarCropper: 头像裁剪组件</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2024-07-09</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/taro/">
+                    Taro
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ihopefulchina.github.io/tag/mp.weixin/">
+                    微信小程序
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。</p>
+<!-- more -->
+<h3 id="组件概述">组件概述</h3>
+<p>AvatarCropper 是一个用户自定义的头像裁剪工具，允许用户选择图片进行裁剪，支持缩放、旋转、拖动等操作。组件的功能包括：<br>
+•	选择图片进行裁剪。<br>
+•	支持缩放和旋转图像。<br>
+•	在画布上实时显示裁剪效果。<br>
+•	裁剪完成后，可以返回裁剪后的图片或文件路径。</p>
+<h3 id="组件属性解析">组件属性解析</h3>
+<p>AvatarCropper 的一些常见属性：<br>
+•	maxZoom：最大缩放倍数，控制裁剪区域的最大缩放程度。<br>
+•	space：裁剪框与画布边缘的空隙，避免裁剪框被画布边界限制。<br>
+•	toolbar：裁剪工具栏的内容，可以自定义显示的按钮。<br>
+•	toolbarPosition：工具栏的位置，支持 top 或 bottom。<br>
+•	editText：显示在裁剪工具栏的编辑文字。<br>
+•	sizeType 和 sourceType：允许选择图片的类型和来源。<br>
+•	shape：裁剪框的形状，支持 square 或 round。<br>
+•	onConfirm：裁剪完成后的回调函数，传递裁剪后的图片路径。<br>
+•	onCancel：取消裁剪的回调函数。</p>
+<h3 id="代码">代码</h3>
+<p>index.less code</p>
+<pre><code>.avatar-cropper {
+  position: relative;
+  display: flex;
+
+  &amp;-edit-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 1;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &amp;-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; // 隐藏原生上传按钮
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  &amp;-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 1000;
+    &amp;-canvas,
+    &amp;-cut-canvas {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    &amp;-cut-canvas {
+      z-index: 0;
+    }
+
+    &amp;-toolbar {
+      position: absolute;
+      bottom: 30px;
+      left: 0;
+      width: 100%;
+      z-index: 2;
+
+      &amp;.top {
+        top: 0;
+        bottom: inherit;
+      }
+
+      &amp;-flex {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &amp;-item {
+        // flex: 1;
+        color: #fff;
+        padding: 10px 30px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    &amp;-highlight {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background-color: transparent;
+
+      .highlight {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: transparent;
+        // box-shadow: 0 0 1000px 1000px rgba(0, 0, 0, 0.6);
+      }
+    }
+  }
+
+  &amp;.round {
+    .nut-avatar-cropper-edit-text {
+      border-radius: 50%;
+    }
+  }
+}
+
+[dir='rtl'] .avatar-cropper,
+.nut-rtl .avatar-cropper {
+  &amp;-edit-text {
+    left: auto;
+    right: 0;
+  }
+
+  &amp;-input {
+    left: auto;
+    right: 0;
+  }
+
+  &amp;-popup {
+    left: auto;
+    right: 0;
+
+    &amp;-canvas,
+    &amp;-cut-canvas {
+      left: auto;
+      right: 0;
+    }
+
+    &amp;-toolbar {
+      left: auto;
+      right: 0;
+    }
+
+    &amp;-highlight {
+      left: auto;
+      right: 0;
+
+      .highlight {
+        left: auto;
+        right: 50%;
+        transform: translate(50%, -50%);
+      }
+    }
+  }
+}
+
+.canvans-btn {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+</code></pre>
+<p>index.tsx code</p>
+<pre><code>import { AvatarCropper } from './avatarcropper'
+
+export type {
+  AvatarCropperProps,
+  AvatarCropperToolbarPosition,
+  AvatarCropperSizeType,
+  AvatarCropperSourceType,
+  AvatarCropperShape
+} from './avatarcropper'
+export default AvatarCropper
+</code></pre>
+<p>type.ts code</p>
+<pre><code>import type { CSSProperties, ReactNode } from 'react'
+
+export interface BasicComponent {
+  className?: string
+  style?: CSSProperties
+  children?: ReactNode
+  id?: string
+}
+
+export const ComponentDefaults = {
+  className: '',
+  style: {}
+}
+</code></pre>
+<p>use-touch.ts code</p>
+<pre><code>import React, { useRef } from 'react'
+
+const MIN_DISTANCE = 10
+
+type Direction = '' | 'vertical' | 'horizontal'
+
+function getDirection(x: number, y: number) {
+  if (x &gt; y &amp;&amp; x &gt; MIN_DISTANCE) {
+    return 'horizontal'
+  }
+  if (y &gt; x &amp;&amp; y &gt; MIN_DISTANCE) {
+    return 'vertical'
+  }
+  return ''
+}
+
+export function useTouch() {
+  const startX = useRef(0)
+  const startY = useRef(0)
+  const deltaX = useRef(0)
+  const deltaY = useRef(0)
+  const delta = useRef(0)
+  const offsetX = useRef(0)
+  const offsetY = useRef(0)
+  const direction = useRef&lt;Direction&gt;('')
+  const last = useRef(false)
+  const velocity = useRef(0)
+  const touchTime = useRef&lt;number&gt;(Date.now())
+
+  const isVertical = () =&gt; direction.current === 'vertical'
+  const isHorizontal = () =&gt; direction.current === 'horizontal'
+
+  const reset = () =&gt; {
+    touchTime.current = Date.now()
+    deltaX.current = 0
+    deltaY.current = 0
+    offsetX.current = 0
+    offsetY.current = 0
+    delta.current = 0
+    direction.current = ''
+    last.current = false
+  }
+
+  const start = (event: React.TouchEvent&lt;HTMLElement&gt;) =&gt; {
+    reset()
+    touchTime.current = Date.now()
+    startX.current = event.touches[0].clientX
+    startY.current = event.touches[0].clientY
+  }
+
+  const move = (event: React.TouchEvent&lt;HTMLElement&gt;) =&gt; {
+    const touch = event.touches[0]
+    // Fix: Safari back will set clientX to negative number
+    deltaX.current = touch.clientX &lt; 0 ? 0 : touch.clientX - startX.current
+    deltaY.current = touch.clientY - startY.current
+    offsetX.current = Math.abs(deltaX.current)
+    offsetY.current = Math.abs(deltaY.current)
+    delta.current = isVertical() ? deltaY.current : deltaX.current
+
+    if (!direction.current) {
+      direction.current = getDirection(offsetX.current, offsetY.current)
+    }
+  }
+  const end = (event: React.TouchEvent&lt;HTMLElement&gt;) =&gt; {
+    last.current = true
+    velocity.current = Math.sqrt(deltaX.current ** 2 + deltaY.current ** 2) / (Date.now() - touchTime.current)
+  }
+
+  return {
+    end,
+    move,
+    start,
+    reset,
+    touchTime,
+    startX,
+    startY,
+    deltaX,
+    deltaY,
+    delta,
+    offsetX,
+    offsetY,
+    direction,
+    isVertical,
+    isHorizontal,
+    last
+  }
+}
+</code></pre>
+<p>utils.ts code</p>
+<pre><code>export const isObject = (val: unknown): val is Record&lt;any, any&gt; =&gt; val !== null &amp;&amp; typeof val === 'object'
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const isFunction = (val: unknown): val is Function =&gt; typeof val === 'function'
+
+export const isPromise = &lt;T = any&gt;(val: unknown): val is Promise&lt;T&gt; =&gt; {
+  return isObject(val) &amp;&amp; isFunction(val.then) &amp;&amp; isFunction(val.catch)
+}
+
+export const upperCaseFirst = (str: string) =&gt; {
+  str = str.toLowerCase()
+  str = str.replace(/\b\w+\b/g, (word) =&gt; word.substring(0, 1).toUpperCase() + word.substring(1))
+  return str
+}
+
+export const clamp = (num: number, min: number, max: number): number =&gt; Math.min(Math.max(num, min), max)
+
+export function preventDefault(event: React.TouchEvent&lt;HTMLElement&gt; | TouchEvent, isStopPropagation?: boolean) {
+  if (typeof event.cancelable !== 'boolean' || event.cancelable) {
+    event.preventDefault()
+  }
+
+  if (isStopPropagation) {
+    event.stopPropagation()
+  }
+}
+</code></pre>
+<h3 id="简单实例">简单实例</h3>
+<pre><code>&lt;AvatarCropper shape=&quot;round&quot; onConfirm={cutImage}&gt;
+        &lt;View className={styles.headImgCenter}&gt;
+          {!!headImg &amp;&amp; &lt;Image className={styles.headImg} src={headImg ?? ''} mode=&quot;aspectFill&quot; /&gt;}
+        &lt;/View&gt;
+      &lt;/AvatarCropper&gt;
+</code></pre>
+<h3 id="todo">TODO</h3>
+<p>相关核心逻辑</p>
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1739775430071.png" alt="" loading="lazy"></figure>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/p9E7d0w867/">
+              <h3 class="post-title">
+                下一篇：自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

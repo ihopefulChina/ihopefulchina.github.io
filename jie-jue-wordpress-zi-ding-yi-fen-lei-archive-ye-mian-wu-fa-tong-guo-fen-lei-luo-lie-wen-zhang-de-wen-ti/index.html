@@ -1,0 +1,362 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题 | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1750291852418">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1750291852418" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti.png')">
+            </div>
+          
+          <h2 class="post-title">解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2019-08-21</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                    WordPress
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ihopefulchina.github.io/tag/php/">
+                    PHP
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。</p>
+<p>解决思路：</p>
+<ol>
+<li>先根据get_categories获取所有产品分类。</li>
+<li>根据所有产品分类foreach循环这个分类下的name、slug、term_id。</li>
+<li>然后根据这些分类的id(tax_query)获取所有产品。</li>
+</ol>
+<!-- more -->
+<p>让我们开始吧。先定义2个数组，其中一个根据get_categories获取所有产品分类。</p>
+<pre><code>$test = get_categories(&quot;taxonomy=product&amp;hide_empty=0&quot;);
+$cats=array(); 
+</code></pre>
+<p>然后循环获取name、slug、term_id</p>
+<pre><code>foreach($test as $tmpcat){
+				if($tmpcat-&gt;parent==0){
+					$cats[$tmpcat-&gt;term_id]['name']=$tmpcat-&gt;name;
+					$cats[$tmpcat-&gt;term_id]['slug']=$tmpcat-&gt;slug;
+					$cats[$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
+				}
+			}
+</code></pre>
+<p>对数组排序</p>
+<pre><code>	ksort($cats);
+</code></pre>
+<p>最后获取所有产品</p>
+<pre><code>&lt;?php  $i=0;
+	foreach($cats as $key=&gt;$val){
+				$id = 'term_'.$cats[$key]['term_id'];
+				$taxId = (int)$cats[$key]['term_id'];
+				$i++;	?&gt;		
+				&lt;h2&gt;
+					&lt;a href=&quot;/products/&lt;?php echo $cats[$key]['slug']; ?&gt;/&quot;&gt;
+						&lt;?php echo $cats[$key]['name']; ?&gt;
+					&lt;/a&gt;
+				&lt;/h2&gt;
+				&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+		&lt;?php 		$args=array(
+					'order' =&gt; 'ASC',
+					'tax_query' =&gt; array(
+						array(
+							'taxonomy' =&gt; 'product',
+							'field' =&gt; 'term_id',
+							'terms' =&gt; $taxId,
+						)
+					)
+				);
+				$arms = array_merge($args, $wp_query-&gt;query);
+				query_posts($arms);
+				?&gt;		
+				&lt;?php if (have_posts()) : ?&gt;
+					&lt;div class=&quot;all-product&quot;&gt;
+						&lt;?php while (have_posts()) : the_post(); ?&gt;
+							&lt;div class=&quot;col-md-4&quot;&gt;
+								&lt;div class=&quot;re-solution-product&quot;&gt;
+									&lt;div class=&quot;re-solution-product-imgcontent&quot;&gt;
+										&lt;a class=&quot;re-solution-product-img&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;
+											&lt;img src=&quot;&lt;?php echo get_field('product_img_cate')?&gt;&quot; alt=&quot;&lt;?php the_title()?&gt; images&quot; /&gt;
+										&lt;/a&gt;
+									&lt;/div&gt;
+									&lt;div class=&quot;re-solution-position&quot;&gt;
+										&lt;div class=&quot;re-solution-content&quot;&gt;
+											&lt;a class=&quot;re-solution-product-title&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;&lt;?php the_title()?&gt;&lt;/a&gt;
+											&lt;ul&gt;
+												&lt;?php if( have_rows('product_adv') ):while ( have_rows('product_adv') ) : the_row();$adv = get_sub_field('product_adv');echo '&lt;li&gt;'.$adv.'&lt;/li&gt;';endwhile;endif;?&gt;
+											&lt;/ul&gt;
+											&lt;div class=&quot;re-products-content-a-link-s&quot;&gt;
+												&lt;a class=&quot;product-more&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;More Info &lt;i class=&quot;fas fa-chevron-right&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+											&lt;/div&gt;
+										&lt;/div&gt;
+									&lt;/div&gt;
+								&lt;/div&gt;
+							&lt;/div&gt;
+						&lt;?php endwhile; ?&gt;
+					&lt;/div&gt;
+					&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+				&lt;?php endif; 
+				wp_reset_query();?&gt;
+			&lt;?php } ?&gt;
+</code></pre>
+<p>以上是解决一种思路，如果有什么更好的思路可以一起探讨</p>
+<p>Demo:</p>
+<pre><code>&lt;div class=&quot;taxonomy-products we-all-product&quot;&gt;
+			&lt;?php
+			$test = get_categories(&quot;taxonomy=product&amp;hide_empty=0&quot;);
+			$cats=array(); 
+			$cat_child=array();
+			foreach($test as $tmpcat){
+				if($tmpcat-&gt;parent==0){
+					$cats[$tmpcat-&gt;term_id]['name']=$tmpcat-&gt;name;
+					$cats[$tmpcat-&gt;term_id]['slug']=$tmpcat-&gt;slug;
+					$cats[$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
+				}
+			}
+			ksort($cats);
+			$i=0;
+			foreach($cats as $key=&gt;$val){
+				$id = 'term_'.$cats[$key]['term_id'];
+				$taxId = (int)$cats[$key]['term_id'];
+				$i++;
+				?&gt;
+				&lt;h2&gt;
+					&lt;a href=&quot;/products/&lt;?php echo $cats[$key]['slug']; ?&gt;/&quot;&gt;
+						&lt;?php echo $cats[$key]['name']; ?&gt;
+					&lt;/a&gt;
+				&lt;/h2&gt;
+				&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+				&lt;?php
+				$args=array(
+					'order' =&gt; 'ASC',
+					'tax_query' =&gt; array(
+						array(
+							'taxonomy' =&gt; 'product',
+							'field' =&gt; 'term_id',
+							'terms' =&gt; $taxId,
+						)
+					)
+				);
+				$arms = array_merge($args, $wp_query-&gt;query);
+				query_posts($arms);
+				?&gt;
+				&lt;?php if (have_posts()) : ?&gt;
+					&lt;div class=&quot;all-product&quot;&gt;
+						&lt;?php while (have_posts()) : the_post(); ?&gt;
+							&lt;div class=&quot;col-md-4&quot;&gt;
+								&lt;div class=&quot;re-solution-product&quot;&gt;
+									&lt;div class=&quot;re-solution-product-imgcontent&quot;&gt;
+										&lt;a class=&quot;re-solution-product-img&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;
+											&lt;img src=&quot;&lt;?php echo get_field('product_img_cate')?&gt;&quot; alt=&quot;&lt;?php the_title()?&gt; images&quot; /&gt;
+										&lt;/a&gt;
+									&lt;/div&gt;
+									&lt;div class=&quot;re-solution-position&quot;&gt;
+										&lt;div class=&quot;re-solution-content&quot;&gt;
+											&lt;a class=&quot;re-solution-product-title&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;&lt;?php the_title()?&gt;&lt;/a&gt;
+											&lt;ul&gt;
+												&lt;?php if( have_rows('product_adv') ):while ( have_rows('product_adv') ) : the_row();$adv = get_sub_field('product_adv');echo '&lt;li&gt;'.$adv.'&lt;/li&gt;';endwhile;endif;?&gt;
+											&lt;/ul&gt;
+											&lt;div class=&quot;re-products-content-a-link-s&quot;&gt;
+												&lt;a class=&quot;product-more&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;More Info &lt;i class=&quot;fas fa-chevron-right&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+											&lt;/div&gt;
+										&lt;/div&gt;
+									&lt;/div&gt;
+								&lt;/div&gt;
+							&lt;/div&gt;
+						&lt;?php endwhile; ?&gt;
+					&lt;/div&gt;
+					&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+				&lt;?php endif; 
+				wp_reset_query();?&gt;
+			&lt;?php } ?&gt;
+		&lt;/div&gt;
+		```</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/lnmp-on-pagespeed/">
+              <h3 class="post-title">
+                下一篇：Lnmp on pagespeed
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

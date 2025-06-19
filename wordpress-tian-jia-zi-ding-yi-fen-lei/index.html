@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>Wordpress 添加自定义分类 | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1750291852418">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1750291852418" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/wordpress-tian-jia-zi-ding-yi-fen-lei.png')">
+            </div>
+          
+          <h2 class="post-title">Wordpress 添加自定义分类</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2019-08-22</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/wordpress/">
+                    WordPress
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ihopefulchina.github.io/tag/php/">
+                    PHP
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <p>Wordpress 玩法很多，其中自定义分类这一项是很重要的，很多玩法，首先需要学会如何创建自定义分类。</p>
+<p>自定义分类这个描述不是很准确，Wordpress 默认只有一个文章，和文章分类，如果我们想创建一个产品类目，案例类目，新闻类目，自带的无法满足这项规定，所以需要自定义分类。</p>
+<!-- more -->
+<p>分2种情况，一种不带子分类，如何写？</p>
+<pre><code>function products() {
+	$labels = array(
+		'name'               =&gt; _x( '产品', 'post type 名称' ),
+		'add_new'            =&gt; _x( '新建产品', '添加新产品的链接名称' ),
+		'add_new_item'       =&gt; __( '新建一个产品' ),
+		'edit_item'          =&gt; __( '编辑产品' ),
+		'new_item'           =&gt; __( '新产品' ),
+		'all_items'          =&gt; __( '所有产品' ),
+		'view_item'          =&gt; __( '查看产品' ),
+		'search_items'       =&gt; __( '搜索产品' ),
+		'not_found'          =&gt; __( '没有找到产品' ),
+		'not_found_in_trash' =&gt; __( '回收站里面没有产品' ),
+		'parent_item_colon'  =&gt; '',
+		'menu_name'          =&gt; '产品'
+	);
+	$args = array(
+		'labels'        =&gt; $labels,
+		'description'   =&gt; '产品',
+		'public'        =&gt; true,
+		'menu_icon'     =&gt; 'dashicons-cart',
+		'menu_position' =&gt; 13,
+		'supports'      =&gt; array( 'title'),
+		'has_archive'   =&gt; true,
+
+	);
+	register_post_type( 'products', $args );
+}
+add_action( 'init', 'products');
+</code></pre>
+<p>具体参数如何修改和意思，可以参考<a href="https://codex.wordpress.org/Function_Reference/register_post_type">官方文档</a></p>
+<p>另一种，需要子分类。</p>
+<p>在上面的基础上添加</p>
+<pre><code>function my_taxonomies_products() {
+	$labels = array(
+		'name'              =&gt; _x( '产品分类', 'taxonomy 名称' ),
+		'singular_name'     =&gt; _x( 'Product', 'taxonomy 单数名称' ),
+		'search_items'      =&gt; __( '搜索产品分类' ),
+		'all_items'         =&gt; __( '所有产品分类' ),
+		'parent_item'       =&gt; __( '该产品分类的上级分类' ),
+		'parent_item_colon' =&gt; __( '该产品分类的上级分类：' ),
+		'edit_item'         =&gt; __( '编辑产品分类' ),
+		'update_item'       =&gt; __( '更新产品分类' ),
+		'add_new_item'      =&gt; __( '添加新的产品分类' ),
+		'new_item_name'     =&gt; __( '新产品分类' ),
+		'menu_name'         =&gt; __( '产品分类' ),
+	);
+	$args = array(
+		'labels' =&gt; $labels,
+		'hierarchical' =&gt; true,
+		'rewrite' =&gt; array(
+			'slug' =&gt; 'products',
+			'hierarchical' =&gt; true,
+		)
+	);
+	register_taxonomy( 'product', 'products', $args );
+}
+
+add_action( 'init', 'my_taxonomies_products' );
+</code></pre>
+<p><a href="https://codex.wordpress.org/Function_Reference/register_taxonomy">官方文档</a>有具体修改提示.</p>
+<h4 id="其中archive-productsphp产品总分类taxonomy-productphp产品二级分类single-productsphp产品详情页">其中archive-products.php(产品总分类)，taxonomy-product.php(产品二级分类)，single-products.php（产品详情页）</h4>
+<p>以上是Wordpress添加自定义分类，道路漫漫，这个是必修课</p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/ye-mian-url-jie-wei-tian-jia-xie-gang/">
+              <h3 class="post-title">
+                下一篇：页面Url结尾添加斜杠&#34;/&#34;
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

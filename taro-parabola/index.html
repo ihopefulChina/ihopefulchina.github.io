@@ -1,0 +1,296 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>Taro Parabola | ihopeful Blog</title>
+<meta name="description" content="Sweat is the lubricant of success.">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1750291852418">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E19W8V1GYT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-E19W8V1GYT');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://ihopefulchina.github.io">
+        <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1750291852418" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://ihopefulchina.github.io">
+        <h1 class="site-title">ihopeful Blog</h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+            <div class="feature-container" style="background-image: url('https://ihopefulchina.github.io/post-images/taro-parabola.gif')">
+            </div>
+          
+          <h2 class="post-title">Taro Parabola</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2022-07-01</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://ihopefulchina.github.io/tag/mp.weixin/">
+                    微信小程序
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://ihopefulchina.github.io/tag/react/">
+                    React
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content">
+            <h1 id="taro-parabola">taro-parabola</h1>
+<p>基于Taro3、React的H5和微信小程序添加到购物车抛物线动画组件</p>
+<!-- more -->
+<figure data-type="image" tabindex="1"><img src="https://ihopefulchina.github.io/post-images/1656646769406.gif" alt="" loading="lazy"></figure>
+<h1 id="安装">安装</h1>
+<pre><code class="language-bash">npm install taro-parabola
+</code></pre>
+<h1 id="导入组件">导入组件</h1>
+<pre><code class="language-js">import Parabola from 'taro-parabola'
+</code></pre>
+<h1 id="参数说明">参数说明</h1>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>类型</th>
+<th>必传</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cartX</code></td>
+<td>购物车 所在坐标的x值</td>
+<td>number</td>
+<td>是</td>
+<td><code>screenWidth</code></td>
+</tr>
+<tr>
+<td><code>cartY</code></td>
+<td>购物车 所在坐标的y值</td>
+<td>number</td>
+<td>是</td>
+<td><code>screenHeight - 60</code></td>
+</tr>
+<tr>
+<td><code>onChange</code></td>
+<td>点击回调方法</td>
+<td>Function</td>
+<td>否</td>
+<td><code>() =&gt; void</code></td>
+</tr>
+<tr>
+<td><code>parabolaStyle</code></td>
+<td>抛物线样式</td>
+<td>React.CSSProperties</td>
+<td>否</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="使用">使用</h1>
+<pre><code>import { FC, memo, useEffect, useState } from 'react'
+import Parabola from 'taro-parabola'
+import Taro from '@tarojs/taro'
+
+import { View } from '@tarojs/components'
+
+ const list = [1, 2, 3, 4, 5]
+const Component: FC = () =&gt; {
+  const [cartInfo, setCartInfo] = useState({} as any)
+
+  return (
+    &lt;&gt;
+      {list.map(item =&gt; (
+        &lt;Parabola
+          cartX={cartInfo.left}
+          cartY={cartInfo.top}
+          parabolaStyle={{ width: '15px', height: '15px', backgroundColor: '#333' }}
+          onChange={() =&gt; {}}
+          key={item}
+        &gt;
+          {item}
+        &lt;/Parabola&gt;
+      ))}
+      &lt;View id=&quot;cart&quot;&gt;我是购物车&lt;/View&gt;
+    &lt;/&gt;
+  )
+}
+
+const Mall = memo(Component)
+export default Mall
+
+</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://ihopefulchina.github.io/IZbWBmM7v/">
+              <h3 class="post-title">
+                下一篇：封装腾讯即时通讯 for 小程序
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+        
+          <div id="gitalk-container"></div>
+        
+
+        
+      
+
+      <div class="site-footer">
+  <div class="slogan">Sweat is the lubricant of success.</div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/ihopefulChina" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+   | <a class="rss" href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '71e97ed99597f66a9dd0',
+        clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+        repo: 'ihopefulchina.github.io',
+        owner: 'ihopefulChina',
+        admin: ['ihopefulChina'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
