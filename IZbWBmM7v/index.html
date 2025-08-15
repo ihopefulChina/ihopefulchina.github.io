@@ -1,0 +1,654 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>封装腾讯即时通讯 for 小程序 | ihopeful Blog</title>
+
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1755246870712">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            ihopeful Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1755246870712" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    封装腾讯即时通讯 for 小程序
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2021-07-22 ·
+                    </time>
+                    
+                        <a href="https://ihopefulchina.github.io/tag/mp.weixin/" class="post-tags">
+                            # 微信小程序
+                        </a>
+                    
+                        <a href="https://ihopefulchina.github.io/tag/Nhq4NKwx6/" class="post-tags">
+                            # JavaScript
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>适用小程序(Taro)接入腾讯即时通讯。<br>
+贴下Github地址：<a href="https://github.com/ihopefulChina/tim-for-weapp-Taro">https://github.com/ihopefulChina/tim-for-weapp-Taro</a></p>
+<!-- more -->
+<h3 id="参考资料">参考资料</h3>
+<ol>
+<li><a href="https://cloud.tencent.com/document/product/269/37411">SDK API（Web &amp; 小程序）</a></li>
+<li><a href="https://blog.csdn.net/weixin_42311676/article/details/105866973?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.add_param_isCf&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.add_param_isCf">微信小程序原生接入腾讯云im</a></li>
+<li><a href="https://blog.csdn.net/weixin_44622984/article/details/109626266">原生JS集成腾讯IM实时聊天/实时音视频</a></li>
+<li><a href="https://blog.csdn.net/qq_29789057/article/details/89396550?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-1&amp;spm=1001.2101.3001.4242">微信小程序利用腾讯云IM即时通讯发送文字+表情开发）</a></li>
+</ol>
+<pre><code>import Taro from &quot;@tarojs/taro&quot;;
+import TIM from 'tim-wx-sdk';
+import COS from &quot;cos-wx-sdk-v5&quot;
+import TIMUploadPlugin from 'tim-upload-plugin';
+import roomStore from &quot;~/store/room&quot;;
+import timStore from '~/store/tim'
+//sdk
+import { timSDK } from &quot;~/config&quot;
+
+import { get } from &quot;~/components/request&quot;;
+
+const userInfo = (Taro.getStorageSync('userInfo')) as any;
+// 初始化
+const iminit_TIM = async () =&gt; {
+  const options = {
+    SDKAppID: timSDK // 接入时需要将0替换为您的即时通信 IM 应用的 SDKAppID
+  }
+  // 创建 SDK 实例，`TIM.create()`方法对于同一个 `SDKAppID` 只会返回同一份实例
+  const tim = TIM.create(options);// SDK 实例通常用 tim 表示
+  // 设置 SDK 日志输出级别，详细分级请参见 setLogLevel 接口的说明
+  // tim.setLogLevel(0); // 普通级别，日志量较多，接入时建议使用
+  tim.setLogLevel(1); // release 级别，SDK 输出关键信息，生产环境时建议使用
+  // 注册 COS SDK 插件
+  tim.registerPlugin({ 'cos-wx-sdk': COS })
+  tim.registerPlugin({ 'tim-upload-plugin': TIMUploadPlugin });
+  // 监听事件，例如：
+  tim.on(TIM.EVENT.SDK_READY, (event) =&gt; {
+    timStore.isImLogin = true
+    Taro.setStorageSync('isImLogin', true)
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('SDK_ready', event.name)
+    // 收到离线消息和会话列表同步完毕通知，接入侧可以调用 sendMessage 等需要鉴权的接口
+    // event.name - TIM.EVENT.SDK_READY
+  });
+
+  tim.on(TIM.EVENT.MESSAGE_RECEIVED, (event) =&gt; {
+    // 若同时收到多个会话 需要根据conversationID来判断是哪个人的会话
+    const msgarr = [] as any
+    const newMsgForm = event.data[0].conversationID // 定义会话键值
+    if (msgarr[newMsgForm]) {
+      msgarr[newMsgForm].push(event.data[0])
+    } else {
+      msgarr[newMsgForm] = [event.data[0]]
+    }
+    timStore.myMessages = msgarr
+    // 这里引入了一个监听器 （因为小程序没有类似vuex的状态管理器 当global里面的数据变化时不能及时同步到聊天页面 因此 这个监听器可以emit一个方法 到需要更新会话数据的页面 在那里进行赋值）
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('testFunc', msgarr, newMsgForm) // 详情页的函数
+    // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
+    // event.name - TIM.EVENT.MESSAGE_RECEIVED
+    // event.data - 存储 Message 对象的数组 - [Message]
+  })
+  tim.on(TIM.EVENT.MESSAGE_READ_BY_PEER, (event) =&gt; {
+    // SDK 收到对端已读消息的通知，即已读回执。使用前需要将 SDK 版本升级至 v2.7.0 或以上。仅支持单聊会话。
+    const msgarr = [] as any
+
+    const newMsgForm = event.data[0].conversationID // 定义会话键值
+    if (msgarr[newMsgForm]) {
+      msgarr[newMsgForm].push(event.data[0])
+    } else {
+      msgarr[newMsgForm] = [event.data[0]]
+    }
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('readItem', msgarr, newMsgForm) // 函数
+    // event.name - TIM.EVENT.MESSAGE_READ_BY_PEER
+    // event.data - event.data - 存储 Message 对象的数组 - [Message] - 每个 Message 对象的 isPeerRead 属性值为 true
+  });
+  tim.on(TIM.EVENT.CONVERSATION_LIST_UPDATED, (event) =&gt; {
+    // 更新当前所有会话列表
+    // 注意 这个函数在首次点击进入会话列表的时候也会执行 因此点击消息 可以显示当前的未读消息数（unreadCount表示未读数）
+    timStore.isImLogin &amp;&amp; initRecentContactList()
+    // 收到会话列表更新通知，可通过遍历 event.data 获取会话列表数据并渲染到页面
+    // event.name - TIM.EVENT.CONVERSATION_LIST_UPDATED
+    // event.data - 存储 Conversation 对象的数组 - [Conversation]
+  });
+
+  tim.on(TIM.EVENT.SDK_NOT_READY, (event) =&gt; {
+    timStore.isImLogin = false
+    Taro.setStorageSync('isImLogin', false)
+    loginIm_TIM(userInfo.adventureNo)
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('SDK_no_ready', event.name)
+    // 收到 SDK 进入 not ready 状态通知，此时 SDK 无法正常工作
+    // event.name - TIM.EVENT.SDK_NOT_READY
+  });
+
+  tim.on(TIM.EVENT.KICKED_OUT, (event) =&gt; {
+    Taro.setStorageSync('isImLogin', false)
+    timStore.isImLogin = false;
+    // 收到被踢下线通知
+    // event.name - TIM.EVENT.KICKED_OUT
+    // event.data.type - 被踢下线的原因，例如:
+    //    - TIM.TYPES.KICKED_OUT_MULT_ACCOUNT 多实例登录被踢
+    //    - TIM.TYPES.KICKED_OUT_MULT_DEVICE 多终端登录被踢
+    //    - TIM.TYPES.KICKED_OUT_USERSIG_EXPIRED 签名过期被踢
+  })
+  timStore.tim = tim;
+}
+// 登录
+const loginIm_TIM = userID =&gt; {
+  const id = userID ? userID : userInfo.adventureNo
+  if (!!id &amp;&amp; !timStore.isImLogin) {
+    // 开始登录
+    get(`/im/getUserSign?adventureNo=${id}`).then(res =&gt; {
+      Taro.setStorageSync('userSig', res.data)
+      const promise = timStore.tim.login({
+        userID: String(id),
+        userSig: res.data
+      });
+      promise.then((imResponse) =&gt; {
+        Taro.setStorageSync('isImLogin', true)
+        timStore.isImLogin = true
+        setTimeout(() =&gt; {
+          // 拉取会话列表
+          timStore.isImLogin &amp;&amp; initRecentContactList()
+        }, 1000);
+      }).catch((imError) =&gt; {
+        // Taro.showToast({
+        //   title: 'login error' + imError,
+        //   icon: 'none',
+        //   duration: 3000
+        // })
+      });
+    })
+  }
+}
+
+// 会话列表
+const initRecentContactList = () =&gt; {
+  const promise = timStore.tim.getConversationList();
+  if (!promise) {
+    // Taro.showToast({
+    //   title: 'SDK not ready',
+    //   icon: 'none',
+    //   duration: 3000
+    // })
+    return
+  }
+  let conversationList = [] as any
+  promise.then((imResponse) =&gt; {
+    // 如果最后一条消息是自定义消息的话，处理一下data
+    conversationList = imResponse.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
+    conversationList.forEach(event =&gt; {
+      if (event.lastMessage.type === 'TIMCustomElem') {
+        const data = event.lastMessage.payload.data
+        let new_data = ''
+        if (typeof (data) === 'string' &amp;&amp; data) {
+          new_data = JSON.parse(data)
+        }
+        event.lastMessage.payload.data = new_data
+      }
+    })
+    let number = 0
+    conversationList.forEach(ele =&gt; {
+      number = number + ele.unreadCount
+    })
+    // console.log('initRecentContactList', number)
+    //更新获取未读消息角标 采用了mbox方式传入
+    roomStore.updateRoomNum(number)
+    const list = conversationList as any
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.emit('conversationList', list) // 函数
+    timStore.conversationList = list
+    Taro.setStorageSync('conversationList', list)
+  }).catch((imError) =&gt; {
+    // Taro.showToast({
+    //   title: 'getConversationList error:' + imError,
+    //   icon: 'none',
+    //   duration: 3000
+    // })
+  })
+}
+// 删除会话
+function deleteConversation_TIM(ID) {
+  const promise = timStore.tim.deleteConversation(ID);
+  promise.then((imResponse) =&gt; {
+    // 删除成功。
+    const { conversationID } = imResponse.data;// 被删除的会话 ID
+    const oldList = Taro.getStorageSync('conversationList')
+    const newList = oldList.filter((item: any) =&gt; conversationID !== item.conversationID)
+    Taro.setStorageSync('conversationList', newList)
+  })
+}
+
+export { iminit_TIM, loginIm_TIM, initRecentContactList, deleteConversation_TIM }
+</code></pre>
+<h3 id="获取列表">获取列表</h3>
+<p>hooks方式</p>
+<pre><code>const [list, setList] = useState([] as any);
+ useEffect(() =&gt; {
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    wx.event.on(&quot;conversationList&quot;, (lists: any) =&gt; {
+      if (lists.length &gt; 0) {
+        timStore.isImLogin &amp;&amp;
+          setList(
+            lists ? lists : timStore.conversationList
+          );
+      }
+    });
+  }, []);
+</code></pre>
+<h3 id="获取聊天会话">获取聊天会话</h3>
+<pre><code> // 发送信息
+const [sendMsg, setSendMsg] = useState(&quot;&quot; as any);
+// im实时聊天数据
+const [toView, setToView] = useState(&quot;&quot; as any);
+// 用于续拉，分页续拉时需传入该字段。
+const [nextReqMessageID, setNextReqMessageID] = useState(&quot;&quot; as any);
+// 表示是否已经拉完所有消息。
+const [isCompleted, setIsCompleted] = useState(&quot;&quot; as any);
+
+// 消息列表
+const [myMessages, setmyMessages] = useState([] as any);
+const [more_text, setmore_text] = useState(&quot;&quot;);
+const [is_lock, setis_lock] = useState(true);
+
+// 语音操作
+const [title, settitle] = useState(&quot;正在录音&quot;);
+const [isRecording, setisRecording] = useState(false);
+// 拉取会话列表
+const getMsgList = () =&gt; {
+  const param = {
+      //sendId 为对方id
+    conversationID: &quot;C2C&quot; + sendId,
+    count: 15,
+    nextReqMessageID
+  };
+  const promise = timStore.tim.getMessageList(param);
+
+  promise
+    .then(imResponse =&gt; {
+      const messageList = imResponse.data.messageList; // 消息列表。
+      // 处理自定义的消息
+      messageList.forEach(event =&gt; {
+        if (event.type === &quot;TIMCustomElem&quot;) {
+          if (typeof event.payload.data === &quot;string&quot; &amp;&amp; event.payload.data) {
+            const new_data = JSON.parse(event.payload.data);
+            event.payload.data = new_data;
+          }
+        }
+      });
+      const newNextReqMessageID = imResponse.data.nextReqMessageID; // 用于续拉，分页续拉时需传入该字段。
+      const newIsCompleted = imResponse.data.isCompleted; // 表示是否已经拉完所有消息。
+      // 将某会话下所有未读消息已读上报
+      setMessageRead();
+      setmyMessages(messageList);
+      setIsCompleted(newIsCompleted);
+      setNextReqMessageID(newNextReqMessageID);
+      setmore_text(newIsCompleted ? &quot;没有更多了&quot; : &quot;下拉查看更多历史信息&quot;);
+      scrollToBottom(messageList.length - 1);
+    })
+    .catch(imError =&gt; {
+      // console.warn(&quot;getConversationList error:&quot;, imError); // 获取会话列表失败的相关信息
+    });
+};
+</code></pre>
+<h3 id="已读回执">已读回执</h3>
+<pre><code>// 已读回执
+  // @ts-ignore
+  // eslint-disable-next-line no-undef
+  wx.event.on(&quot;readItem&quot;, (ele, newMsgForm) =&gt; {
+    if (newMsgForm === `C2C${sendId}` &amp;&amp; timStore.isDetail) {
+      const newmsg = ele[`C2C${sendId}`];
+      const oldItems = deepCopy(myMessages);
+      if (newmsg) {
+        newmsg.forEach(event =&gt; {
+          if (event.type === &quot;TIMCustomElem&quot;) {
+            if (typeof event.payload.data === &quot;string&quot; &amp;&amp; event.payload.data) {
+              const new_data = JSON.parse(event.payload.data);
+              event.payload.data = new_data;
+            }
+          }
+        });
+        let newitems = oldItems.filter(
+          (item: any) =&gt; !newmsg.some((dom: any) =&gt; dom.ID === item.ID)
+        );
+        newitems = [...newitems, ...newmsg];
+        setmyMessages(newitems);
+        scrollToBottom(newitems.length - 1);
+      }
+    }
+  });
+</code></pre>
+<h3 id="接受到新消息">接受到新消息</h3>
+<pre><code> // @ts-ignore
+  // eslint-disable-next-line no-undef
+  wx.event.on(&quot;testFunc&quot;, (ele, newMsgForm) =&gt; {
+    if (newMsgForm === `C2C${sendId}` &amp;&amp; timStore.isDetail) {
+      const newmsg = ele[`C2C${sendId}`];
+      let oldMss = myMessages;
+      if (newmsg) {
+        newmsg.forEach(event =&gt; {
+          if (event.type === &quot;TIMCustomElem&quot;) {
+            if (
+              typeof event.payload.data === &quot;string&quot; &amp;&amp;
+              event.payload.data
+            ) {
+              const new_data = JSON.parse(event.payload.data);
+              event.payload.data = new_data;
+            }
+          }
+          if (!event.isRead) {
+            oldMss = [...oldMss, ...newmsg];
+          }
+        });
+        setmyMessages(oldMss);
+        scrollToBottom(oldMss.length - 1);
+      }
+      setMessageRead();
+    }
+  });
+</code></pre>
+<h3 id="设置已读上报">设置已读上报</h3>
+<pre><code>const setMessageRead = () =&gt; {
+    const promise = timStore.tim.setMessageRead({
+      conversationID: &quot;C2C&quot; + sendId
+    });
+    promise
+      .then(imResponse =&gt; {
+        initRecentContactList();
+        // 已读上报成功
+        let noready = 0;
+        const messages = myMessages as any;
+        messages.forEach(event =&gt; {
+          if (!event.isRead) {
+            noready++;
+          }
+        });
+        const number = Taro.getStorageSync(&quot;number_msg&quot;);
+        const newNumber = number - noready;
+        Taro.setStorageSync(&quot;number_msg&quot;, newNumber);
+        roomStore.updateRoomNum(newNumber);
+      })
+      .catch(imError =&gt; {
+        // 已读上报失败
+        // console.warn(&quot;setMessageRead error:&quot;, imError);
+      });
+  };
+</code></pre>
+<h3 id="发送文本消息">发送文本消息</h3>
+<pre><code> // 发送普通文本消息
+  const bindConfirm = () =&gt; {
+    if (is_lock) {
+      setis_lock(false);
+      if (sendMsg.length === 0) {
+        Taro.showToast({
+          title: &quot;消息不能为空!&quot;,
+          icon: &quot;none&quot;
+        });
+        setis_lock(true);
+        return;
+      }
+
+      const content = {
+        text: sendMsg
+      };
+
+      const options = {
+        to: sendId, // 消息的接收方
+        conversationType: TIM.TYPES.CONV_C2C, // 会话类型取值timStore.tim.TYPES.CONV_C2C或timStore.tim.TYPES.CONV_GROUP
+        payload: content // 消息内容的容器
+      };
+      // // 发送文本消息，Web 端与小程序端相同
+      // 1. 创建消息实例，接口返回的实例可以上屏
+      const message = timStore.tim.createTextMessage(options);
+      // 2. 发送消息
+      sendMessageFun(message, &quot;text&quot;);
+    }
+  };
+</code></pre>
+<h3 id="发送语音图片和视频消息">发送语音图片和视频消息</h3>
+<pre><code> // 发送语音消息
+const bindAudioMessage = res =&gt; {
+ // 4. 创建消息实例，接口返回的实例可以上屏
+ const message = timStore.tim.createAudioMessage({
+   to: sendId, // 消息的接收方
+   conversationType: TIM.TYPES.CONV_C2C,
+   payload: {
+     file: res
+   }
+ });
+ sendMessageFun(message, &quot;voice&quot;);
+};
+// 发送视频
+const createVideoMessage = res =&gt; {
+ // 2. 创建消息实例，接口返回的实例可以上屏
+ const message = timStore.tim.createVideoMessage({
+   to: sendId,
+   conversationType: TIM.TYPES.CONV_C2C,
+   payload: {
+     file: res
+   }
+ });
+ // 3. 发送消息
+ sendMessageFun(message, &quot;video&quot;);
+};
+// 发送图片
+const createImageMessage = res =&gt; {
+ const message = timStore.tim.createImageMessage({
+   to: sendId,
+   conversationType: TIM.TYPES.CONV_C2C,
+   payload: {
+     file: res
+   },
+   onProgress(event) {
+     setProgress(event);
+   }
+ });
+ sendMessageFun(message, &quot;image&quot;);
+};
+</code></pre>
+<h3 id="发送消息封装">发送消息封装</h3>
+<pre><code>const sendMessageFun = (message, type) =&gt; {
+    Taro.showLoading({ title: &quot;发送中&quot; });
+    const promise = timStore.tim.sendMessage(message);
+    promise.then(imResponse =&gt; {
+      // 发送成功
+      setMessageRead();
+      const messageList = myMessages as any;
+      messageList.push(imResponse.data.message);
+      setis_lock(true);
+      setmyMessages(messageList);
+      clearInput();
+      scrollToBottom(messageList.length - 1);
+      Taro.hideLoading({});
+    });
+  };
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://ihopefulchina.github.io/oi4CnmXh7/" class="post-title gt-a-link">
+                    腾讯COS上传图片封装
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+<script>
+    // md5.min.js
+    !function(n){
+        "use strict";
+        function d(n,t){var r=(65535&n)+(65535&t);return(n>>16)+(t>>16)+(r>>16)<<16|65535&r}
+        function f(n,t,r,e,o,u){return d((c=d(d(t,n),d(e,u)))<<(f=o)|c>>>32-f,r);var c,f}
+        function l(n,t,r,e,o,u,c){return f(t&r|~t&e,n,t,o,u,c)}
+        function v(n,t,r,e,o,u,c){return f(t&e|r&~e,n,t,o,u,c)}
+        function g(n,t,r,e,o,u,c){return f(t^r^e,n,t,o,u,c)}
+        function m(n,t,r,e,o,u,c){return f(r^(t|~e),n,t,o,u,c)}
+        function i(n,t){var r,e,o,u,c;n[t>>5]|=128<<t%32,n[14+(t+64>>>9<<4)]=t;var f=1732584193,i=-271733879,a=-1732584194,h=271733878;for(r=0;r<n.length;r+=16)f=l(e=f,o=i,u=a,c=h,n[r],7,-680876936),h=l(h,f,i,a,n[r+1],12,-389564586),a=l(a,h,f,i,n[r+2],17,606105819),i=l(i,a,h,f,n[r+3],22,-1044525330),f=l(f,i,a,h,n[r+4],7,-176418897),h=l(h,f,i,a,n[r+5],12,1200080426),a=l(a,h,f,i,n[r+6],17,-1473231341),i=l(i,a,h,f,n[r+7],22,-45705983),f=l(f,i,a,h,n[r+8],7,1770035416),h=l(h,f,i,a,n[r+9],12,-1958414417),a=l(a,h,f,i,n[r+10],17,-42063),i=l(i,a,h,f,n[r+11],22,-1990404162),f=l(f,i,a,h,n[r+12],7,1804603682),h=l(h,f,i,a,n[r+13],12,-40341101),a=l(a,h,f,i,n[r+14],17,-1502002290),f=v(f,i=l(i,a,h,f,n[r+15],22,1236535329),a,h,n[r+1],5,-165796510),h=v(h,f,i,a,n[r+6],9,-1069501632),a=v(a,h,f,i,n[r+11],14,643717713),i=v(i,a,h,f,n[r],20,-373897302),f=v(f,i,a,h,n[r+5],5,-701558691),h=v(h,f,i,a,n[r+10],9,38016083),a=v(a,h,f,i,n[r+15],14,-660478335),i=v(i,a,h,f,n[r+4],20,-405537848),f=v(f,i,a,h,n[r+9],5,568446438),h=v(h,f,i,a,n[r+14],9,-1019803690),a=v(a,h,f,i,n[r+3],14,-187363961),i=v(i,a,h,f,n[r+8],20,1163531501),f=v(f,i,a,h,n[r+13],5,-1444681467),h=v(h,f,i,a,n[r+2],9,-51403784),a=v(a,h,f,i,n[r+7],14,1735328473),f=g(f,i=v(i,a,h,f,n[r+12],20,-1926607734),a,h,n[r+5],4,-378558),h=g(h,f,i,a,n[r+8],11,-2022574463),a=g(a,h,f,i,n[r+11],16,1839030562),i=g(i,a,h,f,n[r+14],23,-35309556),f=g(f,i,a,h,n[r+1],4,-1530992060),h=g(h,f,i,a,n[r+4],11,1272893353),a=g(a,h,f,i,n[r+7],16,-155497632),i=g(i,a,h,f,n[r+10],23,-1094730640),f=g(f,i,a,h,n[r+13],4,681279174),h=g(h,f,i,a,n[r],11,-358537222),a=g(a,h,f,i,n[r+3],16,-722521979),i=g(i,a,h,f,n[r+6],23,76029189),f=g(f,i,a,h,n[r+9],4,-640364487),h=g(h,f,i,a,n[r+12],11,-421815835),a=g(a,h,f,i,n[r+15],16,530742520),f=m(f,i=g(i,a,h,f,n[r+2],23,-995338651),a,h,n[r],6,-198630844),h=m(h,f,i,a,n[r+7],10,1126891415),a=m(a,h,f,i,n[r+14],15,-1416354905),i=m(i,a,h,f,n[r+5],21,-57434055),f=m(f,i,a,h,n[r+12],6,1700485571),h=m(h,f,i,a,n[r+3],10,-1894986606),a=m(a,h,f,i,n[r+10],15,-1051523),i=m(i,a,h,f,n[r+1],21,-2054922799),f=m(f,i,a,h,n[r+8],6,1873313359),h=m(h,f,i,a,n[r+15],10,-30611744),a=m(a,h,f,i,n[r+6],15,-1560198380),i=m(i,a,h,f,n[r+13],21,1309151649),f=m(f,i,a,h,n[r+4],6,-145523070),h=m(h,f,i,a,n[r+11],10,-1120210379),a=m(a,h,f,i,n[r+2],15,718787259),i=m(i,a,h,f,n[r+9],21,-343485551),f=d(f,e),i=d(i,o),a=d(a,u),h=d(h,c);return[f,i,a,h]}
+        function a(n){var t,r="",e=32*n.length;for(t=0;t<e;t+=8)r+=String.fromCharCode(n[t>>5]>>>t%32&255);return r}
+        function h(n){var t,r=[];for(r[(n.length>>2)-1]=void 0,t=0;t<r.length;t+=1)r[t]=0;var e=8*n.length;for(t=0;t<e;t+=8)r[t>>5]|=(255&n.charCodeAt(t/8))<<t%32;return r}
+        function e(n){var t,r,e="0123456789abcdef",o="";for(r=0;r<n.length;r+=1)t=n.charCodeAt(r),o+=e.charAt(t>>>4&15)+e.charAt(15&t);return o}
+        function r(n){return unescape(encodeURIComponent(n))}
+        function o(n){return a(i(h(t=r(n)),8*t.length));var t}
+        function u(n,t){return function(n,t){var r,e,o=h(n),u=[],c=[];for(u[15]=c[15]=void 0,16<o.length&&(o=i(o,8*n.length)),r=0;r<16;r+=1)u[r]=909522486^o[r],c[r]=1549556828^o[r];return e=i(u.concat(h(t)),512+8*t.length),a(i(c.concat(e),640))}(r(n),r(t))}
+        function t(n,t,r){return t?r?u(t,n):e(u(t,n)):r?o(n):e(o(n))}
+        "function"==typeof define&&define.amd?define(function(){return t}):"object"==typeof module&&module.exports?module.exports=t:n.md5=t;
+    }(this);
+</script>
+
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '71e97ed99597f66a9dd0',
+    clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+    repo: 'ihopefulchina.github.io',
+    owner: 'ihopefulChina',
+    admin: ['ihopefulChina'],
+    id: md5(location.pathname),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false       // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">🧑‍💻切图仔</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>

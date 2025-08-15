@@ -1,0 +1,647 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>uniapp-template  | ihopeful Blog</title>
+
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1755246870712">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            ihopeful Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1755246870712" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    uniapp-template 
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2025-08-15 ·
+                    </time>
+                    
+                        <a href="https://ihopefulchina.github.io/tag/aaJMlrtyK/" class="post-tags">
+                            # Vue
+                        </a>
+                    
+                        <a href="https://ihopefulchina.github.io/tag/typescipt/" class="post-tags">
+                            # Type Script
+                        </a>
+                    
+                        <a href="https://ihopefulchina.github.io/tag/mp.weixin/" class="post-tags">
+                            # 微信小程序
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>一个基于 Vue 3 + TypeScript + Pinia 的 UniApp 跨平台开发模板项目，集成了完整的开发工具链和组件库。</p>
+<!-- more -->
+<h2 id="项目特性">项目特性</h2>
+<ul>
+<li>🚀 <strong>Vue 3</strong> - 使用最新的 Vue 3 Composition API</li>
+<li>📱 <strong>跨平台</strong> - 支持微信小程序、H5、App 等多个平台</li>
+<li>🔧 <strong>TypeScript</strong> - 完整的 TypeScript 支持</li>
+<li>📦 <strong>Pinia</strong> - 现代化的状态管理</li>
+<li>🎨 <strong>Sass/SCSS</strong> - CSS 预处理器支持</li>
+<li>📡 <strong>API 管理</strong> - 集成 Swagger API 模板生成</li>
+<li>🔍 <strong>ESLint + Prettier</strong> - 代码质量检查和格式化</li>
+<li>📁 <strong>Monorepo</strong> - 使用 pnpm workspace 管理多包项目</li>
+<li>🎯 <strong>Wot Design Uni</strong> - 集成完整的UI组件库</li>
+<li>🛠️ <strong>开发工具</strong> - 自动路由生成、页面监听等插件</li>
+<li>🔐 <strong>权限管理</strong> - 完整的登录授权和token管理</li>
+<li>📤 <strong>文件上传</strong> - 集成阿里云OSS文件上传功能</li>
+<li>📊 <strong>状态管理</strong> - 丰富的Vue 3 Hooks和状态管理工具</li>
+</ul>
+<h2 id="项目结构">项目结构</h2>
+<pre><code>uniapp-template/
+├── components/                    # 公共组件和工具
+│   ├── eslint-config/            # ESLint 配置包
+│   └── swagger-api-templates/    # API 模板生成工具
+├── packages/
+│   └── uni-template/             # 主要的 UniApp 项目
+│       ├── src/
+│       │   ├── pages/            # 页面文件
+│       │   │   ├── common/       # 公共页面
+│       │   │   ├── tabbar/       # 底部导航页面
+│       │   │   └── template/     # 模板页面
+│       │   ├── components/       # 组件
+│       │   │   ├── common/       # 公共组件
+│       │   │   ├── help/         # 帮助组件
+│       │   │   └── request/      # 请求相关组件
+│       │   ├── layout/           # 布局组件
+│       │   │   ├── navigation/   # 导航栏组件
+│       │   │   └── pageContainer/# 页面容器组件
+│       │   ├── store/            # Pinia 状态管理
+│       │   ├── request/          # API 请求封装
+│       │   ├── utils/            # 工具函数
+│       │   ├── hooks/            # Vue 3 Hooks
+│       │   ├── enums/            # 枚举定义
+│       │   ├── types/            # 类型定义
+│       │   ├── static/           # 静态资源
+│       │   └── uni_modules/      # UniApp 模块
+│       │       └── wot-design-uni/ # Wot Design Uni 组件库
+│       ├── plugins/              # 自定义插件
+│       ├── scripts/              # 构建脚本
+│       └── dist/                 # 构建输出
+├── package.json                  # 根包配置
+├── pnpm-workspace.yaml          # pnpm 工作区配置
+└── README.md                     # 项目说明文档
+</code></pre>
+<h2 id="快速开始">快速开始</h2>
+<h3 id="环境要求">环境要求</h3>
+<ul>
+<li>Node.js &gt;= 18</li>
+<li>pnpm &gt;= 8</li>
+</ul>
+<h3 id="安装依赖">安装依赖</h3>
+<pre><code class="language-bash">pnpm install
+</code></pre>
+<h3 id="开发命令">开发命令</h3>
+<pre><code class="language-bash"># 进入项目目录
+cd packages/uni-template
+
+# 微信小程序开发
+pnpm dev
+
+# H5 开发
+pnpm dev:h5
+
+# App 开发
+pnpm dev:app
+
+# 其他平台
+pnpm dev:mp-alipay    # 支付宝小程序
+pnpm dev:mp-baidu     # 百度小程序
+pnpm dev:mp-qq        # QQ 小程序
+pnpm dev:mp-toutiao   # 字节跳动小程序
+pnpm dev:mp-kuaishou  # 快手小程序
+pnpm dev:mp-jd        # 京东小程序
+pnpm dev:mp-lark      # 飞书小程序
+</code></pre>
+<h3 id="构建命令">构建命令</h3>
+<pre><code class="language-bash"># 进入项目目录
+cd packages/uni-template
+
+# 微信小程序构建
+pnpm build
+
+# H5 构建
+pnpm build:h5
+
+# App 构建
+pnpm build:app
+</code></pre>
+<h3 id="api-生成">API 生成</h3>
+<pre><code class="language-bash"># 进入项目目录
+cd packages/uni-template
+
+# 根据apifox/swagger 文档导出接口json地址，修改项目配置文件：swaggerApi.config.js
+projects: [{ name: '', url: 'http://127.0.0.1:4523/export/openapi/2?version=3.0' }]
+
+# 根据 apifox 文档生成 API 接口
+pnpm api
+</code></pre>
+<h2 id="核心组件">核心组件</h2>
+<h3 id="布局组件">布局组件</h3>
+<ul>
+<li><strong>Navigation</strong> - 自定义导航栏组件，支持状态栏高度适配</li>
+<li><strong>PageContainer</strong> - 页面容器组件，统一页面布局</li>
+</ul>
+<h3 id="公共组件">公共组件</h3>
+<ul>
+<li><strong>ImageUpload</strong> - 图片上传组件，支持多图上传、预览、删除</li>
+<li><strong>Poster</strong> - 海报生成组件，支持Canvas绘制和图片合成</li>
+<li><strong>PullToRefresh</strong> - 下拉刷新组件，支持自定义刷新逻辑</li>
+<li><strong>RefreshList</strong> - 列表刷新组件，集成下拉刷新和上拉加载</li>
+<li><strong>RichText</strong> - 富文本组件，支持HTML内容渲染</li>
+<li><strong>Ellipsis</strong> - 文本省略组件，支持多行文本截断</li>
+</ul>
+<h3 id="ui-组件库">UI 组件库</h3>
+<p>项目集成了 <strong>Wot Design Uni</strong> 组件库，包含：</p>
+<ul>
+<li>基础组件：Button、Cell、Icon、Input、Gap、Divider等</li>
+<li>表单组件：Form、Checkbox、Radio、Switch、InputNumber等</li>
+<li>反馈组件：Toast、Dialog、Loading、Notify、MessageBox等</li>
+<li>展示组件：Card、Tag、Badge、Progress、Circle等</li>
+<li>导航组件：Tabs、Tabbar、Navbar、Sidebar、IndexBar等</li>
+<li>数据录入：DatetimePicker、Calendar、ColPicker、PasswordInput等</li>
+</ul>
+<h3 id="样式文件组织">样式文件组织</h3>
+<pre><code>src/
+├── assets/
+│   └── index.scss          # 全局样式入口
+├── components/
+│   └── */index.scss        # 组件样式文件
+├── pages/
+│   └── */index.scss        # 页面样式文件
+└── layout/
+    └── */index.scss        # 布局样式文件
+</code></pre>
+<h3 id="主题变量">主题变量</h3>
+<p>使用 CSS 变量定义主题色彩和尺寸：</p>
+<pre><code class="language-scss">:root {
+  --wot-color-theme: #517cf0;
+  --wot-color-success: #34d19d;
+  --wot-color-warning: #f0883a;
+  --wot-color-danger: #fa4350;
+}
+</code></pre>
+<h2 id="开发工具">开发工具</h2>
+<h3 id="插件工具">插件工具</h3>
+<p>项目包含两个自定义插件，用于自动化开发流程：</p>
+<h4 id="路由生成插件-getroutemjs">路由生成插件 (<code>getRoute.mjs</code>)</h4>
+<pre><code class="language-bash"># 进入项目目录
+cd packages/uni-template
+
+# 手动生成路由文件
+pnpm route
+</code></pre>
+<p><strong>功能说明：</strong></p>
+<ul>
+<li>自动读取 <code>src/pages.json</code> 配置</li>
+<li>生成 <code>src/routes.ts</code> 路由映射文件</li>
+<li>生成 <code>src/RouteParams.d.ts</code> 路由参数类型定义</li>
+<li>支持主包页面和分包页面</li>
+<li>自动提取页面标题和路径信息</li>
+<li>生成 tabbar 页面配置</li>
+</ul>
+<p><strong>生成的文件：</strong></p>
+<ul>
+<li><code>routes.ts</code> - 包含 <code>routeNames</code> 对象和类型定义</li>
+<li><code>RouteParams.d.ts</code> - 路由参数的 TypeScript 类型定义</li>
+</ul>
+<h4 id="页面监听插件-watch-pagesmjs">页面监听插件 (<code>watch-pages.mjs</code>)</h4>
+<pre><code class="language-bash"># 开发模式下自动运行（包含在 dev 命令中）
+pnpm dev
+</code></pre>
+<p><strong>功能说明：</strong></p>
+<ul>
+<li>监听 <code>src/pages.json</code> 文件变化</li>
+<li>文件变更时自动重新生成路由文件</li>
+<li>开发模式下提供实时路由更新</li>
+<li>避免手动维护路由映射的繁琐工作</li>
+</ul>
+<p><strong>工作流程：</strong></p>
+<ol>
+<li>启动时执行一次路由生成</li>
+<li>持续监听 <code>pages.json</code> 文件</li>
+<li>检测到变更时自动重新生成路由文件</li>
+<li>控制台输出生成状态和结果</li>
+</ol>
+<h2 id="状态管理">状态管理</h2>
+<h3 id="pinia-store">Pinia Store</h3>
+<p>使用 Pinia 进行状态管理，store 文件放在 <code>src/store/</code> 目录下：</p>
+<pre><code class="language-typescript">// src/store/common/useGlobalStore.ts
+export const useGlobalStore = defineStore('globalStore', () =&gt; {
+  const userInfo = ref&lt;MemberDto&gt;()
+
+  const getUserInfo = async () =&gt; {
+    const { data, code } = await api.get['/api/member/v1/member/getUserInfo']()
+    data &amp;&amp; setUserInfo(data)
+    return { data, code }
+  }
+
+  return { userInfo, getUserInfo }
+})
+</code></pre>
+<p><strong>主要Store：</strong></p>
+<ul>
+<li><code>useGlobalStore</code> - 全局状态管理，用户信息、登录状态等</li>
+<li><code>useSystemInfo</code> - 系统信息管理，设备信息、屏幕尺寸等</li>
+<li><code>useGetAccountInfo</code> - 小程序环境信息管理</li>
+</ul>
+<h3 id="组合式函数-hooks">组合式函数 (Hooks)</h3>
+<p>项目提供了多个实用的组合式函数：</p>
+<h4 id="状态管理类">状态管理类</h4>
+<ul>
+<li><code>useBoolean</code> - 布尔值状态管理，支持setTrue/setFalse/toggle等操作</li>
+<li><code>useToggle</code> - 切换状态管理，支持两个值之间的切换</li>
+<li><code>useState</code> - 受控/非受控状态管理，类似React的useState</li>
+<li><code>useUpdate</code> - 强制更新组件</li>
+</ul>
+<h4 id="表单和数据处理">表单和数据处理</h4>
+<ul>
+<li><code>useFormService</code> - 表单服务封装，支持表单数据管理和重置</li>
+<li><code>useMutate</code> - 数据获取和状态管理，支持数据格式化</li>
+<li><code>usePullToRefresh</code> - 下拉刷新和上拉加载更多</li>
+<li><code>useModify</code> - 页面数据修改和更新</li>
+</ul>
+<h4 id="页面和导航">页面和导航</h4>
+<ul>
+<li><code>useNavigation</code> - 页面导航管理，支持各种跳转方式</li>
+<li><code>useParams</code> - 页面参数获取，支持场景值解析</li>
+<li><code>useGetParams</code> - 组件中获取页面参数</li>
+<li><code>useScroll</code> - 滚动监听和吸顶效果</li>
+</ul>
+<h4 id="工具类">工具类</h4>
+<ul>
+<li><code>useLockFn</code> - 函数防抖和锁定，防止重复调用</li>
+<li><code>useNetworkStatus</code> - 网络状态监听</li>
+<li><code>useUpdateEffect</code> - 忽略首次执行的effect</li>
+</ul>
+<h2 id="api-请求">API 请求</h2>
+<p>项目使用自定义封装的请求库，支持根据swagger文档生成ts、自动token管理和静默授权，以及统一的错误处理和响应拦截。</p>
+<h3 id="请求封装">请求封装</h3>
+<p>使用自定义封装的请求库，配置文件在 <code>src/request/</code> 目录下：</p>
+<pre><code class="language-typescript">// 使用请求
+const data = await api.get['/api/member/v1/activity/activity']()
+const result = await api.post['/api/auth/login']({ username, password })
+</code></pre>
+<p><strong>特性：</strong></p>
+<ul>
+<li>根据swagger文档生成ts</li>
+<li>自动token管理和静默授权</li>
+<li>统一的错误处理和响应拦截</li>
+<li>支持请求和响应拦截器</li>
+<li>自动处理FormData和查询参数</li>
+</ul>
+<h3 id="请求实例">请求实例</h3>
+<pre><code class="language-typescript">// src/request/instance.ts
+const instance = Request.create({ baseUrl: apiUrl })
+
+// 请求拦截器 - 自动添加token
+instance.requestInterceptors.use(async (config) =&gt; {
+  let token = getAuthorization()
+  if (!token &amp;&amp; silentAuthorization) {
+    const { data } = await getToken(silentAuthorizationUrl)
+    token = data
+    setAuthorization(token)
+  }
+  config.headers = { ...config.headers, Authorization: token }
+  return config
+})
+
+// 响应拦截器 - 统一错误处理
+instance.responseInterceptors.use((res) =&gt; {
+  if ([403, 40003, 401].indexOf(res.data.code) !== -1) {
+    // token过期处理
+    removeAuthorization()
+    loginUrl &amp;&amp; uni.navigateTo({ url: loginUrl })
+    throw new Error()
+  }
+  return res.data
+})
+</code></pre>
+<h2 id="工具函数">工具函数</h2>
+<h3 id="文件处理">文件处理</h3>
+<ul>
+<li><strong>阿里云OSS上传</strong> - 支持图片、文件上传到阿里云OSS</li>
+<li><strong>图片处理</strong> - 图片压缩、裁剪、格式转换等</li>
+<li><strong>文件类型检测</strong> - 自动识别图片、视频、音频、PDF等文件类型</li>
+</ul>
+<h3 id="数据处理">数据处理</h3>
+<ul>
+<li><strong>高精度计算</strong> - 解决JavaScript浮点数精度问题</li>
+<li><strong>数据格式化</strong> - 金额格式化、电话号码脱敏等</li>
+<li><strong>数组操作</strong> - 去重、排序、转换等工具函数</li>
+</ul>
+<h3 id="平台适配">平台适配</h3>
+<ul>
+<li><strong>设备信息</strong> - 获取设备型号、屏幕尺寸、状态栏高度等</li>
+<li><strong>平台检测</strong> - 自动识别当前运行平台</li>
+<li><strong>网络状态</strong> - 监听网络状态变化</li>
+</ul>
+<h2 id="支持平台">支持平台</h2>
+<ul>
+<li>✅ 微信小程序 (MP-WEIXIN)</li>
+<li>✅ H5 (H5)</li>
+<li>✅ App (Android/iOS)</li>
+<li>✅ 支付宝小程序 (MP-ALIPAY)</li>
+<li>✅ 百度小程序 (MP-BAIDU)</li>
+<li>✅ QQ 小程序 (MP-QQ)</li>
+<li>✅ 字节跳动小程序 (MP-TOUTIAO)</li>
+<li>✅ 快手小程序 (MP-KUAISHOU)</li>
+<li>✅ 京东小程序 (MP-JD)</li>
+<li>✅ 飞书小程序 (MP-LARK)</li>
+<li>✅ 快应用 (QUICKAPP-WEBVIEW)</li>
+</ul>
+<h2 id="技术栈">技术栈</h2>
+<ul>
+<li><strong>框架</strong>: UniApp 3.x + Vue 3.5.11</li>
+<li><strong>前端</strong>: Vue 3 + TypeScript 5.9.2</li>
+<li><strong>状态管理</strong>: Pinia 2.3.1</li>
+<li><strong>样式</strong>: Sass 1.66.1</li>
+<li><strong>构建工具</strong>: Vite 5.2.11</li>
+<li><strong>代码规范</strong>: ESLint 8.57.1 + Prettier 3.6.2</li>
+<li><strong>包管理</strong>: pnpm workspace</li>
+<li><strong>API 工具</strong>: 自定义请求封装 + Swagger 模板生成</li>
+<li><strong>UI 组件</strong>: Wot Design Uni</li>
+<li><strong>开发工具</strong>: 自动路由生成、页面监听等插件</li>
+<li><strong>工具库</strong>: dayjs 1.11.13 (日期处理)</li>
+</ul>
+<h2 id="开发指南">开发指南</h2>
+<h3 id="页面路由">页面路由</h3>
+<p>页面路由配置在 <code>src/pages.json</code> 中，支持自动路由生成。</p>
+<h3 id="组件开发">组件开发</h3>
+<p>公共组件放在 <code>src/components/</code> 目录下，支持 TypeScript 类型定义：</p>
+<pre><code class="language-vue">&lt;template&gt;
+  &lt;view class=&quot;custom-component&quot;&gt;
+    &lt;slot /&gt;
+  &lt;/view&gt;
+&lt;/template&gt;
+
+&lt;script setup lang=&quot;ts&quot;&gt;
+interface Props {
+  title?: string
+}
+
+defineProps&lt;Props&gt;()
+&lt;/script&gt;
+</code></pre>
+<h3 id="类型定义">类型定义</h3>
+<p>项目包含完整的 TypeScript 类型定义：</p>
+<ul>
+<li><code>src/types/</code> - 全局类型定义</li>
+<li><code>src/enums/</code> - 枚举定义</li>
+<li><code>src/request/types/</code> - 请求相关类型</li>
+<li><code>src/components/request/types/</code> - 请求组件类型</li>
+</ul>
+<h2 id="配置说明">配置说明</h2>
+<h3 id="环境配置">环境配置</h3>
+<ul>
+<li><code>src/config.ts</code> - 应用配置，API地址、登录配置等</li>
+<li><code>src/manifest.json</code> - 应用清单文件</li>
+<li><code>vite.config.ts</code> - Vite 构建配置</li>
+<li><code>tsconfig.json</code> - TypeScript 配置</li>
+</ul>
+<h3 id="api-配置">API 配置</h3>
+<ul>
+<li><code>swaggerApi.config.js</code> - Swagger API 生成配置</li>
+</ul>
+<h3 id="eslint-配置">ESLint 配置</h3>
+<ul>
+<li><code>components/eslint-config/</code> - 统一的 ESLint 配置</li>
+</ul>
+<h2 id="部署说明">部署说明</h2>
+<h3 id="小程序部署">小程序部署</h3>
+<ol>
+<li>构建项目：<code>pnpm build</code></li>
+<li>使用微信开发者工具打开 <code>dist/build/mp-weixin</code> 目录</li>
+<li>上传代码到微信小程序后台</li>
+</ol>
+<h3 id="h5-部署">H5 部署</h3>
+<ol>
+<li>构建项目：<code>pnpm build:h5</code></li>
+<li>将 <code>dist/build/h5</code> 目录部署到 Web 服务器</li>
+</ol>
+<h3 id="app-部署">App 部署</h3>
+<ol>
+<li>构建项目：<code>pnpm build:app</code></li>
+<li>使用 HBuilderX 打开项目</li>
+<li>云打包或本地打包</li>
+</ol>
+<h2 id="常见问题">常见问题</h2>
+<h3 id="路由生成失败">路由生成失败</h3>
+<p>检查 <code>src/pages.json</code> 文件格式是否正确，确保 JSON 语法无误。</p>
+<h3 id="组件库样式问题">组件库样式问题</h3>
+<p>确保正确引入了 Wot Design Uni 的样式文件，检查 <code>src/main.ts</code> 中的导入。</p>
+<h3 id="请求失败">请求失败</h3>
+<p>检查 <code>src/config.ts</code> 中的API地址配置，确保网络环境正常。</p>
+<h2 id="贡献指南">贡献指南</h2>
+<ol>
+<li>Fork 本仓库</li>
+<li>创建特性分支 (<code>git checkout -b feature/AmazingFeature</code>)</li>
+<li>提交更改 (<code>git commit -m 'Add some AmazingFeature'</code>)</li>
+<li>推送到分支 (<code>git push origin feature/AmazingFeature</code>)</li>
+<li>打开 Pull Request</li>
+</ol>
+<h2 id="更新日志">更新日志</h2>
+<h3 id="v300">v3.0.0</h3>
+<ul>
+<li>Monorepo + pnpm workspace 构建</li>
+<li>集成 Vue 3 + TypeScript + Pinia</li>
+<li>集成 Wot Design Uni 组件库</li>
+<li>添加自动路由生成插件</li>
+<li>添加页面监听插件</li>
+<li>完整的请求封装和拦截器</li>
+<li>丰富的Vue 3 Hooks工具库</li>
+<li>阿里云OSS文件上传集成</li>
+<li>完整的权限管理和登录流程</li>
+</ul>
+<h2 id="许可证">许可证</h2>
+<p><a href="LICENSE">ISC</a></p>
+<h2 id="联系方式">联系方式</h2>
+<p>如有问题或建议，请通过以下方式联系：</p>
+<ul>
+<li>提交 Issue</li>
+<li>发送邮件</li>
+<li>参与讨论</li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://ihopefulchina.github.io/qn_PbZX5g6/" class="post-title gt-a-link">
+                    👉👉👉爬蓝湖原型目录结构
+                </a>
+            </div>
+        
+
+        
+
+        
+            
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+<script>
+    // md5.min.js
+    !function(n){
+        "use strict";
+        function d(n,t){var r=(65535&n)+(65535&t);return(n>>16)+(t>>16)+(r>>16)<<16|65535&r}
+        function f(n,t,r,e,o,u){return d((c=d(d(t,n),d(e,u)))<<(f=o)|c>>>32-f,r);var c,f}
+        function l(n,t,r,e,o,u,c){return f(t&r|~t&e,n,t,o,u,c)}
+        function v(n,t,r,e,o,u,c){return f(t&e|r&~e,n,t,o,u,c)}
+        function g(n,t,r,e,o,u,c){return f(t^r^e,n,t,o,u,c)}
+        function m(n,t,r,e,o,u,c){return f(r^(t|~e),n,t,o,u,c)}
+        function i(n,t){var r,e,o,u,c;n[t>>5]|=128<<t%32,n[14+(t+64>>>9<<4)]=t;var f=1732584193,i=-271733879,a=-1732584194,h=271733878;for(r=0;r<n.length;r+=16)f=l(e=f,o=i,u=a,c=h,n[r],7,-680876936),h=l(h,f,i,a,n[r+1],12,-389564586),a=l(a,h,f,i,n[r+2],17,606105819),i=l(i,a,h,f,n[r+3],22,-1044525330),f=l(f,i,a,h,n[r+4],7,-176418897),h=l(h,f,i,a,n[r+5],12,1200080426),a=l(a,h,f,i,n[r+6],17,-1473231341),i=l(i,a,h,f,n[r+7],22,-45705983),f=l(f,i,a,h,n[r+8],7,1770035416),h=l(h,f,i,a,n[r+9],12,-1958414417),a=l(a,h,f,i,n[r+10],17,-42063),i=l(i,a,h,f,n[r+11],22,-1990404162),f=l(f,i,a,h,n[r+12],7,1804603682),h=l(h,f,i,a,n[r+13],12,-40341101),a=l(a,h,f,i,n[r+14],17,-1502002290),f=v(f,i=l(i,a,h,f,n[r+15],22,1236535329),a,h,n[r+1],5,-165796510),h=v(h,f,i,a,n[r+6],9,-1069501632),a=v(a,h,f,i,n[r+11],14,643717713),i=v(i,a,h,f,n[r],20,-373897302),f=v(f,i,a,h,n[r+5],5,-701558691),h=v(h,f,i,a,n[r+10],9,38016083),a=v(a,h,f,i,n[r+15],14,-660478335),i=v(i,a,h,f,n[r+4],20,-405537848),f=v(f,i,a,h,n[r+9],5,568446438),h=v(h,f,i,a,n[r+14],9,-1019803690),a=v(a,h,f,i,n[r+3],14,-187363961),i=v(i,a,h,f,n[r+8],20,1163531501),f=v(f,i,a,h,n[r+13],5,-1444681467),h=v(h,f,i,a,n[r+2],9,-51403784),a=v(a,h,f,i,n[r+7],14,1735328473),f=g(f,i=v(i,a,h,f,n[r+12],20,-1926607734),a,h,n[r+5],4,-378558),h=g(h,f,i,a,n[r+8],11,-2022574463),a=g(a,h,f,i,n[r+11],16,1839030562),i=g(i,a,h,f,n[r+14],23,-35309556),f=g(f,i,a,h,n[r+1],4,-1530992060),h=g(h,f,i,a,n[r+4],11,1272893353),a=g(a,h,f,i,n[r+7],16,-155497632),i=g(i,a,h,f,n[r+10],23,-1094730640),f=g(f,i,a,h,n[r+13],4,681279174),h=g(h,f,i,a,n[r],11,-358537222),a=g(a,h,f,i,n[r+3],16,-722521979),i=g(i,a,h,f,n[r+6],23,76029189),f=g(f,i,a,h,n[r+9],4,-640364487),h=g(h,f,i,a,n[r+12],11,-421815835),a=g(a,h,f,i,n[r+15],16,530742520),f=m(f,i=g(i,a,h,f,n[r+2],23,-995338651),a,h,n[r],6,-198630844),h=m(h,f,i,a,n[r+7],10,1126891415),a=m(a,h,f,i,n[r+14],15,-1416354905),i=m(i,a,h,f,n[r+5],21,-57434055),f=m(f,i,a,h,n[r+12],6,1700485571),h=m(h,f,i,a,n[r+3],10,-1894986606),a=m(a,h,f,i,n[r+10],15,-1051523),i=m(i,a,h,f,n[r+1],21,-2054922799),f=m(f,i,a,h,n[r+8],6,1873313359),h=m(h,f,i,a,n[r+15],10,-30611744),a=m(a,h,f,i,n[r+6],15,-1560198380),i=m(i,a,h,f,n[r+13],21,1309151649),f=m(f,i,a,h,n[r+4],6,-145523070),h=m(h,f,i,a,n[r+11],10,-1120210379),a=m(a,h,f,i,n[r+2],15,718787259),i=m(i,a,h,f,n[r+9],21,-343485551),f=d(f,e),i=d(i,o),a=d(a,u),h=d(h,c);return[f,i,a,h]}
+        function a(n){var t,r="",e=32*n.length;for(t=0;t<e;t+=8)r+=String.fromCharCode(n[t>>5]>>>t%32&255);return r}
+        function h(n){var t,r=[];for(r[(n.length>>2)-1]=void 0,t=0;t<r.length;t+=1)r[t]=0;var e=8*n.length;for(t=0;t<e;t+=8)r[t>>5]|=(255&n.charCodeAt(t/8))<<t%32;return r}
+        function e(n){var t,r,e="0123456789abcdef",o="";for(r=0;r<n.length;r+=1)t=n.charCodeAt(r),o+=e.charAt(t>>>4&15)+e.charAt(15&t);return o}
+        function r(n){return unescape(encodeURIComponent(n))}
+        function o(n){return a(i(h(t=r(n)),8*t.length));var t}
+        function u(n,t){return function(n,t){var r,e,o=h(n),u=[],c=[];for(u[15]=c[15]=void 0,16<o.length&&(o=i(o,8*n.length)),r=0;r<16;r+=1)u[r]=909522486^o[r],c[r]=1549556828^o[r];return e=i(u.concat(h(t)),512+8*t.length),a(i(c.concat(e),640))}(r(n),r(t))}
+        function t(n,t,r){return t?r?u(t,n):e(u(t,n)):r?o(n):e(o(n))}
+        "function"==typeof define&&define.amd?define(function(){return t}):"object"==typeof module&&module.exports?module.exports=t:n.md5=t;
+    }(this);
+</script>
+
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '71e97ed99597f66a9dd0',
+    clientSecret: 'd0fc124ac1d2c122bad4a337bb3ebb6439098820',
+    repo: 'ihopefulchina.github.io',
+    owner: 'ihopefulChina',
+    admin: ['ihopefulChina'],
+    id: md5(location.pathname),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false       // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+            
+
+            
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">🧑‍💻切图仔</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+</body>
+</html>
