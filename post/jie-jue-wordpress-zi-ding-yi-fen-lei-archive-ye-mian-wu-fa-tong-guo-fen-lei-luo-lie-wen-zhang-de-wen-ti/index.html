@@ -1,0 +1,331 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<meta name="generator" content="Gridea Pro 1.1.1">
+<title>解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题 | ihopeful Blog</title>
+
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1777727077">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+<meta name="description" content="Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。 解决思路： 先根据get_categories获取所有产品分类。 根据所有产品分类foreach循环这个分类下的name、slug、term_id。 然后根据这些分类的id(tax_query)获取所有产品。">
+<link rel="canonical" href="https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题","url":"https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/","description":"Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。 解决思路： 先根据get_categories获取所有产品分类。 根据所有产品分类foreach循环这个分类下的name、slug、term_id。 然后根据这些分类的id(tax_query)获取所有产品。","image":"/post-images/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti.png","datePublished":"2019-08-21T16:38:44+08:00","dateModified":"2026-05-02T20:52:25+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/","name":"解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题","position":2}]}</script>
+<meta property="og:title" content="解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题">
+<meta property="og:description" content="Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。 解决思路： 先根据get_categories获取所有产品分类。 根据所有产品分类foreach循环这个分类下的name、slug、term_id。 然后根据这些分类的id(tax_query)获取所有产品。">
+<meta property="og:url" content="https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ihopeful Blog">
+<meta property="og:image" content="/post-images/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/">
+<meta name="twitter:title" content="解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题">
+<meta name="twitter:description" content="Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。 解决思路： 先根据get_categories获取所有产品分类。 根据所有产品分类foreach循环这个分类下的name、slug、term_id。 然后根据这些分类的id(tax_query)获取所有产品。">
+<meta name="twitter:image" content="/post-images/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti.png">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            ihopeful Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1777727077" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2019-08-21 ·
+                    </time>
+                    
+                        <a href="/tag/wordpress/" class="post-tags">
+                            # WordPress
+                        </a>
+                    
+                        <a href="/tag/php/" class="post-tags">
+                            # PHP
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。</p>
+<p>解决思路：</p>
+<ol>
+<li>先根据get_categories获取所有产品分类。</li>
+<li>根据所有产品分类foreach循环这个分类下的name、slug、term_id。</li>
+<li>然后根据这些分类的id(tax_query)获取所有产品。</li>
+</ol>
+<!-- more -->
+<p>让我们开始吧。先定义2个数组，其中一个根据get_categories获取所有产品分类。</p>
+<pre><code>$test = get_categories(&quot;taxonomy=product&amp;hide_empty=0&quot;);
+$cats=array(); 
+</code></pre>
+<p>然后循环获取name、slug、term_id</p>
+<pre><code>foreach($test as $tmpcat){
+				if($tmpcat-&gt;parent==0){
+					$cats[$tmpcat-&gt;term_id]['name']=$tmpcat-&gt;name;
+					$cats[$tmpcat-&gt;term_id]['slug']=$tmpcat-&gt;slug;
+					$cats[$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
+				}
+			}
+</code></pre>
+<p>对数组排序</p>
+<pre><code>	ksort($cats);
+</code></pre>
+<p>最后获取所有产品</p>
+<pre><code>&lt;?php  $i=0;
+	foreach($cats as $key=&gt;$val){
+				$id = 'term_'.$cats[$key]['term_id'];
+				$taxId = (int)$cats[$key]['term_id'];
+				$i++;	?&gt;		
+				&lt;h2&gt;
+					&lt;a href=&quot;/products/&lt;?php echo $cats[$key]['slug']; ?&gt;/&quot;&gt;
+						&lt;?php echo $cats[$key]['name']; ?&gt;
+					&lt;/a&gt;
+				&lt;/h2&gt;
+				&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+		&lt;?php 		$args=array(
+					'order' =&gt; 'ASC',
+					'tax_query' =&gt; array(
+						array(
+							'taxonomy' =&gt; 'product',
+							'field' =&gt; 'term_id',
+							'terms' =&gt; $taxId,
+						)
+					)
+				);
+				$arms = array_merge($args, $wp_query-&gt;query);
+				query_posts($arms);
+				?&gt;		
+				&lt;?php if (have_posts()) : ?&gt;
+					&lt;div class=&quot;all-product&quot;&gt;
+						&lt;?php while (have_posts()) : the_post(); ?&gt;
+							&lt;div class=&quot;col-md-4&quot;&gt;
+								&lt;div class=&quot;re-solution-product&quot;&gt;
+									&lt;div class=&quot;re-solution-product-imgcontent&quot;&gt;
+										&lt;a class=&quot;re-solution-product-img&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;
+											&lt;img src=&quot;&lt;?php echo get_field('product_img_cate')?&gt;&quot; alt=&quot;&lt;?php the_title()?&gt; images&quot; /&gt;
+										&lt;/a&gt;
+									&lt;/div&gt;
+									&lt;div class=&quot;re-solution-position&quot;&gt;
+										&lt;div class=&quot;re-solution-content&quot;&gt;
+											&lt;a class=&quot;re-solution-product-title&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;&lt;?php the_title()?&gt;&lt;/a&gt;
+											&lt;ul&gt;
+												&lt;?php if( have_rows('product_adv') ):while ( have_rows('product_adv') ) : the_row();$adv = get_sub_field('product_adv');echo '&lt;li&gt;'.$adv.'&lt;/li&gt;';endwhile;endif;?&gt;
+											&lt;/ul&gt;
+											&lt;div class=&quot;re-products-content-a-link-s&quot;&gt;
+												&lt;a class=&quot;product-more&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;More Info &lt;i class=&quot;fas fa-chevron-right&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+											&lt;/div&gt;
+										&lt;/div&gt;
+									&lt;/div&gt;
+								&lt;/div&gt;
+							&lt;/div&gt;
+						&lt;?php endwhile; ?&gt;
+					&lt;/div&gt;
+					&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+				&lt;?php endif; 
+				wp_reset_query();?&gt;
+			&lt;?php } ?&gt;
+</code></pre>
+<p>以上是解决一种思路，如果有什么更好的思路可以一起探讨</p>
+<p>Demo:</p>
+<pre><code>&lt;div class=&quot;taxonomy-products we-all-product&quot;&gt;
+			&lt;?php
+			$test = get_categories(&quot;taxonomy=product&amp;hide_empty=0&quot;);
+			$cats=array(); 
+			$cat_child=array();
+			foreach($test as $tmpcat){
+				if($tmpcat-&gt;parent==0){
+					$cats[$tmpcat-&gt;term_id]['name']=$tmpcat-&gt;name;
+					$cats[$tmpcat-&gt;term_id]['slug']=$tmpcat-&gt;slug;
+					$cats[$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
+				}
+			}
+			ksort($cats);
+			$i=0;
+			foreach($cats as $key=&gt;$val){
+				$id = 'term_'.$cats[$key]['term_id'];
+				$taxId = (int)$cats[$key]['term_id'];
+				$i++;
+				?&gt;
+				&lt;h2&gt;
+					&lt;a href=&quot;/products/&lt;?php echo $cats[$key]['slug']; ?&gt;/&quot;&gt;
+						&lt;?php echo $cats[$key]['name']; ?&gt;
+					&lt;/a&gt;
+				&lt;/h2&gt;
+				&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+				&lt;?php
+				$args=array(
+					'order' =&gt; 'ASC',
+					'tax_query' =&gt; array(
+						array(
+							'taxonomy' =&gt; 'product',
+							'field' =&gt; 'term_id',
+							'terms' =&gt; $taxId,
+						)
+					)
+				);
+				$arms = array_merge($args, $wp_query-&gt;query);
+				query_posts($arms);
+				?&gt;
+				&lt;?php if (have_posts()) : ?&gt;
+					&lt;div class=&quot;all-product&quot;&gt;
+						&lt;?php while (have_posts()) : the_post(); ?&gt;
+							&lt;div class=&quot;col-md-4&quot;&gt;
+								&lt;div class=&quot;re-solution-product&quot;&gt;
+									&lt;div class=&quot;re-solution-product-imgcontent&quot;&gt;
+										&lt;a class=&quot;re-solution-product-img&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;
+											&lt;img src=&quot;&lt;?php echo get_field('product_img_cate')?&gt;&quot; alt=&quot;&lt;?php the_title()?&gt; images&quot; /&gt;
+										&lt;/a&gt;
+									&lt;/div&gt;
+									&lt;div class=&quot;re-solution-position&quot;&gt;
+										&lt;div class=&quot;re-solution-content&quot;&gt;
+											&lt;a class=&quot;re-solution-product-title&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;&lt;?php the_title()?&gt;&lt;/a&gt;
+											&lt;ul&gt;
+												&lt;?php if( have_rows('product_adv') ):while ( have_rows('product_adv') ) : the_row();$adv = get_sub_field('product_adv');echo '&lt;li&gt;'.$adv.'&lt;/li&gt;';endwhile;endif;?&gt;
+											&lt;/ul&gt;
+											&lt;div class=&quot;re-products-content-a-link-s&quot;&gt;
+												&lt;a class=&quot;product-more&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;More Info &lt;i class=&quot;fas fa-chevron-right&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+											&lt;/div&gt;
+										&lt;/div&gt;
+									&lt;/div&gt;
+								&lt;/div&gt;
+							&lt;/div&gt;
+						&lt;?php endwhile; ?&gt;
+					&lt;/div&gt;
+					&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+				&lt;?php endif; 
+				wp_reset_query();?&gt;
+			&lt;?php } ?&gt;
+		&lt;/div&gt;
+		```
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="/post/lnmp-on-pagespeed/" class="post-title gt-a-link">
+                    Lnmp on pagespeed
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">🧑‍💻切图仔</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+<script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: gridea-theme-pure-1.3.2 v1.3.2 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+</html>

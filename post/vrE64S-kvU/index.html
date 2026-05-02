@@ -1,0 +1,386 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<meta name="generator" content="Gridea Pro 1.1.1">
+<title>自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装 | ihopeful Blog</title>
+
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1777727077">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+<meta name="description" content="在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— useProTableRequest，并深入讲解其工作原理和如何在项目中使用。">
+<link rel="canonical" href="https://ihopefulchina.github.io/post/vrE64S-kvU/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装","url":"https://ihopefulchina.github.io/post/vrE64S-kvU/","description":"在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— useProTableRequest，并深入讲解其工作原理和如何在项目中使用。","image":"/post-images/vrE64S-kvU.png","datePublished":"2024-08-06T15:26:46+08:00","dateModified":"2026-05-02T20:52:25+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/vrE64S-kvU/","name":"自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装","position":2}]}</script>
+<meta property="og:title" content="自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装">
+<meta property="og:description" content="在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— useProTableRequest，并深入讲解其工作原理和如何在项目中使用。">
+<meta property="og:url" content="https://ihopefulchina.github.io/post/vrE64S-kvU/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ihopeful Blog">
+<meta property="og:image" content="/post-images/vrE64S-kvU.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://ihopefulchina.github.io/post/vrE64S-kvU/">
+<meta name="twitter:title" content="自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装">
+<meta name="twitter:description" content="在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— useProTableRequest，并深入讲解其工作原理和如何在项目中使用。">
+<meta name="twitter:image" content="/post-images/vrE64S-kvU.png">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            ihopeful Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1777727077" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2024-08-06 ·
+                    </time>
+                    
+                        <a href="/tag/react/" class="post-tags">
+                            # React
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— useProTableRequest，并深入讲解其工作原理和如何在项目中使用。</p>
+<!-- more -->
+<h3 id="heading">功能概述</h3>
+<p>useProTableRequest 是一个用于处理表格数据请求的自定义 Hook，主要包括以下功能：<br />
+•	数据请求：从服务器获取数据，并支持分页、排序和筛选功能。<br />
+•	数据缓存：缓存请求的参数和数据，方便在用户返回该页面时恢复表格状态（如分页、筛选等）。<br />
+•	参数格式化：可以自定义格式化请求参数和返回的数据</p>
+<h3 id="code">代码code</h3>
+<pre><code>import { ActionType, ProFormInstance, RequestData } from '@ant-design/pro-components'
+import { SortOrder } from 'antd/lib/table/interface'
+import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
+
+type Params&lt;U&gt; = U &amp; {
+  pageSize?: number
+  current?: number
+  keyword?: string
+}
+
+type Sort = Record&lt;string, SortOrder&gt;
+
+type Filter = Record&lt;string, React.ReactText[] | null&gt;
+
+type Fn&lt;U, T&gt; = (
+  params: any,
+  sort: Sort,
+  filter: Filter
+) =&gt; Promise&lt;{ code?: number; msg?: string; data?: { list?: T[]; total?: number } }&gt;
+
+export interface IUseProTableRequestOption&lt;T, U = T&gt; {
+
+  /** 需要缓存的目标链接地址
+   *  目的: 缓存列表页的请求参数，例如分页、排序、搜索等参数，方便详情回列表页时自动恢复
+   *  @example [routeNames.userManagementUserListUserDetail]
+   */
+  cacheUrls?: string[]
+  /**
+   * 格式化数据
+   * 你可以对返回的数据做一些处理
+   */
+  dataFormat?: (data: T[]) =&gt; U[]
+  /**
+   * 格式化参数
+   *
+   * 前置处理请求参数。如果你需要传递给导出时。这会很有用
+   * @param params 将要传递给接口的参数
+   */
+  paramsFormat?(params: any): any
+}
+
+/**
+ * antd pro table请求封装钩子
+ * @param fn
+ * @param option
+ * @returns
+ */
+export default function useProTableRequest&lt;T, U extends Record&lt;string, any&gt; = {}&gt;(
+  fn: Fn&lt;U, T&gt;,
+  option: IUseProTableRequestOption&lt;T&gt; = {}
+) {
+  const { dataFormat, cacheUrls } = option
+
+  // Table action 的引用，便于自定义触发
+  const actionRef = useRef&lt;ActionType&gt;()
+
+  const formRef = useRef&lt;ProFormInstance&gt;()
+  // 缓存请求参数
+  const requestParams = useRef&lt;Record&lt;string, any&gt;&gt;({})
+  // 数据缓存参数
+  const dataSourceRef = useRef&lt;T[]&gt;([])
+
+  /** 缓存参数 */
+  const _cacheData = useRef&lt;any&gt;(undefined)
+  /** 缓存key */
+  const cacheKey = genCacheKey()
+  /** 当前是否需要缓存 */
+  const needCache = !!cacheUrls?.length
+
+  // 表格请求
+  const tableRequst = useCallback(async (params: Params&lt;U&gt;, sort: Sort, filter: Filter) =&gt; {
+    const { current, ...rest } = params as Record&lt;string, any&gt;
+    const newParams: any = { ...rest, pageNum: current ?? params?.pageNum ?? 1 }
+
+    // 重置数据
+    let total = 0
+    let data: T[] = []
+
+    requestParams.current = option.paramsFormat ? option.paramsFormat(newParams) : newParams
+
+    try {
+      // 参数长度过长不处理
+      if (JSON.stringify(requestParams.current).length &lt; 1000) {
+        const res = await fn(requestParams.current, sort, filter)
+        // 如果当前列表为空并且pageNum不为1.则重新发起请求
+        if (!res.data?.list?.length &amp;&amp; requestParams.current.pageNum !== 1) {
+          setTimeout(() =&gt; {
+            actionRef.current?.reload(true)
+          })
+        }
+        const { list = [] as T[] } = res.data || {}
+        total = res.data?.total || 0
+        data = dataFormat ? dataFormat(list) : list
+        // 缓存数据
+        _cacheData.current = { ...requestParams.current }
+
+        dataSourceRef.current = data
+      }
+    } catch (error) {}
+    // }
+
+    return { data, success: true, total } as Partial&lt;RequestData&lt;T&gt;&gt;
+  }, [])
+
+  /** 恢复缓存 */
+  const restoreCache = () =&gt; {
+    if (needCache) {
+      const cacheString = window.sessionStorage.getItem(cacheKey)
+
+      if (cacheString) {
+        try {
+          const cacheParams = JSON.parse(cacheString)
+
+          /** 恢复请求参数 */
+          _cacheData.current = cacheParams
+          /** 恢复搜索表单 */
+          formRef.current?.setFieldsValue(cacheParams)
+          /** 恢复分页信息 */
+          actionRef.current?.setPageInfo?.({
+            current: cacheParams?.current ?? cacheParams?.pageNum ?? 1,
+            pageSize: cacheParams?.pageSize
+          })
+        } catch (error) {
+        } finally {
+          window.sessionStorage.removeItem(cacheKey) // 清除缓存数据
+        }
+      }
+    }
+  }
+  useLayoutEffect(() =&gt; {
+    restoreCache()
+  }, [])
+  /**
+   * 表格数据缓存处理
+   */
+  useEffect(() =&gt; {
+    return () =&gt; {
+      if (!needCache) {
+        return
+      }
+
+      // 组件卸载时将数据缓存至sessionStorage
+      const to = pick(window.location, ['hash', 'href', 'protocol', 'port', 'search', 'pathname', 'hostname'])
+
+      const toCache = cacheUrls?.some((url) =&gt; to?.href?.includes(url))
+      if (toCache) {
+        window.sessionStorage.setItem(cacheKey, JSON.stringify(_cacheData.current))
+      }
+    }
+  }, [])
+
+  return {
+    formRef,
+    actionRef,
+    /**
+     * 表格请求
+     */
+    request: tableRequst,
+    /**
+     * 表格query参数
+     */
+    params: requestParams,
+
+    /**
+     * 表格数据缓存
+     */
+    dataSource: dataSourceRef
+  }
+}
+
+/**
+ * 从对象中选择指定的属性
+ * @param obj
+ * @param keys
+ * @returns
+ */
+function pick&lt;T extends Object, K extends keyof T&gt;(obj: T, keys: K[]): Pick&lt;T, K&gt; {
+  const result = {} as Pick&lt;T, K&gt;
+  keys.forEach((key) =&gt; {
+    if (key in obj) {
+      result[key] = obj[key]
+    }
+  })
+  return result
+}
+
+/**
+ * 生成缓存键值
+ * @param key key
+ * @returns
+ */
+function genCacheKey(key?: string | ((ok: string) =&gt; string)) {
+  const hostKey = encodeURIComponent(window.location.href.replace(/http(s)?:\/\//, ''))
+  if (typeof key === 'function') {
+    return key(hostKey)
+  }
+  return key || hostKey
+}
+</code></pre>
+<h3 id="heading-1">简单实例</h3>
+<pre><code> const { request, actionRef, formRef } = useProTableRequest(api['/admin/mall/banner/queryList_GET'])
+</code></pre>
+<p><img src="https://ihopefulchina.github.io/post-images/1739777358410.png" alt="" /></p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="/post/ZxMrztTo35/" class="post-title gt-a-link">
+                    插件: 自动生成 Vue 3 项目中的路由配置
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">🧑‍💻切图仔</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+<script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: gridea-theme-pure-1.3.2 v1.3.2 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+</html>

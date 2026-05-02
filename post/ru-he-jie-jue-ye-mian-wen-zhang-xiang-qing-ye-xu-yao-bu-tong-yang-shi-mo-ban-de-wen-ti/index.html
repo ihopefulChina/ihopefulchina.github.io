@@ -1,0 +1,223 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<meta name="generator" content="Gridea Pro 1.1.1">
+<title>如何解决页面/文章/详情页需要不同样式、模板的问题？ | ihopeful Blog</title>
+
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1777727077">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+<meta name="description" content="遇到一个客户，他的需求是在产品详情页有5套不同的模板，需要在后台自己可以选择不同模板，填写不同的内容。 一开始知道这个需求很懵，后来我理清楚了思路，解决了这个问题:">
+<link rel="canonical" href="https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"如何解决页面/文章/详情页需要不同样式、模板的问题？","url":"https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/","description":"遇到一个客户，他的需求是在产品详情页有5套不同的模板，需要在后台自己可以选择不同模板，填写不同的内容。 一开始知道这个需求很懵，后来我理清楚了思路，解决了这个问题:","image":"/post-images/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti.png","datePublished":"2019-08-22T14:48:25+08:00","dateModified":"2026-05-02T20:52:25+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/","name":"如何解决页面/文章/详情页需要不同样式、模板的问题？","position":2}]}</script>
+<meta property="og:title" content="如何解决页面/文章/详情页需要不同样式、模板的问题？">
+<meta property="og:description" content="遇到一个客户，他的需求是在产品详情页有5套不同的模板，需要在后台自己可以选择不同模板，填写不同的内容。 一开始知道这个需求很懵，后来我理清楚了思路，解决了这个问题:">
+<meta property="og:url" content="https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ihopeful Blog">
+<meta property="og:image" content="/post-images/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/">
+<meta name="twitter:title" content="如何解决页面/文章/详情页需要不同样式、模板的问题？">
+<meta name="twitter:description" content="遇到一个客户，他的需求是在产品详情页有5套不同的模板，需要在后台自己可以选择不同模板，填写不同的内容。 一开始知道这个需求很懵，后来我理清楚了思路，解决了这个问题:">
+<meta name="twitter:image" content="/post-images/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti.png">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            ihopeful Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1777727077" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    如何解决页面/文章/详情页需要不同样式、模板的问题？
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2019-08-22 ·
+                    </time>
+                    
+                        <a href="/tag/wordpress/" class="post-tags">
+                            # WordPress
+                        </a>
+                    
+                        <a href="/tag/php/" class="post-tags">
+                            # PHP
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>遇到一个客户，他的需求是在产品详情页有5套不同的模板，需要在后台自己可以选择不同模板，填写不同的内容。</p>
+<p>一开始知道这个需求很懵，后来我理清楚了思路，解决了这个问题:</p>
+<!-- more -->
+<ol>
+<li>
+<p>首先通过<a href="https://www.advancedcustomfields.com/resources/radio-button/">ACF插件Seclect的单选按钮</a>，填写5个参数<br />
+(注: 参数&rsquo; : &lsquo;前后需要有空格)<br />
+<img src="https://ihopefulchina.github.io/post-images/1566457009571.png" alt="" /></p>
+</li>
+<li>
+<p>通过<a href="https://www.advancedcustomfields.com/resources/group/">ACF插件的组</a>来写5个模板(组下面填写不同的自定义字段)</p>
+</li>
+</ol>
+<p><img src="https://ihopefulchina.github.io/post-images/1566456898881.png" alt="" /></p>
+<p>注:<br />
+(1)需要填写判断(条件逻辑)</p>
+<p><img src="https://ihopefulchina.github.io/post-images/1566457679886.png" alt="" /></p>
+<p>(2)其中每个模板Group里面的说明最好加上模板图片样式，例如<code>&lt;img src=&quot;/wp-admin/images/sj.png&quot; width=&quot;50%&quot; height=&quot;auto&quot;&gt;</code><br />
+这么做的目的，是客户知道这是哪个模板样式，呈现的效果如下。</p>
+<p><img src="https://ihopefulchina.github.io/post-images/1566457148348.png" alt="" /></p>
+<p>3.然后创建5个php，命名规避page，single等等自带的命名方式，里面填写各自模板样式和参数。</p>
+<p><img src="https://ihopefulchina.github.io/post-images/1566457258241.png" alt="" /></p>
+<p>5.最后在single-products.php里面，加一个判断:</p>
+<pre><code>&lt;?php if( get_field('select') == 'one' ): ?&gt;
+		&lt;?php include 'product-content1.php'; ?&gt;
+	&lt;?php endif; ?&gt;
+
+	&lt;?php if( get_field('select') == 'two' ): ?&gt;
+		&lt;?php include 'product-content2.php'; ?&gt;
+	&lt;?php endif; ?&gt;
+
+	&lt;?php if( get_field('select') == 'three' ): ?&gt;
+		&lt;?php include 'product-content3.php'; ?&gt;
+	&lt;?php endif; ?&gt;
+
+	&lt;?php if( get_field('select') == 'four' ): ?&gt;
+		&lt;?php include 'product-content4.php'; ?&gt;
+	&lt;?php endif; ?&gt;
+
+	&lt;?php if( get_field('select') == 'five' ): ?&gt;
+		&lt;?php include 'product-content5.php'; ?&gt;
+	&lt;?php endif; ?&gt;
+</code></pre>
+<p>其中的one，two&hellip; 来自ACF插件Seclect的单选按钮前面的参数</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="/post/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa/" class="post-title gt-a-link">
+                    留言表单、支持邮箱转发
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">🧑‍💻切图仔</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+<script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: gridea-theme-pure-1.3.2 v1.3.2 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+</html>

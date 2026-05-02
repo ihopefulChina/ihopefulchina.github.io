@@ -1,0 +1,510 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<meta name="generator" content="Gridea Pro 1.1.1">
+<title>🙋🙋🙋AvatarCropper: 头像裁剪组件 | ihopeful Blog</title>
+
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1777727077">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+<meta name="description" content="在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。">
+<link rel="canonical" href="https://ihopefulchina.github.io/post/7dtD7wCIDd/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"🙋🙋🙋AvatarCropper: 头像裁剪组件","url":"https://ihopefulchina.github.io/post/7dtD7wCIDd/","description":"在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。","image":"/post-images/7dtD7wCIDd.png","datePublished":"2024-07-09T14:51:15+08:00","dateModified":"2026-05-02T20:52:25+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/7dtD7wCIDd/","name":"🙋🙋🙋AvatarCropper: 头像裁剪组件","position":2}]}</script>
+<meta property="og:title" content="🙋🙋🙋AvatarCropper: 头像裁剪组件">
+<meta property="og:description" content="在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。">
+<meta property="og:url" content="https://ihopefulchina.github.io/post/7dtD7wCIDd/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ihopeful Blog">
+<meta property="og:image" content="/post-images/7dtD7wCIDd.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://ihopefulchina.github.io/post/7dtD7wCIDd/">
+<meta name="twitter:title" content="🙋🙋🙋AvatarCropper: 头像裁剪组件">
+<meta name="twitter:description" content="在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。">
+<meta name="twitter:image" content="/post-images/7dtD7wCIDd.png">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            ihopeful Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1777727077" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    🙋🙋🙋AvatarCropper: 头像裁剪组件
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2024-07-09 ·
+                    </time>
+                    
+                        <a href="/tag/Taro/" class="post-tags">
+                            # Taro
+                        </a>
+                    
+                        <a href="/tag/wei-xin-xiao-cheng-xu/" class="post-tags">
+                            # 微信小程序
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。</p>
+<!-- more -->
+<h3 id="heading">组件概述</h3>
+<p>AvatarCropper 是一个用户自定义的头像裁剪工具，允许用户选择图片进行裁剪，支持缩放、旋转、拖动等操作。组件的功能包括：<br />
+•	选择图片进行裁剪。<br />
+•	支持缩放和旋转图像。<br />
+•	在画布上实时显示裁剪效果。<br />
+•	裁剪完成后，可以返回裁剪后的图片或文件路径。</p>
+<h3 id="heading-1">组件属性解析</h3>
+<p>AvatarCropper 的一些常见属性：<br />
+•	maxZoom：最大缩放倍数，控制裁剪区域的最大缩放程度。<br />
+•	space：裁剪框与画布边缘的空隙，避免裁剪框被画布边界限制。<br />
+•	toolbar：裁剪工具栏的内容，可以自定义显示的按钮。<br />
+•	toolbarPosition：工具栏的位置，支持 top 或 bottom。<br />
+•	editText：显示在裁剪工具栏的编辑文字。<br />
+•	sizeType 和 sourceType：允许选择图片的类型和来源。<br />
+•	shape：裁剪框的形状，支持 square 或 round。<br />
+•	onConfirm：裁剪完成后的回调函数，传递裁剪后的图片路径。<br />
+•	onCancel：取消裁剪的回调函数。</p>
+<h3 id="heading-2">代码</h3>
+<p>index.less code</p>
+<pre><code>.avatar-cropper {
+  position: relative;
+  display: flex;
+
+  &amp;-edit-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 1;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &amp;-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; // 隐藏原生上传按钮
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  &amp;-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    z-index: 1000;
+    &amp;-canvas,
+    &amp;-cut-canvas {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    &amp;-cut-canvas {
+      z-index: 0;
+    }
+
+    &amp;-toolbar {
+      position: absolute;
+      bottom: 30px;
+      left: 0;
+      width: 100%;
+      z-index: 2;
+
+      &amp;.top {
+        top: 0;
+        bottom: inherit;
+      }
+
+      &amp;-flex {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &amp;-item {
+        // flex: 1;
+        color: #fff;
+        padding: 10px 30px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    &amp;-highlight {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background-color: transparent;
+
+      .highlight {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: transparent;
+        // box-shadow: 0 0 1000px 1000px rgba(0, 0, 0, 0.6);
+      }
+    }
+  }
+
+  &amp;.round {
+    .nut-avatar-cropper-edit-text {
+      border-radius: 50%;
+    }
+  }
+}
+
+[dir='rtl'] .avatar-cropper,
+.nut-rtl .avatar-cropper {
+  &amp;-edit-text {
+    left: auto;
+    right: 0;
+  }
+
+  &amp;-input {
+    left: auto;
+    right: 0;
+  }
+
+  &amp;-popup {
+    left: auto;
+    right: 0;
+
+    &amp;-canvas,
+    &amp;-cut-canvas {
+      left: auto;
+      right: 0;
+    }
+
+    &amp;-toolbar {
+      left: auto;
+      right: 0;
+    }
+
+    &amp;-highlight {
+      left: auto;
+      right: 0;
+
+      .highlight {
+        left: auto;
+        right: 50%;
+        transform: translate(50%, -50%);
+      }
+    }
+  }
+}
+
+.canvans-btn {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+</code></pre>
+<p>index.tsx code</p>
+<pre><code>import { AvatarCropper } from './avatarcropper'
+
+export type {
+  AvatarCropperProps,
+  AvatarCropperToolbarPosition,
+  AvatarCropperSizeType,
+  AvatarCropperSourceType,
+  AvatarCropperShape
+} from './avatarcropper'
+export default AvatarCropper
+</code></pre>
+<p>type.ts code</p>
+<pre><code>import type { CSSProperties, ReactNode } from 'react'
+
+export interface BasicComponent {
+  className?: string
+  style?: CSSProperties
+  children?: ReactNode
+  id?: string
+}
+
+export const ComponentDefaults = {
+  className: '',
+  style: {}
+}
+</code></pre>
+<p>use-touch.ts code</p>
+<pre><code>import React, { useRef } from 'react'
+
+const MIN_DISTANCE = 10
+
+type Direction = '' | 'vertical' | 'horizontal'
+
+function getDirection(x: number, y: number) {
+  if (x &gt; y &amp;&amp; x &gt; MIN_DISTANCE) {
+    return 'horizontal'
+  }
+  if (y &gt; x &amp;&amp; y &gt; MIN_DISTANCE) {
+    return 'vertical'
+  }
+  return ''
+}
+
+export function useTouch() {
+  const startX = useRef(0)
+  const startY = useRef(0)
+  const deltaX = useRef(0)
+  const deltaY = useRef(0)
+  const delta = useRef(0)
+  const offsetX = useRef(0)
+  const offsetY = useRef(0)
+  const direction = useRef&lt;Direction&gt;('')
+  const last = useRef(false)
+  const velocity = useRef(0)
+  const touchTime = useRef&lt;number&gt;(Date.now())
+
+  const isVertical = () =&gt; direction.current === 'vertical'
+  const isHorizontal = () =&gt; direction.current === 'horizontal'
+
+  const reset = () =&gt; {
+    touchTime.current = Date.now()
+    deltaX.current = 0
+    deltaY.current = 0
+    offsetX.current = 0
+    offsetY.current = 0
+    delta.current = 0
+    direction.current = ''
+    last.current = false
+  }
+
+  const start = (event: React.TouchEvent&lt;HTMLElement&gt;) =&gt; {
+    reset()
+    touchTime.current = Date.now()
+    startX.current = event.touches[0].clientX
+    startY.current = event.touches[0].clientY
+  }
+
+  const move = (event: React.TouchEvent&lt;HTMLElement&gt;) =&gt; {
+    const touch = event.touches[0]
+    // Fix: Safari back will set clientX to negative number
+    deltaX.current = touch.clientX &lt; 0 ? 0 : touch.clientX - startX.current
+    deltaY.current = touch.clientY - startY.current
+    offsetX.current = Math.abs(deltaX.current)
+    offsetY.current = Math.abs(deltaY.current)
+    delta.current = isVertical() ? deltaY.current : deltaX.current
+
+    if (!direction.current) {
+      direction.current = getDirection(offsetX.current, offsetY.current)
+    }
+  }
+  const end = (event: React.TouchEvent&lt;HTMLElement&gt;) =&gt; {
+    last.current = true
+    velocity.current = Math.sqrt(deltaX.current ** 2 + deltaY.current ** 2) / (Date.now() - touchTime.current)
+  }
+
+  return {
+    end,
+    move,
+    start,
+    reset,
+    touchTime,
+    startX,
+    startY,
+    deltaX,
+    deltaY,
+    delta,
+    offsetX,
+    offsetY,
+    direction,
+    isVertical,
+    isHorizontal,
+    last
+  }
+}
+</code></pre>
+<p>utils.ts code</p>
+<pre><code>export const isObject = (val: unknown): val is Record&lt;any, any&gt; =&gt; val !== null &amp;&amp; typeof val === 'object'
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export const isFunction = (val: unknown): val is Function =&gt; typeof val === 'function'
+
+export const isPromise = &lt;T = any&gt;(val: unknown): val is Promise&lt;T&gt; =&gt; {
+  return isObject(val) &amp;&amp; isFunction(val.then) &amp;&amp; isFunction(val.catch)
+}
+
+export const upperCaseFirst = (str: string) =&gt; {
+  str = str.toLowerCase()
+  str = str.replace(/\b\w+\b/g, (word) =&gt; word.substring(0, 1).toUpperCase() + word.substring(1))
+  return str
+}
+
+export const clamp = (num: number, min: number, max: number): number =&gt; Math.min(Math.max(num, min), max)
+
+export function preventDefault(event: React.TouchEvent&lt;HTMLElement&gt; | TouchEvent, isStopPropagation?: boolean) {
+  if (typeof event.cancelable !== 'boolean' || event.cancelable) {
+    event.preventDefault()
+  }
+
+  if (isStopPropagation) {
+    event.stopPropagation()
+  }
+}
+</code></pre>
+<h3 id="heading-3">简单实例</h3>
+<pre><code>&lt;AvatarCropper shape=&quot;round&quot; onConfirm={cutImage}&gt;
+        &lt;View className={styles.headImgCenter}&gt;
+          {!!headImg &amp;&amp; &lt;Image className={styles.headImg} src={headImg ?? ''} mode=&quot;aspectFill&quot; /&gt;}
+        &lt;/View&gt;
+      &lt;/AvatarCropper&gt;
+</code></pre>
+<h3 id="todo">TODO</h3>
+<p>相关核心逻辑</p>
+<p><img src="https://ihopefulchina.github.io/post-images/1739775430071.png" alt="" /></p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="/post/p9E7d0w867/" class="post-title gt-a-link">
+                    自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">🧑‍💻切图仔</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+<script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: gridea-theme-pure-1.3.2 v1.3.2 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+</html>

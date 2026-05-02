@@ -1,0 +1,245 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<meta name="generator" content="Gridea Pro 1.1.1">
+<title>Wordpress 添加自定义分类 | ihopeful Blog</title>
+
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1777727077">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+<meta name="description" content="Wordpress 玩法很多，其中自定义分类这一项是很重要的，很多玩法，首先需要学会如何创建自定义分类。 自定义分类这个描述不是很准确，Wordpress 默认只有一个文章，和文章分类，如果我们想创建一个产品类目，案例类目，新闻类目，自带的无法满足这项规定，所以需要自定义分类。">
+<link rel="canonical" href="https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Wordpress 添加自定义分类","url":"https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/","description":"Wordpress 玩法很多，其中自定义分类这一项是很重要的，很多玩法，首先需要学会如何创建自定义分类。 自定义分类这个描述不是很准确，Wordpress 默认只有一个文章，和文章分类，如果我们想创建一个产品类目，案例类目，新闻类目，自带的无法满足这项规定，所以需要自定义分类。","image":"/post-images/wordpress-tian-jia-zi-ding-yi-fen-lei.png","datePublished":"2019-08-22T08:53:02+08:00","dateModified":"2026-05-02T20:52:25+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/","name":"Wordpress 添加自定义分类","position":2}]}</script>
+<meta property="og:title" content="Wordpress 添加自定义分类">
+<meta property="og:description" content="Wordpress 玩法很多，其中自定义分类这一项是很重要的，很多玩法，首先需要学会如何创建自定义分类。 自定义分类这个描述不是很准确，Wordpress 默认只有一个文章，和文章分类，如果我们想创建一个产品类目，案例类目，新闻类目，自带的无法满足这项规定，所以需要自定义分类。">
+<meta property="og:url" content="https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ihopeful Blog">
+<meta property="og:image" content="/post-images/wordpress-tian-jia-zi-ding-yi-fen-lei.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/">
+<meta name="twitter:title" content="Wordpress 添加自定义分类">
+<meta name="twitter:description" content="Wordpress 玩法很多，其中自定义分类这一项是很重要的，很多玩法，首先需要学会如何创建自定义分类。 自定义分类这个描述不是很准确，Wordpress 默认只有一个文章，和文章分类，如果我们想创建一个产品类目，案例类目，新闻类目，自带的无法满足这项规定，所以需要自定义分类。">
+<meta name="twitter:image" content="/post-images/wordpress-tian-jia-zi-ding-yi-fen-lei.png">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            ihopeful Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1777727077" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    Wordpress 添加自定义分类
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2019-08-22 ·
+                    </time>
+                    
+                        <a href="/tag/wordpress/" class="post-tags">
+                            # WordPress
+                        </a>
+                    
+                        <a href="/tag/php/" class="post-tags">
+                            # PHP
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>Wordpress 玩法很多，其中自定义分类这一项是很重要的，很多玩法，首先需要学会如何创建自定义分类。</p>
+<p>自定义分类这个描述不是很准确，Wordpress 默认只有一个文章，和文章分类，如果我们想创建一个产品类目，案例类目，新闻类目，自带的无法满足这项规定，所以需要自定义分类。</p>
+<!-- more -->
+<p>分2种情况，一种不带子分类，如何写？</p>
+<pre><code>function products() {
+	$labels = array(
+		'name'               =&gt; _x( '产品', 'post type 名称' ),
+		'add_new'            =&gt; _x( '新建产品', '添加新产品的链接名称' ),
+		'add_new_item'       =&gt; __( '新建一个产品' ),
+		'edit_item'          =&gt; __( '编辑产品' ),
+		'new_item'           =&gt; __( '新产品' ),
+		'all_items'          =&gt; __( '所有产品' ),
+		'view_item'          =&gt; __( '查看产品' ),
+		'search_items'       =&gt; __( '搜索产品' ),
+		'not_found'          =&gt; __( '没有找到产品' ),
+		'not_found_in_trash' =&gt; __( '回收站里面没有产品' ),
+		'parent_item_colon'  =&gt; '',
+		'menu_name'          =&gt; '产品'
+	);
+	$args = array(
+		'labels'        =&gt; $labels,
+		'description'   =&gt; '产品',
+		'public'        =&gt; true,
+		'menu_icon'     =&gt; 'dashicons-cart',
+		'menu_position' =&gt; 13,
+		'supports'      =&gt; array( 'title'),
+		'has_archive'   =&gt; true,
+
+	);
+	register_post_type( 'products', $args );
+}
+add_action( 'init', 'products');
+</code></pre>
+<p>具体参数如何修改和意思，可以参考<a href="https://codex.wordpress.org/Function_Reference/register_post_type">官方文档</a></p>
+<p>另一种，需要子分类。</p>
+<p>在上面的基础上添加</p>
+<pre><code>function my_taxonomies_products() {
+	$labels = array(
+		'name'              =&gt; _x( '产品分类', 'taxonomy 名称' ),
+		'singular_name'     =&gt; _x( 'Product', 'taxonomy 单数名称' ),
+		'search_items'      =&gt; __( '搜索产品分类' ),
+		'all_items'         =&gt; __( '所有产品分类' ),
+		'parent_item'       =&gt; __( '该产品分类的上级分类' ),
+		'parent_item_colon' =&gt; __( '该产品分类的上级分类：' ),
+		'edit_item'         =&gt; __( '编辑产品分类' ),
+		'update_item'       =&gt; __( '更新产品分类' ),
+		'add_new_item'      =&gt; __( '添加新的产品分类' ),
+		'new_item_name'     =&gt; __( '新产品分类' ),
+		'menu_name'         =&gt; __( '产品分类' ),
+	);
+	$args = array(
+		'labels' =&gt; $labels,
+		'hierarchical' =&gt; true,
+		'rewrite' =&gt; array(
+			'slug' =&gt; 'products',
+			'hierarchical' =&gt; true,
+		)
+	);
+	register_taxonomy( 'product', 'products', $args );
+}
+
+add_action( 'init', 'my_taxonomies_products' );
+</code></pre>
+<p><a href="https://codex.wordpress.org/Function_Reference/register_taxonomy">官方文档</a>有具体修改提示.</p>
+<h4 id="archive-productsphptaxonomy-productphpsingle-productsphp">其中archive-products.php(产品总分类)，taxonomy-product.php(产品二级分类)，single-products.php（产品详情页）</h4>
+<p>以上是Wordpress添加自定义分类，道路漫漫，这个是必修课</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="/post/ye-mian-url-jie-wei-tian-jia-xie-gang/" class="post-title gt-a-link">
+                    页面Url结尾添加斜杠&#34;/&#34;
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">🧑‍💻切图仔</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+<script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: gridea-theme-pure-1.3.2 v1.3.2 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+</html>

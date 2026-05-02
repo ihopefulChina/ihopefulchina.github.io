@@ -1,0 +1,212 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<meta name="generator" content="Gridea Pro 1.1.1">
+<title>在非当前页面获取指定多个自定义分类下的文章 | ihopeful Blog</title>
+
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1777727077">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script>
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+<meta name="description" content="在非当前页面，我们获取指定分类就有点困难，ACF插件能解决这个问题，ACF插件是我最常用的插件,用ACF插件定义一个真假按钮，然后判断即可，以下为Demo。">
+<link rel="canonical" href="https://ihopefulchina.github.io/post/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"在非当前页面获取指定多个自定义分类下的文章","url":"https://ihopefulchina.github.io/post/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/","description":"在非当前页面，我们获取指定分类就有点困难，ACF插件能解决这个问题，ACF插件是我最常用的插件,用ACF插件定义一个真假按钮，然后判断即可，以下为Demo。","image":"/post-images/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang.png","datePublished":"2019-08-22T13:34:48+08:00","dateModified":"2026-05-02T20:52:25+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/","name":"在非当前页面获取指定多个自定义分类下的文章","position":2}]}</script>
+<meta property="og:title" content="在非当前页面获取指定多个自定义分类下的文章">
+<meta property="og:description" content="在非当前页面，我们获取指定分类就有点困难，ACF插件能解决这个问题，ACF插件是我最常用的插件,用ACF插件定义一个真假按钮，然后判断即可，以下为Demo。">
+<meta property="og:url" content="https://ihopefulchina.github.io/post/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ihopeful Blog">
+<meta property="og:image" content="/post-images/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://ihopefulchina.github.io/post/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/">
+<meta name="twitter:title" content="在非当前页面获取指定多个自定义分类下的文章">
+<meta name="twitter:description" content="在非当前页面，我们获取指定分类就有点困难，ACF插件能解决这个问题，ACF插件是我最常用的插件,用ACF插件定义一个真假按钮，然后判断即可，以下为Demo。">
+<meta name="twitter:image" content="/post-images/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang.png">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            ihopeful Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="https://ihopefulchina.github.io/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1777727077" action="/search/index.html">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    在非当前页面获取指定多个自定义分类下的文章
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2019-08-22 ·
+                    </time>
+                    
+                        <a href="/tag/wordpress/" class="post-tags">
+                            # WordPress
+                        </a>
+                    
+                        <a href="/tag/php/" class="post-tags">
+                            # PHP
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <p>在非当前页面，我们获取指定分类就有点困难，ACF插件能解决这个问题，<a href="https://www.advancedcustomfields.com/">ACF插件</a>是我最常用的插件,用ACF插件定义一个真假按钮，然后判断即可，以下为Demo。</p>
+<!-- more -->
+<p>仅供参考（提供一种思路）</p>
+<pre><code>&lt;?php
+$args=array(
+	'order' =&gt; 'ASC', //顺序
+	'numberposts' =&gt; -1,
+	'post_type' =&gt; 'products',
+	'meta_key' =&gt; 'product_btn',// ACF 插件定义一个真假按钮
+	'meta_value' =&gt; '1',// 1为真，0为假
+	'posts_per_page'=&gt;-1,
+);
+$arms = array_merge($args, $wp_query-&gt;query);
+query_posts($arms)?&gt;
+&lt;?php if (have_posts()) : ?&gt;
+	&lt;?php while (have_posts()) : the_post(); ?&gt;
+		&lt;div class=&quot;swiper-slide&quot;&gt;
+			&lt;?php
+			// 用于图片使用ACF重复器的时候，获取第一张图片
+			if( have_rows('product_photo',$post-&gt;ID) ):
+				while ( have_rows('product_photo',$post-&gt;ID) ) : the_row();
+					$image = get_sub_field('product_photo');
+					echo '&lt;img src=&quot;'.$image['sizes']['medium'].'&quot; alt=&quot;'.$image['title'].'&quot; /&gt;';
+					break;
+				endwhile; 
+			endif;
+			?&gt;
+			&lt;a class=&quot;product-title&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;&lt;?php the_title(); ?&gt;&lt;/a&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;?php endwhile; ?&gt;
+&lt;?php endif; wp_reset_query();?&gt;
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="/post/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/" class="post-title gt-a-link">
+                    获取指定分类的所有子分类链接、Description、Slug、自定义字段
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">🧑‍💻切图仔</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        
+    </div>
+    <div>
+        Theme by <a href="https://imhanjie.com/" target="_blank">imhanjie</a>, Powered by <a
+                href="https://github.com/getgridea/gridea" target="_blank">Gridea | <a href="https://ihopefulchina.github.io/atom.xml" target="_blank">RSS</a></a>
+    </div>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+</script>
+
+    </div>
+</div>
+<script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: gridea-theme-pure-1.3.2 v1.3.2 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+</html>
