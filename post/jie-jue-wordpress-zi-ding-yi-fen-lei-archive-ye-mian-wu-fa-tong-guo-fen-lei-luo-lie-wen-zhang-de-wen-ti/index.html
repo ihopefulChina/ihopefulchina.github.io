@@ -7,7 +7,7 @@
 <meta name="generator" content="Gridea Pro 1.1.1">
 <title>解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题 | ihopeful Blog</title>
 
-<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1777727442">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1777727486">
 
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
 <meta name="description" content="Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。 解决思路： 先根据get_categories获取所有产品分类。 根据所有产品分类foreach循环这个分类下的name、slug、term_id。 然后根据这些分类的id(tax_query)获取所有产品。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题","url":"https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/","description":"Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。 解决思路： 先根据get_categories获取所有产品分类。 根据所有产品分类foreach循环这个分类下的name、slug、term_id。 然后根据这些分类的id(tax_query)获取所有产品。","image":"/post-images/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti.png","datePublished":"2019-08-21T16:38:44+08:00","dateModified":"2026-05-02T20:52:25+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题","url":"https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/","description":"Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。 解决思路： 先根据get_categories获取所有产品分类。 根据所有产品分类foreach循环这个分类下的name、slug、term_id。 然后根据这些分类的id(tax_query)获取所有产品。","image":"/post-images/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti.png","datePublished":"2019-08-21T16:38:44+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"ihopeful Blog"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/","name":"解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题","position":2}]}</script>
 <meta property="og:title" content="解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题">
 <meta property="og:description" content="Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。 解决思路： 先根据get_categories获取所有产品分类。 根据所有产品分类foreach循环这个分类下的name、slug、term_id。 然后根据这些分类的id(tax_query)获取所有产品。">
@@ -104,7 +104,7 @@
             
         </div>
         <div style="text-align: center">
-            <form id="gridea-search-form" style="position: relative" data-update="1777727442" action="/search/index.html">
+            <form id="gridea-search-form" style="position: relative" data-update="1777727486" action="/search/index.html">
                 <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
                 <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
             </form>

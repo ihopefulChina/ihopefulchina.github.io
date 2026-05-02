@@ -7,7 +7,7 @@
 <meta name="generator" content="Gridea Pro 1.1.1">
 <title>自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装 | ihopeful Blog</title>
 
-<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1777727442">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1777727486">
 
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
 <meta name="description" content="在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/aJA508HwI4/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装","url":"https://ihopefulchina.github.io/post/aJA508HwI4/","description":"在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。","image":"/post-images/aJA508HwI4.png","datePublished":"2024-10-17T13:39:42+08:00","dateModified":"2026-05-02T20:52:25+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装","url":"https://ihopefulchina.github.io/post/aJA508HwI4/","description":"在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。","image":"/post-images/aJA508HwI4.png","datePublished":"2024-10-17T13:39:42+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"ihopeful Blog"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/aJA508HwI4/","name":"自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装","position":2}]}</script>
 <meta property="og:title" content="自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装">
 <meta property="og:description" content="在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。">
@@ -104,7 +104,7 @@
             
         </div>
         <div style="text-align: center">
-            <form id="gridea-search-form" style="position: relative" data-update="1777727442" action="/search/index.html">
+            <form id="gridea-search-form" style="position: relative" data-update="1777727486" action="/search/index.html">
                 <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
                 <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
             </form>

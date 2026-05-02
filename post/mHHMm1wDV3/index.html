@@ -7,7 +7,7 @@
 <meta name="generator" content="Gridea Pro 1.1.1">
 <title>自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用 | ihopeful Blog</title>
 
-<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1777727442">
+<link rel="shortcut icon" href="https://ihopefulchina.github.io/favicon.ico?v=1777727486">
 
 <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://ihopefulchina.github.io/styles/main.css">
@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
 <meta name="description" content="在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。 为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文将介绍如何使用 Vue 3 中的 ref 和 async 函数来实现一个 useLockFn 自定义 Hook，它可以防止在短时间内重复执行一个异步操作。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/mHHMm1wDV3/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用","url":"https://ihopefulchina.github.io/post/mHHMm1wDV3/","description":"在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。 为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文将介绍如何使用 Vue 3 中的 ref 和 async 函数来实现一个 useLockFn 自定义 Hook，它可以防止在短时间内重复执行一个异步操作。","image":"/post-images/mHHMm1wDV3.png","datePublished":"2024-05-08T09:45:15+08:00","dateModified":"2026-05-02T20:52:25+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用","url":"https://ihopefulchina.github.io/post/mHHMm1wDV3/","description":"在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。 为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文将介绍如何使用 Vue 3 中的 ref 和 async 函数来实现一个 useLockFn 自定义 Hook，它可以防止在短时间内重复执行一个异步操作。","image":"/post-images/mHHMm1wDV3.png","datePublished":"2024-05-08T09:45:15+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"ihopeful Blog"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/mHHMm1wDV3/","name":"自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用","position":2}]}</script>
 <meta property="og:title" content="自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用">
 <meta property="og:description" content="在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。 为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文将介绍如何使用 Vue 3 中的 ref 和 async 函数来实现一个 useLockFn 自定义 Hook，它可以防止在短时间内重复执行一个异步操作。">
@@ -104,7 +104,7 @@
             
         </div>
         <div style="text-align: center">
-            <form id="gridea-search-form" style="position: relative" data-update="1777727442" action="/search/index.html">
+            <form id="gridea-search-form" style="position: relative" data-update="1777727486" action="/search/index.html">
                 <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
                 <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
             </form>
