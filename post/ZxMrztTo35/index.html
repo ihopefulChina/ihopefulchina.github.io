@@ -1,13 +1,15 @@
 <html>
-  <head>
-    <meta charset="utf-8" />
+
+<head>
+    
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content="Gridea Pro 1.1.1">
 <title>插件: 自动生成 Vue 3 项目中的路由配置 | ihopeful Blog</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1777771434">
+<link rel="shortcut icon" href="/favicon.ico?v=1777771761">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="/styles/main.css">
-<link rel="alternate" type="application/rss+xml" title="插件: 自动生成 Vue 3 项目中的路由配置 | ihopeful Blog - RSS Feed" href="/feed.xml">
+<link rel="alternate" type="application/atom+xml" title="插件: 自动生成 Vue 3 项目中的路由配置 | ihopeful Blog - Atom Feed" href="/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -16,7 +18,7 @@
     <meta name="keywords" content="Vue" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
-  <meta name="description" content="在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。">
+<meta name="description" content="在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/ZxMrztTo35/">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"插件: 自动生成 Vue 3 项目中的路由配置","url":"https://ihopefulchina.github.io/post/ZxMrztTo35/","description":"在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。","image":"/post-images/ZxMrztTo35.png","datePublished":"2024-07-17T16:50:37+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/images/avatar.png"},"name":"ihopeful Blog"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/ZxMrztTo35/","name":"插件: 自动生成 Vue 3 项目中的路由配置","position":2}]}</script>
@@ -43,85 +45,81 @@
 <meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
 <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </head>
-  <body>
+
+<body>
     <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://ihopefulchina.github.io">
-  <img class="avatar" src="https://ihopefulchina.github.io/images/avatar.png?v=1777771434" alt="">
-  </a>
-  <h1 class="site-title">
-    ihopeful Blog
-  </h1>
-  <p class="site-description">
-    🧑‍💻切图仔
-  </p>
-  <div class="menu-container">
-    
-      
+        <div class="main-content">
+            
+<div class="site-header">
+    <a href="/">
+        <img class="avatar" src="/images/avatar.png?v=1777771761" alt="">
+    </a>
+    <h1 class="site-title">
+        ihopeful Blog
+    </h1>
+    <p class="site-description">
+        🧑‍💻切图仔
+    </p>
+    <div class="menu-container">
+        
+        
         <a href="/" class="menu">
-          首页
+            首页
         </a>
-      
-    
-      
+        
+        
+        
         <a href="/archives" class="menu">
-          归档
+            归档
         </a>
-      
-    
-      
+        
+        
+        
         <a href="/tags" class="menu">
-          标签
+            标签
         </a>
-      
-    
-      
+        
+        
+        
         <a href="/mine" class="menu">
-          关于
+            关于
         </a>
-      
-    
-  </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
+        
+        
+    </div>
+    <div class="social-container">
+        
+        
+        
+        
+        
+    </div>
 </div>
 
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              插件: 自动生成 Vue 3 项目中的路由配置
-            </h2>
-            <div class="post-info">
-              <span>
-                2024-07-17
-              </span>
-              <span>
-                4 分钟阅读
-              </span>
-              
-                <a href="/tag/vue/" class="post-tag">
-                  # Vue
-                </a>
-              
-            </div>
-            
-              <img class="post-feature-image" src="/post-images/ZxMrztTo35.png" alt="">
-            
-            <div class="post-content-wrapper">
-              <div class="post-content" v-pre>
-                <p>在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。</p>
+            <div class="post-detail">
+                <article class="post">
+                    <h2 class="post-title">
+                        插件: 自动生成 Vue 3 项目中的路由配置
+                    </h2>
+                    <div class="post-info">
+                        <span>
+                            2024-07-17
+                        </span>
+                        <span>
+                            4 分钟阅读
+                        </span>
+                        
+                        <a href="/tag/vue/" class="post-tag">
+                            # Vue
+                        </a>
+                        
+                    </div>
+                    
+                    <img class="post-feature-image" src="/post-images/ZxMrztTo35.png" alt="">
+                    
+                    <div class="post-content-wrapper">
+                        <div class="post-content" v-pre>
+                            <p>在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。</p>
 <!-- more -->
 <p>我写了一个如何通过自动化脚本生成 Vue 3 项目的路由配置文件。具体来说，将根据 pages.json 文件动态生成路由映射，并且支持分包和 tabBar 配置。</p>
 <h3 id="heading">背景</h3>
@@ -214,77 +212,79 @@ fs.writeFile('./src/routes.ts', str, (error) =&gt; {
 <p>通过这个自动化脚本，我们能够轻松地根据 pages.json 文件生成项目中的路由配置。这大大提高了开发效率，避免了手动维护路由的繁琐工作。每当 pages.json 文件更新时，我们只需重新运行脚本，路由配置就会自动更新。<br />
 <img src="https://ihopefulchina.github.io/post-images/1739757236685.png" alt="" /></p>
 
-              </div>
-              <div class="toc-container">
-                
-              </div>
+                        </div>
+                        <div class="toc-container">
+                            
+                        </div>
+                    </div>
+                </article>
             </div>
-          </article>
-        </div>
 
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="/post/7dtD7wCIDd/">
-              <h3 class="post-title">
-                🙋🙋🙋AvatarCropper: 头像裁剪组件
-              </h3>
-            </a>
-          </div>
-        
+            
+            <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="/post/7dtD7wCIDd/">
+                    <h3 class="post-title">
+                        🙋🙋🙋AvatarCropper: 头像裁剪组件
+                    </h3>
+                </a>
+            </div>
+            
 
-        
+            
 
-        <div class="site-footer">
-  
-  <a class="rss" href="/feed.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
+            
+<div class="site-footer">
+    
+    <a class="rss" href="/atom.xml" target="_blank">
+        <i class="ri-rss-line"></i> RSS
+    </a>
 </div>
 
-      </div>
+        </div>
     </div>
 
     <script>
-      hljs.initHighlightingOnLoad()
+        hljs.initHighlightingOnLoad()
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+        let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
+        
+        
+        
+        
+        
+        
+        
+        
 
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
+        window.addEventListener("scroll", event => {
+            let fromTop = window.scrollY;
 
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
+            mainNavLinks.forEach((link, index) => {
+                let section = document.getElementById(decodeURI(link.hash).substring(1));
+                let nextSection = null
+                if (mainNavLinks[index + 1]) {
+                    nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+                }
+                if (section.offsetTop <= fromTop) {
+                    if (nextSection) {
+                        if (nextSection.offsetTop > fromTop) {
+                            link.classList.add("current");
+                        } else {
+                            link.classList.remove("current");
+                        }
+                    } else {
+                        link.classList.add("current");
+                    }
+                } else {
+                    link.classList.remove("current");
+                }
+            });
         });
-      });
 
     </script>
-  <script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: notes v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v1.1.1 %c · Theme: inotes v1.0.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
+
 </html>
