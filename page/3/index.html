@@ -64,18 +64,6 @@
     
     {
       "@type": "BlogPosting",
-      "headline": "如何输出根据分类罗列文章，当前页面高亮显示",
-      "url": "https://ihopefulchina.github.io/post/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/",
-      "datePublished": "2019-08-22T14:13:54+08:00",
-      "description": "我之前有写过类似这个功能，这次写的全一点，高亮显示实现功能也是用到这个$uri=explode('/',$_SERVER['REQUEST_URI']);\n我贴一下代码，你们可以参考一下，个人暂时未找到更好的方法，有什么好的方法，可以在下面评论，我们探讨一下。\n\n$uri=explode('/',$_SERVER['R...",
-      "author": { "@type": "Person", "name": "ihopeful Blog" }
-    }
-    
-    
-    
-    ,
-    {
-      "@type": "BlogPosting",
       "headline": "如何用TAG方式串联自定义分类(实现相关文章串联功能)",
       "url": "https://ihopefulchina.github.io/post/ru-he-yong-tag-fang-shi-chuan-lian-zi-ding-yi-fen-lei-shi-xian-xiang-guan-wen-zhang-chuan-lian-gong-neng/",
       "datePublished": "2019-08-22T13:47:31+08:00",
@@ -176,6 +164,18 @@
       "url": "https://ihopefulchina.github.io/post/jin-zhi-shan-chu-mou-xie-ye-mian/",
       "datePublished": "2019-08-22T09:22:15+08:00",
       "description": "Wordpress的页面，很多是网站构建重要组成部分、网站的基本框架，有部分客户手贱/不小心删除掉页面，导致页面需要重新挂上。\n重新挂上，难保客户继续删除掉，所以，需要禁止删除某些页面。\n\n/*禁止删除特定的页面函数*/\nfunction prevent_post_deletion($postid){//保护某些页面不...",
+      "author": { "@type": "Person", "name": "ihopeful Blog" }
+    }
+    
+    
+    
+    ,
+    {
+      "@type": "BlogPosting",
+      "headline": "如何在导航栏添加图片？",
+      "url": "https://ihopefulchina.github.io/post/ru-he-zai-dao-hang-lan-tian-jia-tu-pian/",
+      "datePublished": "2019-08-22T09:07:44+08:00",
+      "description": "很多客户有在导航栏添加产品图片的需求，Wordpress不支持这一项，需要我们去创建和自定义。\n\nfunction函数添加这个即可\nadd_filter('wp_nav_menu_objects', 'my_wp_nav_menu_objects', 10, 2);\nfunction my_wp_nav_menu_ob...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -383,19 +383,6 @@
   <div class="msg__body">
     <div class="post-list">
       
-      <a class="post-item" href="/post/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/">
-        <span class="post-item__main">
-          <span class="post-item__title">如何输出根据分类罗列文章，当前页面高亮显示</span>
-          
-          
-          <span class="post-item__excerpt">我之前有写过类似这个功能，这次写的全一点，高亮显示实现功能也是用到这个$uri=explode(&#39;/&#39;,$_SERVER[&#39;REQUEST_URI&#39;]);
-我贴...</span>
-          
-          
-        </span>
-        <time class="post-item__time" datetime="2019-08-22T14:13:54+08:00">6 年前</time>
-      </a>
-      
       <a class="post-item" href="/post/ru-he-yong-tag-fang-shi-chuan-lian-zi-ding-yi-fen-lei-shi-xian-xiang-guan-wen-zhang-chuan-lian-gong-neng/">
         <span class="post-item__main">
           <span class="post-item__title">如何用TAG方式串联自定义分类(实现相关文章串联功能)</span>
@@ -521,6 +508,21 @@ function disabl...</span>
           
         </span>
         <time class="post-item__time" datetime="2019-08-22T09:22:15+08:00">6 年前</time>
+      </a>
+      
+      <a class="post-item" href="/post/ru-he-zai-dao-hang-lan-tian-jia-tu-pian/">
+        <span class="post-item__main">
+          <span class="post-item__title">如何在导航栏添加图片？</span>
+          
+          
+          <span class="post-item__excerpt">很多客户有在导航栏添加产品图片的需求，Wordpress不支持这一项，需要我们去创建和自定义。
+
+function函数添加这个即可
+add_filter(&#39;wp...</span>
+          
+          
+        </span>
+        <time class="post-item__time" datetime="2019-08-22T09:07:44+08:00">6 年前</time>
       </a>
       
     </div>
