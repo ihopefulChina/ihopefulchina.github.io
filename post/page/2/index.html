@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
   <title>博客 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -64,17 +64,6 @@
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/page/2/">
 <meta name="twitter:title" content="ihopeful Blog">
 <meta name="twitter:description" content="🧑‍💻切图仔">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </head>
 <body data-typewriter="True">
 
@@ -255,29 +244,24 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        自定义Hooks: useRowSelection - ProTable 选择项配置hooks
+        ProTable 跨页选择：用 useRowSelection 保存稳定状态
       </h3>
       
-      <p class="post-card__excerpt">在写基于Antd Pro 后台业务的时候，发现一个高频业务场景需求：
-表格列表多选item的时候，没办法跨分页选择。
-我写一个自定义Hooks，支持跨分页选择。
+      <p class="post-card__excerpt">ProTable 跨页选择需要同时保存两类状态：稳定的行主键，以及已经见过的行数据。只保存当前页的 selectedRows，翻页后会丢失详情；只保存主键，批量操作时又可能拿不到名称等展示字段。
 
-import { TableProps } from &#39;antd&#39;
-impo...</p>
+设计约束
+
+rowKey 必须全局稳定，不...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2024-04-01T09:21:53+08:00">2 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>4 分钟</span>
+        <span>6 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/KIr9bupcA9.png" alt="自定义Hooks: useRowSelection - ProTable 选择项配置hooks" loading="lazy">
     </div>
     
   </a>
@@ -290,29 +274,23 @@ impo...</p>
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        自定义Hooks: useMutate - 简单的获取数据方法的一个封装
+        React useMutate：处理加载、错误与并发请求
       </h3>
       
-      <p class="post-card__excerpt">在写React 项目业务过程中，经常写一些 相似的代码逻辑。
-比如我需要在进入页面请求接口数据
-传统上我们请求接口获取数据，大概类似这样：
+      <p class="post-card__excerpt">React 版 useMutate 适合封装由事件触发的异步操作。早期实现里最容易被忽略的问题是：普通局部变量不会触发渲染，失败时塞入 {} as T 会破坏类型，并发请求也可能让旧结果覆盖新结果。
 
-  /** 数据 */
-  const [detail, setDetail] = useStat...</p>
+一个最小但完整的实现
+import {...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2024-03-15T10:52:26+08:00">2 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>3 分钟</span>
+        <span>5 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/481vcXjEdn.png" alt="自定义Hooks: useMutate - 简单的获取数据方法的一个封装" loading="lazy">
     </div>
     
   </a>
@@ -325,29 +303,22 @@ impo...</p>
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        函数式组件与类组件有何不同？
+        React 函数组件与类组件：渲染快照有何不同？
       </h3>
       
-      <p class="post-card__excerpt">
-函数式组件捕获了渲染所用的值。（Function components capture the rendered values.）
+      <p class="post-card__excerpt">React 的函数组件与类组件都能描述界面，但它们最值得理解的差异不是语法，而是一次渲染看到的值如何被保存。函数组件中的事件处理器会捕获创建它的那次渲染快照；类组件的方法通常通过可变的 this 读取最新 props 和 state。
 
-
-作者是 Dan Abramov , Facebook React 核心开发，Redux 作者
-博客地址...</p>
+一...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2021-02-09T15:05:53+08:00">5 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>1 分钟</span>
+        <span>4 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/dBAsSzkYF.png" alt="函数式组件与类组件有何不同？" loading="lazy">
     </div>
     
   </a>
@@ -363,11 +334,9 @@ impo...</p>
         获取当前分类下的所有子分类
       </h3>
       
-      <p class="post-card__excerpt">一般用于taxonomy分类页面，比如产品products，下面有a这个分类，a下面有a-1,a-2,a-3&amp;hellip;
-如何在进入a分类这个页面的时候，输出这个a下面的子分类？
+      <p class="post-card__excerpt">在分类法归档页获取“当前分类”，应使用 WordPress 已解析好的查询对象，而不是拆分 $_SERVER[&#39;REQUEST_URI&#39;]。URL 可能因固定链接、语言插件、子目录安装或重写规则变化，查询对象才是稳定的数据来源。
 
-解决思路:
-1.首先通过get_categories获...</p>
+获取直属...</p>
       
       
       <div class="post-card__meta">
@@ -380,10 +349,6 @@ impo...</p>
       </div>
     </div>
     
-    <div class="post-card__thumb">
-      <img src="/post-images/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei.png" alt="获取当前分类下的所有子分类" loading="lazy">
-    </div>
-    
   </a>
 </article>
 
@@ -394,30 +359,23 @@ impo...</p>
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        如何解决页面/文章/详情页需要不同样式、模板的问题？
+        如何让 WordPress 页面使用不同布局与模板？
       </h3>
       
-      <p class="post-card__excerpt">遇到一个客户，他的需求是在产品详情页有5套不同的模板，需要在后台自己可以选择不同模板，填写不同的内容。
-一开始知道这个需求很懵，后来我理清楚了思路，解决了这个问题:
+      <p class="post-card__excerpt">页面、文章或自定义文章详情需要不同布局时，先使用 WordPress 模板层级和页面模板；只有当编辑需要在后台选择有限的展示变体时，再加入 ACF 字段。不要把字段值直接拼进 include 路径。
 
-
-
-首先通过ACF插件Seclect的单选按钮，填写5个参数
-(注: 参...</p>
+方案一：模板层级
+经典主题会按从具体到...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2019-08-22T14:48:25+08:00">7 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>2 分钟</span>
+        <span>3 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti.png" alt="如何解决页面/文章/详情页需要不同样式、模板的问题？" loading="lazy">
     </div>
     
   </a>
@@ -430,29 +388,25 @@ impo...</p>
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        留言表单、支持邮箱转发
+        WordPress 留言表单与邮件转发：安全、送达和隐私
       </h3>
       
-      <p class="post-card__excerpt">基于PHP搭建，用于Wordpress的插件
-项目地址:https://github.com/ihopefulChina/Message
-(已设为私有，无法访问，如果有需要联系:hpf784667332@gmail.com)
+      <p class="post-card__excerpt">我早期为企业站写过一个留言表单项目，支持后台查看和邮箱通知。原始仓库现在是非公开的历史项目，不能把当年的实现当成可安装、可维护的公开插件。下面重新整理一个生产表单真正需要考虑的边界。
 
-功能介绍:
-...</p>
+表单不只是 wp_mail()
+完整流程包括：
+
+浏览...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2019-08-22T14:25:47+08:00">7 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>1 分钟</span>
+        <span>4 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa.png" alt="留言表单、支持邮箱转发" loading="lazy">
     </div>
     
   </a>
@@ -465,25 +419,22 @@ impo...</p>
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        如何输出根据分类罗列文章，当前页面高亮显示
+        按分类输出文章，并可靠高亮当前分类与文章
       </h3>
       
-      <p class="post-card__excerpt">我之前有写过类似这个功能，这次写的全一点，高亮显示实现功能也是用到这个$uri=explode(&#39;/&#39;,$_SERVER[&#39;REQUEST_URI&#39;]);
-我贴一下代码，你们可以参考一下，个人暂时未找到更好的方法，有什么好的方法，可以在下面...</p>
+      <p class="post-card__excerpt">侧边栏按分类展示视频或文章，并高亮当前分类、当前详情时，应比较 term ID 和 post ID。解析 URL 文本既无法处理别名变化，也会在多语言、分页和子目录站点中失效。
+
+以下示例假设自定义文章类型为 video，分层分类法也名为 ...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2019-08-22T14:13:54+08:00">7 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>4 分钟</span>
+        <span>5 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi.png" alt="如何输出根据分类罗列文章，当前页面高亮显示" loading="lazy">
     </div>
     
   </a>
@@ -496,26 +447,24 @@ impo...</p>
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        如何用TAG方式串联自定义分类(实现相关文章串联功能)
+        用标签关联不同文章类型，并支持 ACF 人工覆盖
       </h3>
       
-      <p class="post-card__excerpt">遇到过一个奇葩的客户，让我通过TAG的方式，获取自定义分类的相关文章。
-例如:某产品写了a这个tag标签，某新闻、案例、应用等等都有一个一样是a标签，然后如何在这个产品详情页，输出含有a标签的相关新闻、相关案例、相关应用等等。
-最后如果没有...</p>
+      <p class="post-card__excerpt">产品、案例、新闻和应用可以通过共享标签建立自动关联；对少数特殊内容，再用 ACF Relationship 字段人工指定。这里的关键是先定义优先级，而不是把两个条件混在一个难以理解的查询里。
+
+
+让自定义文章类型支持标签
+内置 post_t...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2019-08-22T13:47:31+08:00">7 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>4 分钟</span>
+        <span>5 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/ru-he-yong-tag-fang-shi-chuan-lian-zi-ding-yi-fen-lei-shi-xian-xiang-guan-wen-zhang-chuan-lian-gong-neng.png" alt="如何用TAG方式串联自定义分类(实现相关文章串联功能)" loading="lazy">
     </div>
     
   </a>
@@ -528,31 +477,23 @@ impo...</p>
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        页面实现类似于淘宝的图窗功能
+        用 ACF 与 Swiper 实现商品主图和缩略图画廊
       </h3>
       
-      <p class="post-card__excerpt">解决思路:
-
-前台的功能通过JS插件实现。
-图片获取通过自定义字段功能获取。
+      <p class="post-card__excerpt">商品详情常见的“主图 + 缩略图”可以用 ACF Gallery 管理图片，用 Swiper 同步两个轮播。旧版 Swiper 3 的初始化方式和资源路径已经过时；下面采用当前模块化 API 的思路，并把无障碍和图片性能一起考虑。
 
 
-需要用到ACF插件的重复器和Swiper.js
-&amp;lt;div class=&amp;quot;swiper-container gallery-top&amp;quot;&amp;...</p>
+本文...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2019-08-22T13:40:21+08:00">7 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>2 分钟</span>
+        <span>6 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/ye-mian-shi-xian-lei-si-yu-tao-bao-de-tu-chuang-gong-neng.png" alt="页面实现类似于淘宝的图窗功能" loading="lazy">
     </div>
     
   </a>
@@ -565,29 +506,22 @@ impo...</p>
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        在非当前页面获取指定多个自定义分类下的文章
+        在任意页面查询满足 ACF 条件的自定义文章
       </h3>
       
-      <p class="post-card__excerpt">在非当前页面，我们获取指定分类就有点困难，ACF插件能解决这个问题，ACF插件是我最常用的插件,用ACF插件定义一个真假按钮，然后判断即可，以下为Demo。
+      <p class="post-card__excerpt">在首页、落地页或其他非归档模板中查询自定义文章，应创建独立的 WP_Query。不要使用 query_posts() 覆盖主查询，也不要把 ACF 字段名和值直接拼接成 SQL。
 
-仅供参考（提供一种思路）
-&amp;lt;?php
-$args=array(
-	&#39;ord...</p>
+假设要显示属于多个产品分类、并且 ACF 状态字段为 fe...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2019-08-22T13:34:48+08:00">7 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>1 分钟</span>
+        <span>4 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang.png" alt="在非当前页面获取指定多个自定义分类下的文章" loading="lazy">
     </div>
     
   </a>
@@ -667,6 +601,6 @@ $args=array(
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

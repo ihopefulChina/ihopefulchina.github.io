@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>函数式组件与类组件有何不同？ - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>React 函数组件与类组件：渲染快照有何不同？ - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="函数式组件捕获了渲染所用的值。（Function components capture the rendered values.）">
+<meta name="description" content="React 的函数组件与类组件都能描述界面，但它们最值得理解的差异不是语法，而是一次渲染看到的值如何被保存。函数组件中的事件处理器会捕获创建它的那次渲染快照；类组件的方法通常通过可变的 this 读取最新 props 和 state。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/dBAsSzkYF/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"函数式组件与类组件有何不同？","url":"https://ihopefulchina.github.io/post/dBAsSzkYF/","description":"函数式组件捕获了渲染所用的值。（Function components capture the rendered values.）","image":"/post-images/dBAsSzkYF.png","datePublished":"2021-02-09T15:05:53+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/dBAsSzkYF/","name":"函数式组件与类组件有何不同？","position":2}]}</script>
-<meta property="og:title" content="函数式组件与类组件有何不同？">
-<meta property="og:description" content="函数式组件捕获了渲染所用的值。（Function components capture the rendered values.）">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"React 函数组件与类组件：渲染快照有何不同？","url":"https://ihopefulchina.github.io/post/dBAsSzkYF/","description":"React 的函数组件与类组件都能描述界面，但它们最值得理解的差异不是语法，而是一次渲染看到的值如何被保存。函数组件中的事件处理器会捕获创建它的那次渲染快照；类组件的方法通常通过可变的 this 读取最新 props 和 state。","datePublished":"2021-02-09T15:05:53+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/dBAsSzkYF/","name":"React 函数组件与类组件：渲染快照有何不同？","position":2}]}</script>
+<meta property="og:title" content="React 函数组件与类组件：渲染快照有何不同？">
+<meta property="og:description" content="React 的函数组件与类组件都能描述界面，但它们最值得理解的差异不是语法，而是一次渲染看到的值如何被保存。函数组件中的事件处理器会捕获创建它的那次渲染快照；类组件的方法通常通过可变的 this 读取最新 props 和 state。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/dBAsSzkYF/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/dBAsSzkYF.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/dBAsSzkYF/">
-<meta name="twitter:title" content="函数式组件与类组件有何不同？">
-<meta name="twitter:description" content="函数式组件捕获了渲染所用的值。（Function components capture the rendered values.）">
-<meta name="twitter:image" content="/post-images/dBAsSzkYF.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="React 函数组件与类组件：渲染快照有何不同？">
+<meta name="twitter:description" content="React 的函数组件与类组件都能描述界面，但它们最值得理解的差异不是语法，而是一次渲染看到的值如何被保存。函数组件中的事件处理器会捕获创建它的那次渲染快照；类组件的方法通常通过可变的 this 读取最新 props 和 state。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">函数式组件与类组件有何不同？</h1>
+  <h1 class="msg__bubble msg__bubble--title">React 函数组件与类组件：渲染快照有何不同？</h1>
 </div>
 
 
@@ -246,30 +233,130 @@
     <div class="post-meta">
       <time datetime="2021-02-09T15:05:53+08:00">2021-02-09</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>351 字</span>
+      <span>2915 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 1 分钟</span>
+      <span>约 4 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/dBAsSzkYF.png" alt="函数式组件与类组件有何不同？">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <blockquote>
-<p>函数式组件捕获了渲染所用的值。（Function components capture the rendered values.）</p>
-</blockquote>
+      <p>React 的函数组件与类组件都能描述界面，但它们最值得理解的差异不是语法，而是<strong>一次渲染看到的值如何被保存</strong>。函数组件中的事件处理器会捕获创建它的那次渲染快照；类组件的方法通常通过可变的 <code>this</code> 读取最新 props 和 state。</p>
 <!-- more -->
-<p>作者是 <a href="https://mobile.twitter.com/dan_abramov">Dan Abramov</a> , Facebook React 核心开发，Redux 作者</p>
-<h3 id="heading">博客地址</h3>
-<p><a href="https://overreacted.io/zh-hans/how-are-function-components-different-from-classes/">https://overreacted.io/zh-hans/how-are-function-components-different-from-classes/</a></p>
+<h2 id="heading">一个延迟提示的例子</h2>
+<p>函数组件：</p>
+<pre><code class="language-tsx">function Profile({ user }: { user: string }) {
+  function handleClick() {
+    window.setTimeout(() =&gt; {
+      window.alert(`Followed ${user}`)
+    }, 3000)
+  }
+
+  return &lt;button onClick={handleClick}&gt;Follow&lt;/button&gt;
+}
+</code></pre>
+<p>点击按钮时 <code>user</code> 是 “Dan”，随后父组件切换成 “Sophie”。三秒后弹窗仍显示 “Dan”，因为这次 <code>handleClick</code> 来自显示 Dan 的那次渲染。</p>
+<p>类组件：</p>
+<pre><code class="language-tsx">class Profile extends React.Component&lt;{
+  user: string
+}&gt; {
+  handleClick = () =&gt; {
+    window.setTimeout(() =&gt; {
+      window.alert(
+        `Followed ${this.props.user}`
+      )
+    }, 3000)
+  }
+
+  render() {
+    return (
+      &lt;button onClick={this.handleClick}&gt;
+        Follow
+      &lt;/button&gt;
+    )
+  }
+}
+</code></pre>
+<p>定时器执行时才读取 <code>this.props.user</code>。React 已经把实例上的 props 更新为 Sophie，因此它通常显示 Sophie。</p>
+<p>这不是“函数异步、类同步”，也不是闭包本身有问题。差异在于：</p>
+<ul>
+<li>函数组件读取的是某次渲染中的局部常量。</li>
+<li>类方法读取的是同一个组件实例上后来被替换的属性。</li>
+</ul>
+<h2 id="react-state-">React state 是一次渲染的快照</h2>
+<p>在函数组件的一次渲染中，props、state 和由它们计算出的局部变量都不会因为调用 <code>setState</code> 而在当前函数里改变：</p>
+<pre><code class="language-tsx">function Counter() {
+  const [count, setCount] = useState(0)
+
+  function handleClick() {
+    setCount(count + 1)
+    console.log(count) // 仍是本次渲染中的 count
+  }
+
+  return &lt;button onClick={handleClick}&gt;{count}&lt;/button&gt;
+}
+</code></pre>
+<p>状态更新会请求下一次渲染。下一次渲染创建新的 <code>count</code> 和新的事件处理器；旧处理器仍保留旧快照。React 官方把这个模型称为 <a href="https://react.dev/learn/state-as-a-snapshot">state as a snapshot</a>。</p>
+<p>需要基于前一个状态连续更新时，使用函数式更新：</p>
+<pre><code class="language-tsx">setCount((current) =&gt; current + 1)
+</code></pre>
+<h2 id="heading-1">想在类组件里保留点击时的值</h2>
+<p>类组件也能显式创建快照：</p>
+<pre><code class="language-tsx">handleClick = () =&gt; {
+  const { user } = this.props
+
+  window.setTimeout(() =&gt; {
+    window.alert(`Followed ${user}`)
+  }, 3000)
+}
+</code></pre>
+<p>关键不是组件类型，而是读取发生在点击时还是回调执行时。</p>
+<h2 id="heading-2">函数组件什么时候需要最新值</h2>
+<p>有时需求确实是让延迟回调读取最新值，例如 WebSocket 回调始终使用最新筛选条件。可以用 ref 保存“可变的最新值”：</p>
+<pre><code class="language-tsx">function useLatest&lt;T&gt;(value: T) {
+  const ref = useRef(value)
+  ref.current = value
+  return ref
+}
+
+function Search({ query }: { query: string }) {
+  const latestQuery = useLatest(query)
+
+  useEffect(() =&gt; {
+    const unsubscribe = subscribe(() =&gt; {
+      console.log(latestQuery.current)
+    })
+
+    return unsubscribe
+  }, [latestQuery])
+
+  return null
+}
+</code></pre>
+<p>ref 是有意逃离快照模型的工具。不要为了绕过 Effect 依赖而把所有值都塞进 ref；那会让数据流重新变得隐式。</p>
+<h2 id="effect-">Effect 与闭包</h2>
+<p>Effect 也捕获所属渲染的值。依赖数组告诉 React 何时用新闭包重新同步外部系统：</p>
+<pre><code class="language-tsx">useEffect(() =&gt; {
+  const connection = connect(roomId)
+  return () =&gt; connection.disconnect()
+}, [roomId])
+</code></pre>
+<p>遗漏 <code>roomId</code> 会让 Effect 继续使用旧房间。解决办法通常是补齐依赖、调整数据流或拆分 Effect，而不是关闭 lint 规则。</p>
+<h2 id="heading-3">现在应该用哪一种</h2>
+<p>React 仍支持类组件，但官方建议新代码使用函数组件。函数组件与 Hooks 更适合复用状态逻辑，也让“每次渲染的输入”更明确。现有稳定类组件不必为了风格统一全部重写；迁移应有测试和业务收益。</p>
+<p>错误边界仍是常见的类组件用例。其他场景通常优先函数组件，再根据框架和组件库约束决定。</p>
+<p>参考：</p>
+<ul>
+<li><a href="https://react.dev/reference/react/Component">React Component API</a></li>
+<li><a href="https://react.dev/learn/state-as-a-snapshot">State as a Snapshot</a></li>
+<li><a href="https://react.dev/learn/synchronizing-with-effects">Synchronizing with Effects</a></li>
+</ul>
+<p>理解“渲染快照”和“可变实例”之后，很多所谓闭包陷阱都会变成一个更具体的问题：这个异步回调应该看到触发时的值，还是执行时的最新值？</p>
 
     </article>
 
@@ -315,7 +402,7 @@
       
       <a class="post-nav__card post-nav__card--next" href="/post/481vcXjEdn/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">自定义Hooks: useMutate - 简单的获取数据方法的一个封装</span>
+        <span class="post-nav__title">React useMutate：处理加载、错误与并发请求</span>
       </a>
       
     </nav>
@@ -371,6 +458,6 @@
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

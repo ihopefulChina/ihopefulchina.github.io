@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>PHP动态内容，如何添加Class？ - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>PHP 动态邮箱内容如何安全拆分并添加样式？ - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="遇到过一个奇怪的需求，客户的邮箱是通过后台填写的，然后前台获取，获取的是一串字符串，例如:xxx@mail.com 但是客户需求是@这个字体要跟别的不一样。。。我只能通过添加class的方法，解决这个需求。">
+<meta name="description" content="后台填写一个邮箱地址，前台需要单独给 @ 设置样式时，可以拆分本地部分和域名再输出。重点不是 explode() 本身，而是先验证数据、限制拆分次数，并对 HTML 属性与文本分别转义。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/php-dong-tai-nei-rong-ru-he-tian-jia-class/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"PHP动态内容，如何添加Class？","url":"https://ihopefulchina.github.io/post/php-dong-tai-nei-rong-ru-he-tian-jia-class/","description":"遇到过一个奇怪的需求，客户的邮箱是通过后台填写的，然后前台获取，获取的是一串字符串，例如:xxx@mail.com 但是客户需求是@这个字体要跟别的不一样。。。我只能通过添加class的方法，解决这个需求。","image":"/post-images/php-dong-tai-nei-rong-ru-he-tian-jia-class.png","datePublished":"2019-08-21T17:09:22+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/php-dong-tai-nei-rong-ru-he-tian-jia-class/","name":"PHP动态内容，如何添加Class？","position":2}]}</script>
-<meta property="og:title" content="PHP动态内容，如何添加Class？">
-<meta property="og:description" content="遇到过一个奇怪的需求，客户的邮箱是通过后台填写的，然后前台获取，获取的是一串字符串，例如:xxx@mail.com 但是客户需求是@这个字体要跟别的不一样。。。我只能通过添加class的方法，解决这个需求。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"PHP 动态邮箱内容如何安全拆分并添加样式？","url":"https://ihopefulchina.github.io/post/php-dong-tai-nei-rong-ru-he-tian-jia-class/","description":"后台填写一个邮箱地址，前台需要单独给 @ 设置样式时，可以拆分本地部分和域名再输出。重点不是 explode() 本身，而是先验证数据、限制拆分次数，并对 HTML 属性与文本分别转义。","datePublished":"2019-08-21T17:09:22+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/php-dong-tai-nei-rong-ru-he-tian-jia-class/","name":"PHP 动态邮箱内容如何安全拆分并添加样式？","position":2}]}</script>
+<meta property="og:title" content="PHP 动态邮箱内容如何安全拆分并添加样式？">
+<meta property="og:description" content="后台填写一个邮箱地址，前台需要单独给 @ 设置样式时，可以拆分本地部分和域名再输出。重点不是 explode() 本身，而是先验证数据、限制拆分次数，并对 HTML 属性与文本分别转义。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/php-dong-tai-nei-rong-ru-he-tian-jia-class/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/php-dong-tai-nei-rong-ru-he-tian-jia-class.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/php-dong-tai-nei-rong-ru-he-tian-jia-class/">
-<meta name="twitter:title" content="PHP动态内容，如何添加Class？">
-<meta name="twitter:description" content="遇到过一个奇怪的需求，客户的邮箱是通过后台填写的，然后前台获取，获取的是一串字符串，例如:xxx@mail.com 但是客户需求是@这个字体要跟别的不一样。。。我只能通过添加class的方法，解决这个需求。">
-<meta name="twitter:image" content="/post-images/php-dong-tai-nei-rong-ru-he-tian-jia-class.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="PHP 动态邮箱内容如何安全拆分并添加样式？">
+<meta name="twitter:description" content="后台填写一个邮箱地址，前台需要单独给 @ 设置样式时，可以拆分本地部分和域名再输出。重点不是 explode() 本身，而是先验证数据、限制拆分次数，并对 HTML 属性与文本分别转义。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">PHP动态内容，如何添加Class？</h1>
+  <h1 class="msg__bubble msg__bubble--title">PHP 动态邮箱内容如何安全拆分并添加样式？</h1>
 </div>
 
 
@@ -246,32 +233,81 @@
     <div class="post-meta">
       <time datetime="2019-08-21T17:09:22+08:00">2019-08-21</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>281 字</span>
+      <span>1845 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 1 分钟</span>
+      <span>约 3 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/php-dong-tai-nei-rong-ru-he-tian-jia-class.png" alt="PHP动态内容，如何添加Class？">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>遇到过一个奇怪的需求，客户的邮箱是通过后台填写的，然后前台获取，获取的是一串字符串，例如:xxx@mail.com<br />
-但是客户需求是@这个字体要跟别的不一样。。。我只能通过添加class的方法，解决这个需求。</p>
+      <p>后台填写一个邮箱地址，前台需要单独给 <code>@</code> 设置样式时，可以拆分本地部分和域名再输出。重点不是 <code>explode()</code> 本身，而是先验证数据、限制拆分次数，并对 HTML 属性与文本分别转义。</p>
 <!-- more -->
-<p>首先 获取动态内容、根据&quot;@&ldquo;分组字符串。</p>
-<pre><code> $email = explode('@',get_field('email', 90));
+<h2 id="wordpress--acf-">WordPress + ACF 示例</h2>
+<pre><code class="language-php">&lt;?php
+$email = (string) get_field( 'email', 90 );
+$email = sanitize_email( $email );
+
+if ( is_email( $email ) ) {
+    $parts = explode( '@', $email, 2 );
+
+    if ( 2 === count( $parts ) ) {
+        $local  = $parts[0];
+        $domain = $parts[1];
+        ?&gt;
+        &lt;a
+            class=&quot;contact-email&quot;
+            href=&quot;&lt;?php echo esc_attr(
+                'mailto:' . $email
+            ); ?&gt;&quot;
+        &gt;
+            &lt;span class=&quot;contact-email__local&quot;&gt;
+                &lt;?php echo esc_html( $local ); ?&gt;
+            &lt;/span&gt;&lt;span
+                class=&quot;contact-email__at&quot;
+                aria-hidden=&quot;true&quot;
+            &gt;@&lt;/span&gt;&lt;span class=&quot;screen-reader-text&quot;&gt;
+                &lt;?php esc_html_e( 'at', 'site' ); ?&gt;
+            &lt;/span&gt;&lt;span class=&quot;contact-email__domain&quot;&gt;
+                &lt;?php echo esc_html( $domain ); ?&gt;
+            &lt;/span&gt;
+        &lt;/a&gt;
+        &lt;?php
+    }
+}
 </code></pre>
-<p>然后串联添加输出即可</p>
-<pre><code>echo $email[0].'&lt;span class=&quot;email-ico&quot;&gt;@&lt;/span&gt;'.$email[1];
+<p><code>explode( '@', $email, 2 )</code> 明确只拆一次。虽然标准邮箱本地部分可能有更复杂的合法形式，WordPress 的 <code>is_email()</code> 本身也只是实用验证而非完整 RFC 验证；企业内容字段通常应约定普通业务邮箱格式。</p>
+<h2 id="-">是否应该隐藏 @</h2>
+<p>如果只是改颜色或字体，不必给 <code>@</code> 加 <code>aria-hidden</code>，直接让辅助技术读出完整邮箱即可：</p>
+<pre><code class="language-php">&lt;span class=&quot;contact-email__at&quot;&gt;@&lt;/span&gt;
 </code></pre>
+<p>上面的隐藏写法适用于设计字体会让读屏发音异常、并且用“at”替代的情况。中文站点也可以把屏幕阅读器文本改成更自然的“艾特”或“位于”，但要和真实用户测试。</p>
+<p>不要用 CSS <code>::before { content: '@' }</code> 作为唯一的 <code>@</code>。生成内容可能无法被复制，也可能被辅助技术忽略，用户复制邮箱时会得到错误地址。</p>
+<h2 id="heading">样式</h2>
+<pre><code class="language-css">.contact-email__at {
+  display: inline-block;
+  margin-inline: 0.08em;
+  color: #d43c2f;
+  font-family: ui-monospace, monospace;
+  font-weight: 700;
+}
+</code></pre>
+<h2 id="heading-1">更通用的原则</h2>
+<p>动态文本中某个符号需要样式时：</p>
+<ol>
+<li>先判断内容是否符合预期结构。</li>
+<li>使用有上限的拆分或经过测试的解析器。</li>
+<li>每个文本片段使用 <code>esc_html()</code>。</li>
+<li>URL、class、data 属性分别使用对应转义。</li>
+<li>无效数据显示安全空态，不输出半个标签。</li>
+<li>不要为了视觉效果破坏复制、搜索、SEO 和辅助技术语义。</li>
+</ol>
+<p>如果字段允许编辑富文本，应使用明确的允许标签列表和 <code>wp_kses()</code>，不要让后台字符串未经处理直接进入 HTML。</p>
 
     </article>
 
@@ -311,13 +347,13 @@
       
       <a class="post-nav__card" href="/post/wordpress-mian-bao-xie-yi-xie-wen-ti/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">Wordpress 面包屑一些问题</span>
+        <span class="post-nav__title">WordPress 面包屑导航：层级、语义与结构化数据</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">修改Wordpress登录后跳转指定页面</span>
+        <span class="post-nav__title">WordPress 登录后按请求与权限安全跳转</span>
       </a>
       
     </nav>
@@ -373,6 +409,6 @@
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>解决同一张图片，需要在不同尺寸提供不同的水印 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>WordPress 不同图片尺寸使用不同水印：现状与可靠方案 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="客户需要上传同一张图片，需要在不同尺寸提供不同的水印，我看了、尝试了很多插件，发现基本都不支持多个水印，2个插件组合会出现兼容性问题，只能生效其中一个。">
+<meta name="description" content="同一张原图在缩略图、中图和大图中使用不同水印，核心不是“装两个水印插件”，而是为每个派生尺寸定义可重复的图片处理策略。原文推荐的 Awesome Watermark 已多年没有维护，不适合继续作为生产方案。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"解决同一张图片，需要在不同尺寸提供不同的水印","url":"https://ihopefulchina.github.io/post/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin/","description":"客户需要上传同一张图片，需要在不同尺寸提供不同的水印，我看了、尝试了很多插件，发现基本都不支持多个水印，2个插件组合会出现兼容性问题，只能生效其中一个。","image":"/post-images/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin.png","datePublished":"2019-07-01T11:40:37+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin/","name":"解决同一张图片，需要在不同尺寸提供不同的水印","position":2}]}</script>
-<meta property="og:title" content="解决同一张图片，需要在不同尺寸提供不同的水印">
-<meta property="og:description" content="客户需要上传同一张图片，需要在不同尺寸提供不同的水印，我看了、尝试了很多插件，发现基本都不支持多个水印，2个插件组合会出现兼容性问题，只能生效其中一个。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"WordPress 不同图片尺寸使用不同水印：现状与可靠方案","url":"https://ihopefulchina.github.io/post/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin/","description":"同一张原图在缩略图、中图和大图中使用不同水印，核心不是“装两个水印插件”，而是为每个派生尺寸定义可重复的图片处理策略。原文推荐的 Awesome Watermark 已多年没有维护，不适合继续作为生产方案。","datePublished":"2019-07-01T11:40:37+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin/","name":"WordPress 不同图片尺寸使用不同水印：现状与可靠方案","position":2}]}</script>
+<meta property="og:title" content="WordPress 不同图片尺寸使用不同水印：现状与可靠方案">
+<meta property="og:description" content="同一张原图在缩略图、中图和大图中使用不同水印，核心不是“装两个水印插件”，而是为每个派生尺寸定义可重复的图片处理策略。原文推荐的 Awesome Watermark 已多年没有维护，不适合继续作为生产方案。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin/">
-<meta name="twitter:title" content="解决同一张图片，需要在不同尺寸提供不同的水印">
-<meta name="twitter:description" content="客户需要上传同一张图片，需要在不同尺寸提供不同的水印，我看了、尝试了很多插件，发现基本都不支持多个水印，2个插件组合会出现兼容性问题，只能生效其中一个。">
-<meta name="twitter:image" content="/post-images/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="WordPress 不同图片尺寸使用不同水印：现状与可靠方案">
+<meta name="twitter:description" content="同一张原图在缩略图、中图和大图中使用不同水印，核心不是“装两个水印插件”，而是为每个派生尺寸定义可重复的图片处理策略。原文推荐的 Awesome Watermark 已多年没有维护，不适合继续作为生产方案。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">解决同一张图片，需要在不同尺寸提供不同的水印</h1>
+  <h1 class="msg__bubble msg__bubble--title">WordPress 不同图片尺寸使用不同水印：现状与可靠方案</h1>
 </div>
 
 
@@ -246,32 +233,104 @@
     <div class="post-meta">
       <time datetime="2019-07-01T11:40:37+08:00">2019-07-01</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>405 字</span>
+      <span>2027 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 1 分钟</span>
+      <span>约 3 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin.png" alt="解决同一张图片，需要在不同尺寸提供不同的水印">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>客户需要上传同一张图片，需要在不同尺寸提供不同的水印，我看了、尝试了很多插件，发现基本都不支持多个水印，2个插件组合会出现兼容性问题，只能生效其中一个。</p>
+      <p>同一张原图在缩略图、中图和大图中使用不同水印，核心不是“装两个水印插件”，而是为每个派生尺寸定义可重复的图片处理策略。原文推荐的 Awesome Watermark 已多年没有维护，不适合继续作为生产方案。</p>
 <!-- more -->
-<p>我查阅官方文档，也未找到答案，苦恼如何解决这个问题的时候，找到了<a href="https://wordpress.org/plugins/awesome-watermark/">Awesome Watermark</a>这个插件，这个是唯一一个支持不同尺寸实现不同水印的要求。</p>
-<p>但这个插件有几个问题:<br />
-1.siteurl和home的地址必须写域名地址,不能是斜杠。<br />
-2.操作很不友好，不适用小白用户。<br />
-3.水印大小很固定，只能是Full Size，Large，Medium，Medium Large，Thumbnail。</p>
-<p>但瑕不掩瑜，这是唯一一个解决这个问题的插件。</p>
-<p>需要注意:最好选择水印图片的时候，什么尺寸的水印，选择什么尺寸大小。</p>
+<h2 id="heading">先说明旧插件现状</h2>
+<p>WordPress.org 当前信息显示，<a href="https://wordpress.org/plugins/awesome-watermark/">Awesome Watermark</a> 仍停留在 1.0，最后更新于 2015 年，测试版本也停留在 WordPress 4.2 系列。它可以作为历史实现参考，但在现代 WordPress 与 PHP 环境中直接启用存在兼容和安全风险。</p>
+<p>不要因为它“恰好支持多个尺寸”就跳过源码审计、暂存测试和备份。</p>
+<h2 id="heading-1">正确拆分需求</h2>
+<p>先确认以下规则：</p>
+<ul>
+<li>原始上传文件是否必须保持无水印。</li>
+<li>哪些 WordPress 图片尺寸用于哪些页面。</li>
+<li>每个尺寸的水印图片、边距、透明度和位置。</li>
+<li>旧图片是否需要批量重新生成。</li>
+<li>删除水印后能否从原图重新生成干净版本。</li>
+<li>CDN、对象存储和本地媒体库谁是派生图事实源。</li>
+<li>GIF、SVG、WebP、AVIF 和带透明通道图片如何处理。</li>
+</ul>
+<p>建议始终保留原图。水印应施加在派生图或交付副本上，否则规则变化后只能从备份恢复。</p>
+<h2 id="-cdn-">方案一：对象存储或图片 CDN 动态处理</h2>
+<p>如果图片已经使用支持样式处理的对象存储/CDN，可以为缩略图、中图和大图建立命名样式：</p>
+<pre><code class="language-text">avatar-thumb-watermark
+product-card-watermark
+product-detail-watermark
+</code></pre>
+<p>模板只请求对应样式 URL。优点是：</p>
+<ul>
+<li>原图保持不变。</li>
+<li>修改规则后无需重新上传所有媒体。</li>
+<li>转码、缩放和水印可以在一次处理链完成。</li>
+<li>更容易限制输出尺寸并缓存。</li>
+</ul>
+<p>需要确认签名、防盗链、缓存失效和供应商迁移策略。不要在前端公开包含管理权限的签名密钥。</p>
+<h2 id="heading-2">方案二：上传后生成派生文件</h2>
+<p>WordPress 可先注册业务尺寸：</p>
+<pre><code class="language-php">&lt;?php
+add_action(
+    'after_setup_theme',
+    function (): void {
+        add_image_size(
+            'product-card',
+            640,
+            640,
+            true
+        );
+
+        add_image_size(
+            'product-detail',
+            1600,
+            1200,
+            false
+        );
+    }
+);
+</code></pre>
+<p>随后由经过审计的图片处理模块，在附件元数据生成后对指定派生文件叠加对应水印。实现需要满足：</p>
+<ul>
+<li>使用服务器实际可用的 GD 或 Imagick 能力。</li>
+<li>根据 EXIF 方向、色彩空间和透明通道正确处理。</li>
+<li>写临时文件后原子替换，失败时不破坏已有图片。</li>
+<li>对同一个源文件重复执行得到相同结果，避免水印叠加。</li>
+<li>记录规则版本，规则变化时可从原图重新生成。</li>
+<li>在队列或 WP-CLI 中批处理旧附件，避免后台请求超时。</li>
+</ul>
+<p>WordPress 标准 <code>WP_Image_Editor</code> 并没有一个统一的“叠加图片水印”高级接口。若直接调用 Imagick/GD，就必须明确扩展依赖并为两套实现测试，不能只复制一段未验证的代码。</p>
+<h2 id="heading-3">方案三：使用维护中的媒体插件</h2>
+<p>选择插件时，不只看功能列表，还要看：</p>
+<ul>
+<li>最近更新时间与支持的 WordPress/PHP 版本。</li>
+<li>安装量、漏洞记录和维护者响应。</li>
+<li>是否修改原图，是否可恢复。</li>
+<li>是否支持现有图片重新生成和失败回滚。</li>
+<li>是否兼容对象存储、响应式图片和现代格式。</li>
+<li>卸载后是否留下不可理解的媒体状态。</li>
+</ul>
+<p>在暂存站导入一组代表性图片，生成所有尺寸，再检查文件 MIME、像素、透明度、方向、文件大小和前端 <code>srcset</code>，通过后再上生产。</p>
+<h2 id="heading-4">交付清单</h2>
+<ul>
+<li>备份数据库和 <code>uploads</code>。</li>
+<li>记录所有自定义尺寸及水印规则。</li>
+<li>确认模板请求的是正确派生尺寸，不是原图。</li>
+<li>限制最大上传像素，避免内存峰值。</li>
+<li>批处理可暂停、重试并记录失败附件 ID。</li>
+<li>随机抽检旧图与新图，并在 Retina 屏幕和移动端查看。</li>
+<li>保留回滚方案，避免插件停用后页面全部 404。</li>
+</ul>
+<p>水印属于资产生产流程。最可靠的方案不是找到一个“万能插件”，而是让原图、规则、派生文件和缓存之间的关系可追踪、可重复、可恢复。</p>
 
     </article>
 
@@ -311,13 +370,13 @@
       
       <a class="post-nav__card" href="/post/guan-yu-ji-yu-wordpress-de-qi-ye-wang-zhan-da-jian-yi-xie-gan-xiang/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">关于基于Wordpress的企业网站搭建一些感想</span>
+        <span class="post-nav__title">关于 WordPress 企业网站建设的一些复盘</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/lnmp-on-pagespeed/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">Lnmp on pagespeed</span>
+        <span class="post-nav__title">Nginx PageSpeed 已归档：现代 LNMP 性能优化路线</span>
       </a>
       
     </nav>
@@ -373,6 +432,6 @@
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

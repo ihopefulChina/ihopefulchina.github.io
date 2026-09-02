@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
   <title>ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -64,10 +64,10 @@
     
     {
       "@type": "BlogPosting",
-      "headline": "自定义Hooks: useRowSelection - ProTable 选择项配置hooks",
+      "headline": "ProTable 跨页选择：用 useRowSelection 保存稳定状态",
       "url": "https://ihopefulchina.github.io/post/KIr9bupcA9/",
       "datePublished": "2024-04-01T09:21:53+08:00",
-      "description": "在写基于Antd Pro 后台业务的时候，发现一个高频业务场景需求：\n表格列表多选item的时候，没办法跨分页选择。\n我写一个自定义Hooks，支持跨分页选择。\n\nimport { TableProps } from 'antd'\nimport { useState } from 'react'\n\nexport int...",
+      "description": "ProTable 跨页选择需要同时保存两类状态：稳定的行主键，以及已经见过的行数据。只保存当前页的 selectedRows，翻页后会丢失详情；只保存主键，批量操作时又可能拿不到名称等展示字段。\n\n设计约束\n\nrowKey 必须全局稳定，不能使用数组下标。\nselectedRowKeys 是唯一选择事实源。\n用 Map...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -76,10 +76,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "自定义Hooks: useMutate - 简单的获取数据方法的一个封装",
+      "headline": "React useMutate：处理加载、错误与并发请求",
       "url": "https://ihopefulchina.github.io/post/481vcXjEdn/",
       "datePublished": "2024-03-15T10:52:26+08:00",
-      "description": "在写React 项目业务过程中，经常写一些 相似的代码逻辑。\n比如我需要在进入页面请求接口数据\n传统上我们请求接口获取数据，大概类似这样：\n\n  /** 数据 */\n  const [detail, setDetail] = useState(defaultData)\n  /** 请求数据 */\n  const mut...",
+      "description": "React 版 useMutate 适合封装由事件触发的异步操作。早期实现里最容易被忽略的问题是：普通局部变量不会触发渲染，失败时塞入 {} as T 会破坏类型，并发请求也可能让旧结果覆盖新结果。\n\n一个最小但完整的实现\nimport {\n  useCallback,\n  useEffect,\n  useRef,\n ...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -88,10 +88,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "函数式组件与类组件有何不同？",
+      "headline": "React 函数组件与类组件：渲染快照有何不同？",
       "url": "https://ihopefulchina.github.io/post/dBAsSzkYF/",
       "datePublished": "2021-02-09T15:05:53+08:00",
-      "description": "\n函数式组件捕获了渲染所用的值。（Function components capture the rendered values.）\n\n\n作者是 Dan Abramov , Facebook React 核心开发，Redux 作者\n博客地址\nhttps://overreacted.io/zh-hans/how-are-...",
+      "description": "React 的函数组件与类组件都能描述界面，但它们最值得理解的差异不是语法，而是一次渲染看到的值如何被保存。函数组件中的事件处理器会捕获创建它的那次渲染快照；类组件的方法通常通过可变的 this 读取最新 props 和 state。\n\n一个延迟提示的例子\n函数组件：\nfunction Profile({ user }...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -103,7 +103,7 @@
       "headline": "获取当前分类下的所有子分类",
       "url": "https://ihopefulchina.github.io/post/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei/",
       "datePublished": "2019-08-22T15:17:48+08:00",
-      "description": "一般用于taxonomy分类页面，比如产品products，下面有a这个分类，a下面有a-1,a-2,a-3\u0026hellip;\n如何在进入a分类这个页面的时候，输出这个a下面的子分类？\n\n解决思路:\n1.首先通过get_categories获取所有分类的slug和id\n$test = get_categories(\u0026qu...",
+      "description": "在分类法归档页获取“当前分类”，应使用 WordPress 已解析好的查询对象，而不是拆分 $_SERVER['REQUEST_URI']。URL 可能因固定链接、语言插件、子目录安装或重写规则变化，查询对象才是稳定的数据来源。\n\n获取直属子分类\n下面的代码同时适用于内置分类 category 和分层自定义分类法，只需...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -112,10 +112,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "如何解决页面/文章/详情页需要不同样式、模板的问题？",
+      "headline": "如何让 WordPress 页面使用不同布局与模板？",
       "url": "https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/",
       "datePublished": "2019-08-22T14:48:25+08:00",
-      "description": "遇到一个客户，他的需求是在产品详情页有5套不同的模板，需要在后台自己可以选择不同模板，填写不同的内容。\n一开始知道这个需求很懵，后来我理清楚了思路，解决了这个问题:\n\n\n\n首先通过ACF插件Seclect的单选按钮，填写5个参数\n(注: 参数\u0026rsquo; : \u0026lsquo;前后需要有空格)\n\n\n\n通过ACF插件的组来...",
+      "description": "页面、文章或自定义文章详情需要不同布局时，先使用 WordPress 模板层级和页面模板；只有当编辑需要在后台选择有限的展示变体时，再加入 ACF 字段。不要把字段值直接拼进 include 路径。\n\n方案一：模板层级\n经典主题会按从具体到通用的顺序查找模板。例如：\nsingle-product-special.php...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -124,10 +124,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "留言表单、支持邮箱转发",
+      "headline": "WordPress 留言表单与邮件转发：安全、送达和隐私",
       "url": "https://ihopefulchina.github.io/post/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa/",
       "datePublished": "2019-08-22T14:25:47+08:00",
-      "description": "基于PHP搭建，用于Wordpress的插件\n项目地址:https://github.com/ihopefulChina/Message\n(已设为私有，无法访问，如果有需要联系:hpf784667332@gmail.com)\n\n功能介绍:\n\n后台有留言管理，支持留言删除、标记。\n支持过虑垃圾留言，Akismet API...",
+      "description": "我早期为企业站写过一个留言表单项目，支持后台查看和邮箱通知。原始仓库现在是非公开的历史项目，不能把当年的实现当成可安装、可维护的公开插件。下面重新整理一个生产表单真正需要考虑的边界。\n\n表单不只是 wp_mail()\n完整流程包括：\n\n浏览器提交姓名、邮箱、主题和留言。\n服务端验证来源、字段、频率和权限。\n保存最少必要...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -136,10 +136,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "如何输出根据分类罗列文章，当前页面高亮显示",
+      "headline": "按分类输出文章，并可靠高亮当前分类与文章",
       "url": "https://ihopefulchina.github.io/post/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/",
       "datePublished": "2019-08-22T14:13:54+08:00",
-      "description": "我之前有写过类似这个功能，这次写的全一点，高亮显示实现功能也是用到这个$uri=explode('/',$_SERVER['REQUEST_URI']);\n我贴一下代码，你们可以参考一下，个人暂时未找到更好的方法，有什么好的方法，可以在下面评论，我们探讨一下。\n\n$uri=explode('/',$_SERVER['R...",
+      "description": "侧边栏按分类展示视频或文章，并高亮当前分类、当前详情时，应比较 term ID 和 post ID。解析 URL 文本既无法处理别名变化，也会在多语言、分页和子目录站点中失效。\n\n以下示例假设自定义文章类型为 video，分层分类法也名为 video_category。\n\u0026lt;?php\n$current_term_i...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -148,10 +148,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "如何用TAG方式串联自定义分类(实现相关文章串联功能)",
+      "headline": "用标签关联不同文章类型，并支持 ACF 人工覆盖",
       "url": "https://ihopefulchina.github.io/post/ru-he-yong-tag-fang-shi-chuan-lian-zi-ding-yi-fen-lei-shi-xian-xiang-guan-wen-zhang-chuan-lian-gong-neng/",
       "datePublished": "2019-08-22T13:47:31+08:00",
-      "description": "遇到过一个奇葩的客户，让我通过TAG的方式，获取自定义分类的相关文章。\n例如:某产品写了a这个tag标签，某新闻、案例、应用等等都有一个一样是a标签，然后如何在这个产品详情页，输出含有a标签的相关新闻、相关案例、相关应用等等。\n最后如果没有这个标签的话，后台有通过手动添加功能填写\n\n听到这里估计大家都蒙了，Wordpr...",
+      "description": "产品、案例、新闻和应用可以通过共享标签建立自动关联；对少数特殊内容，再用 ACF Relationship 字段人工指定。这里的关键是先定义优先级，而不是把两个条件混在一个难以理解的查询里。\n\n\n让自定义文章类型支持标签\n内置 post_tag 默认用于文章。可在注册文章类型时声明，或显式关联：\n\u0026lt;?php\nad...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -160,10 +160,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "页面实现类似于淘宝的图窗功能",
+      "headline": "用 ACF 与 Swiper 实现商品主图和缩略图画廊",
       "url": "https://ihopefulchina.github.io/post/ye-mian-shi-xian-lei-si-yu-tao-bao-de-tu-chuang-gong-neng/",
       "datePublished": "2019-08-22T13:40:21+08:00",
-      "description": "解决思路:\n\n前台的功能通过JS插件实现。\n图片获取通过自定义字段功能获取。\n\n\n需要用到ACF插件的重复器和Swiper.js\n\u0026lt;div class=\u0026quot;swiper-container gallery-top\u0026quot;\u0026gt;\n\t\u0026lt;div class=\u0026quot;swiper-wrapper\u0026...",
+      "description": "商品详情常见的“主图 + 缩略图”可以用 ACF Gallery 管理图片，用 Swiper 同步两个轮播。旧版 Swiper 3 的初始化方式和资源路径已经过时；下面采用当前模块化 API 的思路，并把无障碍和图片性能一起考虑。\n\n\n本文假设主题有自己的前端构建流程。Swiper 应作为锁定版本的项目依赖打包，不要在...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -172,10 +172,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "在非当前页面获取指定多个自定义分类下的文章",
+      "headline": "在任意页面查询满足 ACF 条件的自定义文章",
       "url": "https://ihopefulchina.github.io/post/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/",
       "datePublished": "2019-08-22T13:34:48+08:00",
-      "description": "在非当前页面，我们获取指定分类就有点困难，ACF插件能解决这个问题，ACF插件是我最常用的插件,用ACF插件定义一个真假按钮，然后判断即可，以下为Demo。\n\n仅供参考（提供一种思路）\n\u0026lt;?php\n$args=array(\n\t'order' =\u0026gt; 'ASC', //顺序\n\t'numberposts' =\u0026g...",
+      "description": "在首页、落地页或其他非归档模板中查询自定义文章，应创建独立的 WP_Query。不要使用 query_posts() 覆盖主查询，也不要把 ACF 字段名和值直接拼接成 SQL。\n\n假设要显示属于多个产品分类、并且 ACF 状态字段为 featured 的产品：\n\u0026lt;?php\n$category_ids = arr...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -196,17 +196,6 @@
 <meta name="twitter:url" content="https://ihopefulchina.github.io/page/2/">
 <meta name="twitter:title" content="ihopeful Blog">
 <meta name="twitter:description" content="🧑‍💻切图仔">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </head>
 <body data-typewriter="True">
 
@@ -385,12 +374,10 @@
       
       <a class="post-item" href="/post/KIr9bupcA9/">
         <span class="post-item__main">
-          <span class="post-item__title">自定义Hooks: useRowSelection - ProTable 选择项配置hooks</span>
+          <span class="post-item__title">ProTable 跨页选择：用 useRowSelection 保存稳定状态</span>
           
           
-          <span class="post-item__excerpt">在写基于Antd Pro 后台业务的时候，发现一个高频业务场景需求：
-表格列表多选item的时候，没办法跨分页选择。
-我写一个自定义Hooks，支持跨分页选择。...</span>
+          <span class="post-item__excerpt">ProTable 跨页选择需要同时保存两类状态：稳定的行主键，以及已经见过的行数据。只保存当前页的 selectedRows，翻页后会丢失详情；只保存主键，批量...</span>
           
           
         </span>
@@ -399,14 +386,10 @@
       
       <a class="post-item" href="/post/481vcXjEdn/">
         <span class="post-item__main">
-          <span class="post-item__title">自定义Hooks: useMutate - 简单的获取数据方法的一个封装</span>
+          <span class="post-item__title">React useMutate：处理加载、错误与并发请求</span>
           
           
-          <span class="post-item__excerpt">在写React 项目业务过程中，经常写一些 相似的代码逻辑。
-比如我需要在进入页面请求接口数据
-传统上我们请求接口获取数据，大概类似这样：
-
-  /** 数据 ...</span>
+          <span class="post-item__excerpt">React 版 useMutate 适合封装由事件触发的异步操作。早期实现里最容易被忽略的问题是：普通局部变量不会触发渲染，失败时塞入 {} as T 会破坏类...</span>
           
           
         </span>
@@ -415,14 +398,10 @@
       
       <a class="post-item" href="/post/dBAsSzkYF/">
         <span class="post-item__main">
-          <span class="post-item__title">函数式组件与类组件有何不同？</span>
+          <span class="post-item__title">React 函数组件与类组件：渲染快照有何不同？</span>
           
           
-          <span class="post-item__excerpt">
-函数式组件捕获了渲染所用的值。（Function components capture the rendered values.）
-
-
-作者是 Dan Abr...</span>
+          <span class="post-item__excerpt">React 的函数组件与类组件都能描述界面，但它们最值得理解的差异不是语法，而是一次渲染看到的值如何被保存。函数组件中的事件处理器会捕获创建它的那次渲染快照；类...</span>
           
           
         </span>
@@ -434,8 +413,7 @@
           <span class="post-item__title">获取当前分类下的所有子分类</span>
           
           
-          <span class="post-item__excerpt">一般用于taxonomy分类页面，比如产品products，下面有a这个分类，a下面有a-1,a-2,a-3&amp;hellip;
-如何在进入a分类这个页面的时候，输...</span>
+          <span class="post-item__excerpt">在分类法归档页获取“当前分类”，应使用 WordPress 已解析好的查询对象，而不是拆分 $_SERVER[&#39;REQUEST_URI&#39;]。URL 可能因固定链...</span>
           
           
         </span>
@@ -444,11 +422,10 @@
       
       <a class="post-item" href="/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/">
         <span class="post-item__main">
-          <span class="post-item__title">如何解决页面/文章/详情页需要不同样式、模板的问题？</span>
+          <span class="post-item__title">如何让 WordPress 页面使用不同布局与模板？</span>
           
           
-          <span class="post-item__excerpt">遇到一个客户，他的需求是在产品详情页有5套不同的模板，需要在后台自己可以选择不同模板，填写不同的内容。
-一开始知道这个需求很懵，后来我理清楚了思路，解决了这个问...</span>
+          <span class="post-item__excerpt">页面、文章或自定义文章详情需要不同布局时，先使用 WordPress 模板层级和页面模板；只有当编辑需要在后台选择有限的展示变体时，再加入 ACF 字段。不要把...</span>
           
           
         </span>
@@ -457,12 +434,10 @@
       
       <a class="post-item" href="/post/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa/">
         <span class="post-item__main">
-          <span class="post-item__title">留言表单、支持邮箱转发</span>
+          <span class="post-item__title">WordPress 留言表单与邮件转发：安全、送达和隐私</span>
           
           
-          <span class="post-item__excerpt">基于PHP搭建，用于Wordpress的插件
-项目地址:https://github.com/ihopefulChina/Message
-(已设为私有，无法访问...</span>
+          <span class="post-item__excerpt">我早期为企业站写过一个留言表单项目，支持后台查看和邮箱通知。原始仓库现在是非公开的历史项目，不能把当年的实现当成可安装、可维护的公开插件。下面重新整理一个生产表...</span>
           
           
         </span>
@@ -471,11 +446,10 @@
       
       <a class="post-item" href="/post/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/">
         <span class="post-item__main">
-          <span class="post-item__title">如何输出根据分类罗列文章，当前页面高亮显示</span>
+          <span class="post-item__title">按分类输出文章，并可靠高亮当前分类与文章</span>
           
           
-          <span class="post-item__excerpt">我之前有写过类似这个功能，这次写的全一点，高亮显示实现功能也是用到这个$uri=explode(&#39;/&#39;,$_SERVER[&#39;REQUEST_URI&#39;]);
-我贴...</span>
+          <span class="post-item__excerpt">侧边栏按分类展示视频或文章，并高亮当前分类、当前详情时，应比较 term ID 和 post ID。解析 URL 文本既无法处理别名变化，也会在多语言、分页和子...</span>
           
           
         </span>
@@ -484,11 +458,10 @@
       
       <a class="post-item" href="/post/ru-he-yong-tag-fang-shi-chuan-lian-zi-ding-yi-fen-lei-shi-xian-xiang-guan-wen-zhang-chuan-lian-gong-neng/">
         <span class="post-item__main">
-          <span class="post-item__title">如何用TAG方式串联自定义分类(实现相关文章串联功能)</span>
+          <span class="post-item__title">用标签关联不同文章类型，并支持 ACF 人工覆盖</span>
           
           
-          <span class="post-item__excerpt">遇到过一个奇葩的客户，让我通过TAG的方式，获取自定义分类的相关文章。
-例如:某产品写了a这个tag标签，某新闻、案例、应用等等都有一个一样是a标签，然后如何在...</span>
+          <span class="post-item__excerpt">产品、案例、新闻和应用可以通过共享标签建立自动关联；对少数特殊内容，再用 ACF Relationship 字段人工指定。这里的关键是先定义优先级，而不是把两个...</span>
           
           
         </span>
@@ -497,17 +470,10 @@
       
       <a class="post-item" href="/post/ye-mian-shi-xian-lei-si-yu-tao-bao-de-tu-chuang-gong-neng/">
         <span class="post-item__main">
-          <span class="post-item__title">页面实现类似于淘宝的图窗功能</span>
+          <span class="post-item__title">用 ACF 与 Swiper 实现商品主图和缩略图画廊</span>
           
           
-          <span class="post-item__excerpt">解决思路:
-
-前台的功能通过JS插件实现。
-图片获取通过自定义字段功能获取。
-
-
-需要用到ACF插件的重复器和Swiper.js
-&amp;lt;div class=&amp;...</span>
+          <span class="post-item__excerpt">商品详情常见的“主图 + 缩略图”可以用 ACF Gallery 管理图片，用 Swiper 同步两个轮播。旧版 Swiper 3 的初始化方式和资源路径已经过...</span>
           
           
         </span>
@@ -516,12 +482,10 @@
       
       <a class="post-item" href="/post/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/">
         <span class="post-item__main">
-          <span class="post-item__title">在非当前页面获取指定多个自定义分类下的文章</span>
+          <span class="post-item__title">在任意页面查询满足 ACF 条件的自定义文章</span>
           
           
-          <span class="post-item__excerpt">在非当前页面，我们获取指定分类就有点困难，ACF插件能解决这个问题，ACF插件是我最常用的插件,用ACF插件定义一个真假按钮，然后判断即可，以下为Demo。
-
-...</span>
+          <span class="post-item__excerpt">在首页、落地页或其他非归档模板中查询自定义文章，应创建独立的 WP_Query。不要使用 query_posts() 覆盖主查询，也不要把 ACF 字段名和值直...</span>
           
           
         </span>
@@ -601,6 +565,6 @@
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>Wordpress如何添加顶级菜单，和移除、隐藏顶级菜单？ - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>WordPress 后台菜单：添加、移除与权限边界 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="Wordpress后台有很多我们必须要的功能，客户会误点等之类的原因，所以我们需要隐藏一些自定义菜单，但是隐藏顶级菜单，可能下面某一个子菜单是我们需要的。">
+<meta name="description" content="WordPress 后台菜单可以按角色工作流精简，但“看不见菜单”不等于“没有权限”。正确顺序是先定义 capability 和服务端授权，再按同一 capability 调整菜单展示。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Wordpress如何添加顶级菜单，和移除、隐藏顶级菜单？","url":"https://ihopefulchina.github.io/post/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan/","description":"Wordpress后台有很多我们必须要的功能，客户会误点等之类的原因，所以我们需要隐藏一些自定义菜单，但是隐藏顶级菜单，可能下面某一个子菜单是我们需要的。","image":"/post-images/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan.png","datePublished":"2019-08-22T09:43:15+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan/","name":"Wordpress如何添加顶级菜单，和移除、隐藏顶级菜单？","position":2}]}</script>
-<meta property="og:title" content="Wordpress如何添加顶级菜单，和移除、隐藏顶级菜单？">
-<meta property="og:description" content="Wordpress后台有很多我们必须要的功能，客户会误点等之类的原因，所以我们需要隐藏一些自定义菜单，但是隐藏顶级菜单，可能下面某一个子菜单是我们需要的。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"WordPress 后台菜单：添加、移除与权限边界","url":"https://ihopefulchina.github.io/post/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan/","description":"WordPress 后台菜单可以按角色工作流精简，但“看不见菜单”不等于“没有权限”。正确顺序是先定义 capability 和服务端授权，再按同一 capability 调整菜单展示。","datePublished":"2019-08-22T09:43:15+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan/","name":"WordPress 后台菜单：添加、移除与权限边界","position":2}]}</script>
+<meta property="og:title" content="WordPress 后台菜单：添加、移除与权限边界">
+<meta property="og:description" content="WordPress 后台菜单可以按角色工作流精简，但“看不见菜单”不等于“没有权限”。正确顺序是先定义 capability 和服务端授权，再按同一 capability 调整菜单展示。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan/">
-<meta name="twitter:title" content="Wordpress如何添加顶级菜单，和移除、隐藏顶级菜单？">
-<meta name="twitter:description" content="Wordpress后台有很多我们必须要的功能，客户会误点等之类的原因，所以我们需要隐藏一些自定义菜单，但是隐藏顶级菜单，可能下面某一个子菜单是我们需要的。">
-<meta name="twitter:image" content="/post-images/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="WordPress 后台菜单：添加、移除与权限边界">
+<meta name="twitter:description" content="WordPress 后台菜单可以按角色工作流精简，但“看不见菜单”不等于“没有权限”。正确顺序是先定义 capability 和服务端授权，再按同一 capability 调整菜单展示。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">Wordpress如何添加顶级菜单，和移除、隐藏顶级菜单？</h1>
+  <h1 class="msg__bubble msg__bubble--title">WordPress 后台菜单：添加、移除与权限边界</h1>
 </div>
 
 
@@ -246,97 +233,116 @@
     <div class="post-meta">
       <time datetime="2019-08-22T09:43:15+08:00">2019-08-22</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>1818 字</span>
+      <span>2478 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 3 分钟</span>
+      <span>约 4 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan.png" alt="Wordpress如何添加顶级菜单，和移除、隐藏顶级菜单？">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>Wordpress后台有很多我们必须要的功能，客户会误点等之类的原因，所以我们需要隐藏一些自定义菜单，但是隐藏顶级菜单，可能下面某一个子菜单是我们需要的。</p>
+      <p>WordPress 后台菜单可以按角色工作流精简，但“看不见菜单”不等于“没有权限”。正确顺序是先定义 capability 和服务端授权，再按同一 capability 调整菜单展示。</p>
 <!-- more -->
-<p>首先我们先隐藏菜单，这里分为2种隐藏，一种是自带的，</p>
-<p>隐藏自带的写这段函数即可</p>
-<pre><code>show_admin_bar(false);
-add_filter('show_admin_bar', '__return_false');
-//关闭后台菜单和删除wordpress自带一些功能
-//__('Dashboard') ： 控制板菜单
-//__('Posts') ： 文章
-//__('Media') ： 媒体
-//__('Links') ： 链接
-//__('Pages') ： 页面
-//__('Comments') ： 评论
-//__('Appearance') ： 外观
-//__('Plugins') ： 插件
-//__('Users') ： 用户
-//__('Tools') ： 工具
-//__('Settings') ： 设置
-remove_action('welcome_panel', 'wp_welcome_panel');
+<h2 id="heading">添加顶级菜单</h2>
+<pre><code class="language-php">&lt;?php
+add_action(
+    'admin_menu',
+    function (): void {
+        add_menu_page(
+            '站点运营设置',
+            '运营设置',
+            'manage_site_content',
+            'site-operations',
+            'site_render_operations_page',
+            'dashicons-admin-tools',
+            58
+        );
+    }
+);
 
-function remove_menus() {
-	global $menu;
-	$restricted = array(
-		__('Posts'),
-		__('Links'),
-		__('Comments'),
-		__('Dashboard'),
-		__('Tools'),
-		__('Appearance'),
-		__('Plugins') ,
-		// __('Pages'),
-		__('Users'),
-		__('Settings')
+function site_render_operations_page(): void {
+    if (
+        ! current_user_can( 'manage_site_content' )
+    ) {
+        wp_die(
+            esc_html__( '你无权访问此页面。', 'site' )
+        );
+    }
 
-	);
-	end ($menu);
-	while (prev($menu)){
-		$value = explode(' ',$menu[key($menu)][0]);
-		if(strpos($value[0], '&lt;') === FALSE) {
-			if(in_array($value[0] != NULL ? $value[0]:&quot;&quot; , $restricted)){
-				unset($menu[key($menu)]);
-			}
-		}else {
-			$value2 = explode('&lt;', $value[0]);
-			if(in_array($value2[0] != NULL ? $value2[0]:&quot;&quot; , $restricted)){
-				unset($menu[key($menu)]);
-			}
-		}
-	}
-}
-if (is_admin()){
-	add_action('admin_menu', 'remove_menus');
-}
-function wp_hide_nag() {
-	remove_action( 'admin_notices', 'update_nag', 3 );
-}
-add_action('admin_menu','wp_hide_nag');
-</code></pre>
-<p>可以选择隐藏哪些菜单，上面有提示，修改即可。</p>
-<p>另外一种是隐藏第三方的菜单:</p>
-<pre><code>function hide_edit_menu()
-{
- remove_menu_page('edit.php?post_type=acf-field-group');
-}
-add_action('admin_menu', 'hide_edit_menu', 999);
-</code></pre>
-<p>修改里面的URL<code>'edit.php?post_type=acf-field-group'</code> 即可。</p>
-<p>然后是如何添加顶级菜单，这里已添加导航栏菜单为例。</p>
-<pre><code>add_action('admin_menu', 'register_custom_menu_page');
-function register_custom_menu_page() {
-    add_menu_page('自定义菜单标题', '导航栏菜单', 'administrator', '/nav-menus.php','', 'dashicons-admin-links', 20);
+    echo '&lt;div class=&quot;wrap&quot;&gt;';
+    echo '&lt;h1&gt;' .
+        esc_html__( '站点运营设置', 'site' ) .
+        '&lt;/h1&gt;';
+    echo '&lt;/div&gt;';
 }
 </code></pre>
-<p>修改title和URL即可。</p>
+<p><code>administrator</code> 是角色名，不是适合传给 <code>add_menu_page()</code> 的权限能力。自定义 capability 应在插件激活、角色迁移或明确的权限管理流程中授予，不能在每次请求随意改角色。</p>
+<p>处理表单时还要检查 capability、nonce、字段清洗，并在输出时转义。菜单回调中的检查是纵深防御，不应省略。</p>
+<h2 id="heading-1">添加子菜单</h2>
+<pre><code class="language-php">&lt;?php
+add_action(
+    'admin_menu',
+    function (): void {
+        add_submenu_page(
+            'site-operations',
+            '内容同步',
+            '内容同步',
+            'manage_site_content',
+            'site-content-sync',
+            'site_render_sync_page'
+        );
+    }
+);
+</code></pre>
+<p>父 slug 必须与顶级菜单一致。若要把自定义入口放到已有菜单下，应使用其真实 slug，而不是后台显示文案。</p>
+<h2 id="heading-2">移除菜单</h2>
+<pre><code class="language-php">&lt;?php
+add_action(
+    'admin_menu',
+    function (): void {
+        if (
+            current_user_can( 'manage_options' )
+        ) {
+            return;
+        }
+
+        remove_menu_page( 'tools.php' );
+        remove_menu_page(
+            'edit.php?post_type=acf-field-group'
+        );
+
+        remove_submenu_page(
+            'themes.php',
+            'theme-editor.php'
+        );
+    },
+    999
+);
+</code></pre>
+<p>较晚的优先级让第三方插件先注册菜单，再执行移除。使用菜单 slug，不要按翻译后的中文/英文标题遍历全局 <code>$menu</code> 数组；显示文案会随语言和插件版本变化。</p>
+<h2 id="heading-3">如果只想提供“菜单”的快捷入口</h2>
+<p>把 WordPress 自带的导航管理页包装成新的顶级菜单并不会改变它的权限，也可能造成重复导航。更清楚的做法是保留“外观 → 菜单”，或在自定义运营页中提供一个经过 capability 检查的链接：</p>
+<pre><code class="language-php">&lt;a href=&quot;&lt;?php echo esc_url(
+    admin_url( 'nav-menus.php' )
+); ?&gt;&quot;&gt;
+    &lt;?php esc_html_e( '管理导航菜单', 'site' ); ?&gt;
+&lt;/a&gt;
+</code></pre>
+<h2 id="heading-4">安全检查</h2>
+<p>用户即使不知道菜单 URL，仍可能直接访问 <code>wp-admin/tools.php</code> 或调用对应接口。隐藏菜单只改善信息架构。要限制操作，必须检查：</p>
+<ul>
+<li>页面 callback 的 <code>current_user_can()</code>。</li>
+<li>REST 路由的 <code>permission_callback</code>。</li>
+<li>AJAX/表单的 capability 和 nonce。</li>
+<li>自定义文章类型的 capability 映射。</li>
+<li>对象级权限，例如是否能编辑某一篇文章。</li>
+</ul>
+<p>官方参考：<a href="https://developer.wordpress.org/reference/functions/add_menu_page/">add_menu_page()</a>、<a href="https://developer.wordpress.org/reference/functions/remove_menu_page/">remove_menu_page()</a>。</p>
 
     </article>
 
@@ -376,13 +382,13 @@ function register_custom_menu_page() {
       
       <a class="post-nav__card" href="/post/yi-chu-yin-cang-shan-chu-wordpres-yi-xie-xiao-gong-ju-he-gong-neng/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">移除、隐藏、删除Wordpres一些小工具和功能</span>
+        <span class="post-nav__title">精简 WordPress 后台工具栏、帮助与显示选项</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/jie-jue-wordpress-zi-ding-yi-er-ji-mu-lu-he-san-ji-mu-lu-cai-yong-bu-tong-de-yang-shi/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">解决Wordpress自定义二级目录和三级目录采用不同的样式</span>
+        <span class="post-nav__title">解决 WordPress 分层分类在不同层级使用不同样式</span>
       </a>
       
     </nav>
@@ -438,6 +444,6 @@ function register_custom_menu_page() {
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>修改Wordpress登录后跳转指定页面 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>WordPress 登录后按请求与权限安全跳转 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="Wordpres 后台登录后默认跳转到仪表板，其实是可以修改跳转到指定页面。">
+<meta name="description" content="WordPress 的 login_redirect 过滤器会提供最终跳转地址、用户原始请求地址和登录结果。实现时要处理 WP_Error、避免开放重定向，并尽量保留用户登录前真正想访问的页面。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"修改Wordpress登录后跳转指定页面","url":"https://ihopefulchina.github.io/post/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/","description":"Wordpres 后台登录后默认跳转到仪表板，其实是可以修改跳转到指定页面。","image":"/post-images/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian.png","datePublished":"2019-08-22T08:42:52+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/","name":"修改Wordpress登录后跳转指定页面","position":2}]}</script>
-<meta property="og:title" content="修改Wordpress登录后跳转指定页面">
-<meta property="og:description" content="Wordpres 后台登录后默认跳转到仪表板，其实是可以修改跳转到指定页面。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"WordPress 登录后按请求与权限安全跳转","url":"https://ihopefulchina.github.io/post/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/","description":"WordPress 的 login_redirect 过滤器会提供最终跳转地址、用户原始请求地址和登录结果。实现时要处理 WP_Error、避免开放重定向，并尽量保留用户登录前真正想访问的页面。","datePublished":"2019-08-22T08:42:52+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/","name":"WordPress 登录后按请求与权限安全跳转","position":2}]}</script>
+<meta property="og:title" content="WordPress 登录后按请求与权限安全跳转">
+<meta property="og:description" content="WordPress 的 login_redirect 过滤器会提供最终跳转地址、用户原始请求地址和登录结果。实现时要处理 WP_Error、避免开放重定向，并尽量保留用户登录前真正想访问的页面。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/">
-<meta name="twitter:title" content="修改Wordpress登录后跳转指定页面">
-<meta name="twitter:description" content="Wordpres 后台登录后默认跳转到仪表板，其实是可以修改跳转到指定页面。">
-<meta name="twitter:image" content="/post-images/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="WordPress 登录后按请求与权限安全跳转">
+<meta name="twitter:description" content="WordPress 的 login_redirect 过滤器会提供最终跳转地址、用户原始请求地址和登录结果。实现时要处理 WP_Error、避免开放重定向，并尽量保留用户登录前真正想访问的页面。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">修改Wordpress登录后跳转指定页面</h1>
+  <h1 class="msg__bubble msg__bubble--title">WordPress 登录后按请求与权限安全跳转</h1>
 </div>
 
 
@@ -246,36 +233,79 @@
     <div class="post-meta">
       <time datetime="2019-08-22T08:42:52+08:00">2019-08-22</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>460 字</span>
+      <span>1710 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 1 分钟</span>
+      <span>约 2 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian.png" alt="修改Wordpress登录后跳转指定页面">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>Wordpres 后台登录后默认跳转到仪表板，其实是可以修改跳转到指定页面。</p>
+      <p>WordPress 的 <code>login_redirect</code> 过滤器会提供最终跳转地址、用户原始请求地址和登录结果。实现时要处理 <code>WP_Error</code>、避免开放重定向，并尽量保留用户登录前真正想访问的页面。</p>
 <!-- more -->
-<p>在function里面添加一个函数即可。</p>
-<pre><code>function my_login_redirect($redirect_to, $request){
-	if( empty( $redirect_to ) || $redirect_to == 'wp-admin/' || $redirect_to == admin_url() )
-		return home_url(&quot;/wp-admin/admin.php?page=lanthymessage&quot;);
-	else
-		return $redirect_to;
-}
-add_filter(&quot;login_redirect&quot;, &quot;my_login_redirect&quot;, 10, 3);
+<h2 id="heading">示例：管理员进入后台，普通用户进入账户页</h2>
+<pre><code class="language-php">&lt;?php
+add_filter(
+    'login_redirect',
+    function (
+        string $redirect_to,
+        string $requested_redirect_to,
+        $user
+    ): string {
+        if (
+            is_wp_error( $user ) ||
+            ! $user instanceof WP_User
+        ) {
+            return $redirect_to;
+        }
+
+        // 优先尊重站内安全的原始目标。
+        $requested = wp_validate_redirect(
+            $requested_redirect_to,
+            ''
+        );
+
+        if ( $requested ) {
+            return $requested;
+        }
+
+        if ( user_can( $user, 'manage_options' ) ) {
+            return admin_url();
+        }
+
+        return home_url( '/account/' );
+    },
+    10,
+    3
+);
 </code></pre>
-<p>其中的&rsquo;/wp-admin/admin.php?page=lanthymessage&rsquo;是指定的url地址。</p>
-<p>以上就是实现Wordpress登录后跳转到指定页面。</p>
+<p>不要在过滤器中调用 <code>wp_redirect()</code> 或 <code>exit</code>，只返回 URL。WordPress 会继续处理登录流程。</p>
+<h2 id="-capability">为什么按 capability，而不是角色名</h2>
+<p>角色是 capability 的集合，站点还可能有自定义角色或插件动态授权。判断 <code>administrator</code>、<code>subscriber</code> 会遗漏这些情况。真正的问题通常是“用户能否管理站点”“能否编辑文章”或“能否查看某业务页面”，应使用 <code>user_can( $user, 'capability' )</code>。</p>
+<p>业务页面自身仍要做权限检查。登录跳转到 <code>/account/</code> 不代表这个 URL 已受到保护。</p>
+<h2 id="heading-1">多种登录入口</h2>
+<p>WooCommerce、会员插件、社交登录、密码重置和双因素认证可能有自己的 redirect 参数或过滤器。全局 <code>login_redirect</code> 改动需要测试：</p>
+<ul>
+<li>从受保护页面触发登录。</li>
+<li>直接访问 <code>wp-login.php</code>。</li>
+<li>登录失败、账号锁定和二次验证。</li>
+<li>管理员、编辑、普通会员和自定义角色。</li>
+<li>多站点网络和不同站点后台。</li>
+<li>注销后重登，以及外部 SSO 回调。</li>
+</ul>
+<p>若插件明确拥有登录流程，应优先使用它公开的扩展点，而不是用更高优先级强行覆盖。</p>
+<h2 id="heading-2">开放重定向</h2>
+<p>绝不能直接返回未经校验的查询参数：</p>
+<pre><code class="language-php">// 错误示例
+return $_GET['redirect_to'];
+</code></pre>
+<p>攻击者可能构造登录链接，把用户登录后带到仿冒站点。使用 WordPress 提供的目标值，并用 <code>wp_validate_redirect()</code> 限制到允许的主机。</p>
+<p>官方参考：<a href="https://developer.wordpress.org/reference/hooks/login_redirect/">login_redirect</a>、<a href="https://developer.wordpress.org/reference/functions/wp_validate_redirect/">wp_validate_redirect</a>。</p>
 
     </article>
 
@@ -315,13 +345,13 @@ add_filter(&quot;login_redirect&quot;, &quot;my_login_redirect&quot;, 10, 3);
       
       <a class="post-nav__card" href="/post/php-dong-tai-nei-rong-ru-he-tian-jia-class/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">PHP动态内容，如何添加Class？</span>
+        <span class="post-nav__title">PHP 动态邮箱内容如何安全拆分并添加样式？</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/ye-mian-url-jie-wei-tian-jia-xie-gang/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">页面Url结尾添加斜杠&quot;/&quot;</span>
+        <span class="post-nav__title">WordPress URL 末尾斜杠：统一固定链接与重定向</span>
       </a>
       
     </nav>
@@ -377,6 +407,6 @@ add_filter(&quot;login_redirect&quot;, &quot;my_login_redirect&quot;, 10, 3);
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

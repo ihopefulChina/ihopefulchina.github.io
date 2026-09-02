@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>Lnmp on pagespeed - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>Nginx PageSpeed 已归档：现代 LNMP 性能优化路线 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="Lnmp-on-pagespeed RedHat, CentOS, or Fedora sudo yum install gcc-c++ pcre-devel zlib-devel make unzip Ubuntu or Debian(一个一个安装，我测试的时候只安装第一个就可以，但发现后面有几次必须安装后面的几个依赖才能100%安装）">
+<meta name="description" content="这篇文章最初记录了给 LNMP 编译 ngx_pagespeed 的过程。该项目现在已经归档，旧版下载地址、PSOL 二进制和重新编译 Nginx 的步骤不再适合作为安装指南。保留过时代码会给读者带来供应链和运维风险，因此本文改为现代性能优化路线。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/lnmp-on-pagespeed/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Lnmp on pagespeed","url":"https://ihopefulchina.github.io/post/lnmp-on-pagespeed/","description":"Lnmp-on-pagespeed RedHat, CentOS, or Fedora sudo yum install gcc-c++ pcre-devel zlib-devel make unzip Ubuntu or Debian(一个一个安装，我测试的时候只安装第一个就可以，但发现后面有几次必须安装后面的几个依赖才能100%安装）","image":"/post-images/lnmp-on-pagespeed.png","datePublished":"2019-08-21T16:32:37+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/lnmp-on-pagespeed/","name":"Lnmp on pagespeed","position":2}]}</script>
-<meta property="og:title" content="Lnmp on pagespeed">
-<meta property="og:description" content="Lnmp-on-pagespeed RedHat, CentOS, or Fedora sudo yum install gcc-c++ pcre-devel zlib-devel make unzip Ubuntu or Debian(一个一个安装，我测试的时候只安装第一个就可以，但发现后面有几次必须安装后面的几个依赖才能100%安装）">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Nginx PageSpeed 已归档：现代 LNMP 性能优化路线","url":"https://ihopefulchina.github.io/post/lnmp-on-pagespeed/","description":"这篇文章最初记录了给 LNMP 编译 ngx_pagespeed 的过程。该项目现在已经归档，旧版下载地址、PSOL 二进制和重新编译 Nginx 的步骤不再适合作为安装指南。保留过时代码会给读者带来供应链和运维风险，因此本文改为现代性能优化路线。","datePublished":"2019-08-21T16:32:37+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/lnmp-on-pagespeed/","name":"Nginx PageSpeed 已归档：现代 LNMP 性能优化路线","position":2}]}</script>
+<meta property="og:title" content="Nginx PageSpeed 已归档：现代 LNMP 性能优化路线">
+<meta property="og:description" content="这篇文章最初记录了给 LNMP 编译 ngx_pagespeed 的过程。该项目现在已经归档，旧版下载地址、PSOL 二进制和重新编译 Nginx 的步骤不再适合作为安装指南。保留过时代码会给读者带来供应链和运维风险，因此本文改为现代性能优化路线。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/lnmp-on-pagespeed/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/lnmp-on-pagespeed.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/lnmp-on-pagespeed/">
-<meta name="twitter:title" content="Lnmp on pagespeed">
-<meta name="twitter:description" content="Lnmp-on-pagespeed RedHat, CentOS, or Fedora sudo yum install gcc-c++ pcre-devel zlib-devel make unzip Ubuntu or Debian(一个一个安装，我测试的时候只安装第一个就可以，但发现后面有几次必须安装后面的几个依赖才能100%安装）">
-<meta name="twitter:image" content="/post-images/lnmp-on-pagespeed.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="Nginx PageSpeed 已归档：现代 LNMP 性能优化路线">
+<meta name="twitter:description" content="这篇文章最初记录了给 LNMP 编译 ngx_pagespeed 的过程。该项目现在已经归档，旧版下载地址、PSOL 二进制和重新编译 Nginx 的步骤不再适合作为安装指南。保留过时代码会给读者带来供应链和运维风险，因此本文改为现代性能优化路线。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">Lnmp on pagespeed</h1>
+  <h1 class="msg__bubble msg__bubble--title">Nginx PageSpeed 已归档：现代 LNMP 性能优化路线</h1>
 </div>
 
 
@@ -246,102 +233,94 @@
     <div class="post-meta">
       <time datetime="2019-08-21T16:32:37+08:00">2019-08-21</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>2929 字</span>
+      <span>2076 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 4 分钟</span>
+      <span>约 3 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/lnmp-on-pagespeed.png" alt="Lnmp on pagespeed">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <h2 id="lnmp-on-pagespeed">Lnmp-on-pagespeed</h2>
-<p>RedHat, CentOS, or Fedora</p>
-<pre><code>sudo yum install gcc-c++ pcre-devel zlib-devel make unzip
-</code></pre>
-<p>Ubuntu or Debian(一个一个安装，我测试的时候只安装第一个就可以，但发现后面有几次必须安装后面的几个依赖才能100%安装）</p>
+      <p>这篇文章最初记录了给 LNMP 编译 <code>ngx_pagespeed</code> 的过程。该项目现在已经归档，旧版下载地址、PSOL 二进制和重新编译 Nginx 的步骤不再适合作为安装指南。保留过时代码会给读者带来供应链和运维风险，因此本文改为现代性能优化路线。</p>
 <!-- more -->
-<pre><code>sudo apt-get install build-essential zlib1g-dev libpcre3 libpcre3-dev unzip
-apt install uuid-dev
-apt-get install libssl-dev openssl
-apt-get install libxslt-dev
-sudo apt-get install -y libgd-dev
-apt-get install libgeoip-dev -y
+<h2 id="-ngx-pagespeed">为什么不再推荐 ngx_pagespeed</h2>
+<p>Apache 的 <a href="https://github.com/apache/incubator-pagespeed-ngx">incubator-pagespeed-ngx</a> 仓库已归档。归档项目不会按现代 Nginx、OpenSSL、编译器和浏览器行为持续修复。</p>
+<p>为一个停止维护的模块自行编译 Nginx，会增加：</p>
+<ul>
+<li>安全更新时的重新构建与回归成本。</li>
+<li>动态模块 ABI 与发行版包不兼容的风险。</li>
+<li>来源、校验和与旧二进制依赖的供应链风险。</li>
+<li>页面被自动重写后难以定位的缓存和展示问题。</li>
+</ul>
+<p>仍在使用的老站应先盘点哪些 PageSpeed filter 真正生效，再逐项迁移，不要直接卸载后凭感觉观察。</p>
+<h2 id="heading">从测量开始</h2>
+<p>至少建立三层指标：</p>
+<ul>
+<li><strong>真实用户：</strong> LCP、INP、CLS、错误率、关键业务转化。</li>
+<li><strong>实验室：</strong> Lighthouse、WebPageTest 或可重复的浏览器性能脚本。</li>
+<li><strong>服务器：</strong> TTFB、上游响应、缓存命中率、带宽、CPU、内存和慢查询。</li>
+</ul>
+<p>测试移动网络、缓存冷启动和登录态。单次本机 Lighthouse 分数不能代表真实用户体验。</p>
+<h2 id="-cdn-">让应用和 CDN 做正确的事</h2>
+<h3 id="heading-1">静态资源指纹与长期缓存</h3>
+<p>只有文件名包含内容哈希时，才适合一年 immutable 缓存：</p>
+<pre><code class="language-nginx">location ~* \.(?:css|js|woff2|png|jpg|jpeg|webp|avif)$ {
+    expires 1y;
+    add_header Cache-Control &quot;public, max-age=31536000, immutable&quot;;
+    try_files $uri =404;
+}
 </code></pre>
-<h2 id="lnmp--ngx-pagespeed-">LNMP 安装 ngx_pagespeed 的方法</h2>
-<p>1、首先，根据官方教程下载 Page Speed，把下面的命令保存成 dp.sh 文件，然后运行 chmod +x dp.sh 赋予该文件可执行权限，然后运行 ./dp.sh 即可自动下载并解压 ngx_pagespeed 模块的源代码。<br />
-现在最新版本是1.13.35.2-stable。你可以在<a href="https://www.modpagespeed.com/doc/release_notes">这里</a>查看最新版本。</p>
-<p>制作dp.sh<br />
-cd<br />
-nano dp.sh</p>
-<p>写入代码,复制粘贴进去，然后Ctrl+X, 输入Y，回车。</p>
-<pre><code>#[check the release notes for the latest version]
-NPS_VERSION=1.13.35.2-stable
-cd
-wget https://github.com/apache/incubator-pagespeed-ngx/archive/v${NPS_VERSION}.zip
-unzip v${NPS_VERSION}.zip
-nps_dir=$(find . -name &quot;*pagespeed-ngx-${NPS_VERSION}&quot; -type d)
-cd &quot;$nps_dir&quot;
-NPS_RELEASE_NUMBER=${NPS_VERSION/beta/}
-NPS_RELEASE_NUMBER=${NPS_VERSION/stable/}
-psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_RELEASE_NUMBER}.tar.gz
-[ -e scripts/format_binary_url.sh ] &amp;&amp; psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
-wget ${psol_url}
-tar -xzvf $(basename ${psol_url})  # extracts to psol/
+<p>如果 <code>app.js</code> 每次发布仍使用相同文件名，不能配置 immutable。HTML 则通常需要更短缓存或协商缓存，避免发布后长时间引用旧资源。</p>
+<h3 id="heading-2">压缩</h3>
+<pre><code class="language-nginx">gzip on;
+gzip_vary on;
+gzip_min_length 1024;
+gzip_comp_level 5;
+gzip_types
+    text/plain
+    text/css
+    application/json
+    application/javascript
+    application/xml
+    image/svg+xml;
 </code></pre>
-<pre><code>#[check the release notes for the latest version]
-NPS_VERSION=1.13.35.2-stablecd
-cd
-wget https://github.com/apache/incubator-pagespeed-ngx/archive/v${NPS_VERSION}.zip
-unzip v${NPS_VERSION}.zip
-nps_dir=$(find . -name &quot;*pagespeed-ngx-${NPS_VERSION}&quot; -type d)cd &quot;$nps_dir&quot;
-NPS_RELEASE_NUMBER=${NPS_VERSION/beta/}
-NPS_RELEASE_NUMBER=${NPS_VERSION/stable/}
-psol_url=https://dl.google.com/dl/page-speed/psol/${NPS_RELEASE_NUMBER}.tar.gz
-[ -e scripts/format_binary_url.sh ] &amp;&amp; psol_url=$(scripts/format_binary_url.sh PSOL_BINARY_URL)
-wget ${psol_url}
-tar -xzvf $(basename ${psol_url})  # extracts to psol/
-</code></pre>
-<p>给予权限并运行</p>
-<pre><code>chmod +x dp.sh
-sudo ./dp.sh
-</code></pre>
-<p>从 1.12.34 版本开始，按照官方的教程进行的时候，可能会遇到无法下载 PSOL 的情况，这时候，按照下面的地址下载对应版本的 PSOL 就可以了。<br />
-或者使用<br />
-<a href="https://dl.google.com/dl/page-speed/psol/%5BPageSpeed">https://dl.google.com/dl/page-speed/psol/[PageSpeed</a>版本]-x[系统位数].tar.gz</p>
-<p>pagespeed下载后修改一下文件夹名字把原来的名字incubator-pagespeed-ngx-1.13.35.2-stable，修改为：ngx_pagespeed-1.13.35.2-stable。<br />
-2、然后编辑 Nginx 升级脚本<br />
-我用的是 LNMP 1.5，其他版本更换安装路径即可。<br />
-配置lnmp文件</p>
-<pre><code>cd /root/lnmp1.5/include
-nano upgrade_nginx.sh
-</code></pre>
-<p>找到 ./configure &ndash;user=www &ndash;group=www &ndash;prefix=/usr/local/nginx，在这行代码的末尾添加，其中 ngx_pagespeed-1.13.35.2-stable 是第一步下载的 PageSpeed 模块的目录名称，根据实际情况替换即可。<br />
-加入字段<br />
-&ndash;add-module=$HOME/ngx_pagespeed-1.13.35.2-stable</p>
-<p>接着更新 Nginx，可以根据需要，选择 Nginx 版本升级，一般选择最新的稳定版本即可。我安装的1.14.2.<br />
-升级nginx</p>
-<pre><code>cd ../
-sudo ./upgrade.sh nginx
-</code></pre>
-<p>出现错误可以试试<br />
-yum install -y libuuid-devel</p>
-<h2 id="xxxcomconf">配置xxx.com.conf</h2>
-<p>所有的东西安装完毕然后开始配置网站的conf文件：<br />
-文件位置在/usr/local/nginx/conf/vhost。 你最好把他下载到桌面编辑。<br />
-你可以直接复制我的配置，对应修改一下自己的网站名称：<br />
-配置文件写好并上传后，把xxx.com.conf里面内容加进去。</p>
-<h3 id="heading">更新缓存</h3>
-<pre><code>touch /var/cache/ngx_pagespeed/cache.flush
-</code></pre>
+<p>Brotli 需要 Nginx 构建或平台模块支持。CDN 已压缩时要避免重复工作，并检查 <code>Vary: Accept-Encoding</code>、缓存键和实际响应头。</p>
+<h3 id="heading-3">图片</h3>
+<ul>
+<li>在上传或构建阶段生成符合展示尺寸的派生图。</li>
+<li>按浏览器和业务能力提供 WebP/AVIF，但保留可用回退。</li>
+<li>为图片输出宽高，减少布局偏移。</li>
+<li>首屏关键图片不要盲目懒加载，其余图片使用原生 lazy loading。</li>
+<li>不把 4000 像素原图缩在 300 像素容器里。</li>
+</ul>
+<h3 id="heading-4">协议与连接</h3>
+<p>优先使用发行版或托管平台维护的 Nginx、TLS 和 HTTP/2；HTTP/3 应在 CDN/入口层有监控地启用。不要为了一个性能模块长期锁死整个服务器软件版本。</p>
+<h2 id="wordpresslnmp-">WordPress/LNMP 常见瓶颈</h2>
+<ul>
+<li>页面缓存与对象缓存是否适合登录态和个性化内容。</li>
+<li>PHP-FPM 进程数、慢日志和 OPcache 是否基于真实内存调整。</li>
+<li>数据库慢查询、autoload 选项和无索引 meta 查询。</li>
+<li>第三方脚本、字体和广告是否阻塞主线程。</li>
+<li>主题/插件是否在每个页面加载不需要的 CSS、JS 和查询。</li>
+<li>Cron、队列和图片生成是否挤占前台请求资源。</li>
+</ul>
+<p>优化顺序通常是删除不必要工作、建立缓存、缩小资源，再考虑更复杂的自动重写。</p>
+<h2 id="heading-5">迁移检查</h2>
+<ol>
+<li>保存当前 Nginx 配置、模块列表和代表性页面瀑布图。</li>
+<li>列出启用的 PageSpeed filter 及它们生成的缓存 URL。</li>
+<li>在暂存环境分别关闭 filter，找出依赖它的图片、CSS、JS 与缓存规则。</li>
+<li>把压缩、图片派生、资源指纹和 HTML 优化迁移到构建/CDN。</li>
+<li>清理缓存并验证旧 PageSpeed URL 的重定向或失效策略。</li>
+<li>小流量发布，比较真实用户指标和错误日志。</li>
+<li>确认回滚后再移除模块和旧缓存目录。</li>
+</ol>
+<p>性能优化的目标是让系统更快也更容易维护。依赖一个归档的“自动优化黑盒”，通常与这两个目标都相反。</p>
 
     </article>
 
@@ -379,13 +358,13 @@ yum install -y libuuid-devel</p>
       
       <a class="post-nav__card" href="/post/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">解决同一张图片，需要在不同尺寸提供不同的水印</span>
+        <span class="post-nav__title">WordPress 不同图片尺寸使用不同水印：现状与可靠方案</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题</span>
+        <span class="post-nav__title">在自定义文章类型归档页按分类法分组输出内容</span>
       </a>
       
     </nav>
@@ -441,6 +420,6 @@ yum install -y libuuid-devel</p>
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

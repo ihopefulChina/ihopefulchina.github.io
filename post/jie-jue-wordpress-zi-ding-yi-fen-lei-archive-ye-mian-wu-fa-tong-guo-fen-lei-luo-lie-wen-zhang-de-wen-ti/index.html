@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>在自定义文章类型归档页按分类法分组输出内容 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。 解决思路： 先根据get_categories获取所有产品分类。 根据所有产品分类foreach循环这个分类下的name、slug、term_id。 然后根据这些分类的id(tax_query)获取所有产品。">
+<meta name="description" content="产品总页需要按分类展示产品时，可以先查询分类，再为每个分类建立独立的 WP_Query。旧代码使用 query_posts() 覆盖主查询，会破坏分页和全局状态，WordPress 官方也明确不建议这样做。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题","url":"https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/","description":"Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。 解决思路： 先根据get_categories获取所有产品分类。 根据所有产品分类foreach循环这个分类下的name、slug、term_id。 然后根据这些分类的id(tax_query)获取所有产品。","image":"/post-images/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti.png","datePublished":"2019-08-21T16:38:44+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/","name":"解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题","position":2}]}</script>
-<meta property="og:title" content="解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题">
-<meta property="og:description" content="Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。 解决思路： 先根据get_categories获取所有产品分类。 根据所有产品分类foreach循环这个分类下的name、slug、term_id。 然后根据这些分类的id(tax_query)获取所有产品。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"在自定义文章类型归档页按分类法分组输出内容","url":"https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/","description":"产品总页需要按分类展示产品时，可以先查询分类，再为每个分类建立独立的 WP_Query。旧代码使用 query_posts() 覆盖主查询，会破坏分页和全局状态，WordPress 官方也明确不建议这样做。","datePublished":"2019-08-21T16:38:44+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/","name":"在自定义文章类型归档页按分类法分组输出内容","position":2}]}</script>
+<meta property="og:title" content="在自定义文章类型归档页按分类法分组输出内容">
+<meta property="og:description" content="产品总页需要按分类展示产品时，可以先查询分类，再为每个分类建立独立的 WP_Query。旧代码使用 query_posts() 覆盖主查询，会破坏分页和全局状态，WordPress 官方也明确不建议这样做。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/">
-<meta name="twitter:title" content="解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题">
-<meta name="twitter:description" content="Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。 解决思路： 先根据get_categories获取所有产品分类。 根据所有产品分类foreach循环这个分类下的name、slug、term_id。 然后根据这些分类的id(tax_query)获取所有产品。">
-<meta name="twitter:image" content="/post-images/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="在自定义文章类型归档页按分类法分组输出内容">
+<meta name="twitter:description" content="产品总页需要按分类展示产品时，可以先查询分类，再为每个分类建立独立的 WP_Query。旧代码使用 query_posts() 覆盖主查询，会破坏分页和全局状态，WordPress 官方也明确不建议这样做。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题</h1>
+  <h1 class="msg__bubble msg__bubble--title">在自定义文章类型归档页按分类法分组输出内容</h1>
 </div>
 
 
@@ -246,175 +233,121 @@
     <div class="post-meta">
       <time datetime="2019-08-21T16:38:44+08:00">2019-08-21</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>4744 字</span>
+      <span>3151 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 7 分钟</span>
+      <span>约 5 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti.png" alt="解决Wordpress自定义分类archive页面无法通过分类罗列文章的问题">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>Wordpress有许多奇怪的逻辑，例如我创建一个叫产品的自定义分类，在产品总页面，无法通过自带函数根据产品分类的顺序罗列产品所在分类下的所有产品。</p>
-<p>解决思路：</p>
-<ol>
-<li>先根据get_categories获取所有产品分类。</li>
-<li>根据所有产品分类foreach循环这个分类下的name、slug、term_id。</li>
-<li>然后根据这些分类的id(tax_query)获取所有产品。</li>
-</ol>
+      <p>产品总页需要按分类展示产品时，可以先查询分类，再为每个分类建立独立的 <code>WP_Query</code>。旧代码使用 <code>query_posts()</code> 覆盖主查询，会破坏分页和全局状态，WordPress 官方也明确不建议这样做。</p>
 <!-- more -->
-<p>让我们开始吧。先定义2个数组，其中一个根据get_categories获取所有产品分类。</p>
-<pre><code>$test = get_categories(&quot;taxonomy=product&amp;hide_empty=0&quot;);
-$cats=array(); 
+<p>以下示例假设文章类型为 <code>product</code>，分类法为 <code>product_category</code>。</p>
+<pre><code class="language-php">&lt;?php
+$terms = get_terms(
+    array(
+        'taxonomy'   =&gt; 'product_category',
+        'parent'     =&gt; 0,
+        'hide_empty' =&gt; true,
+        'orderby'    =&gt; 'name',
+    )
+);
+
+if ( is_wp_error( $terms ) || empty( $terms ) ) {
+    get_template_part( 'template-parts/content', 'none' );
+    return;
+}
+
+foreach ( $terms as $term ) :
+    $term_url = get_term_link( $term );
+
+    if ( is_wp_error( $term_url ) ) {
+        continue;
+    }
+
+    $products = new WP_Query(
+        array(
+            'post_type'              =&gt; 'product',
+            'post_status'            =&gt; 'publish',
+            'posts_per_page'         =&gt; 6,
+            'no_found_rows'          =&gt; true,
+            'ignore_sticky_posts'    =&gt; true,
+            'orderby'                =&gt; 'menu_order title',
+            'order'                  =&gt; 'ASC',
+            'tax_query'              =&gt; array(
+                array(
+                    'taxonomy' =&gt; 'product_category',
+                    'field'    =&gt; 'term_id',
+                    'terms'    =&gt; array( $term-&gt;term_id ),
+                ),
+            ),
+        )
+    );
+    ?&gt;
+
+    &lt;section
+        class=&quot;product-group&quot;
+        aria-labelledby=&quot;term-&lt;?php echo esc_attr( $term-&gt;term_id ); ?&gt;&quot;
+    &gt;
+        &lt;h2 id=&quot;term-&lt;?php echo esc_attr( $term-&gt;term_id ); ?&gt;&quot;&gt;
+            &lt;a href=&quot;&lt;?php echo esc_url( $term_url ); ?&gt;&quot;&gt;
+                &lt;?php echo esc_html( $term-&gt;name ); ?&gt;
+            &lt;/a&gt;
+        &lt;/h2&gt;
+
+        &lt;?php if ( $products-&gt;have_posts() ) : ?&gt;
+            &lt;div class=&quot;product-grid&quot;&gt;
+                &lt;?php while ( $products-&gt;have_posts() ) : ?&gt;
+                    &lt;?php
+                    $products-&gt;the_post();
+                    get_template_part(
+                        'template-parts/content',
+                        'product'
+                    );
+                    ?&gt;
+                &lt;?php endwhile; ?&gt;
+            &lt;/div&gt;
+        &lt;?php else : ?&gt;
+            &lt;p&gt;该分类暂无产品。&lt;/p&gt;
+        &lt;?php endif; ?&gt;
+    &lt;/section&gt;
+
+    &lt;?php wp_reset_postdata(); ?&gt;
+&lt;?php endforeach; ?&gt;
 </code></pre>
-<p>然后循环获取name、slug、term_id</p>
-<pre><code>foreach($test as $tmpcat){
-				if($tmpcat-&gt;parent==0){
-					$cats[$tmpcat-&gt;term_id]['name']=$tmpcat-&gt;name;
-					$cats[$tmpcat-&gt;term_id]['slug']=$tmpcat-&gt;slug;
-					$cats[$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
-				}
-			}
+<h2 id="heading">为什么使用模板片段</h2>
+<p>产品图片、标题、摘要和链接放在 <code>template-parts/content-product.php</code>，归档页、搜索页和分类页就能复用同一输出规则。图片建议使用特色图或附件 ID：</p>
+<pre><code class="language-php">&lt;?php if ( has_post_thumbnail() ) : ?&gt;
+    &lt;a href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;
+        &lt;?php
+        the_post_thumbnail(
+            'medium',
+            array(
+                'alt' =&gt; the_title_attribute(
+                    array( 'echo' =&gt; false )
+                ),
+            )
+        );
+        ?&gt;
+    &lt;/a&gt;
+&lt;?php endif; ?&gt;
 </code></pre>
-<p>对数组排序</p>
-<pre><code>	ksort($cats);
-</code></pre>
-<p>最后获取所有产品</p>
-<pre><code>&lt;?php  $i=0;
-	foreach($cats as $key=&gt;$val){
-				$id = 'term_'.$cats[$key]['term_id'];
-				$taxId = (int)$cats[$key]['term_id'];
-				$i++;	?&gt;		
-				&lt;h2&gt;
-					&lt;a href=&quot;/products/&lt;?php echo $cats[$key]['slug']; ?&gt;/&quot;&gt;
-						&lt;?php echo $cats[$key]['name']; ?&gt;
-					&lt;/a&gt;
-				&lt;/h2&gt;
-				&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
-		&lt;?php 		$args=array(
-					'order' =&gt; 'ASC',
-					'tax_query' =&gt; array(
-						array(
-							'taxonomy' =&gt; 'product',
-							'field' =&gt; 'term_id',
-							'terms' =&gt; $taxId,
-						)
-					)
-				);
-				$arms = array_merge($args, $wp_query-&gt;query);
-				query_posts($arms);
-				?&gt;		
-				&lt;?php if (have_posts()) : ?&gt;
-					&lt;div class=&quot;all-product&quot;&gt;
-						&lt;?php while (have_posts()) : the_post(); ?&gt;
-							&lt;div class=&quot;col-md-4&quot;&gt;
-								&lt;div class=&quot;re-solution-product&quot;&gt;
-									&lt;div class=&quot;re-solution-product-imgcontent&quot;&gt;
-										&lt;a class=&quot;re-solution-product-img&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;
-											&lt;img src=&quot;&lt;?php echo get_field('product_img_cate')?&gt;&quot; alt=&quot;&lt;?php the_title()?&gt; images&quot; /&gt;
-										&lt;/a&gt;
-									&lt;/div&gt;
-									&lt;div class=&quot;re-solution-position&quot;&gt;
-										&lt;div class=&quot;re-solution-content&quot;&gt;
-											&lt;a class=&quot;re-solution-product-title&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;&lt;?php the_title()?&gt;&lt;/a&gt;
-											&lt;ul&gt;
-												&lt;?php if( have_rows('product_adv') ):while ( have_rows('product_adv') ) : the_row();$adv = get_sub_field('product_adv');echo '&lt;li&gt;'.$adv.'&lt;/li&gt;';endwhile;endif;?&gt;
-											&lt;/ul&gt;
-											&lt;div class=&quot;re-products-content-a-link-s&quot;&gt;
-												&lt;a class=&quot;product-more&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;More Info &lt;i class=&quot;fas fa-chevron-right&quot;&gt;&lt;/i&gt;&lt;/a&gt;
-											&lt;/div&gt;
-										&lt;/div&gt;
-									&lt;/div&gt;
-								&lt;/div&gt;
-							&lt;/div&gt;
-						&lt;?php endwhile; ?&gt;
-					&lt;/div&gt;
-					&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
-				&lt;?php endif; 
-				wp_reset_query();?&gt;
-			&lt;?php } ?&gt;
-</code></pre>
-<p>以上是解决一种思路，如果有什么更好的思路可以一起探讨</p>
-<p>Demo:</p>
-<pre><code>&lt;div class=&quot;taxonomy-products we-all-product&quot;&gt;
-			&lt;?php
-			$test = get_categories(&quot;taxonomy=product&amp;hide_empty=0&quot;);
-			$cats=array(); 
-			$cat_child=array();
-			foreach($test as $tmpcat){
-				if($tmpcat-&gt;parent==0){
-					$cats[$tmpcat-&gt;term_id]['name']=$tmpcat-&gt;name;
-					$cats[$tmpcat-&gt;term_id]['slug']=$tmpcat-&gt;slug;
-					$cats[$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
-				}
-			}
-			ksort($cats);
-			$i=0;
-			foreach($cats as $key=&gt;$val){
-				$id = 'term_'.$cats[$key]['term_id'];
-				$taxId = (int)$cats[$key]['term_id'];
-				$i++;
-				?&gt;
-				&lt;h2&gt;
-					&lt;a href=&quot;/products/&lt;?php echo $cats[$key]['slug']; ?&gt;/&quot;&gt;
-						&lt;?php echo $cats[$key]['name']; ?&gt;
-					&lt;/a&gt;
-				&lt;/h2&gt;
-				&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
-				&lt;?php
-				$args=array(
-					'order' =&gt; 'ASC',
-					'tax_query' =&gt; array(
-						array(
-							'taxonomy' =&gt; 'product',
-							'field' =&gt; 'term_id',
-							'terms' =&gt; $taxId,
-						)
-					)
-				);
-				$arms = array_merge($args, $wp_query-&gt;query);
-				query_posts($arms);
-				?&gt;
-				&lt;?php if (have_posts()) : ?&gt;
-					&lt;div class=&quot;all-product&quot;&gt;
-						&lt;?php while (have_posts()) : the_post(); ?&gt;
-							&lt;div class=&quot;col-md-4&quot;&gt;
-								&lt;div class=&quot;re-solution-product&quot;&gt;
-									&lt;div class=&quot;re-solution-product-imgcontent&quot;&gt;
-										&lt;a class=&quot;re-solution-product-img&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;
-											&lt;img src=&quot;&lt;?php echo get_field('product_img_cate')?&gt;&quot; alt=&quot;&lt;?php the_title()?&gt; images&quot; /&gt;
-										&lt;/a&gt;
-									&lt;/div&gt;
-									&lt;div class=&quot;re-solution-position&quot;&gt;
-										&lt;div class=&quot;re-solution-content&quot;&gt;
-											&lt;a class=&quot;re-solution-product-title&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;&lt;?php the_title()?&gt;&lt;/a&gt;
-											&lt;ul&gt;
-												&lt;?php if( have_rows('product_adv') ):while ( have_rows('product_adv') ) : the_row();$adv = get_sub_field('product_adv');echo '&lt;li&gt;'.$adv.'&lt;/li&gt;';endwhile;endif;?&gt;
-											&lt;/ul&gt;
-											&lt;div class=&quot;re-products-content-a-link-s&quot;&gt;
-												&lt;a class=&quot;product-more&quot; href=&quot;&lt;?php the_permalink(); ?&gt;&quot;&gt;More Info &lt;i class=&quot;fas fa-chevron-right&quot;&gt;&lt;/i&gt;&lt;/a&gt;
-											&lt;/div&gt;
-										&lt;/div&gt;
-									&lt;/div&gt;
-								&lt;/div&gt;
-							&lt;/div&gt;
-						&lt;?php endwhile; ?&gt;
-					&lt;/div&gt;
-					&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
-				&lt;?php endif; 
-				wp_reset_query();?&gt;
-			&lt;?php } ?&gt;
-		&lt;/div&gt;
-		```
-</code></pre>
+<h2 id="heading-1">性能与分页</h2>
+<p>“每个分类一次查询”适合分类数量少、每组只展示几项的聚合页。若有几十个分类，会形成大量数据库查询。此时应考虑：</p>
+<ul>
+<li>只展示重点分类，由编辑在后台选择。</li>
+<li>缓存整个聚合区块，并在产品更新时失效。</li>
+<li>一次查询产品后在 PHP 中按 term 分组，但要明确一个产品属于多个分类时的重复规则。</li>
+<li>把归档页改成普通分页列表，分类仅作为筛选项。</li>
+</ul>
+<p>如果只是修改当前归档主查询的筛选或排序，应使用 <code>pre_get_posts</code>，而不是创建第二个查询。</p>
+<p>官方参考：<a href="https://developer.wordpress.org/reference/classes/wp_query/">WP_Query</a>、<a href="https://developer.wordpress.org/reference/functions/query_posts/">query_posts() 警告</a>、<a href="https://developer.wordpress.org/reference/hooks/pre_get_posts/">pre_get_posts</a>。</p>
 
     </article>
 
@@ -454,13 +387,13 @@ $cats=array();
       
       <a class="post-nav__card" href="/post/lnmp-on-pagespeed/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">Lnmp on pagespeed</span>
+        <span class="post-nav__title">Nginx PageSpeed 已归档：现代 LNMP 性能优化路线</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/wordpress-mian-bao-xie-yi-xie-wen-ti/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">Wordpress 面包屑一些问题</span>
+        <span class="post-nav__title">WordPress 面包屑导航：层级、语义与结构化数据</span>
       </a>
       
     </nav>
@@ -516,6 +449,6 @@ $cats=array();
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
   <title>WordPress - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -64,17 +64,6 @@
 <meta name="twitter:url" content="https://ihopefulchina.github.io/tag/wordpress/page/3/">
 <meta name="twitter:title" content="ihopeful Blog">
 <meta name="twitter:description" content="🧑‍💻切图仔">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </head>
 <body data-typewriter="True">
 
@@ -254,26 +243,23 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        解决同一张图片，需要在不同尺寸提供不同的水印
+        WordPress 不同图片尺寸使用不同水印：现状与可靠方案
       </h3>
       
-      <p class="post-card__excerpt">客户需要上传同一张图片，需要在不同尺寸提供不同的水印，我看了、尝试了很多插件，发现基本都不支持多个水印，2个插件组合会出现兼容性问题，只能生效其中一个。
+      <p class="post-card__excerpt">同一张原图在缩略图、中图和大图中使用不同水印，核心不是“装两个水印插件”，而是为每个派生尺寸定义可重复的图片处理策略。原文推荐的 Awesome Watermark 已多年没有维护，不适合继续作为生产方案。
 
-我查阅官方文档，也未找到答案，苦恼如何解决这个问题的时候，找到了Awesome Wa...</p>
+先说明旧插件现状
+WordPr...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2019-07-01T11:40:37+08:00">7 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>1 分钟</span>
+        <span>3 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin.png" alt="解决同一张图片，需要在不同尺寸提供不同的水印" loading="lazy">
     </div>
     
   </a>
@@ -286,24 +272,24 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        关于基于Wordpress的企业网站搭建一些感想
+        关于 WordPress 企业网站建设的一些复盘
       </h3>
       
-      <p class="post-card__excerpt">感叹于Wordpress的强大，Wordpress 能让一个网站快速搭建完成，但成也萧何败萧何，做的越久，越发现Wordpress还是把你束缚在Blog里面，本质上Wordprss上还是一个博客系统，强行基于Wordpress搭建网站还是会...</p>
+      <p class="post-card__excerpt">WordPress 既不是“只能做博客的小程序”，也不是任何企业网站的万能答案。它是一套成熟的内容管理平台，是否合适取决于内容模型、编辑流程、集成复杂度、安全责任和团队维护能力。
+
+适合的场景
+
+企业官网、品牌内容、新闻、案例、产品目录和多...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2019-05-09T17:12:18+08:00">7 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>1 分钟</span>
+        <span>2 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/guan-yu-ji-yu-wordpress-de-qi-ye-wang-zhan-da-jian-yi-xie-gan-xiang.png" alt="关于基于Wordpress的企业网站搭建一些感想" loading="lazy">
     </div>
     
   </a>
@@ -316,27 +302,24 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        Wordpress theme主题结构解析
+        WordPress 主题结构：经典主题与区块主题
       </h3>
       
-      <p class="post-card__excerpt">Wordpress定制站，结构不复杂，了解更多建议去多看看官方文档，下面这个图片是我的定制站需要的文件结构。
+      <p class="post-card__excerpt">WordPress 主题负责站点的展示层。现在需要先区分经典主题与区块主题：两者都使用模板层级，但文件类型、编辑方式和最小结构不同。把所有 PHP 功能都堆进 functions.php 的做法也需要重新审视。
 
 
-需要注意的是product-content.php这个几个文件，是我随便创建的，是因为用到了判断，不同的判断逻辑对应不同的PH...</p>
+经典主题
+最小可运行结构...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2019-04-09T14:38:40+08:00">7 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>1 分钟</span>
+        <span>3 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/wordpress-theme-zhu-ti-jie-gou-jie-xi.png" alt="Wordpress theme主题结构解析" loading="lazy">
     </div>
     
   </a>
@@ -349,26 +332,24 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        WordPress函数代码模块化
+        WordPress 站点功能模块化：从 functions.php 到专用插件
       </h3>
       
-      <p class="post-card__excerpt">函数模块化，以简单、简洁、简约的方式添加代码片段到您的站点。再也没有必要去编辑主题的 functions.php 文件。
+      <p class="post-card__excerpt">我早期做过一个 WordPress-function-modular 项目，用来把常用函数按模块开关。它记录了当时解决 functions.php 膨胀问题的思路，但仓库多年未维护，不应直接当作现代生产插件安装。
 
-Github地址：https://github.com/ihopefulChina/Wordpress-functi...</p>
+旧项目值得保留的想法
+
+...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2019-03-20T16:51:09+08:00">7 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>1 分钟</span>
+        <span>3 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/wordpress-han-shu-dai-ma-mo-kuai-hua.jpg" alt="WordPress函数代码模块化" loading="lazy">
     </div>
     
   </a>
@@ -448,6 +429,6 @@ Github地址：https://github.com/ihopefulChina/Wordpress-functi...</p>
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

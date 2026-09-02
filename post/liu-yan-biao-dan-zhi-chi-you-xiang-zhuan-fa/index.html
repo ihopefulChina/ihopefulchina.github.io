@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>留言表单、支持邮箱转发 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>WordPress 留言表单与邮件转发：安全、送达和隐私 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="基于PHP搭建，用于Wordpress的插件 项目地址:https://github.com/ihopefulChina/Message (已设为私有，无法访问，如果有需要联系:hpf784667332@gmail.com)">
+<meta name="description" content="我早期为企业站写过一个留言表单项目，支持后台查看和邮箱通知。原始仓库现在是非公开的历史项目，不能把当年的实现当成可安装、可维护的公开插件。下面重新整理一个生产表单真正需要考虑的边界。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"留言表单、支持邮箱转发","url":"https://ihopefulchina.github.io/post/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa/","description":"基于PHP搭建，用于Wordpress的插件 项目地址:https://github.com/ihopefulChina/Message (已设为私有，无法访问，如果有需要联系:hpf784667332@gmail.com)","image":"/post-images/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa.png","datePublished":"2019-08-22T14:25:47+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa/","name":"留言表单、支持邮箱转发","position":2}]}</script>
-<meta property="og:title" content="留言表单、支持邮箱转发">
-<meta property="og:description" content="基于PHP搭建，用于Wordpress的插件 项目地址:https://github.com/ihopefulChina/Message (已设为私有，无法访问，如果有需要联系:hpf784667332@gmail.com)">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"WordPress 留言表单与邮件转发：安全、送达和隐私","url":"https://ihopefulchina.github.io/post/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa/","description":"我早期为企业站写过一个留言表单项目，支持后台查看和邮箱通知。原始仓库现在是非公开的历史项目，不能把当年的实现当成可安装、可维护的公开插件。下面重新整理一个生产表单真正需要考虑的边界。","datePublished":"2019-08-22T14:25:47+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa/","name":"WordPress 留言表单与邮件转发：安全、送达和隐私","position":2}]}</script>
+<meta property="og:title" content="WordPress 留言表单与邮件转发：安全、送达和隐私">
+<meta property="og:description" content="我早期为企业站写过一个留言表单项目，支持后台查看和邮箱通知。原始仓库现在是非公开的历史项目，不能把当年的实现当成可安装、可维护的公开插件。下面重新整理一个生产表单真正需要考虑的边界。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa/">
-<meta name="twitter:title" content="留言表单、支持邮箱转发">
-<meta name="twitter:description" content="基于PHP搭建，用于Wordpress的插件 项目地址:https://github.com/ihopefulChina/Message (已设为私有，无法访问，如果有需要联系:hpf784667332@gmail.com)">
-<meta name="twitter:image" content="/post-images/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="WordPress 留言表单与邮件转发：安全、送达和隐私">
+<meta name="twitter:description" content="我早期为企业站写过一个留言表单项目，支持后台查看和邮箱通知。原始仓库现在是非公开的历史项目，不能把当年的实现当成可安装、可维护的公开插件。下面重新整理一个生产表单真正需要考虑的边界。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">留言表单、支持邮箱转发</h1>
+  <h1 class="msg__bubble msg__bubble--title">WordPress 留言表单与邮件转发：安全、送达和隐私</h1>
 </div>
 
 
@@ -246,36 +233,164 @@
     <div class="post-meta">
       <time datetime="2019-08-22T14:25:47+08:00">2019-08-22</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>395 字</span>
+      <span>2992 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 1 分钟</span>
+      <span>约 4 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa.png" alt="留言表单、支持邮箱转发">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p><strong>基于PHP搭建，用于Wordpress的插件</strong></p>
-<p>项目地址:<a href="https://github.com/ihopefulChina/Message">https://github.com/ihopefulChina/Message</a></p>
-<p>(已设为私有，无法访问，如果有需要联系:<a href="mailto:hpf784667332@gmail.com">hpf784667332@gmail.com</a>)</p>
+      <p>我早期为企业站写过一个留言表单项目，支持后台查看和邮箱通知。原始仓库现在是非公开的历史项目，不能把当年的实现当成可安装、可维护的公开插件。下面重新整理一个生产表单真正需要考虑的边界。</p>
 <!-- more -->
-<p>功能介绍:</p>
+<h2 id="-wp-mail">表单不只是 wp_mail()</h2>
+<p>完整流程包括：</p>
 <ol>
-<li>后台有留言管理，支持留言删除、标记。</li>
-<li>支持过虑垃圾留言，<a href="https://akismet.com/">Akismet API</a>提供API支持。</li>
-<li>留言自动转发邮箱，抄送邮箱。</li>
-<li>支持查询客户的IP地址，根据IP地址查找客户所在国家、地区。</li>
-<li>支持客户留言所在网址、留言时间、设备信息等等。</li>
-<li>支持自定义表单name标签内容。</li>
+<li>浏览器提交姓名、邮箱、主题和留言。</li>
+<li>服务端验证来源、字段、频率和权限。</li>
+<li>保存最少必要数据，或直接进入受控工单系统。</li>
+<li>发送通知邮件，并记录可诊断但不泄露正文的结果。</li>
+<li>向用户返回不暴露内部信息的成功/失败状态。</li>
+<li>按隐私政策保留、导出和删除数据。</li>
 </ol>
+<h2 id="heading">最小表单</h2>
+<pre><code class="language-php">&lt;form
+    method=&quot;post&quot;
+    action=&quot;&lt;?php echo esc_url(
+        admin_url( 'admin-post.php' )
+    ); ?&gt;&quot;
+&gt;
+    &lt;input
+        type=&quot;hidden&quot;
+        name=&quot;action&quot;
+        value=&quot;site_contact&quot;
+    &gt;
+
+    &lt;?php wp_nonce_field( 'site_contact', 'site_contact_nonce' ); ?&gt;
+
+    &lt;label&gt;
+        姓名
+        &lt;input name=&quot;name&quot; autocomplete=&quot;name&quot; required&gt;
+    &lt;/label&gt;
+
+    &lt;label&gt;
+        邮箱
+        &lt;input
+            name=&quot;email&quot;
+            type=&quot;email&quot;
+            autocomplete=&quot;email&quot;
+            required
+        &gt;
+    &lt;/label&gt;
+
+    &lt;label&gt;
+        留言
+        &lt;textarea name=&quot;message&quot; required&gt;&lt;/textarea&gt;
+    &lt;/label&gt;
+
+    &lt;button type=&quot;submit&quot;&gt;发送&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>nonce 用于降低跨站请求伪造风险，不是反垃圾验证码，也不能证明提交者是人。</p>
+<h2 id="heading-1">服务端处理</h2>
+<pre><code class="language-php">&lt;?php
+add_action(
+    'admin_post_nopriv_site_contact',
+    'site_handle_contact'
+);
+add_action(
+    'admin_post_site_contact',
+    'site_handle_contact'
+);
+
+function site_handle_contact(): void {
+    check_admin_referer(
+        'site_contact',
+        'site_contact_nonce'
+    );
+
+    $name = isset( $_POST['name'] )
+        ? sanitize_text_field(
+            wp_unslash( $_POST['name'] )
+        )
+        : '';
+
+    $email = isset( $_POST['email'] )
+        ? sanitize_email(
+            wp_unslash( $_POST['email'] )
+        )
+        : '';
+
+    $message = isset( $_POST['message'] )
+        ? sanitize_textarea_field(
+            wp_unslash( $_POST['message'] )
+        )
+        : '';
+
+    if (
+        '' === $name ||
+        ! is_email( $email ) ||
+        '' === $message
+    ) {
+        wp_safe_redirect(
+            add_query_arg(
+                'contact',
+                'invalid',
+                home_url( '/contact/' )
+            )
+        );
+        exit;
+    }
+
+    $subject = sprintf(
+        '网站留言：%s',
+        $name
+    );
+
+    $headers = array(
+        sprintf(
+            'Reply-To: %s &lt;%s&gt;',
+            $name,
+            $email
+        ),
+    );
+
+    $sent = wp_mail(
+        get_option( 'admin_email' ),
+        $subject,
+        $message,
+        $headers
+    );
+
+    wp_safe_redirect(
+        add_query_arg(
+            'contact',
+            $sent ? 'sent' : 'failed',
+            home_url( '/contact/' )
+        )
+    );
+    exit;
+}
+</code></pre>
+<p>这只是流程骨架。生产环境还必须增加频率限制、蜜罐或验证码、最大长度、日志与告警。高风险站点应使用成熟表单/反垃圾方案，不要自行发明一套简单 IP 黑名单。</p>
+<h2 id="heading-2">邮件送达</h2>
+<p>访客邮箱应该放在 <code>Reply-To</code>，<code>From</code> 使用自己已验证的站点域名。否则 SPF、DKIM 和 DMARC 对不齐，邮件容易进入垃圾箱或被拒绝。</p>
+<p><code>wp_mail()</code> 返回 true 只代表邮件组件接受了发送请求，不代表对方邮箱已经收到。重要表单应使用可靠邮件服务，记录 provider message ID 和退信，并为发送失败保留后台待处理记录。</p>
+<h2 id="heading-3">数据与隐私</h2>
+<ul>
+<li>只收集完成回复所需字段。</li>
+<li>在表单旁说明用途、保存期限和隐私政策。</li>
+<li>正文可能包含手机号、邮箱等个人信息，不写进普通应用日志。</li>
+<li>后台列表需要 capability、nonce、分页与输出转义。</li>
+<li>CSV 导出属于敏感操作，应限制权限并记录。</li>
+<li>制定删除、导出、垃圾留言和备份保留规则。</li>
+</ul>
+<p>反垃圾、可靠送达和隐私合规会持续变化。对公共站点，维护中的表单插件加受控邮件服务通常比一段多年不变的自定义 PHP 更可靠。</p>
 
     </article>
 
@@ -315,13 +430,13 @@
       
       <a class="post-nav__card" href="/post/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">如何输出根据分类罗列文章，当前页面高亮显示</span>
+        <span class="post-nav__title">按分类输出文章，并可靠高亮当前分类与文章</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">如何解决页面/文章/详情页需要不同样式、模板的问题？</span>
+        <span class="post-nav__title">如何让 WordPress 页面使用不同布局与模板？</span>
       </a>
       
     </nav>
@@ -377,6 +492,6 @@
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

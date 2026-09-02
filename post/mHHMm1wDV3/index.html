@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>Vue 3 useLockFn：为异步操作增加互斥锁 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。 为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文将介绍如何使用 Vue 3 中的 ref 和 async 函数来实现一个 useLockFn 自定义 Hook，它可以防止在短时间内重复执行一个异步操作。">
+<meta name="description" content="useLockFn 用来保证同一个异步动作在完成前不会再次进入，适合保存、支付前确认、生成文件等操作。它解决的是“执行中互斥”，不是搜索输入防抖，也不是固定频率节流。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/mHHMm1wDV3/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用","url":"https://ihopefulchina.github.io/post/mHHMm1wDV3/","description":"在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。 为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文将介绍如何使用 Vue 3 中的 ref 和 async 函数来实现一个 useLockFn 自定义 Hook，它可以防止在短时间内重复执行一个异步操作。","image":"/post-images/mHHMm1wDV3.png","datePublished":"2024-05-08T09:45:15+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/mHHMm1wDV3/","name":"自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用","position":2}]}</script>
-<meta property="og:title" content="自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用">
-<meta property="og:description" content="在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。 为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文将介绍如何使用 Vue 3 中的 ref 和 async 函数来实现一个 useLockFn 自定义 Hook，它可以防止在短时间内重复执行一个异步操作。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Vue 3 useLockFn：为异步操作增加互斥锁","url":"https://ihopefulchina.github.io/post/mHHMm1wDV3/","description":"useLockFn 用来保证同一个异步动作在完成前不会再次进入，适合保存、支付前确认、生成文件等操作。它解决的是“执行中互斥”，不是搜索输入防抖，也不是固定频率节流。","datePublished":"2024-05-08T09:45:15+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/mHHMm1wDV3/","name":"Vue 3 useLockFn：为异步操作增加互斥锁","position":2}]}</script>
+<meta property="og:title" content="Vue 3 useLockFn：为异步操作增加互斥锁">
+<meta property="og:description" content="useLockFn 用来保证同一个异步动作在完成前不会再次进入，适合保存、支付前确认、生成文件等操作。它解决的是“执行中互斥”，不是搜索输入防抖，也不是固定频率节流。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/mHHMm1wDV3/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/mHHMm1wDV3.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/mHHMm1wDV3/">
-<meta name="twitter:title" content="自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用">
-<meta name="twitter:description" content="在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。 为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文将介绍如何使用 Vue 3 中的 ref 和 async 函数来实现一个 useLockFn 自定义 Hook，它可以防止在短时间内重复执行一个异步操作。">
-<meta name="twitter:image" content="/post-images/mHHMm1wDV3.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="Vue 3 useLockFn：为异步操作增加互斥锁">
+<meta name="twitter:description" content="useLockFn 用来保证同一个异步动作在完成前不会再次进入，适合保存、支付前确认、生成文件等操作。它解决的是“执行中互斥”，不是搜索输入防抖，也不是固定频率节流。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用</h1>
+  <h1 class="msg__bubble msg__bubble--title">Vue 3 useLockFn：为异步操作增加互斥锁</h1>
 </div>
 
 
@@ -246,67 +233,132 @@
     <div class="post-meta">
       <time datetime="2024-05-08T09:45:15+08:00">2024-05-08</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>1268 字</span>
+      <span>2427 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 2 分钟</span>
+      <span>约 4 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/mHHMm1wDV3.png" alt="自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。</p>
-<p>为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文将介绍如何使用 Vue 3 中的 ref 和 async 函数来实现一个 useLockFn 自定义 Hook，它可以防止在短时间内重复执行一个异步操作。</p>
+      <p><code>useLockFn</code> 用来保证同一个异步动作在完成前不会再次进入，适合保存、支付前确认、生成文件等操作。它解决的是“执行中互斥”，不是搜索输入防抖，也不是固定频率节流。</p>
 <!-- more -->
-<h3 id="heading">需求分析</h3>
-<p>有些操作可能会被频繁触发，比如：<br />
-•	用户多次点击按钮发起网络请求。<br />
-•	连续调用同一个函数导致重复操作（例如，表单提交、数据保存等）。</p>
-<p>为了避免这种重复操作，我们需要引入 锁机制，确保同一时刻只执行一次函数。</p>
-<h3 id="uselockfn-">useLockFn 的实现</h3>
-<p>useLockFn 是一个高阶函数，它接受一个异步函数 fn 和一个可选的延迟 delay（默认为 600 毫秒）。它返回一个新函数，该函数会：<br />
-•	防止在指定的延迟时间内重复调用。<br />
-•	在异步操作完成前，锁住该函数，避免重复执行。</p>
-<pre><code>import { ref } from 'vue';
+<h2 id="heading">实现</h2>
+<pre><code class="language-ts">import { readonly, ref } from 'vue'
 
-type ArgsAny = any[];
+interface UseLockFnOptions {
+  /**
+   * 从本次调用开始计算的最短锁定时间。
+   * 默认 0，表示请求结束后立即解锁。
+   */
+  minLockMs?: number
+}
 
-type Fn = (...args: ArgsAny) =&gt; Promise&lt;any&gt;;
+function wait(ms: number) {
+  return new Promise&lt;void&gt;((resolve) =&gt; {
+    setTimeout(resolve, ms)
+  })
+}
 
-export const useLockFn = (fn: Fn, delay = 600) =&gt; {
-    const lock = ref(false);
-    const lastDate = ref();
+export function useLockFn&lt;
+  TArgs extends unknown[],
+  TResult
+&gt;(
+  fn: (...args: TArgs) =&gt; Promise&lt;TResult&gt;,
+  options: UseLockFnOptions = {}
+) {
+  const locked = ref(false)
+  const minLockMs = Math.max(0, options.minLockMs ?? 0)
 
-    return async (...args: ArgsAny) =&gt; {
-        if (lock.value) return;
-        const nowDate = new Date();
+  async function run(
+    ...args: TArgs
+  ): Promise&lt;TResult | undefined&gt; {
+    if (locked.value) return undefined
 
-        if (lastDate?.value &amp;&amp; nowDate.getTime() - lastDate?.value.getTime() &lt;= delay) {
-            return;
-        }
-        lastDate.value = nowDate;
+    locked.value = true
+    const startedAt = Date.now()
 
-        lock.value = true;
-        try {
-            const ret = await fn(...args);
-            lock.value = false;
-            return ret;
-        } catch (error) {
-            lock.value = false;
-            throw error;
-        }
-    };
-};
+    try {
+      return await fn(...args)
+    } finally {
+      const elapsed = Date.now() - startedAt
+      const remaining = minLockMs - elapsed
+
+      if (remaining &gt; 0) {
+        await wait(remaining)
+      }
+
+      locked.value = false
+    }
+  }
+
+  return {
+    run,
+    locked: readonly(locked)
+  }
+}
 </code></pre>
-<p><img src="https://ihopefulchina.github.io/post-images/1739756837494.png" alt="" /></p>
+<p><code>finally</code> 是关键。无论请求成功、抛错还是业务校验拒绝，锁都必须恢复。调用方仍能收到原始异常，不会因为 Hook 捕获错误而误判成功。这里使用全局 <code>setTimeout</code>，避免把组合式函数无意限制在有 <code>window</code> 的浏览器环境。</p>
+<h2 id="heading-1">使用示例</h2>
+<pre><code class="language-vue">&lt;script setup lang=&quot;ts&quot;&gt;
+import { useLockFn } from '@/hooks/useLockFn'
+import { saveProfile } from '@/request/profile'
+
+const { run: submit, locked } = useLockFn(
+  async () =&gt; {
+    await saveProfile(form.value)
+    uni.showToast({ title: '保存成功' })
+  },
+  { minLockMs: 300 }
+)
+
+async function handleSubmit() {
+  try {
+    await submit()
+  } catch {
+    uni.showToast({
+      title: '保存失败，请重试',
+      icon: 'none'
+    })
+  }
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;button :disabled=&quot;locked&quot; @click=&quot;handleSubmit&quot;&gt;
+    {{ locked ? '保存中…' : '保存' }}
+  &lt;/button&gt;
+&lt;/template&gt;
+</code></pre>
+<p>按钮禁用是反馈和可用性措施，锁才是逻辑兜底。只禁用按钮仍可能被键盘快捷键、其他入口或重复事件绕过。</p>
+<h2 id="heading-2">锁、防抖和节流的区别</h2>
+<ul>
+<li><strong>异步锁：</strong> 第一次调用未完成时，忽略后续调用。</li>
+<li><strong>防抖：</strong> 连续触发停止一段时间后，只执行最后一次，适合搜索输入。</li>
+<li><strong>节流：</strong> 在一个时间窗口内至多执行一次，适合滚动或拖动采样。</li>
+<li><strong>幂等：</strong> 同一业务请求重复到达服务端时，不产生重复副作用。</li>
+</ul>
+<p>前端锁不能替代服务端幂等。下单、支付、领取权益等关键操作仍需要幂等键、唯一约束或状态机保护。</p>
+<h2 id="-promise">要不要返回上一次 Promise</h2>
+<p>上面的实现让锁定期间的调用返回 <code>undefined</code>，含义是“本次没有执行”。另一种策略是缓存正在执行的 Promise，让所有调用者等待同一个结果：</p>
+<pre><code class="language-ts">let pending: Promise&lt;TResult&gt; | undefined
+
+function runShared(...args: TArgs) {
+  if (!pending) {
+    pending = fn(...args).finally(() =&gt; {
+      pending = undefined
+    })
+  }
+
+  return pending
+}
+</code></pre>
+<p>两者语义不同。按钮点击通常适合忽略重复调用；多个模块请求同一份初始化数据时，共享 Promise 更自然。写 Hook 前应先决定调用者需要哪一种结果。</p>
 
     </article>
 
@@ -344,13 +396,13 @@ export const useLockFn = (fn: Fn, delay = 600) =&gt; {
       
       <a class="post-nav__card" href="/post/KIr9bupcA9/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">自定义Hooks: useRowSelection - ProTable 选择项配置hooks</span>
+        <span class="post-nav__title">ProTable 跨页选择：用 useRowSelection 保存稳定状态</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/p9E7d0w867/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数</span>
+        <span class="post-nav__title">React URL 查询参数：解析与路由订阅</span>
       </a>
       
     </nav>
@@ -406,6 +458,6 @@ export const useLockFn = (fn: Fn, delay = 600) =&gt; {
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

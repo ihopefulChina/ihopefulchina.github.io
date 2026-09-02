@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
   <title>React - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -64,17 +64,6 @@
 <meta name="twitter:url" content="https://ihopefulchina.github.io/tag/react/">
 <meta name="twitter:title" content="ihopeful Blog">
 <meta name="twitter:description" content="🧑‍💻切图仔">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </head>
 <body data-typewriter="True">
 
@@ -254,24 +243,21 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装
+        ProTable 请求封装：明确协议适配与错误边界
       </h3>
       
-      <p class="post-card__excerpt">在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— use...</p>
+      <p class="post-card__excerpt">Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。
+...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2024-08-06T15:26:46+08:00">2 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>8 分钟</span>
+        <span>5 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/vrE64S-kvU.png" alt="自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装" loading="lazy">
     </div>
     
   </a>
@@ -284,24 +270,20 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数
+        React URL 查询参数：解析与路由订阅
       </h3>
       
-      <p class="post-card__excerpt">在 React 中，我们经常需要获取和处理 URL 中的查询参数。特别是在单页应用（SPA）中，路由参数的管理和转换非常常见。为了提高代码的复用性和可维护性，我们可以使用 React 的 Hook 来封装这类逻辑，确保代码简洁、易于维护。通...</p>
+      <p class="post-card__excerpt">在 React 应用中读取 URL 查询参数，难点不在字符串解析，而在“URL 变化后组件何时重新渲染”。正则表达式通常会漏掉重复参数、+、编码字符和空值；直接读取 window.location.search 又不会自动订阅前端路由变化。...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2024-06-12T14:36:43+08:00">2 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>3 分钟</span>
+        <span>5 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/p9E7d0w867.png" alt="自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数" loading="lazy">
     </div>
     
   </a>
@@ -314,29 +296,24 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        自定义Hooks: useRowSelection - ProTable 选择项配置hooks
+        ProTable 跨页选择：用 useRowSelection 保存稳定状态
       </h3>
       
-      <p class="post-card__excerpt">在写基于Antd Pro 后台业务的时候，发现一个高频业务场景需求：
-表格列表多选item的时候，没办法跨分页选择。
-我写一个自定义Hooks，支持跨分页选择。
+      <p class="post-card__excerpt">ProTable 跨页选择需要同时保存两类状态：稳定的行主键，以及已经见过的行数据。只保存当前页的 selectedRows，翻页后会丢失详情；只保存主键，批量操作时又可能拿不到名称等展示字段。
 
-import { TableProps } from &#39;antd&#39;
-impo...</p>
+设计约束
+
+rowKey 必须全局稳定，不...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2024-04-01T09:21:53+08:00">2 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>4 分钟</span>
+        <span>6 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/KIr9bupcA9.png" alt="自定义Hooks: useRowSelection - ProTable 选择项配置hooks" loading="lazy">
     </div>
     
   </a>
@@ -349,29 +326,23 @@ impo...</p>
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        自定义Hooks: useMutate - 简单的获取数据方法的一个封装
+        React useMutate：处理加载、错误与并发请求
       </h3>
       
-      <p class="post-card__excerpt">在写React 项目业务过程中，经常写一些 相似的代码逻辑。
-比如我需要在进入页面请求接口数据
-传统上我们请求接口获取数据，大概类似这样：
+      <p class="post-card__excerpt">React 版 useMutate 适合封装由事件触发的异步操作。早期实现里最容易被忽略的问题是：普通局部变量不会触发渲染，失败时塞入 {} as T 会破坏类型，并发请求也可能让旧结果覆盖新结果。
 
-  /** 数据 */
-  const [detail, setDetail] = useStat...</p>
+一个最小但完整的实现
+import {...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2024-03-15T10:52:26+08:00">2 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>3 分钟</span>
+        <span>5 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/481vcXjEdn.png" alt="自定义Hooks: useMutate - 简单的获取数据方法的一个封装" loading="lazy">
     </div>
     
   </a>
@@ -384,29 +355,22 @@ impo...</p>
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        函数式组件与类组件有何不同？
+        React 函数组件与类组件：渲染快照有何不同？
       </h3>
       
-      <p class="post-card__excerpt">
-函数式组件捕获了渲染所用的值。（Function components capture the rendered values.）
+      <p class="post-card__excerpt">React 的函数组件与类组件都能描述界面，但它们最值得理解的差异不是语法，而是一次渲染看到的值如何被保存。函数组件中的事件处理器会捕获创建它的那次渲染快照；类组件的方法通常通过可变的 this 读取最新 props 和 state。
 
-
-作者是 Dan Abramov , Facebook React 核心开发，Redux 作者
-博客地址...</p>
+一...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2021-02-09T15:05:53+08:00">5 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>1 分钟</span>
+        <span>4 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/dBAsSzkYF.png" alt="函数式组件与类组件有何不同？" loading="lazy">
     </div>
     
   </a>
@@ -468,6 +432,6 @@ impo...</p>
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

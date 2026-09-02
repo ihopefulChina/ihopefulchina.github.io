@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>自定义Hooks: useMutate - 简单的获取数据方法的一个封装 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>React useMutate：处理加载、错误与并发请求 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="在写React 项目业务过程中，经常写一些 相似的代码逻辑。 比如我需要在进入页面请求接口数据 传统上我们请求接口获取数据，大概类似这样：">
+<meta name="description" content="React 版 useMutate 适合封装由事件触发的异步操作。早期实现里最容易被忽略的问题是：普通局部变量不会触发渲染，失败时塞入 {} as T 会破坏类型，并发请求也可能让旧结果覆盖新结果。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/481vcXjEdn/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"自定义Hooks: useMutate - 简单的获取数据方法的一个封装","url":"https://ihopefulchina.github.io/post/481vcXjEdn/","description":"在写React 项目业务过程中，经常写一些 相似的代码逻辑。 比如我需要在进入页面请求接口数据 传统上我们请求接口获取数据，大概类似这样：","image":"/post-images/481vcXjEdn.png","datePublished":"2024-03-15T10:52:26+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/481vcXjEdn/","name":"自定义Hooks: useMutate - 简单的获取数据方法的一个封装","position":2}]}</script>
-<meta property="og:title" content="自定义Hooks: useMutate - 简单的获取数据方法的一个封装">
-<meta property="og:description" content="在写React 项目业务过程中，经常写一些 相似的代码逻辑。 比如我需要在进入页面请求接口数据 传统上我们请求接口获取数据，大概类似这样：">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"React useMutate：处理加载、错误与并发请求","url":"https://ihopefulchina.github.io/post/481vcXjEdn/","description":"React 版 useMutate 适合封装由事件触发的异步操作。早期实现里最容易被忽略的问题是：普通局部变量不会触发渲染，失败时塞入 {} as T 会破坏类型，并发请求也可能让旧结果覆盖新结果。","datePublished":"2024-03-15T10:52:26+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/481vcXjEdn/","name":"React useMutate：处理加载、错误与并发请求","position":2}]}</script>
+<meta property="og:title" content="React useMutate：处理加载、错误与并发请求">
+<meta property="og:description" content="React 版 useMutate 适合封装由事件触发的异步操作。早期实现里最容易被忽略的问题是：普通局部变量不会触发渲染，失败时塞入 {} as T 会破坏类型，并发请求也可能让旧结果覆盖新结果。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/481vcXjEdn/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/481vcXjEdn.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/481vcXjEdn/">
-<meta name="twitter:title" content="自定义Hooks: useMutate - 简单的获取数据方法的一个封装">
-<meta name="twitter:description" content="在写React 项目业务过程中，经常写一些 相似的代码逻辑。 比如我需要在进入页面请求接口数据 传统上我们请求接口获取数据，大概类似这样：">
-<meta name="twitter:image" content="/post-images/481vcXjEdn.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="React useMutate：处理加载、错误与并发请求">
+<meta name="twitter:description" content="React 版 useMutate 适合封装由事件触发的异步操作。早期实现里最容易被忽略的问题是：普通局部变量不会触发渲染，失败时塞入 {} as T 会破坏类型，并发请求也可能让旧结果覆盖新结果。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">自定义Hooks: useMutate - 简单的获取数据方法的一个封装</h1>
+  <h1 class="msg__bubble msg__bubble--title">React useMutate：处理加载、错误与并发请求</h1>
 </div>
 
 
@@ -246,119 +233,177 @@
     <div class="post-meta">
       <time datetime="2024-03-15T10:52:26+08:00">2024-03-15</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>2036 字</span>
+      <span>3454 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 3 分钟</span>
+      <span>约 5 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/481vcXjEdn.png" alt="自定义Hooks: useMutate - 简单的获取数据方法的一个封装">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>在写React 项目业务过程中，经常写一些 相似的代码逻辑。<br />
-比如我需要在进入页面请求接口数据</p>
-<p>传统上我们请求接口获取数据，大概类似这样：</p>
+      <p>React 版 <code>useMutate</code> 适合封装由事件触发的异步操作。早期实现里最容易被忽略的问题是：普通局部变量不会触发渲染，失败时塞入 <code>{} as T</code> 会破坏类型，并发请求也可能让旧结果覆盖新结果。</p>
 <!-- more -->
-<pre><code>  /** 数据 */
-  const [detail, setDetail] = useState(defaultData)
-  /** 请求数据 */
-  const mutate = async () =&gt; {
-    try {
-      const { data } = await config.getData({ ...params })
-      setDetail(data)
-    } catch (error) {}
-  }
+<h2 id="heading">一个最小但完整的实现</h2>
+<pre><code class="language-tsx">import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 
-  useEffect(() =&gt; {
-    mutate()
-  }, [])
-</code></pre>
-<p>对于这类相关的业务逻辑，我写了一个自定义hooks</p>
-<pre><code>/** hooks - 对于简单的获取数据方法的一个封装 */
-import { useState, useRef, useEffect, useMemo } from 'react'
-
-interface IMutateOption&lt;T&gt; {
-  /** 默认数据 */
-  defaultData?: T
-
-  /** 额外传递参数 */
-  params?: Record&lt;string, any&gt;
-
-  /** 初始是否发出请求 */
-  initRequest?: boolean
-
-  /** 获取数据 */
-  getData: (data: Record&lt;string, any&gt;) =&gt; Promise&lt;{ data?: T }&gt;
-
-  /** 数据格式化 */
-  dataFormat?(data?: T): any
-
-  /** 请求成功后的回调 */
-  successCallback?(data?: T): void
+interface UseMutateOptions&lt;TData&gt; {
+  initialData?: TData
 }
 
-export function useMutate&lt;T&gt;(config: IMutateOption&lt;T&gt;) {
-  const { defaultData, params, initRequest = true } = config
+interface MutateState&lt;TData&gt; {
+  data: TData | undefined
+  error: unknown
+  loading: boolean
+}
 
-  /** 数据 */
-  const [detail, setDetail] = useState(defaultData)
-  /** 是否初始化 */
-  const isInit = useRef(initRequest)
+export function useMutate&lt;
+  TData,
+  TArgs extends unknown[]
+&gt;(
+  requester: (...args: TArgs) =&gt; Promise&lt;TData&gt;,
+  options: UseMutateOptions&lt;TData&gt; = {}
+) {
+  const { initialData } = options
 
-  let loading = false
+  const [state, setState] = useState&lt;MutateState&lt;TData&gt;&gt;({
+    data: initialData,
+    error: undefined,
+    loading: false
+  })
 
-  /** 请求数据 */
-  const mutate = async () =&gt; {
-    try {
-      loading = true
+  const latestRequestIdRef = useRef(0)
+  const mountedRef = useRef(true)
 
-      const { data } = await config.getData({ ...params })
-      const newData = config.dataFormat ? config.dataFormat(data) : data
-
-      setDetail(newData)
-      config?.successCallback?.(newData)
-      return newData
-    } catch (error) {
-      setDetail({})
-    } finally {
-      loading = false
-    }
-  }
-
-  /** 初始请求 */
   useEffect(() =&gt; {
-    if (!isInit.current) {
-      isInit.current = true
-    } else {
-      mutate()
+    mountedRef.current = true
+
+    return () =&gt; {
+      mountedRef.current = false
+      latestRequestIdRef.current += 1
     }
   }, [])
 
-  /** 暂无数据 */
-  const noData = useMemo(() =&gt; {
-    if (detail !== undefined) {
-      if (detail instanceof Array) {
-        return detail.length === 0
-      } else if (detail instanceof Object) {
-        return Object.keys(detail).length === 0
+  const mutate = useCallback(
+    async (...args: TArgs): Promise&lt;TData&gt; =&gt; {
+      const requestId = ++latestRequestIdRef.current
+
+      setState((previous) =&gt; ({
+        ...previous,
+        error: undefined,
+        loading: true
+      }))
+
+      try {
+        const data = await requester(...args)
+
+        if (
+          mountedRef.current &amp;&amp;
+          requestId === latestRequestIdRef.current
+        ) {
+          setState({
+            data,
+            error: undefined,
+            loading: false
+          })
+        }
+
+        return data
+      } catch (error) {
+        if (
+          mountedRef.current &amp;&amp;
+          requestId === latestRequestIdRef.current
+        ) {
+          setState((previous) =&gt; ({
+            ...previous,
+            error,
+            loading: false
+          }))
+        }
+
+        throw error
       }
-    }
-    return false
-  }, [detail])
+    },
+    [requester]
+  )
 
-  return { mutate, detail, setDetail, noData, loading }
+  const reset = useCallback(() =&gt; {
+    latestRequestIdRef.current += 1
+    setState({
+      data: initialData,
+      error: undefined,
+      loading: false
+    })
+  }, [initialData])
+
+  return {
+    ...state,
+    mutate,
+    reset
+  }
 }
 </code></pre>
-<p>获取数据类似逻辑简单封装</p>
-<p><img src="https://ihopefulchina.github.io/post-images/1739674966401.png" alt="" /></p>
+<h2 id="heading-1">使用</h2>
+<pre><code class="language-tsx">function UserDetail({ userId }: { userId: string }) {
+  const requestUser = useCallback(
+    (id: string) =&gt; userService.getById(id),
+    []
+  )
+
+  const {
+    data,
+    error,
+    loading,
+    mutate
+  } = useMutate(requestUser)
+
+  const handleLoad = async () =&gt; {
+    try {
+      await mutate(userId)
+    } catch {
+      // Hook 已记录 error；这里决定是否 toast。
+    }
+  }
+
+  return (
+    &lt;section&gt;
+      &lt;button disabled={loading} onClick={handleLoad}&gt;
+        {loading ? '加载中…' : '加载用户'}
+      &lt;/button&gt;
+
+      {error &amp;&amp; &lt;p role=&quot;alert&quot;&gt;加载失败，请重试。&lt;/p&gt;}
+      {data &amp;&amp; &lt;UserCard user={data} /&gt;}
+    &lt;/section&gt;
+  )
+}
+</code></pre>
+<p>传给 Hook 的 <code>requester</code> 应使用稳定引用，否则 <code>mutate</code> 每次渲染都会变化。是否真的需要稳定引用，要看它是否继续作为子组件属性或 Effect 依赖，不能为了 <code>useCallback</code> 而滥用 <code>useCallback</code>。</p>
+<h2 id="heading-2">状态语义</h2>
+<ul>
+<li><code>loading</code> 必须由 <code>useState</code> 或 reducer 管理，普通 <code>let loading = false</code> 不会让界面更新。</li>
+<li><code>data</code> 用 <code>TData | undefined</code> 表达“尚无成功结果”，不要用伪造的空对象。</li>
+<li>失败的 Promise 继续抛出，让事件处理器、表单库或错误边界决定后续动作。</li>
+<li>示例保留上一次成功数据。若产品希望重新请求时显示骨架屏，可在请求开始时清空 <code>data</code>。</li>
+<li>最新调用才能写状态，避免快速切换条件时出现结果倒退。</li>
+</ul>
+<p>“忽略旧结果”没有取消网络请求。如果接口库支持 <code>AbortSignal</code>，高频查询应把取消信号传到底层。</p>
+<h2 id="-mutate-">自动请求不是 mutate 的默认职责</h2>
+<p>若组件挂载或参数变化时自动获取数据，应在调用处写清 Effect：</p>
+<pre><code class="language-tsx">useEffect(() =&gt; {
+  void mutate(userId).catch(() =&gt; {})
+}, [mutate, userId])
+</code></pre>
+<p>React 开发模式的 Strict Mode 可能额外执行 Effect 的设置与清理，用来暴露不可逆副作用。请求需要具备取消、去重或幂等边界，不能依赖“Effect 只执行一次”的假设。</p>
+<p>当需求包含缓存、预取、失焦刷新、乐观更新、请求去重或分页时，优先评估 TanStack Query、SWR 等专门的数据层。这个 Hook 的价值是把一个小型命令式请求写清楚，而不是替代完整的服务端状态管理。</p>
 
     </article>
 
@@ -396,13 +441,13 @@ export function useMutate&lt;T&gt;(config: IMutateOption&lt;T&gt;) {
       
       <a class="post-nav__card" href="/post/dBAsSzkYF/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">函数式组件与类组件有何不同？</span>
+        <span class="post-nav__title">React 函数组件与类组件：渲染快照有何不同？</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/KIr9bupcA9/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">自定义Hooks: useRowSelection - ProTable 选择项配置hooks</span>
+        <span class="post-nav__title">ProTable 跨页选择：用 useRowSelection 保存稳定状态</span>
       </a>
       
     </nav>
@@ -458,6 +503,6 @@ export function useMutate&lt;T&gt;(config: IMutateOption&lt;T&gt;) {
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

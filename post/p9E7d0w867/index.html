@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>React URL 查询参数：解析与路由订阅 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="在 React 中，我们经常需要获取和处理 URL 中的查询参数。特别是在单页应用（SPA）中，路由参数的管理和转换非常常见。为了提高代码的复用性和可维护性，我们可以使用 React 的 Hook 来封装这类逻辑，确保代码简洁、易于维护。通过实现一个自定义的 useRouterParams Hook 来演示如何获取 URL 中的查询参数，并根据需求进行解析和转换。">
+<meta name="description" content="在 React 应用中读取 URL 查询参数，难点不在字符串解析，而在“URL 变化后组件何时重新渲染”。正则表达式通常会漏掉重复参数、+、编码字符和空值；直接读取 window.location.search 又不会自动订阅前端路由变化。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/p9E7d0w867/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数","url":"https://ihopefulchina.github.io/post/p9E7d0w867/","description":"在 React 中，我们经常需要获取和处理 URL 中的查询参数。特别是在单页应用（SPA）中，路由参数的管理和转换非常常见。为了提高代码的复用性和可维护性，我们可以使用 React 的 Hook 来封装这类逻辑，确保代码简洁、易于维护。通过实现一个自定义的 useRouterParams Hook 来演示如何获取 URL 中的查询参数，并根据需求进行解析和转换。","image":"/post-images/p9E7d0w867.png","datePublished":"2024-06-12T14:36:43+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/p9E7d0w867/","name":"自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数","position":2}]}</script>
-<meta property="og:title" content="自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数">
-<meta property="og:description" content="在 React 中，我们经常需要获取和处理 URL 中的查询参数。特别是在单页应用（SPA）中，路由参数的管理和转换非常常见。为了提高代码的复用性和可维护性，我们可以使用 React 的 Hook 来封装这类逻辑，确保代码简洁、易于维护。通过实现一个自定义的 useRouterParams Hook 来演示如何获取 URL 中的查询参数，并根据需求进行解析和转换。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"React URL 查询参数：解析与路由订阅","url":"https://ihopefulchina.github.io/post/p9E7d0w867/","description":"在 React 应用中读取 URL 查询参数，难点不在字符串解析，而在“URL 变化后组件何时重新渲染”。正则表达式通常会漏掉重复参数、+、编码字符和空值；直接读取 window.location.search 又不会自动订阅前端路由变化。","datePublished":"2024-06-12T14:36:43+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/p9E7d0w867/","name":"React URL 查询参数：解析与路由订阅","position":2}]}</script>
+<meta property="og:title" content="React URL 查询参数：解析与路由订阅">
+<meta property="og:description" content="在 React 应用中读取 URL 查询参数，难点不在字符串解析，而在“URL 变化后组件何时重新渲染”。正则表达式通常会漏掉重复参数、+、编码字符和空值；直接读取 window.location.search 又不会自动订阅前端路由变化。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/p9E7d0w867/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/p9E7d0w867.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/p9E7d0w867/">
-<meta name="twitter:title" content="自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数">
-<meta name="twitter:description" content="在 React 中，我们经常需要获取和处理 URL 中的查询参数。特别是在单页应用（SPA）中，路由参数的管理和转换非常常见。为了提高代码的复用性和可维护性，我们可以使用 React 的 Hook 来封装这类逻辑，确保代码简洁、易于维护。通过实现一个自定义的 useRouterParams Hook 来演示如何获取 URL 中的查询参数，并根据需求进行解析和转换。">
-<meta name="twitter:image" content="/post-images/p9E7d0w867.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="React URL 查询参数：解析与路由订阅">
+<meta name="twitter:description" content="在 React 应用中读取 URL 查询参数，难点不在字符串解析，而在“URL 变化后组件何时重新渲染”。正则表达式通常会漏掉重复参数、+、编码字符和空值；直接读取 window.location.search 又不会自动订阅前端路由变化。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数</h1>
+  <h1 class="msg__bubble msg__bubble--title">React URL 查询参数：解析与路由订阅</h1>
 </div>
 
 
@@ -246,89 +233,141 @@
     <div class="post-meta">
       <time datetime="2024-06-12T14:36:43+08:00">2024-06-12</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>1877 字</span>
+      <span>3463 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 3 分钟</span>
+      <span>约 5 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/p9E7d0w867.png" alt="自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>在 React 中，我们经常需要获取和处理 URL 中的查询参数。特别是在单页应用（SPA）中，路由参数的管理和转换非常常见。为了提高代码的复用性和可维护性，我们可以使用 React 的 Hook 来封装这类逻辑，确保代码简洁、易于维护。通过实现一个自定义的 useRouterParams Hook 来演示如何获取 URL 中的查询参数，并根据需求进行解析和转换。</p>
+      <p>在 React 应用中读取 URL 查询参数，难点不在字符串解析，而在“URL 变化后组件何时重新渲染”。正则表达式通常会漏掉重复参数、<code>+</code>、编码字符和空值；直接读取 <code>window.location.search</code> 又不会自动订阅前端路由变化。</p>
 <!-- more -->
-<h3 id="heading">背景</h3>
-<p>在前端开发中，路由查询参数（Query Parameters）是非常常见的。例如，在一个电商平台中，可能会通过 URL 的查询参数来传递过滤条件（如类别、价格区间等）。对于多页面应用（MPA）或单页面应用（SPA），获取和处理这些参数是必不可少的操作。</p>
-<p>React 官方提供的 useLocation 和 useHistory 钩子可以帮助我们访问路由，但它们默认只返回完整的 URL 信息，没有直接提供对查询参数的处理。因此，我们需要编写一个自定义 Hook 来简化这个过程。</p>
-<h3 id="heading-1">实现思路</h3>
-<p>我们希望创建一个 useRouterParams 的 Hook，它具有以下功能：<br />
-•	获取当前页面的查询参数。<br />
-•	可以选择对查询参数进行转换（例如，转换为数值类型或枚举类型）。<br />
-•	提供一种简便的方式来访问和管理查询参数。</p>
-<h3 id="heading-2">代码实现</h3>
-<p>下面是 useRouterParams Hook 的实现代码：</p>
-<pre><code>import { useMemo } from 'react'
+<h2 id="-hook">首选路由库提供的 Hook</h2>
+<p>如果项目使用 React Router，直接使用它的 <code>useSearchParams</code>。路由库已经处理导航订阅，不需要自己监听 History API。</p>
+<pre><code class="language-tsx">import { useSearchParams } from 'react-router-dom'
 
-export type DefaultParams = Partial&lt;Record&lt;string, string&gt;&gt;
+export function OrderPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
 
-/**
- * 获取路由参数。
- * 这个钩子允许开发者类型化路由参数，并可选地提供一个解析函数来处理参数。
- *
- * @param option.parseFn 解析函数。默认路由参数都是string类型。有些时候你需要转换成其他类型(数值/枚举)等。你可以通过传递这个参数来处理参数。
- *
- */
-export function useRouterParams&lt;T = DefaultParams&gt;(
-  option: {
-    transform?: (data: T) =&gt; T
-  } = {}
-) {
-  const url = new URL(window.location.href)
+  const keyword = searchParams.get('keyword') ?? ''
+  const page = Number(searchParams.get('page') ?? '1')
+  const tags = searchParams.getAll('tag')
 
-  const params = getQueryParams(url?.href) as T
+  function goToPage(nextPage: number) {
+    const next = new URLSearchParams(searchParams)
+    next.set('page', String(nextPage))
+    setSearchParams(next)
+  }
 
-  const _param = useMemo(() =&gt; {
-    // 计算key
-    let cparam: T = params as T
-
-    try {
-      if (option.transform) cparam = option.transform(cparam)
-    } catch (event) {
-      // eslint-disable-next-line no-console
-      console.error('parseFn 执行失败:', event)
-    }
-
-    return { ...params, ...cparam } as T
-  }, [params])
-
-  return [_param as T] as const
+  // ...
 }
-
-// 正则表达式提取查询字符串
-function getQueryParams(url: string): Record&lt;string, string&gt; {
-  const queryString = url.split('?')[1] || ''
-  const params: Record&lt;string, string&gt; = {}
-
-  // 匹配所有的 key=value 对
-  queryString.replace(/([^=&amp;]+)=([^&amp;]*)/g, (_match, key, value) =&gt; {
-    params[decodeURIComponent(key)] = decodeURIComponent(value)
-    return ''
-  })
-
-  return params
-}
-
 </code></pre>
-<h3 id="heading-3">简单实例</h3>
-<p><img src="https://ihopefulchina.github.io/post-images/1739774334205.png" alt="" /></p>
+<p><code>URLSearchParams.getAll()</code> 会保留 <code>?tag=a&amp;tag=b</code> 这样的重复参数。用 <code>Object.fromEntries(searchParams)</code> 会只留下其中一个值，不适合数组语义。</p>
+<h2 id="heading">把解析和订阅分开</h2>
+<p>若多个页面需要相同的类型转换，可以写一个只负责解析的 Hook，让路由库提供当前 <code>search</code> 字符串：</p>
+<pre><code class="language-ts">import { useMemo } from 'react'
+
+interface ListQuery {
+  keyword: string
+  page: number
+  tags: string[]
+  preview: boolean
+}
+
+function parsePositiveInt(
+  value: string | null,
+  fallback: number
+) {
+  if (value === null) return fallback
+
+  const parsed = Number(value)
+  return Number.isInteger(parsed) &amp;&amp; parsed &gt; 0
+    ? parsed
+    : fallback
+}
+
+export function useListQuery(search: string): ListQuery {
+  return useMemo(() =&gt; {
+    const params = new URLSearchParams(search)
+
+    return {
+      keyword: params.get('keyword')?.trim() ?? '',
+      page: parsePositiveInt(params.get('page'), 1),
+      tags: params.getAll('tag'),
+      preview: params.get('preview') === '1'
+    }
+  }, [search])
+}
+</code></pre>
+<p>在 React Router 中：</p>
+<pre><code class="language-tsx">import { useLocation } from 'react-router-dom'
+
+function ListPage() {
+  const { search } = useLocation()
+  const query = useListQuery(search)
+  // ...
+}
+</code></pre>
+<p>这里把 <code>search</code> 字符串作为依赖，而不是依赖一个每次渲染都新建的普通对象。</p>
+<h2 id="heading-1">不使用路由库时</h2>
+<p>浏览器的 <code>popstate</code> 会在历史记录前进、后退时触发，但调用 <code>history.pushState()</code> 或 <code>replaceState()</code> 本身不会触发 <code>popstate</code>。因此，独立应用应通过统一的导航模块发布变更，而不是让每个 Hook 都猴子补丁 <code>history</code>。</p>
+<pre><code class="language-ts">const LOCATION_CHANGE = 'app:location-change'
+
+export function navigate(url: string, replace = false) {
+  if (replace) {
+    window.history.replaceState(null, '', url)
+  } else {
+    window.history.pushState(null, '', url)
+  }
+
+  window.dispatchEvent(new Event(LOCATION_CHANGE))
+}
+
+export function subscribeLocation(
+  onChange: () =&gt; void
+) {
+  window.addEventListener('popstate', onChange)
+  window.addEventListener('hashchange', onChange)
+  window.addEventListener(LOCATION_CHANGE, onChange)
+
+  return () =&gt; {
+    window.removeEventListener('popstate', onChange)
+    window.removeEventListener('hashchange', onChange)
+    window.removeEventListener(LOCATION_CHANGE, onChange)
+  }
+}
+</code></pre>
+<p>再用 React 的 <code>useSyncExternalStore</code> 订阅：</p>
+<pre><code class="language-ts">import { useSyncExternalStore } from 'react'
+
+export function useLocationSearch() {
+  return useSyncExternalStore(
+    subscribeLocation,
+    () =&gt; window.location.search,
+    () =&gt; ''
+  )
+}
+</code></pre>
+<p>服务端快照返回空字符串，避免 SSR 阶段访问 <code>window</code>。水合后客户端会读取真实 URL；如果服务端也需要查询参数，应由框架路由层把它作为初始数据传入。</p>
+<h2 id="heading-2">类型转换要显式</h2>
+<p>查询参数永远来自外部输入。TypeScript 类型声明不会在运行时把字符串变成数字或枚举：</p>
+<pre><code class="language-ts">const allowedSort = new Set(['newest', 'price'])
+
+function parseSort(params: URLSearchParams) {
+  const value = params.get('sort')
+  return value &amp;&amp; allowedSort.has(value)
+    ? (value as 'newest' | 'price')
+    : 'newest'
+}
+</code></pre>
+<p>数字要检查有限性和范围，布尔值要约定编码方式，JSON 参数要捕获解析错误。敏感状态、权限和完整业务对象不应放进可复制、可记录的 URL。</p>
+<p>MDN 参考：<a href="https://developer.mozilla.org/docs/Web/API/URLSearchParams">URLSearchParams</a>。</p>
 
     </article>
 
@@ -366,13 +405,13 @@ function getQueryParams(url: string): Record&lt;string, string&gt; {
       
       <a class="post-nav__card" href="/post/mHHMm1wDV3/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用</span>
+        <span class="post-nav__title">Vue 3 useLockFn：为异步操作增加互斥锁</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/7dtD7wCIDd/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">🙋🙋🙋AvatarCropper: 头像裁剪组件</span>
+        <span class="post-nav__title">AvatarCropper：Taro 头像裁剪组件的工程设计</span>
       </a>
       
     </nav>
@@ -428,6 +467,6 @@ function getQueryParams(url: string): Record&lt;string, string&gt; {
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

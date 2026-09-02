@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>Vue 3 分页列表：用 usePullToRefresh 处理刷新与加载更多 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="在 Vue 3 中，我们可以通过自定义 Hook 来将业务逻辑从组件中抽离出来，使得我们的组件更加简洁和易于维护。今天，我们将介绍如何实现一个自定义的 PullToRefresh Hook，该 Hook 可以帮助我们在列表组件中轻松实现下拉刷新和上拉加载更多功能。">
+<meta name="description" content="下拉刷新和上拉加载看似只是两个事件，真正容易出错的是状态一致性：刷新与翻页同时发生怎么办、失败后页码是否回退、列表总数如何判断、旧请求晚回来能不能覆盖新数据。下面用 Vue 3 组合式函数把这些边界集中处理。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/4PEcn6ZhYy/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能","url":"https://ihopefulchina.github.io/post/4PEcn6ZhYy/","description":"在 Vue 3 中，我们可以通过自定义 Hook 来将业务逻辑从组件中抽离出来，使得我们的组件更加简洁和易于维护。今天，我们将介绍如何实现一个自定义的 PullToRefresh Hook，该 Hook 可以帮助我们在列表组件中轻松实现下拉刷新和上拉加载更多功能。","image":"/post-images/4PEcn6ZhYy.png","datePublished":"2024-12-20T09:32:47+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/4PEcn6ZhYy/","name":"自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能","position":2}]}</script>
-<meta property="og:title" content="自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能">
-<meta property="og:description" content="在 Vue 3 中，我们可以通过自定义 Hook 来将业务逻辑从组件中抽离出来，使得我们的组件更加简洁和易于维护。今天，我们将介绍如何实现一个自定义的 PullToRefresh Hook，该 Hook 可以帮助我们在列表组件中轻松实现下拉刷新和上拉加载更多功能。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Vue 3 分页列表：用 usePullToRefresh 处理刷新与加载更多","url":"https://ihopefulchina.github.io/post/4PEcn6ZhYy/","description":"下拉刷新和上拉加载看似只是两个事件，真正容易出错的是状态一致性：刷新与翻页同时发生怎么办、失败后页码是否回退、列表总数如何判断、旧请求晚回来能不能覆盖新数据。下面用 Vue 3 组合式函数把这些边界集中处理。","datePublished":"2024-12-20T09:32:47+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/4PEcn6ZhYy/","name":"Vue 3 分页列表：用 usePullToRefresh 处理刷新与加载更多","position":2}]}</script>
+<meta property="og:title" content="Vue 3 分页列表：用 usePullToRefresh 处理刷新与加载更多">
+<meta property="og:description" content="下拉刷新和上拉加载看似只是两个事件，真正容易出错的是状态一致性：刷新与翻页同时发生怎么办、失败后页码是否回退、列表总数如何判断、旧请求晚回来能不能覆盖新数据。下面用 Vue 3 组合式函数把这些边界集中处理。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/4PEcn6ZhYy/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/4PEcn6ZhYy.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/4PEcn6ZhYy/">
-<meta name="twitter:title" content="自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能">
-<meta name="twitter:description" content="在 Vue 3 中，我们可以通过自定义 Hook 来将业务逻辑从组件中抽离出来，使得我们的组件更加简洁和易于维护。今天，我们将介绍如何实现一个自定义的 PullToRefresh Hook，该 Hook 可以帮助我们在列表组件中轻松实现下拉刷新和上拉加载更多功能。">
-<meta name="twitter:image" content="/post-images/4PEcn6ZhYy.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="Vue 3 分页列表：用 usePullToRefresh 处理刷新与加载更多">
+<meta name="twitter:description" content="下拉刷新和上拉加载看似只是两个事件，真正容易出错的是状态一致性：刷新与翻页同时发生怎么办、失败后页码是否回退、列表总数如何判断、旧请求晚回来能不能覆盖新数据。下面用 Vue 3 组合式函数把这些边界集中处理。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能</h1>
+  <h1 class="msg__bubble msg__bubble--title">Vue 3 分页列表：用 usePullToRefresh 处理刷新与加载更多</h1>
 </div>
 
 
@@ -246,416 +233,233 @@
     <div class="post-meta">
       <time datetime="2024-12-20T09:32:47+08:00">2024-12-20</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>12010 字</span>
+      <span>4638 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 20 分钟</span>
+      <span>约 7 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/4PEcn6ZhYy.png" alt="自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>在 Vue 3 中，我们可以通过自定义 Hook 来将业务逻辑从组件中抽离出来，使得我们的组件更加简洁和易于维护。今天，我们将介绍如何实现一个自定义的 PullToRefresh Hook，该 Hook 可以帮助我们在列表组件中轻松实现下拉刷新和上拉加载更多功能。</p>
+      <p>下拉刷新和上拉加载看似只是两个事件，真正容易出错的是状态一致性：刷新与翻页同时发生怎么办、失败后页码是否回退、列表总数如何判断、旧请求晚回来能不能覆盖新数据。下面用 Vue 3 组合式函数把这些边界集中处理。</p>
 <!-- more -->
-<h3 id="heading">背景</h3>
-<p>在许多移动端应用或 Web 应用中，下拉刷新和上拉加载更多功能是非常常见的交互方式。为了实现这一功能，我们需要管理分页状态、加载状态、数据合并等多个方面的逻辑。通过使用 Vue 3 的组合式 API（Composition API），我们可以将这些逻辑封装成一个通用的 Hook，使得代码更加复用和易于维护。</p>
-<ol>
-<li>需求分析</li>
-</ol>
-<p>我们需要实现以下功能：<br />
-•	支持下拉刷新和上拉加载更多。<br />
-•	支持分页加载，每次请求时，都会返回一页的数据。<br />
-•	支持数据的去重处理，防止加载重复的数据。<br />
-•	支持刷新时清空旧数据。<br />
-•	支持自定义数据格式化。<br />
-•	支持刷新完成后的回调，以便处理列表数据。</p>
-<ol start="2">
-<li>代码实现</li>
-</ol>
-<p>下面是我们实现的 usePullToRefresh Hook 代码：</p>
-<pre><code>import { computed, onMounted, ref } from 'vue';
-import { useLockFn } from '~/hooks';
-import { removeRepetition } from '~/utils';
+<h2 id="heading">先定义接口契约</h2>
+<p>不要让 Hook 猜测后端字段。先把分页结果收敛为稳定结构：</p>
+<pre><code class="language-ts">export interface PageResult&lt;T&gt; {
+  list: T[]
+  total?: number
+  hasMore?: boolean
+}
 
-export enum PullToRefreshState {
-    /**
-     * 普通状态
-     */
-    none,
-    /**
-     * 刷新中
-     */
+export interface PageRequest {
+  page: number
+  pageSize: number
+}
+</code></pre>
+<p><code>hasMore</code> 优先级最高；没有它时用累计条数和 <code>total</code> 判断；两者都没有时，才用“本页不足 <code>pageSize</code>”作为结束条件。</p>
+<h2 id="heading-1">一个可复用的实现</h2>
+<pre><code class="language-ts">import { computed, onScopeDispose, ref, type Ref } from 'vue'
+
+type LoadMode = 'refresh' | 'append'
+
+interface UsePullToRefreshOptions&lt;T&gt; {
+  pageSize?: number
+  immediate?: boolean
+  fetchPage: (params: PageRequest) =&gt; Promise&lt;PageResult&lt;T&gt;&gt;
+}
+
+export function usePullToRefresh&lt;T&gt;(
+  options: UsePullToRefreshOptions&lt;T&gt;
+) {
+  const pageSize = options.pageSize ?? 20
+
+  const list = ref&lt;T[]&gt;([]) as Ref&lt;T[]&gt;
+  const currentPage = ref(0)
+  const total = ref&lt;number&gt;()
+  const error = ref&lt;unknown&gt;()
+
+  const refreshing = ref(false)
+  const loadingMore = ref(false)
+  const noMore = ref(false)
+
+  let latestRequestId = 0
+
+  async function loadPage(page: number, mode: LoadMode) {
+    const requestId = ++latestRequestId
+    error.value = undefined
+
+    if (mode === 'refresh') {
+      refreshing.value = true
+      loadingMore.value = false
+    } else {
+      loadingMore.value = true
+    }
+
+    try {
+      const result = await options.fetchPage({ page, pageSize })
+
+      // 刷新发生后，更早的翻页结果不能覆盖新列表。
+      if (requestId !== latestRequestId) return
+
+      const nextList =
+        mode === 'refresh'
+          ? result.list
+          : [...list.value, ...result.list]
+
+      list.value = nextList
+      currentPage.value = page
+      total.value = result.total
+
+      if (typeof result.hasMore === 'boolean') {
+        noMore.value = !result.hasMore
+      } else if (typeof result.total === 'number') {
+        noMore.value = nextList.length &gt;= result.total
+      } else {
+        noMore.value = result.list.length &lt; pageSize
+      }
+    } catch (cause) {
+      if (requestId === latestRequestId) {
+        error.value = cause
+      }
+      throw cause
+    } finally {
+      if (requestId === latestRequestId) {
+        refreshing.value = false
+        loadingMore.value = false
+      }
+    }
+  }
+
+  async function refresh() {
+    try {
+      await loadPage(1, 'refresh')
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  async function loadMore() {
+    if (
+      refreshing.value ||
+      loadingMore.value ||
+      noMore.value
+    ) {
+      return
+    }
+
+    try {
+      await loadPage(currentPage.value + 1, 'append')
+      return true
+    } catch {
+      return false
+    }
+  }
+
+  function reset() {
+    latestRequestId += 1
+    list.value = []
+    currentPage.value = 0
+    total.value = undefined
+    error.value = undefined
+    noMore.value = false
+    refreshing.value = false
+    loadingMore.value = false
+  }
+
+  onScopeDispose(() =&gt; {
+    // 让已经离开作用域的请求结果失效。
+    latestRequestId += 1
+  })
+
+  if (options.immediate !== false) {
+    void refresh()
+  }
+
+  return {
+    list,
+    total,
+    error,
     refreshing,
-    /**
-     * 添加中
-     */
-    pushing,
+    loadingMore,
+    noMore: computed(() =&gt; noMore.value),
+    refresh,
+    loadMore,
+    reset
+  }
 }
+</code></pre>
+<p>这里没有在请求发出前递增页码。只有请求成功后才提交 <code>currentPage</code>，因此失败重试不会跳页。</p>
+<p>“最新请求获胜”只解决状态覆盖问题，不会真正取消网络请求。如果请求库支持 <code>AbortController</code> 或平台自己的 abort API，可以在此基础上继续取消旧请求。</p>
+<h2 id="-uni-app-">在 uni-app 页面中使用</h2>
+<pre><code class="language-vue">&lt;script setup lang=&quot;ts&quot;&gt;
+import { computed } from 'vue'
+import { usePullToRefresh } from '@/hooks/usePullToRefresh'
+import { getGoodsPage } from '@/request/goods'
 
-export interface IPullRefreshHookRefreshParams {
-    /**
-     * 刷新时是否清空旧数组
-     *
-     * @default false
-     */
-    clearList?: boolean;
-}
-
-interface IUsePullToRefreshOption&lt;T&gt; {
-    /** 默认数据 */
-    defaultData?: T[];
-    /** 默认初始插入数据 */
-    defaultInsertData?: T[];
-    dataKey?: string;
-    /** 初始是否发出请求 */
-    initRequest?: boolean;
-
-    /** 获取数据 */
-    getData: (data: Record&lt;string, any&gt; 
-    &amp; { pageNum: number }) =&gt; Promise&lt;{ data?: { list?: T[]; 
-    isLastPage?: boolean; total?: number } }&gt;;
-
-    /** 数据格式化 */
-    dataFormat?(data: T[]): any[];
-
-    /** 获取数据完成回调，返回本次数据 */
-    onAfterLoad?(data: T[], currentParams: Record&lt;string, any&gt;
-     &amp; { pageNum: number }, total: number, isLastPage: boolean): void;
-    /** 获取数据完成回调，返回当前list、currentParams */
-    customSpliceList?(list: T[], currentParams: Record&lt;string, any&gt; 
-    &amp; { pageNum: number }): void;
-}
-
-export default function usePullToRefresh&lt;T&gt;(config: IUsePullToRefreshOption&lt;T&gt;) {
-    const { defaultData = [], dataKey = 'id' } = config;
-    const list = ref&lt;any[]&gt;(defaultData);
-    const total = ref&lt;number&gt;(0);
-    const noMore = ref&lt;boolean&gt;(false);
-
-    const pullToRefreshState = ref&lt;PullToRefreshState&gt;(PullToRefreshState.refreshing);
-    const requestId = ref&lt;number&gt;(0);
-    const pageNum = ref&lt;number&gt;(0);
-
-    const getListData = useLockFn(async (num?: number) =&gt; {
-        if (num !== undefined) {
-            pageNum.value = num;
-        } else {
-            pageNum.value++;
-        }
-
-        if (pageNum.value === 1) {
-            pullToRefreshState.value = PullToRefreshState.refreshing;
-            // setData([]);
-        } else {
-            pullToRefreshState.value = PullToRefreshState.pushing;
-        }
-
-        try {
-            const currentRequestId = ++requestId.value;
-            const currentParams = { pageNum: pageNum.value, pageSize: 10 };
-
-            const { data = {} } = await config.getData(currentParams);
-            if (currentRequestId !== requestId.value) {
-                return;
-            }
-            // eslint-disable-next-line prefer-const
-            let { list: dataList = [], isLastPage } = data;
-
-            dataList = config.dataFormat ?
-             config.dataFormat(dataList) : dataList;
-
-            if (config.onAfterLoad) {
-                config.onAfterLoad(dataList, currentParams, data?.total 
-                || -1, !!isLastPage);
-            }
-
-            if (pageNum.value === 1) {
-                list.value = (config.defaultInsertData ?
-                 [...config.defaultInsertData, ...dataList] : dataList) || [];
-            } else {
-                dataList = removeRepetition((list.value || [])
-                ?.concat(dataList), dataKey);
-                list.value = dataList;
-            }
-
-            if (config.customSpliceList) {
-                config.customSpliceList(dataList, currentParams);
-            }
-            total.value = data?.total || -1;
-            noMore.value = isLastPage !== undefined ?
-             !!isLastPage : data?.total !== -1 ?
-             dataList?.length &gt;= (data?.total || -1) : true;
-        } catch (error) {
-            if (pageNum.value === 1) {
-                list.value = [];
-            }
-        }
-        pullToRefreshState.value = PullToRefreshState.none;
-    });
-
-    /**
-     * 更新某条数据的值
-     *
-     * @param updatedata
-     */
-    function updateById(updatedata: T, key = 'id') {
-        const newList = [...list.value]?.map((value) =&gt; {
-            if ((value as any)[key] === (updatedata as any)[key]) {
-                /** 改成替换更新 */
-                return { ...updatedata };
-            }
-            return { ...value };
-        });
-
-        list.value = [...newList];
-    }
-
-    /**
-     * 删除某条数据的值
-     *
-     * @param id
-     */
-    function deleteById(id: number | string, key = 'id') {
-        list.value = list.value?.filter((item) =&gt; `${item[key]}` !== `${id}`);
-    }
-
-    /**
-     * 更新列表中的数据
-     *
-     * @param {T} data 需要更新的数据
-     * @param {(string | ((item: T, index: number) =&gt; boolean))} compare 比对逻辑
-     */
-    function updateLisItem(data: T, compare: string 
-    | ((item: T, index: number) =&gt; boolean)) {
-        const isString = typeof compare === 'string';
-        list.value = list.value?.map((value, index) =&gt; {
-            if (isString) {
-                return (value as any)[compare] === (data as any)[compare] ? 
-                { ...value, ...data } : value;
-            }
-            return compare(value, index) ? { ...value, ...data } : value;
-        });
-    }
-
-    onMounted(() =&gt; {
-        if (config?.initRequest !== false) {
-            getListData();
-        }
-    });
-
-    function onRefresh(refreshParams?: IPullRefreshHookRefreshParams) {
-        if (refreshParams?.clearList) {
-            list.value = [];
-        }
-        getListData(1);
-    }
-
-    const isEmpty = computed(() =&gt; list?.value.length === 0 
-    &amp;&amp; pullToRefreshState?.value === PullToRefreshState.none);
+const {
+  list,
+  error,
+  refreshing,
+  loadingMore,
+  noMore,
+  refresh,
+  loadMore
+} = usePullToRefresh({
+  pageSize: 20,
+  fetchPage: async ({ page, pageSize }) =&gt; {
+    const response = await getGoodsPage({ page, pageSize })
 
     return {
-        list,
-        setList: list.value,
-        total,
-        updateById,
-        pageNum,
-        updateLisItem,
-        deleteByIndex: (index: number) =&gt; (list.value = list.value
-        ?.filter((__, idx) =&gt; idx !== index)),
-        /** 根据传入的标识删除对应的数据，传入标识值和标识字段，默认id */
-        deleteById,
-        state: pullToRefreshState,
-        noMore,
-        onRefresh,
-        isEmpty,
-        onReachBottom: () =&gt; getListData(),
-    };
-}
+      list: response.records,
+      total: response.total
+    }
+  }
+})
+
+const footerText = computed(() =&gt; {
+  if (loadingMore.value) return '加载中…'
+  if (noMore.value) return '没有更多了'
+  return '继续上拉加载'
+})
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;scroll-view
+    scroll-y
+    refresher-enabled
+    class=&quot;page-scroll&quot;
+    :refresher-triggered=&quot;refreshing&quot;
+    @refresherrefresh=&quot;refresh&quot;
+    @scrolltolower=&quot;loadMore&quot;
+  &gt;
+    &lt;view v-for=&quot;item in list&quot; :key=&quot;item.id&quot;&gt;
+      {{ item.name }}
+    &lt;/view&gt;
+
+    &lt;view v-if=&quot;error&quot; class=&quot;error&quot;&gt;
+      加载失败，请重试
+    &lt;/view&gt;
+
+    &lt;view class=&quot;footer&quot;&gt;{{ footerText }}&lt;/view&gt;
+  &lt;/scroll-view&gt;
+&lt;/template&gt;
 </code></pre>
-<h3 id="heading-1">使用实例</h3>
-<pre><code>// 列表数据
-const pullToProps = useMMPullToRefresh&lt;UpWorkHistoryPageVO&gt;({
-    initRequest: false,
-    getData: (params) =&gt; {
-        if (type.value === EStaffBillPermission.REPAIR) {
-            return api['/wechat/api/repairWorkOrderSignHistory/page_GET']
-            ({ ...params, id: pageQuery?.value?.id });
-        }
-        return api['/wechat/api/upWorkOrder/historyPage_GET']
-        ({ ...params, id: pageQuery?.value?.id, type: ESignInType.SIGN_IN });
-    },
-});
-const { list, isEmpty } = toRefs(pullToProps);
-
-&lt;PullToRefresh
-                :noMore=&quot;pullToProps?.noMore&quot;
-                :state=&quot;pullToProps?.state&quot;
-                :isEmpty=&quot;pullToProps?.isEmpty&quot;
-                @onRefresh=&quot;pullToProps?.onRefresh&quot;
-                @onReachBottom=&quot;pullToProps?.onReachBottom&quot;
-                refresherBackground=&quot;#fff&quot;
-            &gt;
-                &lt;view class=&quot;list&quot; v-if=&quot;list &amp;&amp; list?.length &gt; 0&quot;&gt;
-                    &lt;view class=&quot;item&quot; v-for=&quot;item in list&quot; :key=&quot;item?.id&quot;&gt;
-                        &lt;Item :item=&quot;item&quot; :type=&quot;type&quot; /&gt;
-                    &lt;/view&gt;
-                &lt;/view&gt;
-                &lt;view v-else-if=&quot;isEmpty&quot;&gt;
-                    &lt;Empty marginTop=&quot;440&quot; :emptyStr=&quot;t('common.no_data')&quot; /&gt;
-                &lt;/view&gt;
-            &lt;/PullToRefresh&gt;
-        ```
-PullToRefresh 组件源码(仅供参考，相关逻辑根据项目实际业务场景)
-</code></pre>
-<script lang="ts" setup>
-import { CSSProperties, ComputedRef, Ref, computed, getCurrentInstance, onMounted, ref, toRefs } from 'vue';
-import Gap from '~/components/common/gap/Gap.vue';
-import { useLockFn } from '~/hooks';
-import { useSystemInfo } from '~/state/useSystemInfo';
-import TnLoadmore from '~/uni_modules/tuniaoui-vue3/components/loadmore/src/loadmore.vue';
-import { selectRect } from '~/utils/uniApi';
-import { MMPullToRefreshState } from './const';
-
-/** 设置自定义下拉刷新阈值 */
-const REFRESHER_THRESHOLD = 45;
-
-interface IMMPullToRefreshProps {
-    /** 刷新状态 */
-    state: Ref<MMPullToRefreshState>;
-    /** 没有更多 */
-    noMore: Ref<boolean>;
-    /** 是否显示没有更多文案，默认显示 */
-    hiddeNoMoreText?: boolean;
-    /** 是否空数据 */
-    isEmpty?: ComputedRef<boolean>;
-    /** 列表高度 */
-    height?: number;
-    /** styles */
-    styles?: CSSProperties;
-    /** isTab */
-    isTab?: boolean;
-    /** 背景颜色 */
-    refresherBackground?: string;
-    /** 底部空间高度 rpx */
-    footerSpace?: number;
-    /** 页面滚动回掉 */
-    onScroll?: (e: any) => void;
-}
-
-/** 子传父事件 */
-const emits = defineEmits<{
-    (e: 'onRefresh'): void;
-    (e: 'onReachBottom'): void;
-}>();
-const systemInfo = useSystemInfo();
-const instance = getCurrentInstance(); // 获取组件实例
-
-/** 父传子参数 */
-const props = defineProps<IMMPullToRefreshProps>();
-const { noMore, state, isEmpty } = toRefs(props);
-
-/** 列表高度计算 */
-const scollViewHeight = ref<number>();
-const calculateScrollViewHeight = async () => {
-    let scrollViewHeight = props?.height;
-    try {
-        if (!scrollViewHeight) {
-            const topViewRes: any = await selectRect('#MMPullToRefreshTop', instance!);
-
-            scrollViewHeight = systemInfo?.screenHeight - topViewRes?.top;
-        }
-    } catch (error) {
-        console.warn(error);
-    }
-
-    scollViewHeight.value = props?.isTab && scrollViewHeight ? scrollViewHeight - systemInfo?.tabbarHeight : scrollViewHeight;
-};
-onMounted(() => {
-    calculateScrollViewHeight();
-});
-
-/** 加载更多status */
-const status = computed<'loading' | 'nomore' | undefined>(() => {
-    if (state?.value === MMPullToRefreshState.pushing) {
-        return 'loading';
-    } else if (state.value !== MMPullToRefreshState.refreshing && noMore) {
-        return 'nomore';
-    }
-    return undefined;
-});
-
-/** 开启自定义下拉刷新 */
-// const refresherTriggered = computed(() => state?.value === MMPullToRefreshState.refreshing);
-const refresherTriggered = ref<boolean>(false);
-/** 刷新列表 */
-const refresherrefresh = useLockFn(async () => {
-    refresherTriggered.value = true;
-    if (state.value === MMPullToRefreshState.none) {
-        emits('onRefresh');
-        setTimeout(() => {
-            refresherTriggered.value = false;
-        }, 500);
-    }
-});
-
-const onScroll = (event: any) => {
-    props.onScroll?.(event);
-};
-
-/** 下拉更多 */
-const scrolltolower = () => {
-    if (!noMore?.value) {
-        emits('onReachBottom');
-    }
-};
-</script>
-<template>
-    <view class="MMPullToRefresh" :style="{ height: `${scollViewHeight}px` }">
-        <view id="MMPullToRefreshTop" />
-        <!-- <view class="pullHead" v-if="refresherTriggered">
-            <TnLoadmore size="36" status="loading" color="#999" :loadingText="false" loadingIconMode="flower" />
-        </view> -->
-        <scroll-view
-            scrollY
-            scrollWithAnimation
-            enableBackToTop
-            refresherEnabled
-            refresherDefaultStyle="black"
-            :refresherThreshold="REFRESHER_THRESHOLD"
-            :refresherTriggered="refresherTriggered"
-            :refresherBackground="props?.refresherBackground ?? '#fff'"
-            @refresherrefresh="refresherrefresh"
-            @scrolltolower="scrolltolower"
-            @scroll="onScroll"
-            class="simplePullToRefresh"
-            :style="{ ...props.styles }"
-        >
-            <!-- <slot name="refresher">
-                <view class="pullHead">
-                    <TnLoadmore size="36" status="loading" color="#999" :loadingText="false" loadingIconMode="flower" />
-                </view>
-            </slot> -->
-            <slot></slot>
-<pre><code>        &lt;view class=&quot;noMore&quot; v-if=&quot;!isEmpty &amp;&amp; (status !== 'nomore' || (status === 'nomore' &amp;&amp; !props.hiddeNoMoreText))&quot;&gt;
-            &lt;TnLoadmore :status=&quot;status&quot; v-if=&quot;status&quot; color=&quot;#999&quot; loadingIconMode=&quot;flower&quot; /&gt;
-        &lt;/view&gt;
-        &lt;Gap :height=&quot;props?.footerSpace&quot; v-if=&quot;props?.footerSpace&quot; :styles=&quot;{ width: '100%' }&quot; /&gt;
-    &lt;/scroll-view&gt;
-&lt;/view&gt;
-</code></pre>
-</template>
-<style lang="scss" scoped>
-@import './index.scss';
-</style>
-<pre><code></code></pre>
+<p><code>scroll-view</code> 必须有可计算的高度，否则滚动到底事件可能永远不会触发。微信小程序和 H5 的滚动、回弹、触底距离也有差异，需要在目标端分别验证。</p>
+<h2 id="heading-2">生产使用时还要决定</h2>
+<ul>
+<li>刷新失败时，是保留旧列表还是展示全屏错误。</li>
+<li>列表项重复时，按主键覆盖还是保留服务端顺序。</li>
+<li>筛选条件变化时，是调用 <code>reset()</code> 后刷新，还是保留旧数据到新请求完成。</li>
+<li>快速切换筛选是否需要真正取消请求。</li>
+<li>空态、首次加载、增量加载和无更多数据是否使用不同视觉状态。</li>
+</ul>
+<p>组合式函数应该统一状态机和边界，不应该替页面决定产品策略。</p>
 
     </article>
 
@@ -693,13 +497,13 @@ const scrolltolower = () => {
       
       <a class="post-nav__card" href="/post/aJA508HwI4/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装</span>
+        <span class="post-nav__title">Vue 3 useMutate：封装可控的命令式异步请求</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/qn_PbZX5g6/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">👉👉👉爬蓝湖原型目录结构</span>
+        <span class="post-nav__title">把蓝湖原型目录导出为 CSV：一段用户脚本实践</span>
       </a>
       
     </nav>
@@ -755,6 +559,6 @@ const scrolltolower = () => {
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

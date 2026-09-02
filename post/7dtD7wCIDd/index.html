@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>🙋🙋🙋AvatarCropper: 头像裁剪组件 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>AvatarCropper：Taro 头像裁剪组件的工程设计 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。">
+<meta name="description" content="头像裁剪不是“给图片加一个圆形遮罩”这么简单。可用于生产的组件需要把手势坐标、原图像素、Canvas 导出、文件体积和多端差异放在同一个模型里。本文不再把早期的样式原型描述成完整组件，而是整理一套可实现、可测试的设计。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/7dtD7wCIDd/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"🙋🙋🙋AvatarCropper: 头像裁剪组件","url":"https://ihopefulchina.github.io/post/7dtD7wCIDd/","description":"在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。","image":"/post-images/7dtD7wCIDd.png","datePublished":"2024-07-09T14:51:15+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/7dtD7wCIDd/","name":"🙋🙋🙋AvatarCropper: 头像裁剪组件","position":2}]}</script>
-<meta property="og:title" content="🙋🙋🙋AvatarCropper: 头像裁剪组件">
-<meta property="og:description" content="在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"AvatarCropper：Taro 头像裁剪组件的工程设计","url":"https://ihopefulchina.github.io/post/7dtD7wCIDd/","description":"头像裁剪不是“给图片加一个圆形遮罩”这么简单。可用于生产的组件需要把手势坐标、原图像素、Canvas 导出、文件体积和多端差异放在同一个模型里。本文不再把早期的样式原型描述成完整组件，而是整理一套可实现、可测试的设计。","datePublished":"2024-07-09T14:51:15+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/7dtD7wCIDd/","name":"AvatarCropper：Taro 头像裁剪组件的工程设计","position":2}]}</script>
+<meta property="og:title" content="AvatarCropper：Taro 头像裁剪组件的工程设计">
+<meta property="og:description" content="头像裁剪不是“给图片加一个圆形遮罩”这么简单。可用于生产的组件需要把手势坐标、原图像素、Canvas 导出、文件体积和多端差异放在同一个模型里。本文不再把早期的样式原型描述成完整组件，而是整理一套可实现、可测试的设计。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/7dtD7wCIDd/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/7dtD7wCIDd.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/7dtD7wCIDd/">
-<meta name="twitter:title" content="🙋🙋🙋AvatarCropper: 头像裁剪组件">
-<meta name="twitter:description" content="在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。">
-<meta name="twitter:image" content="/post-images/7dtD7wCIDd.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="AvatarCropper：Taro 头像裁剪组件的工程设计">
+<meta name="twitter:description" content="头像裁剪不是“给图片加一个圆形遮罩”这么简单。可用于生产的组件需要把手势坐标、原图像素、Canvas 导出、文件体积和多端差异放在同一个模型里。本文不再把早期的样式原型描述成完整组件，而是整理一套可实现、可测试的设计。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">🙋🙋🙋AvatarCropper: 头像裁剪组件</h1>
+  <h1 class="msg__bubble msg__bubble--title">AvatarCropper：Taro 头像裁剪组件的工程设计</h1>
 </div>
 
 
@@ -246,354 +233,179 @@
     <div class="post-meta">
       <time datetime="2024-07-09T14:51:15+08:00">2024-07-09</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>7179 字</span>
+      <span>3675 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 11 分钟</span>
+      <span>约 6 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/7dtD7wCIDd.png" alt="🙋🙋🙋AvatarCropper: 头像裁剪组件">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。</p>
+      <p>头像裁剪不是“给图片加一个圆形遮罩”这么简单。可用于生产的组件需要把手势坐标、原图像素、Canvas 导出、文件体积和多端差异放在同一个模型里。本文不再把早期的样式原型描述成完整组件，而是整理一套可实现、可测试的设计。</p>
 <!-- more -->
-<h3 id="heading">组件概述</h3>
-<p>AvatarCropper 是一个用户自定义的头像裁剪工具，允许用户选择图片进行裁剪，支持缩放、旋转、拖动等操作。组件的功能包括：<br />
-•	选择图片进行裁剪。<br />
-•	支持缩放和旋转图像。<br />
-•	在画布上实时显示裁剪效果。<br />
-•	裁剪完成后，可以返回裁剪后的图片或文件路径。</p>
-<h3 id="heading-1">组件属性解析</h3>
-<p>AvatarCropper 的一些常见属性：<br />
-•	maxZoom：最大缩放倍数，控制裁剪区域的最大缩放程度。<br />
-•	space：裁剪框与画布边缘的空隙，避免裁剪框被画布边界限制。<br />
-•	toolbar：裁剪工具栏的内容，可以自定义显示的按钮。<br />
-•	toolbarPosition：工具栏的位置，支持 top 或 bottom。<br />
-•	editText：显示在裁剪工具栏的编辑文字。<br />
-•	sizeType 和 sourceType：允许选择图片的类型和来源。<br />
-•	shape：裁剪框的形状，支持 square 或 round。<br />
-•	onConfirm：裁剪完成后的回调函数，传递裁剪后的图片路径。<br />
-•	onCancel：取消裁剪的回调函数。</p>
-<h3 id="heading-2">代码</h3>
-<p>index.less code</p>
-<pre><code>.avatar-cropper {
-  position: relative;
-  display: flex;
-
-  &amp;-edit-text {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    z-index: 1;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &amp;-input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0; // 隐藏原生上传按钮
-    cursor: pointer;
-    z-index: 2;
-  }
-
-  &amp;-popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    z-index: 1000;
-    &amp;-canvas,
-    &amp;-cut-canvas {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-    }
-
-    &amp;-cut-canvas {
-      z-index: 0;
-    }
-
-    &amp;-toolbar {
-      position: absolute;
-      bottom: 30px;
-      left: 0;
-      width: 100%;
-      z-index: 2;
-
-      &amp;.top {
-        top: 0;
-        bottom: inherit;
-      }
-
-      &amp;-flex {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-      }
-
-      &amp;-item {
-        // flex: 1;
-        color: #fff;
-        padding: 10px 30px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-      }
-    }
-
-    &amp;-highlight {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      background-color: transparent;
-
-      .highlight {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        background-color: transparent;
-        // box-shadow: 0 0 1000px 1000px rgba(0, 0, 0, 0.6);
-      }
-    }
-  }
-
-  &amp;.round {
-    .nut-avatar-cropper-edit-text {
-      border-radius: 50%;
-    }
-  }
+<h2 id="heading">组件的职责</h2>
+<p>一个边界清楚的 <code>AvatarCropper</code> 应负责：</p>
+<ul>
+<li>展示本地临时图片或允许访问的网络图片。</li>
+<li>支持拖动、双指缩放，以及可选的 90° 旋转。</li>
+<li>保证图片始终覆盖裁剪框，不暴露空白区域。</li>
+<li>将当前视口映射回原图像素，并导出指定尺寸。</li>
+<li>返回临时文件路径和必要的元信息。</li>
+<li>在取消、读取失败、图片过大和导出失败时给出明确结果。</li>
+</ul>
+<p>它不应该直接上传头像、修改用户资料或决定压缩服务。裁剪与业务提交分开，才能重试、替换上传实现，也便于单独测试。</p>
+<h2 id="-props-">建议的 Props 与事件</h2>
+<pre><code class="language-ts">interface CropperProps {
+  src: string
+  size?: number          // 视口中的裁剪框尺寸
+  outputSize?: number    // 输出图片像素，例如 512
+  minScale?: number
+  maxScale?: number
+  shape?: 'circle' | 'rect'
+  quality?: number
+  disabled?: boolean
 }
 
-[dir='rtl'] .avatar-cropper,
-.nut-rtl .avatar-cropper {
-  &amp;-edit-text {
-    left: auto;
-    right: 0;
-  }
-
-  &amp;-input {
-    left: auto;
-    right: 0;
-  }
-
-  &amp;-popup {
-    left: auto;
-    right: 0;
-
-    &amp;-canvas,
-    &amp;-cut-canvas {
-      left: auto;
-      right: 0;
-    }
-
-    &amp;-toolbar {
-      left: auto;
-      right: 0;
-    }
-
-    &amp;-highlight {
-      left: auto;
-      right: 0;
-
-      .highlight {
-        left: auto;
-        right: 50%;
-        transform: translate(50%, -50%);
-      }
-    }
-  }
+interface CropResult {
+  tempFilePath: string
+  width: number
+  height: number
+  sourceWidth: number
+  sourceHeight: number
 }
 
-.canvans-btn {
-  font-size: 13px;
-  color: #fff;
-  font-weight: 400;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+interface CropperEvents {
+  onConfirm?: (result: CropResult) =&gt; void
+  onCancel?: () =&gt; void
+  onError?: (error: Error) =&gt; void
 }
 </code></pre>
-<p>index.tsx code</p>
-<pre><code>import { AvatarCropper } from './avatarcropper'
-
-export type {
-  AvatarCropperProps,
-  AvatarCropperToolbarPosition,
-  AvatarCropperSizeType,
-  AvatarCropperSourceType,
-  AvatarCropperShape
-} from './avatarcropper'
-export default AvatarCropper
-</code></pre>
-<p>type.ts code</p>
-<pre><code>import type { CSSProperties, ReactNode } from 'react'
-
-export interface BasicComponent {
-  className?: string
-  style?: CSSProperties
-  children?: ReactNode
-  id?: string
+<p>圆形通常只是预览遮罩，导出文件仍是正方形。这样 JPEG 不需要透明通道，服务端也更容易统一处理；如果必须输出真正透明的圆形图片，应使用 PNG 并明确文件体积变化。</p>
+<h2 id="heading-1">坐标模型</h2>
+<p>设原图尺寸为 <code>sourceWidth × sourceHeight</code>，在视口中的缩放比例为 <code>scale</code>，图片左上角位于 <code>imageX, imageY</code>，裁剪框左上角位于 <code>cropX, cropY</code>，边长为 <code>cropSize</code>。</p>
+<p>裁剪框映射回原图：</p>
+<pre><code class="language-ts">interface Rect {
+  x: number
+  y: number
+  width: number
+  height: number
 }
 
-export const ComponentDefaults = {
-  className: '',
-  style: {}
-}
-</code></pre>
-<p>use-touch.ts code</p>
-<pre><code>import React, { useRef } from 'react'
+function viewportCropToSource(input: {
+  cropX: number
+  cropY: number
+  cropSize: number
+  imageX: number
+  imageY: number
+  scale: number
+  sourceWidth: number
+  sourceHeight: number
+}): Rect {
+  const {
+    cropX,
+    cropY,
+    cropSize,
+    imageX,
+    imageY,
+    scale,
+    sourceWidth,
+    sourceHeight
+  } = input
 
-const MIN_DISTANCE = 10
-
-type Direction = '' | 'vertical' | 'horizontal'
-
-function getDirection(x: number, y: number) {
-  if (x &gt; y &amp;&amp; x &gt; MIN_DISTANCE) {
-    return 'horizontal'
-  }
-  if (y &gt; x &amp;&amp; y &gt; MIN_DISTANCE) {
-    return 'vertical'
-  }
-  return ''
-}
-
-export function useTouch() {
-  const startX = useRef(0)
-  const startY = useRef(0)
-  const deltaX = useRef(0)
-  const deltaY = useRef(0)
-  const delta = useRef(0)
-  const offsetX = useRef(0)
-  const offsetY = useRef(0)
-  const direction = useRef&lt;Direction&gt;('')
-  const last = useRef(false)
-  const velocity = useRef(0)
-  const touchTime = useRef&lt;number&gt;(Date.now())
-
-  const isVertical = () =&gt; direction.current === 'vertical'
-  const isHorizontal = () =&gt; direction.current === 'horizontal'
-
-  const reset = () =&gt; {
-    touchTime.current = Date.now()
-    deltaX.current = 0
-    deltaY.current = 0
-    offsetX.current = 0
-    offsetY.current = 0
-    delta.current = 0
-    direction.current = ''
-    last.current = false
-  }
-
-  const start = (event: React.TouchEvent&lt;HTMLElement&gt;) =&gt; {
-    reset()
-    touchTime.current = Date.now()
-    startX.current = event.touches[0].clientX
-    startY.current = event.touches[0].clientY
-  }
-
-  const move = (event: React.TouchEvent&lt;HTMLElement&gt;) =&gt; {
-    const touch = event.touches[0]
-    // Fix: Safari back will set clientX to negative number
-    deltaX.current = touch.clientX &lt; 0 ? 0 : touch.clientX - startX.current
-    deltaY.current = touch.clientY - startY.current
-    offsetX.current = Math.abs(deltaX.current)
-    offsetY.current = Math.abs(deltaY.current)
-    delta.current = isVertical() ? deltaY.current : deltaX.current
-
-    if (!direction.current) {
-      direction.current = getDirection(offsetX.current, offsetY.current)
-    }
-  }
-  const end = (event: React.TouchEvent&lt;HTMLElement&gt;) =&gt; {
-    last.current = true
-    velocity.current = Math.sqrt(deltaX.current ** 2 + deltaY.current ** 2) / (Date.now() - touchTime.current)
-  }
+  const x = (cropX - imageX) / scale
+  const y = (cropY - imageY) / scale
+  const size = cropSize / scale
 
   return {
-    end,
-    move,
-    start,
-    reset,
-    touchTime,
-    startX,
-    startY,
-    deltaX,
-    deltaY,
-    delta,
-    offsetX,
-    offsetY,
-    direction,
-    isVertical,
-    isHorizontal,
-    last
+    x: Math.max(0, Math.min(x, sourceWidth - size)),
+    y: Math.max(0, Math.min(y, sourceHeight - size)),
+    width: Math.min(size, sourceWidth),
+    height: Math.min(size, sourceHeight)
   }
 }
 </code></pre>
-<p>utils.ts code</p>
-<pre><code>export const isObject = (val: unknown): val is Record&lt;any, any&gt; =&gt; val !== null &amp;&amp; typeof val === 'object'
-
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const isFunction = (val: unknown): val is Function =&gt; typeof val === 'function'
-
-export const isPromise = &lt;T = any&gt;(val: unknown): val is Promise&lt;T&gt; =&gt; {
-  return isObject(val) &amp;&amp; isFunction(val.then) &amp;&amp; isFunction(val.catch)
-}
-
-export const upperCaseFirst = (str: string) =&gt; {
-  str = str.toLowerCase()
-  str = str.replace(/\b\w+\b/g, (word) =&gt; word.substring(0, 1).toUpperCase() + word.substring(1))
-  return str
-}
-
-export const clamp = (num: number, min: number, max: number): number =&gt; Math.min(Math.max(num, min), max)
-
-export function preventDefault(event: React.TouchEvent&lt;HTMLElement&gt; | TouchEvent, isStopPropagation?: boolean) {
-  if (typeof event.cancelable !== 'boolean' || event.cancelable) {
-    event.preventDefault()
-  }
-
-  if (isStopPropagation) {
-    event.stopPropagation()
-  }
+<p>这段换算成立的前提是图片没有任意角度旋转。加入旋转后，应使用统一的变换矩阵计算，不要继续堆叠针对四个方向的坐标补丁。</p>
+<h2 id="heading-2">初始缩放与边界约束</h2>
+<p>图片必须完整覆盖裁剪框，所以最小缩放比例是：</p>
+<pre><code class="language-ts">function getCoverScale(
+  sourceWidth: number,
+  sourceHeight: number,
+  cropSize: number
+) {
+  return Math.max(
+    cropSize / sourceWidth,
+    cropSize / sourceHeight
+  )
 }
 </code></pre>
-<h3 id="heading-3">简单实例</h3>
-<pre><code>&lt;AvatarCropper shape=&quot;round&quot; onConfirm={cutImage}&gt;
-        &lt;View className={styles.headImgCenter}&gt;
-          {!!headImg &amp;&amp; &lt;Image className={styles.headImg} src={headImg ?? ''} mode=&quot;aspectFill&quot; /&gt;}
-        &lt;/View&gt;
-      &lt;/AvatarCropper&gt;
+<p>拖动或缩放后，将图片位置限制在：</p>
+<pre><code class="language-ts">function clampOffset(
+  offset: number,
+  renderedSize: number,
+  cropStart: number,
+  cropSize: number
+) {
+  const min = cropStart + cropSize - renderedSize
+  const max = cropStart
+  return Math.min(max, Math.max(min, offset))
+}
 </code></pre>
-<h3 id="todo">TODO</h3>
-<p>相关核心逻辑</p>
-<p><img src="https://ihopefulchina.github.io/post-images/1739775430071.png" alt="" /></p>
+<p>横纵轴分别约束。双指缩放应以手势中心为锚点，先记录开始时的距离、缩放和图片位置，再从初始状态计算；如果每个 <code>touchmove</code> 都在上一次结果上累加，误差会越来越大。</p>
+<h2 id="canvas-">Canvas 导出流程</h2>
+<ol>
+<li>用 <code>Taro.getImageInfo</code> 获取原图尺寸和可绘制路径。</li>
+<li>根据当前变换计算原图裁剪矩形。</li>
+<li>创建输出尺寸的 Canvas，并按设备像素和目标文件尺寸配置宽高。</li>
+<li>使用 <code>drawImage</code> 的九参数形式把原图裁剪区绘制到整个输出 Canvas。</li>
+<li>等待绘制完成，再调用相应平台的导出 API。</li>
+<li>校验返回路径、文件大小和图片宽高后触发 <code>onConfirm</code>。</li>
+</ol>
+<p>示意代码：</p>
+<pre><code class="language-ts">context.drawImage(
+  image,
+  sourceRect.x,
+  sourceRect.y,
+  sourceRect.width,
+  sourceRect.height,
+  0,
+  0,
+  outputSize,
+  outputSize
+)
+</code></pre>
+<p>Taro 同时存在旧版 <code>createCanvasContext</code> 和 2D/离屏 Canvas 能力，平台支持度并不完全一致。实现前应按项目所用 Taro 版本查看<a href="https://docs.taro.zone/docs/components/canvas/">官方 Canvas 文档</a>和<a href="https://docs.taro.zone/docs/apis/canvas/createOffscreenCanvas">离屏 Canvas 文档</a>，不能只在微信开发者工具中验证一次就声明全端支持。</p>
+<h2 id="heading-3">图片来源与安全</h2>
+<ul>
+<li>网络图片需要正确配置下载域名与 CORS；无法直接绘制时，先下载为本地临时文件。</li>
+<li>不把用户选取的本地路径写入日志、埋点或错误上报。</li>
+<li>限制原图尺寸和输出尺寸，避免超大图片导致内存峰值或 Canvas 失败。</li>
+<li>上传前再次校验 MIME、后缀和服务端允许大小；客户端裁剪不能替代服务端校验。</li>
+<li>页面退出或重新选图时，让上一次读取和导出结果失效，防止旧结果覆盖新图。</li>
+</ul>
+<h2 id="heading-4">无障碍与交互</h2>
+<p>只有手势不够。至少提供：</p>
+<ul>
+<li>“放大、缩小、向左/右/上/下移动、旋转、重置”的可点击控制。</li>
+<li>当前处理状态和导出失败提示。</li>
+<li>明确的取消与确认按钮，确认中禁用重复提交。</li>
+<li>足够大的触控区域，以及适配安全区的底部操作栏。</li>
+<li>减少动态效果偏好下关闭非必要动画。</li>
+</ul>
+<h2 id="heading-5">测试清单</h2>
+<ul>
+<li>横图、竖图、正方形、超长图和很小的图片。</li>
+<li>图片恰好覆盖边界、最大/最小缩放、快速连续手势。</li>
+<li>选图后立即取消、导出中重新选图、页面卸载。</li>
+<li>中文和特殊字符文件名、网络图失败、Canvas 导出失败。</li>
+<li>真机与开发者工具对比，尤其检查高 DPR 下的清晰度和内存。</li>
+<li>输出图片四角与中心是否对应预览区域，避免“预览正确、导出偏移”。</li>
+</ul>
+<p>一个头像裁剪组件最重要的不是动画有多顺，而是预览与最终像素一致，并且在失败和并发场景下不交付错误文件。</p>
 
     </article>
 
@@ -631,13 +443,13 @@ export function preventDefault(event: React.TouchEvent&lt;HTMLElement&gt; | Touc
       
       <a class="post-nav__card" href="/post/p9E7d0w867/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数</span>
+        <span class="post-nav__title">React URL 查询参数：解析与路由订阅</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/ZxMrztTo35/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">插件: 自动生成 Vue 3 项目中的路由配置</span>
+        <span class="post-nav__title">从 pages.json 生成 uni-app 类型化路由</span>
       </a>
       
     </nav>
@@ -693,6 +505,6 @@ export function preventDefault(event: React.TouchEvent&lt;HTMLElement&gt; | Touc
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

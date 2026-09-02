@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>👉👉👉爬蓝湖原型目录结构 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>把蓝湖原型目录导出为 CSV：一段用户脚本实践 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,21 @@
   
 
 
-<meta name="description" content="本插件用于爬 蓝湖原型目录结构，导出csv文件，可以用于飞书等 开发项目在线文档。">
+<meta name="description" content="“爬蓝湖原型目录结构”是一段运行在蓝湖网页中的用户脚本。它读取当前原型的目录层级，为每个页面生成“接口开发、页面开发、接口联调”三类任务，并导出 CSV，方便导入飞书多维表格继续分工和跟踪。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/qn_PbZX5g6/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"👉👉👉爬蓝湖原型目录结构","url":"https://ihopefulchina.github.io/post/qn_PbZX5g6/","description":"本插件用于爬 蓝湖原型目录结构，导出csv文件，可以用于飞书等 开发项目在线文档。","image":"/post-images/qn_PbZX5g6.png","datePublished":"2025-02-14T17:47:03+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/qn_PbZX5g6/","name":"👉👉👉爬蓝湖原型目录结构","position":2}]}</script>
-<meta property="og:title" content="👉👉👉爬蓝湖原型目录结构">
-<meta property="og:description" content="本插件用于爬 蓝湖原型目录结构，导出csv文件，可以用于飞书等 开发项目在线文档。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"把蓝湖原型目录导出为 CSV：一段用户脚本实践","url":"https://ihopefulchina.github.io/post/qn_PbZX5g6/","description":"“爬蓝湖原型目录结构”是一段运行在蓝湖网页中的用户脚本。它读取当前原型的目录层级，为每个页面生成“接口开发、页面开发、接口联调”三类任务，并导出 CSV，方便导入飞书多维表格继续分工和跟踪。","image":"/post-images/qn_PbZX5g6.png","datePublished":"2025-02-14T17:47:03+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/qn_PbZX5g6/","name":"把蓝湖原型目录导出为 CSV：一段用户脚本实践","position":2}]}</script>
+<meta property="og:title" content="把蓝湖原型目录导出为 CSV：一段用户脚本实践">
+<meta property="og:description" content="“爬蓝湖原型目录结构”是一段运行在蓝湖网页中的用户脚本。它读取当前原型的目录层级，为每个页面生成“接口开发、页面开发、接口联调”三类任务，并导出 CSV，方便导入飞书多维表格继续分工和跟踪。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/qn_PbZX5g6/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
 <meta property="og:image" content="/post-images/qn_PbZX5g6.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/qn_PbZX5g6/">
-<meta name="twitter:title" content="👉👉👉爬蓝湖原型目录结构">
-<meta name="twitter:description" content="本插件用于爬 蓝湖原型目录结构，导出csv文件，可以用于飞书等 开发项目在线文档。">
+<meta name="twitter:title" content="把蓝湖原型目录导出为 CSV：一段用户脚本实践">
+<meta name="twitter:description" content="“爬蓝湖原型目录结构”是一段运行在蓝湖网页中的用户脚本。它读取当前原型的目录层级，为每个页面生成“接口开发、页面开发、接口联调”三类任务，并导出 CSV，方便导入飞书多维表格继续分工和跟踪。">
 <meta name="twitter:image" content="/post-images/qn_PbZX5g6.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +225,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">👉👉👉爬蓝湖原型目录结构</h1>
+  <h1 class="msg__bubble msg__bubble--title">把蓝湖原型目录导出为 CSV：一段用户脚本实践</h1>
 </div>
 
 
@@ -246,9 +235,9 @@
     <div class="post-meta">
       <time datetime="2025-02-14T17:47:03+08:00">2025-02-14</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>760 字</span>
+      <span>1964 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 1 分钟</span>
+      <span>约 3 分钟</span>
       
     </div>
   </div>
@@ -256,34 +245,76 @@
 
     
     <figure class="post-feature">
-      <img src="/post-images/qn_PbZX5g6.png" alt="👉👉👉爬蓝湖原型目录结构">
+      <img src="/post-images/qn_PbZX5g6.png" alt="把蓝湖原型目录导出为 CSV：一段用户脚本实践">
     </figure>
     
 
     
 
     <article class="article-content" id="article-content">
-      <p>本插件用于爬 蓝湖原型目录结构，导出csv文件，可以用于飞书等 开发项目在线文档。</p>
+      <p>“爬蓝湖原型目录结构”是一段运行在蓝湖网页中的用户脚本。它读取当前原型的目录层级，为每个页面生成“接口开发、页面开发、接口联调”三类任务，并导出 CSV，方便导入飞书多维表格继续分工和跟踪。</p>
 <!-- more -->
-<p><img src="https://ihopefulchina.github.io/post-images/1739674155883.png" alt="" /></p>
-<p>原型<br />
-<img src="https://ihopefulchina.github.io/post-images/1739526995167.png" alt="" /></p>
-<p>在公司发现一个痛点, 需求是这样的:</p>
+<p><img src="https://ihopefulchina.github.io/post-images/1739526995167.png" alt="蓝湖原型目录" /></p>
+<h2 id="heading">它解决了什么问题</h2>
+<p>原型评审结束后，团队通常还要把页面拆成任务、补充负责人、排期和联调状态。如果靠手动复制，目录层级容易丢失，同一页面对应的前后端任务也容易遗漏。</p>
+<p>这段脚本把机械工作缩短为：</p>
+<ol>
+<li>在蓝湖中打开需要整理的产品原型。</li>
+<li>展开希望导出的目录，确认页面名称和层级。</li>
+<li>点击页面右侧的“导出原型目录 CSV”按钮。</li>
+<li>检查文件内容，再导入飞书多维表格或其他表格工具。</li>
+</ol>
+<p>脚本页面：<a href="https://greasyfork.org/zh-CN/scripts/513139-%E7%88%AC%E8%93%9D%E6%B9%96%E5%8E%9F%E5%9E%8B%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84">Greasy Fork：爬蓝湖原型目录结构</a></p>
+<h2 id="heading-1">当前实现</h2>
+<p>Greasy Fork 上公开的版本为 1.0.5，适用于 <code>lanhuapp.com/web/*</code>。脚本会：</p>
 <ul>
-<li>蓝湖原型，需要按照目录下来，然后生成飞书在线开发文档</li>
-<li>传统上，只能手动copy</li>
+<li>从蓝湖页面 DOM 中读取目录节点和父级路径。</li>
+<li>忽略名称中包含“废弃”的节点。</li>
+<li>为每个有效页面展开三种默认任务类型。</li>
+<li>输出任务名称、任务类型、所属模块、开发人员、进展、日期、延期、完成情况和备注等列。</li>
+<li>允许拖动导出按钮，并在当前页面会话中保存按钮位置。</li>
+<li>使用 SheetJS 将中间表格转换为 CSV，然后由浏览器下载到本地。</li>
 </ul>
-<p>针对以上，写一个油猴脚本插件 <a href="https://greasyfork.org/zh-CN/scripts/513139-%E7%88%AC%E8%93%9D%E6%B9%96%E5%8E%9F%E5%9E%8B%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84">爬蓝湖原型目录结构</a></p>
-<h4 id="heading">主要特性</h4>
-<p>生成csv文件， 任务模块copy3份, 3种任务类型：[接口开发, 页面开发, 接口联调] ，如果有其他自定义，自行调整。<br />
-现已支持按钮拖拽，并缓存top，right位置信息，解决遮挡原型问题。<br />
-改成生成csv格式文件，兼容性更强，可以在飞书新建一个多维表格，然后选择导入Excel生成的文件。</p>
-<h4 id="heading-1">后续支持</h4>
-<p>支持数据类型更丰富，比如添加开发人员信息</p>
-<p>生成的Excel<br />
-<img src="https://ihopefulchina.github.io/post-images/1739527027563.png" alt="" /></p>
-<p>导入到飞书<br />
-<img src="https://ihopefulchina.github.io/post-images/1739674155883.png" alt="" /></p>
+<p><img src="https://ihopefulchina.github.io/post-images/1739527027563.png" alt="导出的 CSV 内容" /></p>
+<h2 id="heading-2">安装</h2>
+<ol>
+<li>先安装可信的用户脚本管理器，例如 Tampermonkey 或 Violentmonkey。</li>
+<li>打开上面的 Greasy Fork 页面。</li>
+<li>在安装前检查脚本的 <code>@match</code>、<code>@require</code> 和源码。</li>
+<li>安装后刷新蓝湖页面。</li>
+</ol>
+<p>用户脚本有读取和修改匹配页面的能力。即使脚本由自己编写，也应该定期复查权限范围和外部依赖；不要在来源不明的镜像站安装。</p>
+<h2 id="heading-3">导入飞书多维表格</h2>
+<p>在飞书新建多维表格后，选择“导入 Excel/CSV”，再上传导出的文件。导入前建议先做三项检查：</p>
+<ul>
+<li>目录是否全部展开，是否存在未加载的懒加载节点。</li>
+<li>“所属模块”是否符合团队对模块边界的定义。</li>
+<li>页面是否真的都需要三种任务，删除不适用的行后再分配负责人。</li>
+</ul>
+<p><img src="https://ihopefulchina.github.io/post-images/1739674155883.png" alt="导入飞书后的效果" /></p>
+<h2 id="heading-4">已知边界</h2>
+<p>这不是蓝湖官方 API 集成，而是基于页面 DOM 的自动化脚本。因此：</p>
+<ul>
+<li>蓝湖调整类名或目录结构后，脚本可能导出空数据或层级错误。</li>
+<li>脚本只能处理浏览器中已经渲染出来的内容，导出结果必须人工核对。</li>
+<li>默认任务模型是我的团队实践，不一定适合所有项目。</li>
+<li>CSV 适合交换数据，但字段类型、成员列和日期列通常要在飞书中重新设置。</li>
+<li>脚本不会理解页面复杂度、接口复用关系或真实排期，不能代替任务拆解评审。</li>
+</ul>
+<h2 id="heading-5">如何按团队需要调整</h2>
+<p>源码中的 <code>columnOptions</code> 控制默认任务类型：</p>
+<pre><code class="language-js">const columnOptions = ['接口开发', '页面开发', '接口联调']
+</code></pre>
+<p>可以改成团队自己的阶段，例如“视觉验收、埋点、测试用例”。列定义集中在 <code>column</code> 数组中，也可以增加测试负责人、需求链接或风险等级。</p>
+<p>修改后应重点测试中文逗号、引号、换行和特殊字符。CSV 不是简单地用逗号拼接字符串；使用成熟的表格库统一转义，能避免导入时出现错列。</p>
+<h2 id="heading-6">适合继续演进的方向</h2>
+<ul>
+<li>在导出前提供任务类型和忽略规则配置，而不是要求用户改源码。</li>
+<li>对未展开目录、空结果和重复页面给出明确提示。</li>
+<li>为字段增加稳定标识，支持二次导入时合并，而不是重复创建任务。</li>
+<li>如果蓝湖未来提供合适的开放 API，优先迁移到结构化数据接口，降低 DOM 变化带来的维护成本。</li>
+</ul>
+<p>这个脚本的价值不是“自动完成项目管理”，而是把原型目录转换成一个可编辑的任务初稿。最终范围、负责人和验收标准仍应由团队共同确认。</p>
 
     </article>
 
@@ -321,13 +352,13 @@
       
       <a class="post-nav__card" href="/post/4PEcn6ZhYy/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能</span>
+        <span class="post-nav__title">Vue 3 分页列表：用 usePullToRefresh 处理刷新与加载更多</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/uniapp_template /" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">uniapp-template </span>
+        <span class="post-nav__title">uniapp-template：一个面向业务的 uni-app 工程模板</span>
       </a>
       
     </nav>
@@ -383,6 +414,6 @@
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

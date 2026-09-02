@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
   <title>获取当前分类下的所有子分类 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="一般用于taxonomy分类页面，比如产品products，下面有a这个分类，a下面有a-1,a-2,a-3&amp;hellip; 如何在进入a分类这个页面的时候，输出这个a下面的子分类？">
+<meta name="description" content="在分类法归档页获取“当前分类”，应使用 WordPress 已解析好的查询对象，而不是拆分 $_SERVER['REQUEST_URI']。URL 可能因固定链接、语言插件、子目录安装或重写规则变化，查询对象才是稳定的数据来源。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"获取当前分类下的所有子分类","url":"https://ihopefulchina.github.io/post/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei/","description":"一般用于taxonomy分类页面，比如产品products，下面有a这个分类，a下面有a-1,a-2,a-3\u0026hellip; 如何在进入a分类这个页面的时候，输出这个a下面的子分类？","image":"/post-images/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei.png","datePublished":"2019-08-22T15:17:48+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"获取当前分类下的所有子分类","url":"https://ihopefulchina.github.io/post/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei/","description":"在分类法归档页获取“当前分类”，应使用 WordPress 已解析好的查询对象，而不是拆分 $_SERVER['REQUEST_URI']。URL 可能因固定链接、语言插件、子目录安装或重写规则变化，查询对象才是稳定的数据来源。","datePublished":"2019-08-22T15:17:48+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei/","name":"获取当前分类下的所有子分类","position":2}]}</script>
 <meta property="og:title" content="获取当前分类下的所有子分类">
-<meta property="og:description" content="一般用于taxonomy分类页面，比如产品products，下面有a这个分类，a下面有a-1,a-2,a-3&amp;hellip; 如何在进入a分类这个页面的时候，输出这个a下面的子分类？">
+<meta property="og:description" content="在分类法归档页获取“当前分类”，应使用 WordPress 已解析好的查询对象，而不是拆分 $_SERVER['REQUEST_URI']。URL 可能因固定链接、语言插件、子目录安装或重写规则变化，查询对象才是稳定的数据来源。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei/">
 <meta name="twitter:title" content="获取当前分类下的所有子分类">
-<meta name="twitter:description" content="一般用于taxonomy分类页面，比如产品products，下面有a这个分类，a下面有a-1,a-2,a-3&amp;hellip; 如何在进入a分类这个页面的时候，输出这个a下面的子分类？">
-<meta name="twitter:image" content="/post-images/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:description" content="在分类法归档页获取“当前分类”，应使用 WordPress 已解析好的查询对象，而不是拆分 $_SERVER['REQUEST_URI']。URL 可能因固定链接、语言插件、子目录安装或重写规则变化，查询对象才是稳定的数据来源。">
 </head>
 <body data-typewriter="True">
 
@@ -246,7 +233,7 @@
     <div class="post-meta">
       <time datetime="2019-08-22T15:17:48+08:00">2019-08-22</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>1998 字</span>
+      <span>2159 字</span>
       <span class="dot" aria-hidden="true">·</span>
       <span>约 3 分钟</span>
       
@@ -255,67 +242,84 @@
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei.png" alt="获取当前分类下的所有子分类">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>一般用于taxonomy分类页面，比如产品products，下面有a这个分类，a下面有a-1,a-2,a-3&hellip;</p>
-<p>如何在进入a分类这个页面的时候，输出这个a下面的子分类？</p>
+      <p>在分类法归档页获取“当前分类”，应使用 WordPress 已解析好的查询对象，而不是拆分 <code>$_SERVER['REQUEST_URI']</code>。URL 可能因固定链接、语言插件、子目录安装或重写规则变化，查询对象才是稳定的数据来源。</p>
 <!-- more -->
-<p>解决思路:<br />
-1.首先通过<code>get_categories</code>获取所有分类的slug和id</p>
-<pre><code>$test = get_categories(&quot;taxonomy=product&amp;hide_empty=0&quot;);
-						$cats=array(); 
-						foreach($test as $tmpcat){
-							if($tmpcat-&gt;parent==0){
-								$cats[$tmpcat-&gt;term_id]['slug']=$tmpcat-&gt;slug;
-								$cats[$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
-							}
-						}
+<h2 id="heading">获取直属子分类</h2>
+<p>下面的代码同时适用于内置分类 <code>category</code> 和分层自定义分类法，只需要调整允许的 taxonomy。</p>
+<pre><code class="language-php">&lt;?php
+$term = get_queried_object();
+
+if (
+    ! $term instanceof WP_Term ||
+    'category' !== $term-&gt;taxonomy
+) {
+    return;
+}
+
+$children = get_terms(
+    array(
+        'taxonomy'   =&gt; $term-&gt;taxonomy,
+        'parent'     =&gt; $term-&gt;term_id,
+        'hide_empty' =&gt; true,
+        'orderby'    =&gt; 'name',
+        'order'      =&gt; 'ASC',
+    )
+);
+
+if ( is_wp_error( $children ) ) {
+    // 生产环境可记录脱敏日志，不要把内部错误直接输出给访客。
+    return;
+}
+
+if ( empty( $children ) ) {
+    echo '&lt;p&gt;当前分类暂无子分类。&lt;/p&gt;';
+    return;
+}
+?&gt;
+
+&lt;ul class=&quot;term-list&quot;&gt;
+    &lt;?php foreach ( $children as $child ) : ?&gt;
+        &lt;?php $url = get_term_link( $child ); ?&gt;
+
+        &lt;?php if ( is_wp_error( $url ) ) : ?&gt;
+            &lt;?php continue; ?&gt;
+        &lt;?php endif; ?&gt;
+
+        &lt;li class=&quot;term-list__item&quot;&gt;
+            &lt;a href=&quot;&lt;?php echo esc_url( $url ); ?&gt;&quot;&gt;
+                &lt;?php echo esc_html( $child-&gt;name ); ?&gt;
+            &lt;/a&gt;
+
+            &lt;?php if ( $child-&gt;description ) : ?&gt;
+                &lt;p&gt;
+                    &lt;?php
+                    echo wp_kses_post(
+                        term_description(
+                            $child-&gt;term_id,
+                            $child-&gt;taxonomy
+                        )
+                    );
+                    ?&gt;
+                &lt;/p&gt;
+            &lt;?php endif; ?&gt;
+        &lt;/li&gt;
+    &lt;?php endforeach; ?&gt;
+&lt;/ul&gt;
 </code></pre>
-<p>3.然后切割分组当前url，判断slug是否等于当前的url</p>
-<pre><code>$uri=explode('/',$_SERVER['REQUEST_URI']);
-</code></pre>
-<p>5.等于的话，再根据<code>get_categories</code>加上child_of=，最后foreach输出所有分类。</p>
-<pre><code>foreach($cats as $key=&gt;$val){
-							if($cats[$key]['slug']==$uri[2]){
-								$id = $cats[$key]['term_id'];
-								$cate = get_categories(&quot;depth=0&amp;hide_empty=0&amp;title_li=&amp;orderby=ID&amp;order=ASC&amp;taxonomy=product&amp;child_of=$id&quot;);
-								foreach ($cate as $key =&gt; $value) {?&gt;
-									&lt;div class=&quot;swiper-slide&quot;&gt;
-										&lt;li class=&quot;cat-item&lt;?php if($value-&gt;slug == $uri[3]){ echo ' current-cat';}?&gt;&quot;&gt;&lt;a href=&quot;/products/&lt;?php echo $uri[2];?&gt;/&lt;?php echo $value-&gt;slug; ?&gt;/&quot;&gt;&lt;?php echo $value-&gt;name;?&gt;&lt;/a&gt;&lt;/li&gt;
-									&lt;/div&gt;
-								&lt;?php }
-							}
-						}
-</code></pre>
-<p>完整的</p>
-<pre><code>&lt;?php 
-						$test = get_categories(&quot;taxonomy=product&amp;hide_empty=0&quot;);
-						$cats=array(); 
-						foreach($test as $tmpcat){
-							if($tmpcat-&gt;parent==0){
-								$cats[$tmpcat-&gt;term_id]['slug']=$tmpcat-&gt;slug;
-								$cats[$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
-							}
-						}
-						foreach($cats as $key=&gt;$val){
-							if($cats[$key]['slug']==$uri[2]){
-								$id = $cats[$key]['term_id'];
-								$cate = get_categories(&quot;depth=0&amp;hide_empty=0&amp;title_li=&amp;orderby=ID&amp;order=ASC&amp;taxonomy=product&amp;child_of=$id&quot;);
-								foreach ($cate as $key =&gt; $value) {?&gt;
-									&lt;div class=&quot;swiper-slide&quot;&gt;
-										&lt;li class=&quot;cat-item&lt;?php if($value-&gt;slug == $uri[3]){ echo ' current-cat';}?&gt;&quot;&gt;&lt;a href=&quot;/products/&lt;?php echo $uri[2];?&gt;/&lt;?php echo $value-&gt;slug; ?&gt;/&quot;&gt;&lt;?php echo $value-&gt;name;?&gt;&lt;/a&gt;&lt;/li&gt;
-									&lt;/div&gt;
-								&lt;?php }
-							}
-						}
-						?&gt;
-</code></pre>
+<h2 id="heading-1">直属子分类和全部后代</h2>
+<ul>
+<li><code>parent =&gt; $term-&gt;term_id</code>：只返回下一层直属子分类。</li>
+<li><code>child_of =&gt; $term-&gt;term_id</code>：返回所有层级的后代分类。</li>
+<li><code>hide_empty =&gt; true</code>：隐藏当前没有关联文章的分类；管理页或目录页可能需要设为 <code>false</code>。</li>
+</ul>
+<p>如果需要树状输出，不要只依赖返回顺序。先按 <code>parent</code> 分组，再递归渲染，并为递归设置最大深度，避免异常数据造成无限处理。</p>
+<h2 id="-get-categories">为什么不用 get_categories</h2>
+<p><code>get_categories()</code> 是针对内置分类法的便捷封装；<code>get_terms()</code> 的意图更清楚，也适合自定义分类法。两者都可能返回 <code>WP_Error</code>，模板不能把结果直接当数组循环。</p>
+<p>官方参考：<a href="https://developer.wordpress.org/reference/functions/get_queried_object/">get_queried_object()</a>、<a href="https://developer.wordpress.org/reference/functions/get_terms/">get_terms()</a>、<a href="https://developer.wordpress.org/reference/functions/get_term_link/">get_term_link()</a>。</p>
 
     </article>
 
@@ -355,13 +359,13 @@
       
       <a class="post-nav__card" href="/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">如何解决页面/文章/详情页需要不同样式、模板的问题？</span>
+        <span class="post-nav__title">如何让 WordPress 页面使用不同布局与模板？</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/dBAsSzkYF/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">函数式组件与类组件有何不同？</span>
+        <span class="post-nav__title">React 函数组件与类组件：渲染快照有何不同？</span>
       </a>
       
     </nav>
@@ -417,6 +421,6 @@
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

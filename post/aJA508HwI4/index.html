@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>Vue 3 useMutate：封装可控的命令式异步请求 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。">
+<meta name="description" content="useMutate 适合封装“由用户动作触发一次异步请求”的场景，例如提交表单、重新获取详情或执行预览。一个可靠的版本至少要回答四个问题：数据的空值是什么、错误如何交给界面、并发时谁可以更新状态、组件卸载后是否还写状态。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/aJA508HwI4/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装","url":"https://ihopefulchina.github.io/post/aJA508HwI4/","description":"在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。","image":"/post-images/aJA508HwI4.png","datePublished":"2024-10-17T13:39:42+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/aJA508HwI4/","name":"自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装","position":2}]}</script>
-<meta property="og:title" content="自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装">
-<meta property="og:description" content="在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Vue 3 useMutate：封装可控的命令式异步请求","url":"https://ihopefulchina.github.io/post/aJA508HwI4/","description":"useMutate 适合封装“由用户动作触发一次异步请求”的场景，例如提交表单、重新获取详情或执行预览。一个可靠的版本至少要回答四个问题：数据的空值是什么、错误如何交给界面、并发时谁可以更新状态、组件卸载后是否还写状态。","datePublished":"2024-10-17T13:39:42+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/aJA508HwI4/","name":"Vue 3 useMutate：封装可控的命令式异步请求","position":2}]}</script>
+<meta property="og:title" content="Vue 3 useMutate：封装可控的命令式异步请求">
+<meta property="og:description" content="useMutate 适合封装“由用户动作触发一次异步请求”的场景，例如提交表单、重新获取详情或执行预览。一个可靠的版本至少要回答四个问题：数据的空值是什么、错误如何交给界面、并发时谁可以更新状态、组件卸载后是否还写状态。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/aJA508HwI4/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/aJA508HwI4.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/aJA508HwI4/">
-<meta name="twitter:title" content="自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装">
-<meta name="twitter:description" content="在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。">
-<meta name="twitter:image" content="/post-images/aJA508HwI4.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="Vue 3 useMutate：封装可控的命令式异步请求">
+<meta name="twitter:description" content="useMutate 适合封装“由用户动作触发一次异步请求”的场景，例如提交表单、重新获取详情或执行预览。一个可靠的版本至少要回答四个问题：数据的空值是什么、错误如何交给界面、并发时谁可以更新状态、组件卸载后是否还写状态。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装</h1>
+  <h1 class="msg__bubble msg__bubble--title">Vue 3 useMutate：封装可控的命令式异步请求</h1>
 </div>
 
 
@@ -246,109 +233,145 @@
     <div class="post-meta">
       <time datetime="2024-10-17T13:39:42+08:00">2024-10-17</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>2388 字</span>
+      <span>2918 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 3 分钟</span>
+      <span>约 4 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/aJA508HwI4.png" alt="自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。</p>
+      <p><code>useMutate</code> 适合封装“由用户动作触发一次异步请求”的场景，例如提交表单、重新获取详情或执行预览。一个可靠的版本至少要回答四个问题：数据的空值是什么、错误如何交给界面、并发时谁可以更新状态、组件卸载后是否还写状态。</p>
 <!-- more -->
-<h3 id="heading">背景</h3>
-<p>在前端开发中，数据的请求和展示是常见的功能。为了避免在每个组件中重复相似的代码，我们可以将数据请求的逻辑抽象成一个可复用的 Hook。useMutate Hook 的目标就是封装数据请求、处理无数据状态和格式化数据的逻辑，帮助我们简化代码并提高开发效率。</p>
-<h3 id="heading-1">需求分析</h3>
-<p>我们需要实现以下功能：<br />
-1.	数据请求： 向服务器请求数据。<br />
-2.	数据格式化： 支持自定义的数据格式化函数。<br />
-3.	请求成功回调： 请求成功后触发回调，方便后续操作。<br />
-4.	无数据状态管理： 判断返回数据是否为空，并更新 noData 状态。</p>
-<h3 id="heading-2">代码实现</h3>
-<p>下面是我们实现的 useMutate Hook：</p>
-<pre><code>import { onMounted, ref } from 'vue';
-import { useLockFn } from './useLockFn';
+<h2 id="heading">实现</h2>
+<pre><code class="language-ts">import {
+  onScopeDispose,
+  ref,
+  shallowRef,
+  type Ref,
+  type ShallowRef
+} from 'vue'
 
-interface IMutateOption&lt;T&gt; {
-    /** 默认数据 */
-    defaultData?: T;
-
-    /** 额外传递参数 */
-    params?: Record&lt;string, any&gt;;
-
-    /** 初始是否发出请求 */
-    initRequest?: boolean;
-
-    /** 获取数据 */
-    getData: (data: Record&lt;string, any&gt;) =&gt; Promise&lt;{ data?: T }&gt;;
-
-    /** 数据格式化 */
-    dataFormat?(data?: T): any;
-
-    /** 请求成功后的回调 */
-    successCallback?(data?: T): void;
+interface UseMutateOptions&lt;TData&gt; {
+  initialData?: TData
 }
 
-export function useMutate&lt;T&gt;(config: IMutateOption&lt;T&gt;) {
-    const { defaultData, params, initRequest = true } = config;
-    const detail = ref&lt;T | undefined&gt;(defaultData);
-    const noData = ref&lt;boolean&gt;();
-    const isInit = ref(initRequest);
+interface UseMutateResult&lt;TData, TArgs extends unknown[]&gt; {
+  data: ShallowRef&lt;TData | undefined&gt;
+  error: ShallowRef&lt;unknown&gt;
+  loading: Ref&lt;boolean&gt;
+  mutate: (...args: TArgs) =&gt; Promise&lt;TData&gt;
+  reset: () =&gt; void
+}
 
-    const mutate = useLockFn(async () =&gt; {
-        try {
-            const { data } = await config.getData({ ...params });
-            const newData = config.dataFormat ? config.dataFormat(data) : data;
+export function useMutate&lt;TData, TArgs extends unknown[]&gt;(
+  requester: (...args: TArgs) =&gt; Promise&lt;TData&gt;,
+  options: UseMutateOptions&lt;TData&gt; = {}
+): UseMutateResult&lt;TData, TArgs&gt; {
+  const data = shallowRef&lt;TData | undefined&gt;(options.initialData)
+  const error = shallowRef&lt;unknown&gt;()
+  const loading = ref(false)
 
-            detail.value = newData;
-            config?.successCallback?.(newData);
+  let latestRequestId = 0
+  let disposed = false
 
-            /**暂无数据 */
-            let blo = false;
+  async function mutate(...args: TArgs): Promise&lt;TData&gt; {
+    const requestId = ++latestRequestId
+    loading.value = true
+    error.value = undefined
 
-            if (newData !== undefined) {
-                if (newData instanceof Array) {
-                    blo = newData.length === 0;
-                } else if (newData instanceof Object) {
-                    blo = Object.keys(newData).length === 0;
-                }
-            } else {
-                blo = true;
-            }
+    try {
+      const result = await requester(...args)
 
-            noData.value = blo;
-        } catch (error) {
-            console.log(error);
-            noData.value = true;
-        }
-    }, 500);
+      if (!disposed &amp;&amp; requestId === latestRequestId) {
+        data.value = result
+      }
 
-    onMounted(() =&gt; {
-        if (!isInit.value) {
-            isInit.value = true;
-        } else {
-            mutate();
-        }
-    });
+      return result
+    } catch (cause) {
+      if (!disposed &amp;&amp; requestId === latestRequestId) {
+        error.value = cause
+      }
 
-    return { mutate, detail, noData };
+      // 保留 rejected Promise，让调用方能决定 toast、重试或表单错误。
+      throw cause
+    } finally {
+      if (!disposed &amp;&amp; requestId === latestRequestId) {
+        loading.value = false
+      }
+    }
+  }
+
+  function reset() {
+    latestRequestId += 1
+    data.value = options.initialData
+    error.value = undefined
+    loading.value = false
+  }
+
+  onScopeDispose(() =&gt; {
+    disposed = true
+    latestRequestId += 1
+  })
+
+  return {
+    data,
+    error,
+    loading,
+    mutate,
+    reset
+  }
 }
 </code></pre>
-<h3 id="heading-3">使用示例</h3>
-<pre><code>const { detail, mutate, noData } = useMutate({
-    getData: () =&gt; api['/wechat/api/outWorkOrder/express/{id}_GET'](1),
-});
+<h2 id="heading-1">使用示例</h2>
+<pre><code class="language-vue">&lt;script setup lang=&quot;ts&quot;&gt;
+import { useMutate } from '@/hooks/useMutate'
+import { getUserDetail } from '@/request/user'
+
+const {
+  data: user,
+  error,
+  loading,
+  mutate: loadUser
+} = useMutate(getUserDetail)
+
+async function handleSearch(id: string) {
+  try {
+    await loadUser(id)
+  } catch {
+    // 页面在这里决定如何提示用户。
+  }
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;button :disabled=&quot;loading&quot; @click=&quot;handleSearch('42')&quot;&gt;
+    {{ loading ? '加载中…' : '查询用户' }}
+  &lt;/button&gt;
+
+  &lt;p v-if=&quot;error&quot;&gt;请求失败，请稍后重试。&lt;/p&gt;
+  &lt;pre v-else-if=&quot;user&quot;&gt;{{ user }}&lt;/pre&gt;
+&lt;/template&gt;
 </code></pre>
-<p><img src="https://ihopefulchina.github.io/post-images/1739756542887.png" alt="" /></p>
+<h2 id="heading-2">为什么不在失败时写入空对象</h2>
+<p>用 <code>{} as T</code> 掩盖错误，会让类型系统失去意义：调用方以为数据完整，运行时却可能访问不存在的字段。更清楚的状态是：</p>
+<ul>
+<li><code>data === undefined</code>：还没有成功数据，或被重置。</li>
+<li><code>error !== undefined</code>：最近一次有效请求失败。</li>
+<li><code>loading === true</code>：最近一次请求仍在进行。</li>
+<li><code>data</code> 有值且 <code>error</code> 为空：存在可展示的成功结果。</li>
+</ul>
+<p>是否在重新请求时清空旧数据是产品策略。上面的实现默认保留旧数据，避免界面闪烁；如果页面要求骨架屏，可以在 <code>mutate</code> 开始时显式清空。</p>
+<h2 id="heading-3">并发语义</h2>
+<p>示例采用“最后一次调用更新状态”。假设先查询 A，再查询 B，但 A 更晚返回，A 的 Promise 仍会正常完成，Hook 却不会让它覆盖 B。</p>
+<p>这并不等于取消请求。搜索联想、文件上传等高频或高成本场景，应让 <code>requester</code> 接受取消信号，并在新请求开始时主动中止旧请求。</p>
+<h2 id="heading-4">什么时候不要自己写</h2>
+<p>如果页面需要缓存、请求去重、失焦重试、分页缓存、乐观更新或服务端状态同步，成熟的数据请求库通常更合适。自定义 Hook 适用于需求边界较小、团队愿意维护其并发和错误语义的场景。</p>
 
     </article>
 
@@ -386,13 +409,13 @@ export function useMutate&lt;T&gt;(config: IMutateOption&lt;T&gt;) {
       
       <a class="post-nav__card" href="/post/vrE64S-kvU/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装</span>
+        <span class="post-nav__title">ProTable 请求封装：明确协议适配与错误边界</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/4PEcn6ZhYy/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能</span>
+        <span class="post-nav__title">Vue 3 分页列表：用 usePullToRefresh 处理刷新与加载更多</span>
       </a>
       
     </nav>
@@ -448,6 +471,6 @@ export function useMutate&lt;T&gt;(config: IMutateOption&lt;T&gt;) {
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

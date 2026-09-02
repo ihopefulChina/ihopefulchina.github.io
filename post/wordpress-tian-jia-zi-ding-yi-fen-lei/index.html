@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>Wordpress 添加自定义分类 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>WordPress 注册自定义文章类型与分类法 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="Wordpress 玩法很多，其中自定义分类这一项是很重要的，很多玩法，首先需要学会如何创建自定义分类。 自定义分类这个描述不是很准确，Wordpress 默认只有一个文章，和文章分类，如果我们想创建一个产品类目，案例类目，新闻类目，自带的无法满足这项规定，所以需要自定义分类。">
+<meta name="description" content="WordPress 中常说的“自定义分类”实际包含两个概念：自定义文章类型（Custom Post Type）和自定义分类法（Custom Taxonomy）。文章类型定义内容实体，分类法定义内容如何分组，两者应分别注册。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Wordpress 添加自定义分类","url":"https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/","description":"Wordpress 玩法很多，其中自定义分类这一项是很重要的，很多玩法，首先需要学会如何创建自定义分类。 自定义分类这个描述不是很准确，Wordpress 默认只有一个文章，和文章分类，如果我们想创建一个产品类目，案例类目，新闻类目，自带的无法满足这项规定，所以需要自定义分类。","image":"/post-images/wordpress-tian-jia-zi-ding-yi-fen-lei.png","datePublished":"2019-08-22T08:53:02+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/","name":"Wordpress 添加自定义分类","position":2}]}</script>
-<meta property="og:title" content="Wordpress 添加自定义分类">
-<meta property="og:description" content="Wordpress 玩法很多，其中自定义分类这一项是很重要的，很多玩法，首先需要学会如何创建自定义分类。 自定义分类这个描述不是很准确，Wordpress 默认只有一个文章，和文章分类，如果我们想创建一个产品类目，案例类目，新闻类目，自带的无法满足这项规定，所以需要自定义分类。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"WordPress 注册自定义文章类型与分类法","url":"https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/","description":"WordPress 中常说的“自定义分类”实际包含两个概念：自定义文章类型（Custom Post Type）和自定义分类法（Custom Taxonomy）。文章类型定义内容实体，分类法定义内容如何分组，两者应分别注册。","datePublished":"2019-08-22T08:53:02+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/","name":"WordPress 注册自定义文章类型与分类法","position":2}]}</script>
+<meta property="og:title" content="WordPress 注册自定义文章类型与分类法">
+<meta property="og:description" content="WordPress 中常说的“自定义分类”实际包含两个概念：自定义文章类型（Custom Post Type）和自定义分类法（Custom Taxonomy）。文章类型定义内容实体，分类法定义内容如何分组，两者应分别注册。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/wordpress-tian-jia-zi-ding-yi-fen-lei.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/">
-<meta name="twitter:title" content="Wordpress 添加自定义分类">
-<meta name="twitter:description" content="Wordpress 玩法很多，其中自定义分类这一项是很重要的，很多玩法，首先需要学会如何创建自定义分类。 自定义分类这个描述不是很准确，Wordpress 默认只有一个文章，和文章分类，如果我们想创建一个产品类目，案例类目，新闻类目，自带的无法满足这项规定，所以需要自定义分类。">
-<meta name="twitter:image" content="/post-images/wordpress-tian-jia-zi-ding-yi-fen-lei.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="WordPress 注册自定义文章类型与分类法">
+<meta name="twitter:description" content="WordPress 中常说的“自定义分类”实际包含两个概念：自定义文章类型（Custom Post Type）和自定义分类法（Custom Taxonomy）。文章类型定义内容实体，分类法定义内容如何分组，两者应分别注册。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">Wordpress 添加自定义分类</h1>
+  <h1 class="msg__bubble msg__bubble--title">WordPress 注册自定义文章类型与分类法</h1>
 </div>
 
 
@@ -246,89 +233,118 @@
     <div class="post-meta">
       <time datetime="2019-08-22T08:53:02+08:00">2019-08-22</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>2161 字</span>
+      <span>3202 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 3 分钟</span>
+      <span>约 5 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/wordpress-tian-jia-zi-ding-yi-fen-lei.png" alt="Wordpress 添加自定义分类">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>Wordpress 玩法很多，其中自定义分类这一项是很重要的，很多玩法，首先需要学会如何创建自定义分类。</p>
-<p>自定义分类这个描述不是很准确，Wordpress 默认只有一个文章，和文章分类，如果我们想创建一个产品类目，案例类目，新闻类目，自带的无法满足这项规定，所以需要自定义分类。</p>
+      <p>WordPress 中常说的“自定义分类”实际包含两个概念：自定义文章类型（Custom Post Type）和自定义分类法（Custom Taxonomy）。文章类型定义内容实体，分类法定义内容如何分组，两者应分别注册。</p>
 <!-- more -->
-<p>分2种情况，一种不带子分类，如何写？</p>
-<pre><code>function products() {
-	$labels = array(
-		'name'               =&gt; _x( '产品', 'post type 名称' ),
-		'add_new'            =&gt; _x( '新建产品', '添加新产品的链接名称' ),
-		'add_new_item'       =&gt; __( '新建一个产品' ),
-		'edit_item'          =&gt; __( '编辑产品' ),
-		'new_item'           =&gt; __( '新产品' ),
-		'all_items'          =&gt; __( '所有产品' ),
-		'view_item'          =&gt; __( '查看产品' ),
-		'search_items'       =&gt; __( '搜索产品' ),
-		'not_found'          =&gt; __( '没有找到产品' ),
-		'not_found_in_trash' =&gt; __( '回收站里面没有产品' ),
-		'parent_item_colon'  =&gt; '',
-		'menu_name'          =&gt; '产品'
-	);
-	$args = array(
-		'labels'        =&gt; $labels,
-		'description'   =&gt; '产品',
-		'public'        =&gt; true,
-		'menu_icon'     =&gt; 'dashicons-cart',
-		'menu_position' =&gt; 13,
-		'supports'      =&gt; array( 'title'),
-		'has_archive'   =&gt; true,
-
-	);
-	register_post_type( 'products', $args );
-}
-add_action( 'init', 'products');
+<p>下面以“产品”和“产品分类”为例。代码更适合放在站点专用插件中，而不是主题的 <code>functions.php</code>；切换主题不应该让业务内容类型消失。</p>
+<h2 id="heading">注册文章类型</h2>
+<pre><code class="language-php">&lt;?php
+add_action(
+    'init',
+    function (): void {
+        register_post_type(
+            'acme_product',
+            array(
+                'labels'       =&gt; array(
+                    'name'          =&gt; '产品',
+                    'singular_name' =&gt; '产品',
+                    'add_new_item'  =&gt; '添加产品',
+                    'edit_item'     =&gt; '编辑产品',
+                ),
+                'public'       =&gt; true,
+                'has_archive'  =&gt; true,
+                'rewrite'      =&gt; array(
+                    'slug'       =&gt; 'products',
+                    'with_front' =&gt; false,
+                ),
+                'show_in_rest' =&gt; true,
+                'menu_icon'    =&gt; 'dashicons-products',
+                'supports'     =&gt; array(
+                    'title',
+                    'editor',
+                    'excerpt',
+                    'thumbnail',
+                    'revisions',
+                ),
+            )
+        );
+    }
+);
 </code></pre>
-<p>具体参数如何修改和意思，可以参考<a href="https://codex.wordpress.org/Function_Reference/register_post_type">官方文档</a></p>
-<p>另一种，需要子分类。</p>
-<p>在上面的基础上添加</p>
-<pre><code>function my_taxonomies_products() {
-	$labels = array(
-		'name'              =&gt; _x( '产品分类', 'taxonomy 名称' ),
-		'singular_name'     =&gt; _x( 'Product', 'taxonomy 单数名称' ),
-		'search_items'      =&gt; __( '搜索产品分类' ),
-		'all_items'         =&gt; __( '所有产品分类' ),
-		'parent_item'       =&gt; __( '该产品分类的上级分类' ),
-		'parent_item_colon' =&gt; __( '该产品分类的上级分类：' ),
-		'edit_item'         =&gt; __( '编辑产品分类' ),
-		'update_item'       =&gt; __( '更新产品分类' ),
-		'add_new_item'      =&gt; __( '添加新的产品分类' ),
-		'new_item_name'     =&gt; __( '新产品分类' ),
-		'menu_name'         =&gt; __( '产品分类' ),
-	);
-	$args = array(
-		'labels' =&gt; $labels,
-		'hierarchical' =&gt; true,
-		'rewrite' =&gt; array(
-			'slug' =&gt; 'products',
-			'hierarchical' =&gt; true,
-		)
-	);
-	register_taxonomy( 'product', 'products', $args );
+<p>文章类型 key 最长 20 个字符，并应使用项目或组织前缀，避免与主题、插件冲突。</p>
+<h2 id="heading-1">注册分层分类法</h2>
+<pre><code class="language-php">&lt;?php
+add_action(
+    'init',
+    function (): void {
+        register_taxonomy(
+            'acme_product_category',
+            array( 'acme_product' ),
+            array(
+                'labels'            =&gt; array(
+                    'name'          =&gt; '产品分类',
+                    'singular_name' =&gt; '产品分类',
+                    'add_new_item'  =&gt; '添加产品分类',
+                    'edit_item'     =&gt; '编辑产品分类',
+                ),
+                'public'            =&gt; true,
+                'hierarchical'      =&gt; true,
+                'show_admin_column' =&gt; true,
+                'show_in_rest'      =&gt; true,
+                'rewrite'           =&gt; array(
+                    'slug'         =&gt; 'product-category',
+                    'with_front'   =&gt; false,
+                    'hierarchical' =&gt; true,
+                ),
+            )
+        );
+    }
+);
+</code></pre>
+<p><code>hierarchical =&gt; true</code> 表示像分类目录一样支持父子层级；设为 <code>false</code> 时更接近标签。</p>
+<h2 id="heading-2">固定链接只刷新一次</h2>
+<p>注册或修改 rewrite 规则后需要刷新固定链接，但不能在每次请求调用 <code>flush_rewrite_rules()</code>。插件应只在激活和停用时处理：</p>
+<pre><code class="language-php">&lt;?php
+function acme_register_content_types(): void {
+    // 把上面的 register_post_type 和
+    // register_taxonomy 调用提取到此函数。
 }
 
-add_action( 'init', 'my_taxonomies_products' );
+register_activation_hook(
+    __FILE__,
+    function (): void {
+        acme_register_content_types();
+        flush_rewrite_rules();
+    }
+);
+
+register_deactivation_hook(
+    __FILE__,
+    'flush_rewrite_rules'
+);
 </code></pre>
-<p><a href="https://codex.wordpress.org/Function_Reference/register_taxonomy">官方文档</a>有具体修改提示.</p>
-<h4 id="archive-productsphptaxonomy-productphpsingle-productsphp">其中archive-products.php(产品总分类)，taxonomy-product.php(产品二级分类)，single-products.php（产品详情页）</h4>
-<p>以上是Wordpress添加自定义分类，道路漫漫，这个是必修课</p>
+<p>挂到 <code>init</code> 的回调也调用同一个注册函数。不要复制两份注册参数，否则以后会出现激活逻辑和运行逻辑不一致。</p>
+<h2 id="rest-">权限、REST 与归档</h2>
+<ul>
+<li><code>public</code>、<code>publicly_queryable</code>、<code>show_ui</code> 和 <code>show_in_menu</code> 含义不同，内部数据不应只靠隐藏菜单保护。</li>
+<li>使用区块编辑器或 REST API 时通常需要 <code>show_in_rest =&gt; true</code>。</li>
+<li>自定义权限模型要配置 <code>capability_type</code>、<code>capabilities</code> 和 <code>map_meta_cap</code>，并在业务操作中再次调用 <code>current_user_can()</code>。</li>
+<li><code>has_archive</code> 决定文章类型归档；taxonomy 则有自己的 term 归档链接。</li>
+<li>slug 变更会影响已收录 URL，应配置 301 重定向并检查 canonical、站点地图和内链。</li>
+</ul>
+<p>官方参考：<a href="https://developer.wordpress.org/reference/functions/register_post_type/">register_post_type()</a>、<a href="https://developer.wordpress.org/reference/functions/register_taxonomy/">register_taxonomy()</a>。</p>
 
     </article>
 
@@ -368,13 +384,13 @@ add_action( 'init', 'my_taxonomies_products' );
       
       <a class="post-nav__card" href="/post/ye-mian-url-jie-wei-tian-jia-xie-gang/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">页面Url结尾添加斜杠&quot;/&quot;</span>
+        <span class="post-nav__title">WordPress URL 末尾斜杠：统一固定链接与重定向</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/ru-he-zai-dao-hang-lan-tian-jia-tu-pian/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">如何在导航栏添加图片？</span>
+        <span class="post-nav__title">如何在 WordPress 导航菜单中添加图片？</span>
       </a>
       
     </nav>
@@ -430,6 +446,6 @@ add_action( 'init', 'my_taxonomies_products' );
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

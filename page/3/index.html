@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
   <title>ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -67,7 +67,7 @@
       "headline": "获取指定分类的所有子分类链接、Description、Slug、自定义字段",
       "url": "https://ihopefulchina.github.io/post/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/",
       "datePublished": "2019-08-22T13:06:15+08:00",
-      "description": "Wordpress很难获取指定分类下的所有子分类。这需要我们绕路获取。\n以下的方法适用于任何页面来获取所有子分类，仅供参考，如果不懂，可以联系我，或者多看几遍官方文档。\n分类的标题、Description、Slug是Wordpress自带函数可以直接获取，自定义字段和链接需要通过ID的方式获取。\n\nDemo\n\u0026lt;?...",
+      "description": "已知父分类的 slug 或 ID 时，可以用 get_term_by() 定位父项，再用 get_terms() 查询子项。链接必须由 get_term_link() 生成，不要拼接 /products/{slug}/ 之类的路径。\n\n以下示例假设分类法名为 product_category，父分类 slug 为 ha...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -76,10 +76,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "解决Wordpress自定义二级目录和三级目录采用不同的样式",
+      "headline": "解决 WordPress 分层分类在不同层级使用不同样式",
       "url": "https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-er-ji-mu-lu-he-san-ji-mu-lu-cai-yong-bu-tong-de-yang-shi/",
       "datePublished": "2019-08-22T11:51:30+08:00",
-      "description": "Wordpress自定义分类结构采用的是archive-\u0026gt;taxonomy-\u0026gt;single,其中archive是自定义分类的总页面，taxonomy是子分类，子分类的下面分类，single是自定义分类下的文章。\n层级很清晰，但有一个问题，如果二级目录和三级目录采用不同的样式(taxonomy页面)，怎么办？...",
+      "description": "分层分类法的二级、三级页面需要不同样式时，不要按 URL 的第几个片段判断。WordPress 已把当前 term 和祖先关系解析完成，可以用模板层级、get_ancestors() 或 body_class 明确表达。\n\n方案一：同一模板，不同层级 class\n适合结构相同、只有布局或视觉差异的页面。\n\u0026lt;?ph...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -88,10 +88,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "Wordpress如何添加顶级菜单，和移除、隐藏顶级菜单？",
+      "headline": "WordPress 后台菜单：添加、移除与权限边界",
       "url": "https://ihopefulchina.github.io/post/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan/",
       "datePublished": "2019-08-22T09:43:15+08:00",
-      "description": "Wordpress后台有很多我们必须要的功能，客户会误点等之类的原因，所以我们需要隐藏一些自定义菜单，但是隐藏顶级菜单，可能下面某一个子菜单是我们需要的。\n\n首先我们先隐藏菜单，这里分为2种隐藏，一种是自带的，\n隐藏自带的写这段函数即可\nshow_admin_bar(false);\nadd_filter('show_a...",
+      "description": "WordPress 后台菜单可以按角色工作流精简，但“看不见菜单”不等于“没有权限”。正确顺序是先定义 capability 和服务端授权，再按同一 capability 调整菜单展示。\n\n添加顶级菜单\n\u0026lt;?php\nadd_action(\n    'admin_menu',\n    function (): vo...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -100,10 +100,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "移除、隐藏、删除Wordpres一些小工具和功能",
+      "headline": "精简 WordPress 后台工具栏、帮助与显示选项",
       "url": "https://ihopefulchina.github.io/post/yi-chu-yin-cang-shan-chu-wordpres-yi-xie-xiao-gong-ju-he-gong-neng/",
       "datePublished": "2019-08-22T09:37:45+08:00",
-      "description": "Wordpress 有些功能不适用定制站(客户可能会乱点到)，所以需要隐藏掉，比如顶部工具栏。\n\n\n移除顶部工具栏“新建”按钮\n\nfunction disable_new_content() {  \n\tglobal $wp_admin_bar;  \n\t$wp_admin_bar-\u0026gt;remove_menu('new...",
+      "description": "定制站可以为编辑精简后台界面，但应按 capability 和具体页面处理。全站隐藏“帮助”“显示选项”会让管理员和支持人员也失去诊断入口，并不能阻止用户直接调用功能。\n\n移除部分顶部工具栏节点\n\u0026lt;?php\nadd_action(\n    'admin_bar_menu',\n    function ( WP_A...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -112,10 +112,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "隐藏、禁止、删除Wordpress自带的更新和仪表盘",
+      "headline": "精简 WordPress 仪表盘，但不要关闭安全更新",
       "url": "https://ihopefulchina.github.io/post/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/",
       "datePublished": "2019-08-22T09:30:48+08:00",
-      "description": "Wordpress 更新有点频繁，最恶心的地方是，一旦更新，很多东西都已经没有了，所以最好禁止wordpress更新，仪表盘我个人不喜欢它，所以隐藏，看官们可以选择保留\n\n\nfunction example_remove_dashboard_widgets() {\n        // Globalize the me...",
+      "description": "早期版本建议通过过滤 transient、移除检查 action 和关闭自动更新来“保持稳定”，这会让站点错过安全修复，也让管理员看不到真实风险。现代做法是精简无关仪表盘组件，同时建立可回滚的更新流程，而不是让更新系统失明。\n\n安全地移除仪表盘组件\n\u0026lt;?php\nadd_action(\n    'wp_dashbo...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -124,10 +124,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "禁止删除某些页面",
+      "headline": "保护 WordPress 关键页面，避免被移入回收站或永久删除",
       "url": "https://ihopefulchina.github.io/post/jin-zhi-shan-chu-mou-xie-ye-mian/",
       "datePublished": "2019-08-22T09:22:15+08:00",
-      "description": "Wordpress的页面，很多是网站构建重要组成部分、网站的基本框架，有部分客户手贱/不小心删除掉页面，导致页面需要重新挂上。\n重新挂上，难保客户继续删除掉，所以，需要禁止删除某些页面。\n\n/*禁止删除特定的页面函数*/\nfunction prevent_post_deletion($postid){//保护某些页面不...",
+      "description": "隐私政策、结算页、会员中心等关键页面可能被主题、插件或业务配置引用。保护它们不能靠在删除按钮点击后 exit：那会留下不完整响应，也无法覆盖批量操作、REST、WP-CLI 或其他代码路径。\n\n先维护明确的受保护 ID\n不同环境的文章 ID 可能不同。生产项目可把这些 ID 存进站点选项，或直接读取 WordPress...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -136,10 +136,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "如何在导航栏添加图片？",
+      "headline": "如何在 WordPress 导航菜单中添加图片？",
       "url": "https://ihopefulchina.github.io/post/ru-he-zai-dao-hang-lan-tian-jia-tu-pian/",
       "datePublished": "2019-08-22T09:07:44+08:00",
-      "description": "很多客户有在导航栏添加产品图片的需求，Wordpress不支持这一项，需要我们去创建和自定义。\n\nfunction函数添加这个即可\nadd_filter('wp_nav_menu_objects', 'my_wp_nav_menu_objects', 10, 2);\nfunction my_wp_nav_menu_ob...",
+      "description": "导航菜单需要图标或缩略图时，可以给菜单项增加一个图片字段，再通过 WordPress 菜单过滤器输出。图片应保存为媒体附件 ID，由 wp_get_attachment_image() 生成尺寸、宽高和响应式属性。\n\n1. 创建菜单项图片字段\n使用 ACF 时，将字段组位置规则设为“菜单项等于全部”，新增图片字段 me...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -148,10 +148,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "Wordpress 添加自定义分类",
+      "headline": "WordPress 注册自定义文章类型与分类法",
       "url": "https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/",
       "datePublished": "2019-08-22T08:53:02+08:00",
-      "description": "Wordpress 玩法很多，其中自定义分类这一项是很重要的，很多玩法，首先需要学会如何创建自定义分类。\n自定义分类这个描述不是很准确，Wordpress 默认只有一个文章，和文章分类，如果我们想创建一个产品类目，案例类目，新闻类目，自带的无法满足这项规定，所以需要自定义分类。\n\n分2种情况，一种不带子分类，如何写？\n...",
+      "description": "WordPress 中常说的“自定义分类”实际包含两个概念：自定义文章类型（Custom Post Type）和自定义分类法（Custom Taxonomy）。文章类型定义内容实体，分类法定义内容如何分组，两者应分别注册。\n\n下面以“产品”和“产品分类”为例。代码更适合放在站点专用插件中，而不是主题的 function...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -160,10 +160,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "页面Url结尾添加斜杠\"/\"",
+      "headline": "WordPress URL 末尾斜杠：统一固定链接与重定向",
       "url": "https://ihopefulchina.github.io/post/ye-mian-url-jie-wei-tian-jia-xie-gang/",
       "datePublished": "2019-08-22T08:46:52+08:00",
-      "description": "Wordpress 自带不支持 某些页面Url结尾添加斜杠\u0026quot;/\u0026quot;，例如产品总页，Wordpress 输出的地址是 xxx.com/products ,但是符合静态页面Url规则的话，需要在结尾加斜杠，\n\n添加function函数即可。\nfunction nice_trailingslashit($s...",
+      "description": "URL 末尾是否使用斜杠没有通用的“更好”答案，重要的是同一资源只保留一个 canonical 形式，并让站内链接、重定向、站点地图、缓存和搜索引擎信号保持一致。\n\n先使用固定链接设置\nWordPress 后台“设置 → 固定链接”的结构决定文章与页面 URL。主题和插件输出链接时，应调用：\n\nget_permalin...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -172,10 +172,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "修改Wordpress登录后跳转指定页面",
+      "headline": "WordPress 登录后按请求与权限安全跳转",
       "url": "https://ihopefulchina.github.io/post/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/",
       "datePublished": "2019-08-22T08:42:52+08:00",
-      "description": "Wordpres 后台登录后默认跳转到仪表板，其实是可以修改跳转到指定页面。\n\n在function里面添加一个函数即可。\nfunction my_login_redirect($redirect_to, $request){\n\tif( empty( $redirect_to ) || $redirect_to == '...",
+      "description": "WordPress 的 login_redirect 过滤器会提供最终跳转地址、用户原始请求地址和登录结果。实现时要处理 WP_Error、避免开放重定向，并尽量保留用户登录前真正想访问的页面。\n\n示例：管理员进入后台，普通用户进入账户页\n\u0026lt;?php\nadd_filter(\n    'login_redirect...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -196,17 +196,6 @@
 <meta name="twitter:url" content="https://ihopefulchina.github.io/page/3/">
 <meta name="twitter:title" content="ihopeful Blog">
 <meta name="twitter:description" content="🧑‍💻切图仔">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </head>
 <body data-typewriter="True">
 
@@ -388,8 +377,7 @@
           <span class="post-item__title">获取指定分类的所有子分类链接、Description、Slug、自定义字段</span>
           
           
-          <span class="post-item__excerpt">Wordpress很难获取指定分类下的所有子分类。这需要我们绕路获取。
-以下的方法适用于任何页面来获取所有子分类，仅供参考，如果不懂，可以联系我，或者多看几遍官...</span>
+          <span class="post-item__excerpt">已知父分类的 slug 或 ID 时，可以用 get_term_by() 定位父项，再用 get_terms() 查询子项。链接必须由 get_term_lin...</span>
           
           
         </span>
@@ -398,10 +386,10 @@
       
       <a class="post-item" href="/post/jie-jue-wordpress-zi-ding-yi-er-ji-mu-lu-he-san-ji-mu-lu-cai-yong-bu-tong-de-yang-shi/">
         <span class="post-item__main">
-          <span class="post-item__title">解决Wordpress自定义二级目录和三级目录采用不同的样式</span>
+          <span class="post-item__title">解决 WordPress 分层分类在不同层级使用不同样式</span>
           
           
-          <span class="post-item__excerpt">Wordpress自定义分类结构采用的是archive-&amp;gt;taxonomy-&amp;gt;single,其中archive是自定义分类的总页面，taxonomy...</span>
+          <span class="post-item__excerpt">分层分类法的二级、三级页面需要不同样式时，不要按 URL 的第几个片段判断。WordPress 已把当前 term 和祖先关系解析完成，可以用模板层级、get_...</span>
           
           
         </span>
@@ -410,12 +398,10 @@
       
       <a class="post-item" href="/post/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan/">
         <span class="post-item__main">
-          <span class="post-item__title">Wordpress如何添加顶级菜单，和移除、隐藏顶级菜单？</span>
+          <span class="post-item__title">WordPress 后台菜单：添加、移除与权限边界</span>
           
           
-          <span class="post-item__excerpt">Wordpress后台有很多我们必须要的功能，客户会误点等之类的原因，所以我们需要隐藏一些自定义菜单，但是隐藏顶级菜单，可能下面某一个子菜单是我们需要的。
-
-首...</span>
+          <span class="post-item__excerpt">WordPress 后台菜单可以按角色工作流精简，但“看不见菜单”不等于“没有权限”。正确顺序是先定义 capability 和服务端授权，再按同一 capab...</span>
           
           
         </span>
@@ -424,15 +410,10 @@
       
       <a class="post-item" href="/post/yi-chu-yin-cang-shan-chu-wordpres-yi-xie-xiao-gong-ju-he-gong-neng/">
         <span class="post-item__main">
-          <span class="post-item__title">移除、隐藏、删除Wordpres一些小工具和功能</span>
+          <span class="post-item__title">精简 WordPress 后台工具栏、帮助与显示选项</span>
           
           
-          <span class="post-item__excerpt">Wordpress 有些功能不适用定制站(客户可能会乱点到)，所以需要隐藏掉，比如顶部工具栏。
-
-
-移除顶部工具栏“新建”按钮
-
-function disabl...</span>
+          <span class="post-item__excerpt">定制站可以为编辑精简后台界面，但应按 capability 和具体页面处理。全站隐藏“帮助”“显示选项”会让管理员和支持人员也失去诊断入口，并不能阻止用户直接调...</span>
           
           
         </span>
@@ -441,10 +422,10 @@ function disabl...</span>
       
       <a class="post-item" href="/post/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/">
         <span class="post-item__main">
-          <span class="post-item__title">隐藏、禁止、删除Wordpress自带的更新和仪表盘</span>
+          <span class="post-item__title">精简 WordPress 仪表盘，但不要关闭安全更新</span>
           
           
-          <span class="post-item__excerpt">Wordpress 更新有点频繁，最恶心的地方是，一旦更新，很多东西都已经没有了，所以最好禁止wordpress更新，仪表盘我个人不喜欢它，所以隐藏，看官们可以...</span>
+          <span class="post-item__excerpt">早期版本建议通过过滤 transient、移除检查 action 和关闭自动更新来“保持稳定”，这会让站点错过安全修复，也让管理员看不到真实风险。现代做法是精简...</span>
           
           
         </span>
@@ -453,11 +434,10 @@ function disabl...</span>
       
       <a class="post-item" href="/post/jin-zhi-shan-chu-mou-xie-ye-mian/">
         <span class="post-item__main">
-          <span class="post-item__title">禁止删除某些页面</span>
+          <span class="post-item__title">保护 WordPress 关键页面，避免被移入回收站或永久删除</span>
           
           
-          <span class="post-item__excerpt">Wordpress的页面，很多是网站构建重要组成部分、网站的基本框架，有部分客户手贱/不小心删除掉页面，导致页面需要重新挂上。
-重新挂上，难保客户继续删除掉，所...</span>
+          <span class="post-item__excerpt">隐私政策、结算页、会员中心等关键页面可能被主题、插件或业务配置引用。保护它们不能靠在删除按钮点击后 exit：那会留下不完整响应，也无法覆盖批量操作、REST、...</span>
           
           
         </span>
@@ -466,13 +446,10 @@ function disabl...</span>
       
       <a class="post-item" href="/post/ru-he-zai-dao-hang-lan-tian-jia-tu-pian/">
         <span class="post-item__main">
-          <span class="post-item__title">如何在导航栏添加图片？</span>
+          <span class="post-item__title">如何在 WordPress 导航菜单中添加图片？</span>
           
           
-          <span class="post-item__excerpt">很多客户有在导航栏添加产品图片的需求，Wordpress不支持这一项，需要我们去创建和自定义。
-
-function函数添加这个即可
-add_filter(&#39;wp...</span>
+          <span class="post-item__excerpt">导航菜单需要图标或缩略图时，可以给菜单项增加一个图片字段，再通过 WordPress 菜单过滤器输出。图片应保存为媒体附件 ID，由 wp_get_attach...</span>
           
           
         </span>
@@ -481,11 +458,10 @@ add_filter(&#39;wp...</span>
       
       <a class="post-item" href="/post/wordpress-tian-jia-zi-ding-yi-fen-lei/">
         <span class="post-item__main">
-          <span class="post-item__title">Wordpress 添加自定义分类</span>
+          <span class="post-item__title">WordPress 注册自定义文章类型与分类法</span>
           
           
-          <span class="post-item__excerpt">Wordpress 玩法很多，其中自定义分类这一项是很重要的，很多玩法，首先需要学会如何创建自定义分类。
-自定义分类这个描述不是很准确，Wordpress 默认...</span>
+          <span class="post-item__excerpt">WordPress 中常说的“自定义分类”实际包含两个概念：自定义文章类型（Custom Post Type）和自定义分类法（Custom Taxonomy）。...</span>
           
           
         </span>
@@ -494,10 +470,10 @@ add_filter(&#39;wp...</span>
       
       <a class="post-item" href="/post/ye-mian-url-jie-wei-tian-jia-xie-gang/">
         <span class="post-item__main">
-          <span class="post-item__title">页面Url结尾添加斜杠&quot;/&quot;</span>
+          <span class="post-item__title">WordPress URL 末尾斜杠：统一固定链接与重定向</span>
           
           
-          <span class="post-item__excerpt">Wordpress 自带不支持 某些页面Url结尾添加斜杠&amp;quot;/&amp;quot;，例如产品总页，Wordpress 输出的地址是 xxx.com/produ...</span>
+          <span class="post-item__excerpt">URL 末尾是否使用斜杠没有通用的“更好”答案，重要的是同一资源只保留一个 canonical 形式，并让站内链接、重定向、站点地图、缓存和搜索引擎信号保持一致...</span>
           
           
         </span>
@@ -506,13 +482,10 @@ add_filter(&#39;wp...</span>
       
       <a class="post-item" href="/post/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/">
         <span class="post-item__main">
-          <span class="post-item__title">修改Wordpress登录后跳转指定页面</span>
+          <span class="post-item__title">WordPress 登录后按请求与权限安全跳转</span>
           
           
-          <span class="post-item__excerpt">Wordpres 后台登录后默认跳转到仪表板，其实是可以修改跳转到指定页面。
-
-在function里面添加一个函数即可。
-function my_login_r...</span>
+          <span class="post-item__excerpt">WordPress 的 login_redirect 过滤器会提供最终跳转地址、用户原始请求地址和登录结果。实现时要处理 WP_Error、避免开放重定向，并尽...</span>
           
           
         </span>
@@ -592,6 +565,6 @@ function my_login_r...</span>
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

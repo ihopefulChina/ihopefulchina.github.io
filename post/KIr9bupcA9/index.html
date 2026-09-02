@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>自定义Hooks: useRowSelection - ProTable 选择项配置hooks - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>ProTable 跨页选择：用 useRowSelection 保存稳定状态 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="在写基于Antd Pro 后台业务的时候，发现一个高频业务场景需求： 表格列表多选item的时候，没办法跨分页选择。 我写一个自定义Hooks，支持跨分页选择。">
+<meta name="description" content="ProTable 跨页选择需要同时保存两类状态：稳定的行主键，以及已经见过的行数据。只保存当前页的 selectedRows，翻页后会丢失详情；只保存主键，批量操作时又可能拿不到名称等展示字段。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/KIr9bupcA9/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"自定义Hooks: useRowSelection - ProTable 选择项配置hooks","url":"https://ihopefulchina.github.io/post/KIr9bupcA9/","description":"在写基于Antd Pro 后台业务的时候，发现一个高频业务场景需求： 表格列表多选item的时候，没办法跨分页选择。 我写一个自定义Hooks，支持跨分页选择。","image":"/post-images/KIr9bupcA9.png","datePublished":"2024-04-01T09:21:53+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/KIr9bupcA9/","name":"自定义Hooks: useRowSelection - ProTable 选择项配置hooks","position":2}]}</script>
-<meta property="og:title" content="自定义Hooks: useRowSelection - ProTable 选择项配置hooks">
-<meta property="og:description" content="在写基于Antd Pro 后台业务的时候，发现一个高频业务场景需求： 表格列表多选item的时候，没办法跨分页选择。 我写一个自定义Hooks，支持跨分页选择。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"ProTable 跨页选择：用 useRowSelection 保存稳定状态","url":"https://ihopefulchina.github.io/post/KIr9bupcA9/","description":"ProTable 跨页选择需要同时保存两类状态：稳定的行主键，以及已经见过的行数据。只保存当前页的 selectedRows，翻页后会丢失详情；只保存主键，批量操作时又可能拿不到名称等展示字段。","datePublished":"2024-04-01T09:21:53+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/KIr9bupcA9/","name":"ProTable 跨页选择：用 useRowSelection 保存稳定状态","position":2}]}</script>
+<meta property="og:title" content="ProTable 跨页选择：用 useRowSelection 保存稳定状态">
+<meta property="og:description" content="ProTable 跨页选择需要同时保存两类状态：稳定的行主键，以及已经见过的行数据。只保存当前页的 selectedRows，翻页后会丢失详情；只保存主键，批量操作时又可能拿不到名称等展示字段。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/KIr9bupcA9/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/KIr9bupcA9.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/KIr9bupcA9/">
-<meta name="twitter:title" content="自定义Hooks: useRowSelection - ProTable 选择项配置hooks">
-<meta name="twitter:description" content="在写基于Antd Pro 后台业务的时候，发现一个高频业务场景需求： 表格列表多选item的时候，没办法跨分页选择。 我写一个自定义Hooks，支持跨分页选择。">
-<meta name="twitter:image" content="/post-images/KIr9bupcA9.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="ProTable 跨页选择：用 useRowSelection 保存稳定状态">
+<meta name="twitter:description" content="ProTable 跨页选择需要同时保存两类状态：稳定的行主键，以及已经见过的行数据。只保存当前页的 selectedRows，翻页后会丢失详情；只保存主键，批量操作时又可能拿不到名称等展示字段。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">自定义Hooks: useRowSelection - ProTable 选择项配置hooks</h1>
+  <h1 class="msg__bubble msg__bubble--title">ProTable 跨页选择：用 useRowSelection 保存稳定状态</h1>
 </div>
 
 
@@ -246,128 +233,178 @@
     <div class="post-meta">
       <time datetime="2024-04-01T09:21:53+08:00">2024-04-01</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>2707 字</span>
+      <span>3619 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 4 分钟</span>
+      <span>约 6 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/KIr9bupcA9.png" alt="自定义Hooks: useRowSelection - ProTable 选择项配置hooks">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>在写基于Antd Pro 后台业务的时候，发现一个高频业务场景需求：<br />
-表格列表多选item的时候，没办法跨分页选择。</p>
-<p>我写一个自定义Hooks，支持跨分页选择。</p>
+      <p>ProTable 跨页选择需要同时保存两类状态：稳定的行主键，以及已经见过的行数据。只保存当前页的 <code>selectedRows</code>，翻页后会丢失详情；只保存主键，批量操作时又可能拿不到名称等展示字段。</p>
 <!-- more -->
-<pre><code>import { TableProps } from 'antd'
-import { useState } from 'react'
+<h2 id="heading">设计约束</h2>
+<ul>
+<li><code>rowKey</code> 必须全局稳定，不能使用数组下标。</li>
+<li><code>selectedRowKeys</code> 是唯一选择事实源。</li>
+<li>用 <code>Map</code> 缓存已选行，去重和删除都是常数复杂度。</li>
+<li>新一页返回的 <code>selectedRows</code> 用来补充缓存；不再选中的 key 必须从缓存删除。</li>
+<li>服务端批量操作只应信任 key，缓存行数据主要用于前端展示。</li>
+</ul>
+<h2 id="hook-">Hook 实现</h2>
+<pre><code class="language-tsx">import {
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  type Key
+} from 'react'
+import type { TableProps } from 'antd'
 
-export interface UseRowSelectionResult&lt;T&gt; {
-  /** key */
-  rowKey: string
-  /** 选择项配置 */
-  rowSelection?:
-    | (TableProps&lt;T&gt;['rowSelection'] &amp; {
-        alwaysShowAlert?: boolean
-      })
-    | false
-  /** 选择项选中id合集 */
-  selectedRowKeys: number[]
-  /** 批量选择items */
-  selectedRows: T[]
-  /** 选择项更新 */
-  setSelectedRows: (list: T[]) =&gt; void
+type RowSelection&lt;T extends object&gt; =
+  NonNullable&lt;TableProps&lt;T&gt;['rowSelection']&gt;
+
+type RowKey&lt;T&gt; = keyof T | ((record: T) =&gt; Key)
+
+interface UseRowSelectionOptions&lt;T extends object&gt; {
+  rowKey: RowKey&lt;T&gt;
+  onChange?: (keys: Key[], rows: T[]) =&gt; void
 }
 
-export interface UseRowSelectionParams&lt;T&gt; {
-  /**  @name 选择项Key值 */
-  rowKey?: string
-  /** @name 选择项配置 */
-  rowSelection?: TableProps&lt;T&gt;['rowSelection']
-  /** 选中项更新 */
-  onChange?: (list: T[], ids: number[]) =&gt; void
-}
-/** hooks - ProTable 选择项配置hooks */
-export function useRowSelection&lt;T&gt;(props?: UseRowSelectionParams&lt;T&gt;): UseRowSelectionResult&lt;T&gt; {
-  const rowKey = props?.rowKey ?? 'id'
+export function useRowSelection&lt;T extends object&gt;(
+  options: UseRowSelectionOptions&lt;T&gt;
+) {
+  const { rowKey, onChange } = options
+  const rowMapRef = useRef(new Map&lt;Key, T&gt;())
+  const [selectedRowKeys, setSelectedRowKeys] =
+    useState&lt;Key[]&gt;([])
 
-  const rowSelection = props?.rowSelection
+  const getRowKey = useCallback(
+    (record: T): Key =&gt; {
+      const value =
+        typeof rowKey === 'function'
+          ? rowKey(record)
+          : record[rowKey]
 
-  /** 批量选择items */
-  const [selectedRows, setSelectedRows] = useState&lt;T[]&gt;([])
-
-  /** 选择项选中id合集 */
-  const selectedRowKeys = (selectedRows || []).map((row) =&gt; row[rowKey])
-
-  /** 选择项配置 */
-  const newRowSelection = {
-    ...rowSelection,
-    type: rowSelection?.type ?? 'checkbox',
-    selectedRowKeys,
-
-    onSelect: (item: any, blo) =&gt; {
-      if (blo) {
-        if (rowSelection?.type === 'radio') {
-          setSelectedRows([{ ...item }])
-        } else {
-          setSelectedRows([...selectedRows, { ...item }])
-        }
-      } else {
-        setSelectedRows(selectedRows.filter((row) =&gt; row[rowKey] !== item?.[rowKey]))
+      if (
+        typeof value !== 'string' &amp;&amp;
+        typeof value !== 'number'
+      ) {
+        throw new Error(
+          'rowKey 必须返回 string 或 number'
+        )
       }
+
+      return value
     },
-    onSelectAll: (blo, rows, changeRows) =&gt; {
-      if (blo) {
-        setSelectedRows([...selectedRows, ...changeRows])
-      } else {
-        if (selectedRows?.length) {
-          const newList = selectedRows?.filter((item) =&gt; !changeRows?.find((row) =&gt; row[rowKey] === item[rowKey]))
-          setSelectedRows(newList)
-        } else {
-          setSelectedRows([])
+    [rowKey]
+  )
+
+  const handleChange = useCallback&lt;
+    NonNullable&lt;RowSelection&lt;T&gt;['onChange']&gt;
+  &gt;(
+    (nextKeys, currentRows) =&gt; {
+      const nextKeySet = new Set&lt;Key&gt;(nextKeys)
+
+      for (const key of rowMapRef.current.keys()) {
+        if (!nextKeySet.has(key)) {
+          rowMapRef.current.delete(key)
         }
       }
-    },
-    onChange: (selectedRowKeys, selectedRows, info) =&gt; {
-      if (info?.type === 'none') {
-        setSelectedRows(selectedRows)
-        props?.onChange?.(selectedRowKeys, selectedRows)
+
+      for (const row of currentRows) {
+        rowMapRef.current.set(getRowKey(row), row)
       }
-    }
-  }
+
+      const keys = [...nextKeys]
+      const rows = keys
+        .map((key) =&gt; rowMapRef.current.get(key))
+        .filter((row): row is T =&gt; row !== undefined)
+
+      setSelectedRowKeys(keys)
+      onChange?.(keys, rows)
+    },
+    [getRowKey, onChange]
+  )
+
+  const clear = useCallback(() =&gt; {
+    rowMapRef.current.clear()
+    setSelectedRowKeys([])
+    onChange?.([], [])
+  }, [onChange])
+
+  const selectedRows = useMemo(
+    () =&gt;
+      selectedRowKeys
+        .map((key) =&gt; rowMapRef.current.get(key))
+        .filter((row): row is T =&gt; row !== undefined),
+    [selectedRowKeys]
+  )
+
+  const rowSelection = useMemo&lt;RowSelection&lt;T&gt;&gt;(
+    () =&gt; ({
+      selectedRowKeys,
+      preserveSelectedRowKeys: true,
+      onChange: handleChange
+    }),
+    [handleChange, selectedRowKeys]
+  )
 
   return {
-    /** key */
-    rowKey,
-    /** 选择项配置 */
-    rowSelection: newRowSelection,
-    /** 选择项选中id合集 */
+    rowSelection,
     selectedRowKeys,
-    /** 批量选择items */
     selectedRows,
-    /** 选择项更新 */
-    setSelectedRows
+    clear
   }
 }
 </code></pre>
-<h3 id="heading">使用方法实例:</h3>
-<pre><code> /** ProTable 选择项配置 */
-  const { rowSelection, selectedRows, setSelectedRows } = useRowSelection&lt;MallCouponTemplateResVO&gt;({
-    ...props.rowSelectionProps
-  })
+<p>这里从 <code>antd</code> 的公共导出 <code>TableProps</code> 推导类型，避免依赖组件库内部目录。</p>
+<h2 id="heading-1">使用示例</h2>
+<pre><code class="language-tsx">const {
+  rowSelection,
+  selectedRowKeys,
+  selectedRows,
+  clear
+} = useRowSelection&lt;User&gt;({
+  rowKey: 'id'
+})
 
-  &lt;ProTable  rowSelection={rowSelection} /&gt;
+return (
+  &lt;&gt;
+    &lt;ProTable&lt;User&gt;
+      rowKey=&quot;id&quot;
+      columns={columns}
+      request={request}
+      rowSelection={rowSelection}
+    /&gt;
 
+    &lt;Button
+      disabled={selectedRowKeys.length === 0}
+      onClick={() =&gt; openBatchDialog(selectedRowKeys)}
+    &gt;
+      批量处理 {selectedRowKeys.length} 项
+    &lt;/Button&gt;
+  &lt;/&gt;
+)
 </code></pre>
-<p><img src="https://ihopefulchina.github.io/post-images/1739755620925.png" alt="" /></p>
+<p>批量请求应该发送 <code>selectedRowKeys</code>，不要把缓存的整行对象原样提交给服务端。后端仍要重新检查记录是否存在、用户是否有权限、状态是否允许操作。</p>
+<h2 id="heading-2">“已选行”可能不完整</h2>
+<p>如果用户先选择一行，随后服务端数据变化或页面刷新，<code>Map</code> 中是选择时的快照。它适合显示“已选择 A、B”，不适合做金额、权限和库存等最终判断。</p>
+<p>另外，一些表格版本在跨页时提供的 <code>currentRows</code> 只包含当前数据源中可解析的记录。Hook 因此保留已见过的缓存，但从未加载过的预置 key 可能没有对应行对象。界面必须允许 <code>selectedRows.length &lt; selectedRowKeys.length</code>。</p>
+<h2 id="heading-3">何时清空</h2>
+<p>建议在以下场景明确调用 <code>clear()</code>：</p>
+<ul>
+<li>批量操作成功后。</li>
+<li>租户、门店或其他数据权限范围发生变化后。</li>
+<li>筛选条件变化且产品不允许跨筛选选择时。</li>
+<li>离开页面或开始另一轮独立任务时。</li>
+</ul>
+<p>如果产品允许“选择全部查询结果”，不要把所有页都拉到浏览器。应设计服务端任务，提交筛选条件和排除项，并在执行时重新校验数据范围。</p>
 
     </article>
 
@@ -405,13 +442,13 @@ export function useRowSelection&lt;T&gt;(props?: UseRowSelectionParams&lt;T&gt;)
       
       <a class="post-nav__card" href="/post/481vcXjEdn/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">自定义Hooks: useMutate - 简单的获取数据方法的一个封装</span>
+        <span class="post-nav__title">React useMutate：处理加载、错误与并发请求</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/mHHMm1wDV3/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用</span>
+        <span class="post-nav__title">Vue 3 useLockFn：为异步操作增加互斥锁</span>
       </a>
       
     </nav>
@@ -467,6 +504,6 @@ export function useRowSelection&lt;T&gt;(props?: UseRowSelectionParams&lt;T&gt;)
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

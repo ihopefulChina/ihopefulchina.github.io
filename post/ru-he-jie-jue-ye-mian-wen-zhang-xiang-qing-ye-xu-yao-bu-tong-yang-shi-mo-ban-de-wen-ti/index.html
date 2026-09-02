@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>如何解决页面/文章/详情页需要不同样式、模板的问题？ - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>如何让 WordPress 页面使用不同布局与模板？ - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="遇到一个客户，他的需求是在产品详情页有5套不同的模板，需要在后台自己可以选择不同模板，填写不同的内容。 一开始知道这个需求很懵，后来我理清楚了思路，解决了这个问题:">
+<meta name="description" content="页面、文章或自定义文章详情需要不同布局时，先使用 WordPress 模板层级和页面模板；只有当编辑需要在后台选择有限的展示变体时，再加入 ACF 字段。不要把字段值直接拼进 include 路径。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"如何解决页面/文章/详情页需要不同样式、模板的问题？","url":"https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/","description":"遇到一个客户，他的需求是在产品详情页有5套不同的模板，需要在后台自己可以选择不同模板，填写不同的内容。 一开始知道这个需求很懵，后来我理清楚了思路，解决了这个问题:","image":"/post-images/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti.png","datePublished":"2019-08-22T14:48:25+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/","name":"如何解决页面/文章/详情页需要不同样式、模板的问题？","position":2}]}</script>
-<meta property="og:title" content="如何解决页面/文章/详情页需要不同样式、模板的问题？">
-<meta property="og:description" content="遇到一个客户，他的需求是在产品详情页有5套不同的模板，需要在后台自己可以选择不同模板，填写不同的内容。 一开始知道这个需求很懵，后来我理清楚了思路，解决了这个问题:">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"如何让 WordPress 页面使用不同布局与模板？","url":"https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/","description":"页面、文章或自定义文章详情需要不同布局时，先使用 WordPress 模板层级和页面模板；只有当编辑需要在后台选择有限的展示变体时，再加入 ACF 字段。不要把字段值直接拼进 include 路径。","datePublished":"2019-08-22T14:48:25+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/","name":"如何让 WordPress 页面使用不同布局与模板？","position":2}]}</script>
+<meta property="og:title" content="如何让 WordPress 页面使用不同布局与模板？">
+<meta property="og:description" content="页面、文章或自定义文章详情需要不同布局时，先使用 WordPress 模板层级和页面模板；只有当编辑需要在后台选择有限的展示变体时，再加入 ACF 字段。不要把字段值直接拼进 include 路径。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/">
-<meta name="twitter:title" content="如何解决页面/文章/详情页需要不同样式、模板的问题？">
-<meta name="twitter:description" content="遇到一个客户，他的需求是在产品详情页有5套不同的模板，需要在后台自己可以选择不同模板，填写不同的内容。 一开始知道这个需求很懵，后来我理清楚了思路，解决了这个问题:">
-<meta name="twitter:image" content="/post-images/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="如何让 WordPress 页面使用不同布局与模板？">
+<meta name="twitter:description" content="页面、文章或自定义文章详情需要不同布局时，先使用 WordPress 模板层级和页面模板；只有当编辑需要在后台选择有限的展示变体时，再加入 ACF 字段。不要把字段值直接拼进 include 路径。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">如何解决页面/文章/详情页需要不同样式、模板的问题？</h1>
+  <h1 class="msg__bubble msg__bubble--title">如何让 WordPress 页面使用不同布局与模板？</h1>
 </div>
 
 
@@ -246,67 +233,105 @@
     <div class="post-meta">
       <time datetime="2019-08-22T14:48:25+08:00">2019-08-22</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>1465 字</span>
+      <span>2381 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 2 分钟</span>
+      <span>约 3 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti.png" alt="如何解决页面/文章/详情页需要不同样式、模板的问题？">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>遇到一个客户，他的需求是在产品详情页有5套不同的模板，需要在后台自己可以选择不同模板，填写不同的内容。</p>
-<p>一开始知道这个需求很懵，后来我理清楚了思路，解决了这个问题:</p>
+      <p>页面、文章或自定义文章详情需要不同布局时，先使用 WordPress 模板层级和页面模板；只有当编辑需要在后台选择有限的展示变体时，再加入 ACF 字段。不要把字段值直接拼进 <code>include</code> 路径。</p>
 <!-- more -->
-<ol>
-<li>
-<p>首先通过<a href="https://www.advancedcustomfields.com/resources/radio-button/">ACF插件Seclect的单选按钮</a>，填写5个参数<br />
-(注: 参数&rsquo; : &lsquo;前后需要有空格)<br />
-<img src="https://ihopefulchina.github.io/post-images/1566457009571.png" alt="" /></p>
-</li>
-<li>
-<p>通过<a href="https://www.advancedcustomfields.com/resources/group/">ACF插件的组</a>来写5个模板(组下面填写不同的自定义字段)</p>
-</li>
-</ol>
-<p><img src="https://ihopefulchina.github.io/post-images/1566456898881.png" alt="" /></p>
-<p>注:<br />
-(1)需要填写判断(条件逻辑)</p>
-<p><img src="https://ihopefulchina.github.io/post-images/1566457679886.png" alt="" /></p>
-<p>(2)其中每个模板Group里面的说明最好加上模板图片样式，例如<code>&lt;img src=&quot;/wp-admin/images/sj.png&quot; width=&quot;50%&quot; height=&quot;auto&quot;&gt;</code><br />
-这么做的目的，是客户知道这是哪个模板样式，呈现的效果如下。</p>
-<p><img src="https://ihopefulchina.github.io/post-images/1566457148348.png" alt="" /></p>
-<p>3.然后创建5个php，命名规避page，single等等自带的命名方式，里面填写各自模板样式和参数。</p>
-<p><img src="https://ihopefulchina.github.io/post-images/1566457258241.png" alt="" /></p>
-<p>5.最后在single-products.php里面，加一个判断:</p>
-<pre><code>&lt;?php if( get_field('select') == 'one' ): ?&gt;
-		&lt;?php include 'product-content1.php'; ?&gt;
-	&lt;?php endif; ?&gt;
-
-	&lt;?php if( get_field('select') == 'two' ): ?&gt;
-		&lt;?php include 'product-content2.php'; ?&gt;
-	&lt;?php endif; ?&gt;
-
-	&lt;?php if( get_field('select') == 'three' ): ?&gt;
-		&lt;?php include 'product-content3.php'; ?&gt;
-	&lt;?php endif; ?&gt;
-
-	&lt;?php if( get_field('select') == 'four' ): ?&gt;
-		&lt;?php include 'product-content4.php'; ?&gt;
-	&lt;?php endif; ?&gt;
-
-	&lt;?php if( get_field('select') == 'five' ): ?&gt;
-		&lt;?php include 'product-content5.php'; ?&gt;
-	&lt;?php endif; ?&gt;
+<h2 id="heading">方案一：模板层级</h2>
+<p>经典主题会按从具体到通用的顺序查找模板。例如：</p>
+<pre><code class="language-text">single-product-special.php
+single-product.php
+single.php
+singular.php
+index.php
 </code></pre>
-<p>其中的one，two&hellip; 来自ACF插件Seclect的单选按钮前面的参数</p>
+<p>特定页面还可以使用 <code>page-{slug}.php</code> 或 <code>page-{id}.php</code>。这种方式适合“内容类型本身就决定布局”的场景，不需要额外字段。</p>
+<h2 id="heading-1">方案二：可选择的页面模板</h2>
+<p>在经典主题 PHP 文件顶部声明：</p>
+<pre><code class="language-php">&lt;?php
+/**
+ * Template Name: Campaign Landing Page
+ * Template Post Type: page
+ */
+</code></pre>
+<p>编辑页面时即可从模板列表选择。模板名称属于主题公共界面，改名或删除前要检查已有页面引用。</p>
+<h2 id="acf-">方案三：ACF 选择有限布局</h2>
+<p><img src="https://ihopefulchina.github.io/post-images/1566457009571.png" alt="ACF Radio Button 配置" /></p>
+<p>ACF Radio Button 可将保存值与后台文案分开：</p>
+<pre><code class="language-text">default : 默认详情
+landing : 营销落地页
+download : 下载中心
+</code></pre>
+<p>模板中先做白名单校验，再加载固定片段：</p>
+<pre><code class="language-php">&lt;?php
+$allowed_layouts = array(
+    'default',
+    'landing',
+    'download',
+);
+
+$layout = (string) get_field( 'page_layout' );
+
+if ( ! in_array( $layout, $allowed_layouts, true ) ) {
+    $layout = 'default';
+}
+
+get_template_part(
+    'template-parts/page/layout',
+    $layout,
+    array(
+        'post_id' =&gt; get_the_ID(),
+    )
+);
+</code></pre>
+<p>文件结构：</p>
+<pre><code class="language-text">template-parts/
+└── page/
+    ├── layout-default.php
+    ├── layout-landing.php
+    └── layout-download.php
+</code></pre>
+<p>白名单很重要。即使后台字段通常由可信编辑操作，也不应该让任意字符串决定服务器包含哪个 PHP 文件。</p>
+<h2 id="heading-2">组合字段组织内容</h2>
+<p><img src="https://ihopefulchina.github.io/post-images/1566456898881.png" alt="ACF Group 配置" /></p>
+<p>当每种布局需要一组专属字段，可以用 ACF Group 组织命名空间：</p>
+<pre><code class="language-php">&lt;?php
+$hero = get_field( 'hero' );
+
+if ( is_array( $hero ) ) {
+    $title = isset( $hero['title'] )
+        ? (string) $hero['title']
+        : '';
+    $image_id = isset( $hero['image'] )
+        ? absint( $hero['image'] )
+        : 0;
+}
+</code></pre>
+<p>建议让图片字段返回附件 ID，再用 <code>wp_get_attachment_image()</code> 输出。不要假设组字段、图片数组和所有子键永远存在。</p>
+<p><img src="https://ihopefulchina.github.io/post-images/1566457679886.png" alt="不同模板字段示例" /></p>
+<h2 id="-flexible-content">什么时候用 Flexible Content</h2>
+<p>如果后台需要自由排序 Hero、图文、视频、表单等模块，ACF Flexible Content 比“几十个显示/隐藏字段”更合适。但仍应：</p>
+<ul>
+<li>限制允许的模块和嵌套深度。</li>
+<li>每种模块使用独立模板片段。</li>
+<li>为缺失字段提供可预期的空态。</li>
+<li>控制图片尺寸、视频来源和富文本允许标签。</li>
+<li>对最终组合做视觉回归和性能检查。</li>
+</ul>
+<p><img src="https://ihopefulchina.github.io/post-images/1566457148348.png" alt="布局模块示例" /></p>
+<p><img src="https://ihopefulchina.github.io/post-images/1566457258241.png" alt="页面效果示例" /></p>
+<p>参考：<a href="https://developer.wordpress.org/themes/classic-themes/basics/template-hierarchy/">WordPress Template Hierarchy</a>、<a href="https://www.advancedcustomfields.com/resources/radio-button/">ACF Radio Button</a>、<a href="https://www.advancedcustomfields.com/resources/group/">ACF Group</a>。</p>
 
     </article>
 
@@ -346,7 +371,7 @@
       
       <a class="post-nav__card" href="/post/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">留言表单、支持邮箱转发</span>
+        <span class="post-nav__title">WordPress 留言表单与邮件转发：安全、送达和隐私</span>
       </a>
       
       
@@ -408,6 +433,6 @@
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

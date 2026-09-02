@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>隐藏、禁止、删除Wordpress自带的更新和仪表盘 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>精简 WordPress 仪表盘，但不要关闭安全更新 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="Wordpress 更新有点频繁，最恶心的地方是，一旦更新，很多东西都已经没有了，所以最好禁止wordpress更新，仪表盘我个人不喜欢它，所以隐藏，看官们可以选择保留">
+<meta name="description" content="早期版本建议通过过滤 transient、移除检查 action 和关闭自动更新来“保持稳定”，这会让站点错过安全修复，也让管理员看不到真实风险。现代做法是精简无关仪表盘组件，同时建立可回滚的更新流程，而不是让更新系统失明。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"隐藏、禁止、删除Wordpress自带的更新和仪表盘","url":"https://ihopefulchina.github.io/post/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/","description":"Wordpress 更新有点频繁，最恶心的地方是，一旦更新，很多东西都已经没有了，所以最好禁止wordpress更新，仪表盘我个人不喜欢它，所以隐藏，看官们可以选择保留","image":"/post-images/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan.png","datePublished":"2019-08-22T09:30:48+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/","name":"隐藏、禁止、删除Wordpress自带的更新和仪表盘","position":2}]}</script>
-<meta property="og:title" content="隐藏、禁止、删除Wordpress自带的更新和仪表盘">
-<meta property="og:description" content="Wordpress 更新有点频繁，最恶心的地方是，一旦更新，很多东西都已经没有了，所以最好禁止wordpress更新，仪表盘我个人不喜欢它，所以隐藏，看官们可以选择保留">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"精简 WordPress 仪表盘，但不要关闭安全更新","url":"https://ihopefulchina.github.io/post/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/","description":"早期版本建议通过过滤 transient、移除检查 action 和关闭自动更新来“保持稳定”，这会让站点错过安全修复，也让管理员看不到真实风险。现代做法是精简无关仪表盘组件，同时建立可回滚的更新流程，而不是让更新系统失明。","datePublished":"2019-08-22T09:30:48+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/","name":"精简 WordPress 仪表盘，但不要关闭安全更新","position":2}]}</script>
+<meta property="og:title" content="精简 WordPress 仪表盘，但不要关闭安全更新">
+<meta property="og:description" content="早期版本建议通过过滤 transient、移除检查 action 和关闭自动更新来“保持稳定”，这会让站点错过安全修复，也让管理员看不到真实风险。现代做法是精简无关仪表盘组件，同时建立可回滚的更新流程，而不是让更新系统失明。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/">
-<meta name="twitter:title" content="隐藏、禁止、删除Wordpress自带的更新和仪表盘">
-<meta name="twitter:description" content="Wordpress 更新有点频繁，最恶心的地方是，一旦更新，很多东西都已经没有了，所以最好禁止wordpress更新，仪表盘我个人不喜欢它，所以隐藏，看官们可以选择保留">
-<meta name="twitter:image" content="/post-images/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="精简 WordPress 仪表盘，但不要关闭安全更新">
+<meta name="twitter:description" content="早期版本建议通过过滤 transient、移除检查 action 和关闭自动更新来“保持稳定”，这会让站点错过安全修复，也让管理员看不到真实风险。现代做法是精简无关仪表盘组件，同时建立可回滚的更新流程，而不是让更新系统失明。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">隐藏、禁止、删除Wordpress自带的更新和仪表盘</h1>
+  <h1 class="msg__bubble msg__bubble--title">精简 WordPress 仪表盘，但不要关闭安全更新</h1>
 </div>
 
 
@@ -246,65 +233,80 @@
     <div class="post-meta">
       <time datetime="2019-08-22T09:30:48+08:00">2019-08-22</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>2348 字</span>
+      <span>1684 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 3 分钟</span>
+      <span>约 2 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan.png" alt="隐藏、禁止、删除Wordpress自带的更新和仪表盘">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>Wordpress 更新有点频繁，最恶心的地方是，一旦更新，很多东西都已经没有了，所以最好禁止wordpress更新，仪表盘我个人不喜欢它，所以隐藏，看官们可以选择保留</p>
+      <p>早期版本建议通过过滤 transient、移除检查 action 和关闭自动更新来“保持稳定”，这会让站点错过安全修复，也让管理员看不到真实风险。现代做法是精简无关仪表盘组件，同时建立可回滚的更新流程，而不是让更新系统失明。</p>
 <!-- more -->
-<pre><code>
-function example_remove_dashboard_widgets() {
-        // Globalize the metaboxes array, this holds all the widgets for wp-admin
-	global $wp_meta_boxes;
-	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity']);
-	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now']);
-	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_recent_comments']);
-	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
-	unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']);
-	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
-	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
-	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']);
-	unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']);
-}
-add_action('wp_dashboard_setup', 'example_remove_dashboard_widgets' );
-function change_footer_admin () {return '';}
-add_filter('admin_footer_text', 'change_footer_admin', 9999);
-function change_footer_version() {return '';}
-add_filter( 'update_footer', 'change_footer_version', 9999);
-function annointed_admin_bar_remove() {
-	global $wp_admin_bar;
-	/* Remove their stuff */
-	$wp_admin_bar-&gt;remove_menu('wp-logo');
-}
-add_action('wp_before_admin_bar_render', 'annointed_admin_bar_remove', 0);
-add_filter('admin_title', 'wpdx_custom_admin_title', 10, 2);
-function wpdx_custom_admin_title($admin_title, $title){
-	return $title.' &amp;lsaquo; '.' 这里可以填写title名字';
-}
-add_filter('pre_site_transient_update_core', create_function('$a', &quot;return null;&quot;)); // 关闭核心提示
-add_filter('pre_site_transient_update_plugins', create_function('$a', &quot;return null;&quot;)); // 关闭插件提示
-add_filter('pre_site_transient_update_themes', create_function('$a', &quot;return null;&quot;)); // 关闭主题提示
-add_filter( 'automatic_updater_disabled', '__return_true' );//禁止自动更新
-remove_action('admin_init', '_maybe_update_core'); // 禁止检查更新
-remove_action('admin_init', '_maybe_update_plugins'); // 禁止更新插件
-remove_action('admin_init', '_maybe_update_themes'); // 禁止更新主题
-add_filter( 'wpcf7_validate_configuration', '__return_false' );
-add_filter( 'post_thumbnail_html', 'remove_width_attribute', 10 );
+<h2 id="heading">安全地移除仪表盘组件</h2>
+<pre><code class="language-php">&lt;?php
+add_action(
+    'wp_dashboard_setup',
+    function (): void {
+        if (
+            current_user_can( 'manage_options' )
+        ) {
+            return;
+        }
+
+        remove_meta_box(
+            'dashboard_quick_press',
+            'dashboard',
+            'side'
+        );
+        remove_meta_box(
+            'dashboard_primary',
+            'dashboard',
+            'side'
+        );
+        remove_meta_box(
+            'dashboard_activity',
+            'dashboard',
+            'normal'
+        );
+        remove_action(
+            'welcome_panel',
+            'wp_welcome_panel'
+        );
+    }
+);
 </code></pre>
-<p>用上函数包含隐藏、禁止、删除Wordpress自带的更新和仪表盘，还有修改title名字</p>
+<p>应先在浏览器开发者工具或 <code>$wp_meta_boxes</code> 的调试输出中确认当前组件 ID。插件可能注册自己的仪表盘卡片，不能假设多年不变。</p>
+<h2 id="heading-1">不要使用的旧做法</h2>
+<p>以下思路都不应作为普通生产站默认配置：</p>
+<ul>
+<li>过滤 <code>pre_site_transient_update_core/plugins/themes</code> 返回空值。</li>
+<li>移除 <code>_maybe_update_core</code> 等内部 action。</li>
+<li>全局设置 <code>automatic_updater_disabled</code>。</li>
+<li>只隐藏更新提示，却没有其他告警通道。</li>
+<li>使用 <code>create_function()</code> 创建回调；该函数已从 PHP 8 移除。</li>
+<li>为避免兼容问题长期冻结 WordPress Core、主题和插件。</li>
+</ul>
+<p>“更新后出问题”说明缺少依赖管理、测试和回滚，不说明永不更新更安全。</p>
+<h2 id="heading-2">一个可执行的更新流程</h2>
+<ol>
+<li><strong>资产清单：</strong> 记录 WordPress、PHP、主题、插件、数据库和服务器版本。</li>
+<li><strong>维护状态：</strong> 移除废弃插件，减少来源不明或无法升级的定制代码。</li>
+<li><strong>自动备份：</strong> 数据库与上传目录都要备份，并定期验证恢复。</li>
+<li><strong>暂存验证：</strong> 在与生产接近的环境升级，运行登录、表单、支付、搜索、缓存和定时任务等关键流程。</li>
+<li><strong>小步发布：</strong> 区分核心、主题和插件变更，保留明确回滚点。</li>
+<li><strong>发布后监控：</strong> 检查 PHP 错误、前端异常、队列、邮件、404 和性能。</li>
+<li><strong>安全响应：</strong> 高危漏洞不能等待下一次大版本维护窗口。</li>
+</ol>
+<p>托管平台或不可变部署可能禁止后台直接安装文件，这是部署策略，而不是隐藏更新事实。此时应由 CI、主机控制台或安全平台提供升级与告警，并明确负责人与响应时间。</p>
+<h2 id="heading-3">版本信息能否隐藏</h2>
+<p>从后台页脚移除版本号几乎不构成安全防护；攻击者可以通过静态资源、接口行为和已知漏洞探测站点。真正有效的是及时修复、最小权限、WAF/速率限制、日志和备份。</p>
+<p>可以为编辑优化后台品牌和信息密度，但管理员必须能看到版本、健康状态和待处理更新。可见性是维护能力的一部分。</p>
 
     </article>
 
@@ -344,13 +346,13 @@ add_filter( 'post_thumbnail_html', 'remove_width_attribute', 10 );
       
       <a class="post-nav__card" href="/post/jin-zhi-shan-chu-mou-xie-ye-mian/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">禁止删除某些页面</span>
+        <span class="post-nav__title">保护 WordPress 关键页面，避免被移入回收站或永久删除</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/yi-chu-yin-cang-shan-chu-wordpres-yi-xie-xiao-gong-ju-he-gong-neng/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">移除、隐藏、删除Wordpres一些小工具和功能</span>
+        <span class="post-nav__title">精简 WordPress 后台工具栏、帮助与显示选项</span>
       </a>
       
     </nav>
@@ -406,6 +408,6 @@ add_filter( 'post_thumbnail_html', 'remove_width_attribute', 10 );
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

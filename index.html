@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
   <title>ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -67,7 +67,7 @@
       "headline": "在 Mac 上，像用访达一样用阿里云 OSS。",
       "url": "https://ihopefulchina.github.io/post/YJuTn5/",
       "datePublished": "2026-08-18T13:27:33+08:00",
-      "description": "Ossuno\n\n  在 Mac 上，像用访达一样用阿里云 OSS。\n\n\n  官网\n  \u0026nbsp;·\u0026nbsp;\n  下载 Ossuno\n  \u0026nbsp;·\u0026nbsp;\n  使用 ossuno-mcp\n  \u0026nbsp;·\u0026nbsp;\n  使用支持\n  \u0026nbsp;·\u0026nbsp;\n  版本记录\n\nApple Silico...",
+      "description": "Ossuno\n\n  在 Mac 上，像用访达一样用阿里云 OSS。\n\n\n  官网\n  \u0026nbsp;·\u0026nbsp;\n  下载 Apple Silicon 版\n  \u0026nbsp;·\u0026nbsp;\n  下载 Intel 版\n  \u0026nbsp;·\u0026nbsp;\n  使用 ossuno-mcp\n  \u0026nbsp;·\u0026nbsp;\n  使用支...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -76,10 +76,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "uniapp-template ",
+      "headline": "uniapp-template：一个面向业务的 uni-app 工程模板",
       "url": "https://ihopefulchina.github.io/post/uniapp_template /",
       "datePublished": "2025-08-15T15:45:50+08:00",
-      "description": "一个基于 Vue 3 + TypeScript + Pinia 的 UniApp 跨平台开发模板项目，集成了完整的开发工具链和组件库。\n\n项目特性\n\n🚀 Vue 3 - 使用最新的 Vue 3 Composition API\n📱 跨平台 - 支持微信小程序、H5、App 等多个平台\n🔧 TypeScript - 完整的...",
+      "description": "uniapp-template 是我从实际跨端项目中整理出的 uni-app Monorepo 模板。它的目标不是堆叠依赖，而是把页面、路由、接口生成、状态管理和多端构建这些高频基础工作组织清楚，让新项目从一套可检查的工程基线开始。\n\n\n这是项目模板，不是开箱即用的完整业务系统。登录、权限、接口地址、隐私协议、应用标识...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -88,10 +88,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "👉👉👉爬蓝湖原型目录结构",
+      "headline": "把蓝湖原型目录导出为 CSV：一段用户脚本实践",
       "url": "https://ihopefulchina.github.io/post/qn_PbZX5g6/",
       "datePublished": "2025-02-14T17:47:03+08:00",
-      "description": "本插件用于爬 蓝湖原型目录结构，导出csv文件，可以用于飞书等 开发项目在线文档。\n\n\n原型\n\n在公司发现一个痛点, 需求是这样的:\n\n蓝湖原型，需要按照目录下来，然后生成飞书在线开发文档\n传统上，只能手动copy\n\n针对以上，写一个油猴脚本插件 爬蓝湖原型目录结构\n主要特性\n生成csv文件， 任务模块copy3份, ...",
+      "description": "“爬蓝湖原型目录结构”是一段运行在蓝湖网页中的用户脚本。它读取当前原型的目录层级，为每个页面生成“接口开发、页面开发、接口联调”三类任务，并导出 CSV，方便导入飞书多维表格继续分工和跟踪。\n\n\n它解决了什么问题\n原型评审结束后，团队通常还要把页面拆成任务、补充负责人、排期和联调状态。如果靠手动复制，目录层级容易丢失，...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -100,10 +100,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能",
+      "headline": "Vue 3 分页列表：用 usePullToRefresh 处理刷新与加载更多",
       "url": "https://ihopefulchina.github.io/post/4PEcn6ZhYy/",
       "datePublished": "2024-12-20T09:32:47+08:00",
-      "description": "在 Vue 3 中，我们可以通过自定义 Hook 来将业务逻辑从组件中抽离出来，使得我们的组件更加简洁和易于维护。今天，我们将介绍如何实现一个自定义的 PullToRefresh Hook，该 Hook 可以帮助我们在列表组件中轻松实现下拉刷新和上拉加载更多功能。\n\n背景\n在许多移动端应用或 Web 应用中，下拉刷新和...",
+      "description": "下拉刷新和上拉加载看似只是两个事件，真正容易出错的是状态一致性：刷新与翻页同时发生怎么办、失败后页码是否回退、列表总数如何判断、旧请求晚回来能不能覆盖新数据。下面用 Vue 3 组合式函数把这些边界集中处理。\n\n先定义接口契约\n不要让 Hook 猜测后端字段。先把分页结果收敛为稳定结构：\nexport interfac...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -112,10 +112,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装",
+      "headline": "Vue 3 useMutate：封装可控的命令式异步请求",
       "url": "https://ihopefulchina.github.io/post/aJA508HwI4/",
       "datePublished": "2024-10-17T13:39:42+08:00",
-      "description": "在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取、格式化、状态管理等逻辑，从而使得组件更简洁且易于复用。\n\n背景\n在前端开发中，...",
+      "description": "useMutate 适合封装“由用户动作触发一次异步请求”的场景，例如提交表单、重新获取详情或执行预览。一个可靠的版本至少要回答四个问题：数据的空值是什么、错误如何交给界面、并发时谁可以更新状态、组件卸载后是否还写状态。\n\n实现\nimport {\n  onScopeDispose,\n  ref,\n  shallowRe...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -124,10 +124,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装",
+      "headline": "ProTable 请求封装：明确协议适配与错误边界",
       "url": "https://ihopefulchina.github.io/post/vrE64S-kvU/",
       "datePublished": "2024-08-06T15:26:46+08:00",
-      "description": "在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— useProTableRequest，并深入讲解其工作原理和如何在项目中使用。\n\n功能...",
+      "description": "Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。\n\n先定义稳定的边界\n下面不从 Ant Design 的内部文件路径导入 Sort...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -136,10 +136,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "插件: 自动生成 Vue 3 项目中的路由配置",
+      "headline": "从 pages.json 生成 uni-app 类型化路由",
       "url": "https://ihopefulchina.github.io/post/ZxMrztTo35/",
       "datePublished": "2024-07-17T16:50:37+08:00",
-      "description": "在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。\n\n我写了一个如何通过自动化脚本生成 Vue 3 项目的路由配置文件。具体来说，将根据 pages.json 文件动态生成路由映...",
+      "description": "这篇文章讨论的不是 Vue Router，而是 uni-app 项目如何从 pages.json 生成可复用、可推导类型的路由常量。在 uni-app 中，pages.json 才是页面入口事实源；生成器的职责是减少业务代码里的路径字符串，而不是再维护一份独立路由表。\n\n完整实践可参考我的 uniapp-templat...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -148,10 +148,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "🙋🙋🙋AvatarCropper: 头像裁剪组件",
+      "headline": "AvatarCropper：Taro 头像裁剪组件的工程设计",
       "url": "https://ihopefulchina.github.io/post/7dtD7wCIDd/",
       "datePublished": "2024-07-09T14:51:15+08:00",
-      "description": "在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，结构，以及如何使用它。\n\n组件概述\nAvatarCropper 是一个用户自定义...",
+      "description": "头像裁剪不是“给图片加一个圆形遮罩”这么简单。可用于生产的组件需要把手势坐标、原图像素、Canvas 导出、文件体积和多端差异放在同一个模型里。本文不再把早期的样式原型描述成完整组件，而是整理一套可实现、可测试的设计。\n\n组件的职责\n一个边界清楚的 AvatarCropper 应负责：\n\n展示本地临时图片或允许访问的网...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -160,10 +160,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数",
+      "headline": "React URL 查询参数：解析与路由订阅",
       "url": "https://ihopefulchina.github.io/post/p9E7d0w867/",
       "datePublished": "2024-06-12T14:36:43+08:00",
-      "description": "在 React 中，我们经常需要获取和处理 URL 中的查询参数。特别是在单页应用（SPA）中，路由参数的管理和转换非常常见。为了提高代码的复用性和可维护性，我们可以使用 React 的 Hook 来封装这类逻辑，确保代码简洁、易于维护。通过实现一个自定义的 useRouterParams Hook 来演示如何获取 U...",
+      "description": "在 React 应用中读取 URL 查询参数，难点不在字符串解析，而在“URL 变化后组件何时重新渲染”。正则表达式通常会漏掉重复参数、+、编码字符和空值；直接读取 window.location.search 又不会自动订阅前端路由变化。\n\n首选路由库提供的 Hook\n如果项目使用 React Router，直接使用...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -172,10 +172,10 @@
     ,
     {
       "@type": "BlogPosting",
-      "headline": "自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用",
+      "headline": "Vue 3 useLockFn：为异步操作增加互斥锁",
       "url": "https://ihopefulchina.github.io/post/mHHMm1wDV3/",
       "datePublished": "2024-05-08T09:45:15+08:00",
-      "description": "在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。\n为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文将介绍如何使用 Vue 3 中的 ref 和 async 函数来实现一个 use...",
+      "description": "useLockFn 用来保证同一个异步动作在完成前不会再次进入，适合保存、支付前确认、生成文件等操作。它解决的是“执行中互斥”，不是搜索输入防抖，也不是固定频率节流。\n\n实现\nimport { readonly, ref } from 'vue'\n\ninterface UseLockFnOptions {\n  /**\n...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -196,17 +196,6 @@
 <meta name="twitter:url" content="https://ihopefulchina.github.io/">
 <meta name="twitter:title" content="ihopeful Blog">
 <meta name="twitter:description" content="🧑‍💻切图仔">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </head>
 <body data-typewriter="True">
 
@@ -435,13 +424,12 @@
 
   官网
   &amp;nbsp;·&amp;nbsp;
-  下载 Ossuno
+  下载 Apple Silicon 版
   &amp;nbsp;·&amp;nbsp;
-  使用 ossuno-mcp
-  &amp;nbsp;·&amp;nbsp;
-  使...</p>
+  下载 Intel 版
+  &amp;nbsp;·&amp;nbs...</p>
         
-        <time class="featured-card__time" datetime="2026-08-18T13:27:33+08:00">14 天前</time>
+        <time class="featured-card__time" datetime="2026-08-18T13:27:33+08:00">15 天前</time>
       </div>
     </a>
     
@@ -480,15 +468,11 @@
         <span class="post-item__main">
           <span class="post-item__title">
             
-            uniapp-template 
+            uniapp-template：一个面向业务的 uni-app 工程模板
           </span>
           
           
-          <span class="post-item__excerpt">一个基于 Vue 3 + TypeScript + Pinia 的 UniApp 跨平台开发模板项目，集成了完整的开发工具链和组件库。
-
-项目特性
-
-🚀 Vue...</span>
+          <span class="post-item__excerpt">uniapp-template 是我从实际跨端项目中整理出的 uni-app Monorepo 模板。它的目标不是堆叠依赖，而是把页面、路由、接口生成、状态管理...</span>
           
           
         </span>
@@ -503,18 +487,11 @@
         <span class="post-item__main">
           <span class="post-item__title">
             
-            👉👉👉爬蓝湖原型目录结构
+            把蓝湖原型目录导出为 CSV：一段用户脚本实践
           </span>
           
           
-          <span class="post-item__excerpt">本插件用于爬 蓝湖原型目录结构，导出csv文件，可以用于飞书等 开发项目在线文档。
-
-
-原型
-
-在公司发现一个痛点, 需求是这样的:
-
-蓝湖原型，需要按照目录下...</span>
+          <span class="post-item__excerpt">“爬蓝湖原型目录结构”是一段运行在蓝湖网页中的用户脚本。它读取当前原型的目录层级，为每个页面生成“接口开发、页面开发、接口联调”三类任务，并导出 CSV，方便导...</span>
           
           
         </span>
@@ -529,11 +506,11 @@
         <span class="post-item__main">
           <span class="post-item__title">
             
-            自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能
+            Vue 3 分页列表：用 usePullToRefresh 处理刷新与加载更多
           </span>
           
           
-          <span class="post-item__excerpt">在 Vue 3 中，我们可以通过自定义 Hook 来将业务逻辑从组件中抽离出来，使得我们的组件更加简洁和易于维护。今天，我们将介绍如何实现一个自定义的 Pull...</span>
+          <span class="post-item__excerpt">下拉刷新和上拉加载看似只是两个事件，真正容易出错的是状态一致性：刷新与翻页同时发生怎么办、失败后页码是否回退、列表总数如何判断、旧请求晚回来能不能覆盖新数据。下...</span>
           
           
         </span>
@@ -548,11 +525,11 @@
         <span class="post-item__main">
           <span class="post-item__title">
             
-            自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装
+            Vue 3 useMutate：封装可控的命令式异步请求
           </span>
           
           
-          <span class="post-item__excerpt">在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook...</span>
+          <span class="post-item__excerpt">useMutate 适合封装“由用户动作触发一次异步请求”的场景，例如提交表单、重新获取详情或执行预览。一个可靠的版本至少要回答四个问题：数据的空值是什么、错误...</span>
           
           
         </span>
@@ -567,11 +544,11 @@
         <span class="post-item__main">
           <span class="post-item__title">
             
-            自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装
+            ProTable 请求封装：明确协议适配与错误边界
           </span>
           
           
-          <span class="post-item__excerpt">在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 ...</span>
+          <span class="post-item__excerpt">Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得...</span>
           
           
         </span>
@@ -586,11 +563,11 @@
         <span class="post-item__main">
           <span class="post-item__title">
             
-            插件: 自动生成 Vue 3 项目中的路由配置
+            从 pages.json 生成 uni-app 类型化路由
           </span>
           
           
-          <span class="post-item__excerpt">在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由...</span>
+          <span class="post-item__excerpt">这篇文章讨论的不是 Vue Router，而是 uni-app 项目如何从 pages.json 生成可复用、可推导类型的路由常量。在 uni-app 中，pa...</span>
           
           
         </span>
@@ -605,11 +582,11 @@
         <span class="post-item__main">
           <span class="post-item__title">
             
-            🙋🙋🙋AvatarCropper: 头像裁剪组件
+            AvatarCropper：Taro 头像裁剪组件的工程设计
           </span>
           
           
-          <span class="post-item__excerpt">在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构...</span>
+          <span class="post-item__excerpt">头像裁剪不是“给图片加一个圆形遮罩”这么简单。可用于生产的组件需要把手势坐标、原图像素、Canvas 导出、文件体积和多端差异放在同一个模型里。本文不再把早期的...</span>
           
           
         </span>
@@ -719,6 +696,6 @@
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

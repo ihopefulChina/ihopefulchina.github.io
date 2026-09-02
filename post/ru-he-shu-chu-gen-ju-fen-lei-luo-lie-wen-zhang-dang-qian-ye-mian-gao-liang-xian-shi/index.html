@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>如何输出根据分类罗列文章，当前页面高亮显示 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>按分类输出文章，并可靠高亮当前分类与文章 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="我之前有写过类似这个功能，这次写的全一点，高亮显示实现功能也是用到这个$uri=explode('/',$_SERVER['REQUEST_URI']); 我贴一下代码，你们可以参考一下，个人暂时未找到更好的方法，有什么好的方法，可以在下面评论，我们探讨一下。">
+<meta name="description" content="侧边栏按分类展示视频或文章，并高亮当前分类、当前详情时，应比较 term ID 和 post ID。解析 URL 文本既无法处理别名变化，也会在多语言、分页和子目录站点中失效。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"如何输出根据分类罗列文章，当前页面高亮显示","url":"https://ihopefulchina.github.io/post/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/","description":"我之前有写过类似这个功能，这次写的全一点，高亮显示实现功能也是用到这个$uri=explode('/',$_SERVER['REQUEST_URI']); 我贴一下代码，你们可以参考一下，个人暂时未找到更好的方法，有什么好的方法，可以在下面评论，我们探讨一下。","image":"/post-images/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi.png","datePublished":"2019-08-22T14:13:54+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/","name":"如何输出根据分类罗列文章，当前页面高亮显示","position":2}]}</script>
-<meta property="og:title" content="如何输出根据分类罗列文章，当前页面高亮显示">
-<meta property="og:description" content="我之前有写过类似这个功能，这次写的全一点，高亮显示实现功能也是用到这个$uri=explode('/',$_SERVER['REQUEST_URI']); 我贴一下代码，你们可以参考一下，个人暂时未找到更好的方法，有什么好的方法，可以在下面评论，我们探讨一下。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"按分类输出文章，并可靠高亮当前分类与文章","url":"https://ihopefulchina.github.io/post/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/","description":"侧边栏按分类展示视频或文章，并高亮当前分类、当前详情时，应比较 term ID 和 post ID。解析 URL 文本既无法处理别名变化，也会在多语言、分页和子目录站点中失效。","datePublished":"2019-08-22T14:13:54+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/","name":"按分类输出文章，并可靠高亮当前分类与文章","position":2}]}</script>
+<meta property="og:title" content="按分类输出文章，并可靠高亮当前分类与文章">
+<meta property="og:description" content="侧边栏按分类展示视频或文章，并高亮当前分类、当前详情时，应比较 term ID 和 post ID。解析 URL 文本既无法处理别名变化，也会在多语言、分页和子目录站点中失效。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/">
-<meta name="twitter:title" content="如何输出根据分类罗列文章，当前页面高亮显示">
-<meta name="twitter:description" content="我之前有写过类似这个功能，这次写的全一点，高亮显示实现功能也是用到这个$uri=explode('/',$_SERVER['REQUEST_URI']); 我贴一下代码，你们可以参考一下，个人暂时未找到更好的方法，有什么好的方法，可以在下面评论，我们探讨一下。">
-<meta name="twitter:image" content="/post-images/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="按分类输出文章，并可靠高亮当前分类与文章">
+<meta name="twitter:description" content="侧边栏按分类展示视频或文章，并高亮当前分类、当前详情时，应比较 term ID 和 post ID。解析 URL 文本既无法处理别名变化，也会在多语言、分页和子目录站点中失效。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">如何输出根据分类罗列文章，当前页面高亮显示</h1>
+  <h1 class="msg__bubble msg__bubble--title">按分类输出文章，并可靠高亮当前分类与文章</h1>
 </div>
 
 
@@ -246,87 +233,131 @@
     <div class="post-meta">
       <time datetime="2019-08-22T14:13:54+08:00">2019-08-22</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>2416 字</span>
+      <span>3482 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 4 分钟</span>
+      <span>约 5 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi.png" alt="如何输出根据分类罗列文章，当前页面高亮显示">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>我之前有写过类似这个功能，这次写的全一点，高亮显示实现功能也是用到这个<code>$uri=explode('/',$_SERVER['REQUEST_URI']);</code></p>
-<p>我贴一下代码，你们可以参考一下，个人暂时未找到更好的方法，有什么好的方法，可以在下面评论，我们探讨一下。</p>
+      <p>侧边栏按分类展示视频或文章，并高亮当前分类、当前详情时，应比较 term ID 和 post ID。解析 URL 文本既无法处理别名变化，也会在多语言、分页和子目录站点中失效。</p>
 <!-- more -->
-<pre><code>$uri=explode('/',$_SERVER['REQUEST_URI']);
-&lt;?php
-					$categories = get_categories(&quot;hierarchical=1&amp;taxonomy=video&amp;hide_empty=0&quot;);
-					$cats=array();
-					foreach($categories as $tmpcat){
-						if($tmpcat-&gt;parent&gt;0){
-							$cats[$tmpcat-&gt;parent]['child'][$tmpcat-&gt;term_id]['name']=$tmpcat-&gt;name;
-							$cats[$tmpcat-&gt;parent]['child'][$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
-						}else{
-							$cats[$tmpcat-&gt;term_id]['name']=$tmpcat-&gt;name;
-							$cats[$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
-						}
-					}
-					ksort($cats);
-					foreach($cats as $key=&gt;$val){?&gt;
-						&lt;li class=&quot;cat-item&quot;&gt;
-							&lt;i class=&quot;fas fa-angle-down&quot;&gt;&lt;/i&gt;&lt;a&gt;&lt;?php echo $val[&quot;name&quot;]; ?&gt;&lt;/a&gt;
-							&lt;ul class=&quot;children&quot;&gt;
-								&lt;?php foreach($val[&quot;child&quot;] as $cat){ ?&gt;
-									&lt;li class=&quot;cat-item&quot;&gt;
-										&lt;a&lt;?php if (ucwords(str_replace('-',' ',$uri[3])) == $cat[&quot;name&quot;] ) {echo ' class=&quot;opeth&quot;';}?&gt;&gt;&lt;?php echo $cat[&quot;name&quot;]; ?&gt;&lt;/a&gt;
-										&lt;?php
-										$posts_array = get_posts(
-											array(
-												'posts_per_page' =&gt; 3,
-												'post_type' =&gt; 'videos',
-												'tax_query' =&gt; array(
-													array(
-														'taxonomy' =&gt; 'video',
-														'field' =&gt; 'term_id',
-														'terms' =&gt; $cat['term_id'],
-													)
-												)
-											)
-										);
-										if ($posts_array){?&gt;
-											&lt;ul class=&quot;children&quot;&gt;
-												&lt;?php
-												foreach( $posts_array as $post ){ 
-													$youtube = substr(basename(get_field('add_link')),8); 
-													$a =  substr(strrchr(rtrim(get_permalink(), '/'), '/'), 1);?&gt;
-													&lt;li&lt;?php if ($uri[4] == $a ) {echo ' class=&quot;opeth&quot;';} ?&gt;&gt;
-														&lt;div class=&quot;list-video&quot;&gt;
-															&lt;div class=&quot;col-md-4&quot;&gt;
-																&lt;iframe width=&quot;100%&quot; height=&quot;45px&quot; src=&quot;https://www.youtube.com/embed/&lt;?php echo $youtube;?&gt;&quot; frameborder=&quot;0&quot; showinfo=&quot;0&quot;&gt;&lt;/iframe&gt;
-															&lt;/div&gt;
-															&lt;div class=&quot;col-md-8&quot;&gt;
-																&lt;a href=&quot;&lt;?php echo get_permalink(); ?&gt;&quot;&gt;&lt;?php echo get_the_title(); ?&gt;&lt;/a&gt;
-															&lt;/div&gt;
-															&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
-														&lt;/div&gt;
-													&lt;/li&gt;
-												&lt;?php } ?&gt;
-											&lt;/ul&gt;
-										&lt;?php } ?&gt;
-									&lt;/li&gt;
-								&lt;?php } ?&gt;
-							&lt;/ul&gt;
-						&lt;/li&gt;
-					&lt;?php } ?&gt;
+<p>以下示例假设自定义文章类型为 <code>video</code>，分层分类法也名为 <code>video_category</code>。</p>
+<pre><code class="language-php">&lt;?php
+$current_term_id = 0;
+$current_post_id = is_singular( 'video' )
+    ? get_queried_object_id()
+    : 0;
+
+if ( is_tax( 'video_category' ) ) {
+    $current_term_id = get_queried_object_id();
+}
+
+$terms = get_terms(
+    array(
+        'taxonomy'   =&gt; 'video_category',
+        'parent'     =&gt; 0,
+        'hide_empty' =&gt; true,
+        'orderby'    =&gt; 'name',
+    )
+);
+
+if ( is_wp_error( $terms ) ) {
+    return;
+}
+?&gt;
+
+&lt;nav aria-label=&quot;视频分类&quot;&gt;
+    &lt;ul class=&quot;video-navigation&quot;&gt;
+        &lt;?php foreach ( $terms as $term ) : ?&gt;
+            &lt;?php
+            $term_url = get_term_link( $term );
+
+            if ( is_wp_error( $term_url ) ) {
+                continue;
+            }
+
+            $videos = new WP_Query(
+                array(
+                    'post_type'              =&gt; 'video',
+                    'post_status'            =&gt; 'publish',
+                    'posts_per_page'         =&gt; 3,
+                    'no_found_rows'          =&gt; true,
+                    'ignore_sticky_posts'    =&gt; true,
+                    'tax_query'              =&gt; array(
+                        array(
+                            'taxonomy' =&gt; 'video_category',
+                            'field'    =&gt; 'term_id',
+                            'terms'    =&gt; array( $term-&gt;term_id ),
+                        ),
+                    ),
+                )
+            );
+            ?&gt;
+
+            &lt;li&gt;
+                &lt;a
+                    href=&quot;&lt;?php echo esc_url( $term_url ); ?&gt;&quot;
+                    &lt;?php
+                    if ( $term-&gt;term_id === $current_term_id ) {
+                        echo 'aria-current=&quot;page&quot;';
+                    }
+                    ?&gt;
+                &gt;
+                    &lt;?php echo esc_html( $term-&gt;name ); ?&gt;
+                &lt;/a&gt;
+
+                &lt;?php if ( $videos-&gt;have_posts() ) : ?&gt;
+                    &lt;ul&gt;
+                        &lt;?php while ( $videos-&gt;have_posts() ) : ?&gt;
+                            &lt;?php $videos-&gt;the_post(); ?&gt;
+                            &lt;li&gt;
+                                &lt;a
+                                    href=&quot;&lt;?php the_permalink(); ?&gt;&quot;
+                                    &lt;?php
+                                    if ( get_the_ID() === $current_post_id ) {
+                                        echo 'aria-current=&quot;page&quot;';
+                                    }
+                                    ?&gt;
+                                &gt;
+                                    &lt;?php the_title(); ?&gt;
+                                &lt;/a&gt;
+                            &lt;/li&gt;
+                        &lt;?php endwhile; ?&gt;
+                    &lt;/ul&gt;
+                &lt;?php endif; ?&gt;
+
+                &lt;?php wp_reset_postdata(); ?&gt;
+            &lt;/li&gt;
+        &lt;?php endforeach; ?&gt;
+    &lt;/ul&gt;
+&lt;/nav&gt;
 </code></pre>
+<p>CSS 可以基于语义属性高亮，不需要额外把 URL 转成 class：</p>
+<pre><code class="language-css">.video-navigation [aria-current=&quot;page&quot;] {
+  color: #0b57d0;
+  font-weight: 700;
+  text-decoration-thickness: 0.15em;
+}
+</code></pre>
+<h2 id="heading">分层分类如何处理</h2>
+<p>如果导航需要顶级和二级分类，可以：</p>
+<ol>
+<li>先查询顶级 term。</li>
+<li>为每个顶级 term 查询 <code>parent =&gt; $term-&gt;term_id</code> 的直属子项。</li>
+<li>使用当前 term 的 <code>get_ancestors()</code> 判断哪个父级应展开。</li>
+<li>用递归模板函数渲染，并限制最大层级。</li>
+</ol>
+<p>不要把所有 term 塞进数组后默认每个父项都有 <code>child</code> 键；没有子分类时必须正常输出。</p>
+<h2 id="-iframe">不建议在列表里直接嵌入多个 iframe</h2>
+<p>旧实现为每篇视频创建 YouTube iframe，会增加网络请求、拖慢首屏并带来 Cookie/隐私问题。导航只输出缩略图和链接更稳妥；真正的视频播放器放在详情页，并使用允许的嵌入方式、懒加载和清晰标题。</p>
+<p>如果分类很多或每组都查询文章，这同样会形成 N+1 查询。大规模站点应缓存导航、限制展示项或改成异步按需加载。</p>
 
     </article>
 
@@ -366,13 +397,13 @@
       
       <a class="post-nav__card" href="/post/ru-he-yong-tag-fang-shi-chuan-lian-zi-ding-yi-fen-lei-shi-xian-xiang-guan-wen-zhang-chuan-lian-gong-neng/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">如何用TAG方式串联自定义分类(实现相关文章串联功能)</span>
+        <span class="post-nav__title">用标签关联不同文章类型，并支持 ACF 人工覆盖</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">留言表单、支持邮箱转发</span>
+        <span class="post-nav__title">WordPress 留言表单与邮件转发：安全、送达和隐私</span>
       </a>
       
     </nav>
@@ -428,6 +459,6 @@
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>如何在导航栏添加图片？ - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>如何在 WordPress 导航菜单中添加图片？ - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,33 +52,19 @@
   
 
 
-<meta name="description" content="很多客户有在导航栏添加产品图片的需求，Wordpress不支持这一项，需要我们去创建和自定义。">
+<meta name="description" content="导航菜单需要图标或缩略图时，可以给菜单项增加一个图片字段，再通过 WordPress 菜单过滤器输出。图片应保存为媒体附件 ID，由 wp_get_attachment_image() 生成尺寸、宽高和响应式属性。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/ru-he-zai-dao-hang-lan-tian-jia-tu-pian/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"如何在导航栏添加图片？","url":"https://ihopefulchina.github.io/post/ru-he-zai-dao-hang-lan-tian-jia-tu-pian/","description":"很多客户有在导航栏添加产品图片的需求，Wordpress不支持这一项，需要我们去创建和自定义。","image":"/post-images/ru-he-zai-dao-hang-lan-tian-jia-tu-pian.png","datePublished":"2019-08-22T09:07:44+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/ru-he-zai-dao-hang-lan-tian-jia-tu-pian/","name":"如何在导航栏添加图片？","position":2}]}</script>
-<meta property="og:title" content="如何在导航栏添加图片？">
-<meta property="og:description" content="很多客户有在导航栏添加产品图片的需求，Wordpress不支持这一项，需要我们去创建和自定义。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"如何在 WordPress 导航菜单中添加图片？","url":"https://ihopefulchina.github.io/post/ru-he-zai-dao-hang-lan-tian-jia-tu-pian/","description":"导航菜单需要图标或缩略图时，可以给菜单项增加一个图片字段，再通过 WordPress 菜单过滤器输出。图片应保存为媒体附件 ID，由 wp_get_attachment_image() 生成尺寸、宽高和响应式属性。","datePublished":"2019-08-22T09:07:44+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/ru-he-zai-dao-hang-lan-tian-jia-tu-pian/","name":"如何在 WordPress 导航菜单中添加图片？","position":2}]}</script>
+<meta property="og:title" content="如何在 WordPress 导航菜单中添加图片？">
+<meta property="og:description" content="导航菜单需要图标或缩略图时，可以给菜单项增加一个图片字段，再通过 WordPress 菜单过滤器输出。图片应保存为媒体附件 ID，由 wp_get_attachment_image() 生成尺寸、宽高和响应式属性。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/ru-he-zai-dao-hang-lan-tian-jia-tu-pian/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/ru-he-zai-dao-hang-lan-tian-jia-tu-pian.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/ru-he-zai-dao-hang-lan-tian-jia-tu-pian/">
-<meta name="twitter:title" content="如何在导航栏添加图片？">
-<meta name="twitter:description" content="很多客户有在导航栏添加产品图片的需求，Wordpress不支持这一项，需要我们去创建和自定义。">
-<meta name="twitter:image" content="/post-images/ru-he-zai-dao-hang-lan-tian-jia-tu-pian.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.47/dist/katex.min.css" crossorigin="anonymous">
+<meta name="twitter:title" content="如何在 WordPress 导航菜单中添加图片？">
+<meta name="twitter:description" content="导航菜单需要图标或缩略图时，可以给菜单项增加一个图片字段，再通过 WordPress 菜单过滤器输出。图片应保存为媒体附件 ID，由 wp_get_attachment_image() 生成尺寸、宽高和响应式属性。">
 </head>
 <body data-typewriter="True">
 
@@ -237,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">如何在导航栏添加图片？</h1>
+  <h1 class="msg__bubble msg__bubble--title">如何在 WordPress 导航菜单中添加图片？</h1>
 </div>
 
 
@@ -247,53 +233,102 @@
     <div class="post-meta">
       <time datetime="2019-08-22T09:07:44+08:00">2019-08-22</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>936 字</span>
+      <span>1931 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 1 分钟</span>
+      <span>约 3 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/ru-he-zai-dao-hang-lan-tian-jia-tu-pian.png" alt="如何在导航栏添加图片？">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>很多客户有在导航栏添加产品图片的需求，Wordpress不支持这一项，需要我们去创建和自定义。</p>
+      <p>导航菜单需要图标或缩略图时，可以给菜单项增加一个图片字段，再通过 WordPress 菜单过滤器输出。图片应保存为媒体附件 ID，由 <code>wp_get_attachment_image()</code> 生成尺寸、宽高和响应式属性。</p>
 <!-- more -->
-<p>function函数添加这个即可</p>
-<pre><code>add_filter('wp_nav_menu_objects', 'my_wp_nav_menu_objects', 10, 2);
-function my_wp_nav_menu_objects( $items, $args ) {
-	foreach( $items as &amp;$item ) {
-		$img = get_field('nav_product', $item);
-		if( $img ) {
-			$item-&gt;title = '&lt;img src=&quot;'.$img.'&quot;&gt;'.$item-&gt;title;
-		}
-	}
-	return $items;
+<h2 id="1-">1. 创建菜单项图片字段</h2>
+<p>使用 ACF 时，将字段组位置规则设为“菜单项等于全部”，新增图片字段 <code>menu_image</code>，返回格式选择“图片 ID”。</p>
+<p>图标只是装饰时，可将替代文本留空；图片承担导航含义时，应在媒体库中提供准确替代文本。不要把菜单标题原样重复成所有图标的 alt，否则屏幕阅读器会读两遍同样内容。</p>
+<h2 id="2-">2. 输出图片</h2>
+<p><code>nav_menu_item_title</code> 会在链接内容生成时过滤菜单标题：</p>
+<pre><code class="language-php">&lt;?php
+add_filter(
+    'nav_menu_item_title',
+    function (
+        string $title,
+        WP_Post $item,
+        stdClass $args,
+        int $depth
+    ): string {
+        if (
+            'primary' !== $args-&gt;theme_location ||
+            0 !== $depth
+        ) {
+            return $title;
+        }
+
+        $image_id = (int) get_field(
+            'menu_image',
+            $item
+        );
+
+        if ( ! $image_id ) {
+            return $title;
+        }
+
+        $image = wp_get_attachment_image(
+            $image_id,
+            'thumbnail',
+            false,
+            array(
+                'class'   =&gt; 'menu-item__image',
+                'loading' =&gt; 'lazy',
+            )
+        );
+
+        if ( ! $image ) {
+            return $title;
+        }
+
+        return sprintf(
+            '&lt;span class=&quot;menu-item__media&quot;&gt;%s&lt;/span&gt;' .
+            '&lt;span class=&quot;menu-item__label&quot;&gt;%s&lt;/span&gt;',
+            $image,
+            esc_html( wp_strip_all_tags( $title ) )
+        );
+    },
+    10,
+    4
+);
+</code></pre>
+<p>这段代码只处理 <code>primary</code> 菜单的顶级项目，避免后台菜单、页脚菜单和多层子菜单意外继承同一结构。</p>
+<p>如果其他插件需要在标题中保留 HTML，不要用这段简化过滤器覆盖它们的输出；改用自定义 <code>Walker_Nav_Menu</code>，在一个明确的渲染层组合图片与标题。</p>
+<h2 id="3-">3. 样式</h2>
+<pre><code class="language-css">.primary-menu .menu-item &gt; a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.menu-item__image {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
 }
 </code></pre>
-<p>其中<code> $item-&gt;title = '&lt;img src=&quot;'.$img.'&quot;&gt;'.$item-&gt;title;</code>意思是在title添加图片，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mi>m</mi><mi>g</mi><mtext>来着</mtext></mrow><annotation encoding="application/x-tex">img 来着</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">im</span><span class="mord mathnormal" style="margin-right:0.0359em;">g</span><span class="mord cjk_fallback">来着</span></span></span></span>img = get_field(&rsquo;nav_product&rsquo;, $item);，这个是ACF插件创建的自定义分类</p>
-<p>前台header.php里面的导航栏 不需要修改任何地方，因为已经注入了图片。</p>
-<pre><code>if (has_nav_menu('primary')) {
-							wp_nav_menu(array(
-								'theme_location' =&gt; 'primary',
-								'menu'              =&gt; 'primary',
-								'depth'             =&gt; 0,
-								'container'         =&gt; '',
-								'container_class'   =&gt; '',
-								'menu_class'        =&gt; 'nav navbar-nav',
-								'items_wrap'        =&gt; '&lt;ul class=&quot;%2$s&quot;&gt;%3$s&lt;/ul&gt;'
-							));
-						}
-
-	```
-</code></pre>
+<p>移动端导航需要检查图片是否挤压文字、展开按钮是否仍有足够点击区域，以及长标题换行是否正常。</p>
+<h2 id="-url">不要直接保存图片 URL</h2>
+<p>附件 ID 的优势包括：</p>
+<ul>
+<li>WordPress 可以生成 <code>srcset</code>、尺寸和宽高属性。</li>
+<li>替换域名、使用 CDN 或迁移站点时不需要逐项改 URL。</li>
+<li>删除附件后能明确得到空结果。</li>
+<li>可以使用媒体库已有的替代文本与裁剪尺寸。</li>
+</ul>
+<p>导航图片属于视觉增强。即使图片加载失败，文本标签也必须仍能完成导航。</p>
 
     </article>
 
@@ -333,13 +368,13 @@ function my_wp_nav_menu_objects( $items, $args ) {
       
       <a class="post-nav__card" href="/post/wordpress-tian-jia-zi-ding-yi-fen-lei/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">Wordpress 添加自定义分类</span>
+        <span class="post-nav__title">WordPress 注册自定义文章类型与分类法</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/jin-zhi-shan-chu-mou-xie-ye-mian/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">禁止删除某些页面</span>
+        <span class="post-nav__title">保护 WordPress 关键页面，避免被移入回收站或永久删除</span>
       </a>
       
     </nav>
@@ -395,6 +430,6 @@ function my_wp_nav_menu_objects( $items, $args ) {
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

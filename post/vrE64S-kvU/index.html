@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>ProTable 请求封装：明确协议适配与错误边界 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— useProTableRequest，并深入讲解其工作原理和如何在项目中使用。">
+<meta name="description" content="Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/vrE64S-kvU/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装","url":"https://ihopefulchina.github.io/post/vrE64S-kvU/","description":"在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— useProTableRequest，并深入讲解其工作原理和如何在项目中使用。","image":"/post-images/vrE64S-kvU.png","datePublished":"2024-08-06T15:26:46+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/vrE64S-kvU/","name":"自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装","position":2}]}</script>
-<meta property="og:title" content="自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装">
-<meta property="og:description" content="在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— useProTableRequest，并深入讲解其工作原理和如何在项目中使用。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"ProTable 请求封装：明确协议适配与错误边界","url":"https://ihopefulchina.github.io/post/vrE64S-kvU/","description":"Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。","datePublished":"2024-08-06T15:26:46+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/vrE64S-kvU/","name":"ProTable 请求封装：明确协议适配与错误边界","position":2}]}</script>
+<meta property="og:title" content="ProTable 请求封装：明确协议适配与错误边界">
+<meta property="og:description" content="Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/vrE64S-kvU/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/vrE64S-kvU.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/vrE64S-kvU/">
-<meta name="twitter:title" content="自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装">
-<meta name="twitter:description" content="在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— useProTableRequest，并深入讲解其工作原理和如何在项目中使用。">
-<meta name="twitter:image" content="/post-images/vrE64S-kvU.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="ProTable 请求封装：明确协议适配与错误边界">
+<meta name="twitter:description" content="Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装</h1>
+  <h1 class="msg__bubble msg__bubble--title">ProTable 请求封装：明确协议适配与错误边界</h1>
 </div>
 
 
@@ -246,234 +233,174 @@
     <div class="post-meta">
       <time datetime="2024-08-06T15:26:46+08:00">2024-08-06</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>5347 字</span>
+      <span>3583 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 8 分钟</span>
+      <span>约 5 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/vrE64S-kvU.png" alt="自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— useProTableRequest，并深入讲解其工作原理和如何在项目中使用。</p>
+      <p>Ant Design ProTable 的 <code>request</code> 约定很简单：接收分页、表单、排序和筛选参数，返回 <code>data</code>、<code>success</code> 与 <code>total</code>。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。</p>
 <!-- more -->
-<h3 id="heading">功能概述</h3>
-<p>useProTableRequest 是一个用于处理表格数据请求的自定义 Hook，主要包括以下功能：<br />
-•	数据请求：从服务器获取数据，并支持分页、排序和筛选功能。<br />
-•	数据缓存：缓存请求的参数和数据，方便在用户返回该页面时恢复表格状态（如分页、筛选等）。<br />
-•	参数格式化：可以自定义格式化请求参数和返回的数据</p>
-<h3 id="code">代码code</h3>
-<pre><code>import { ActionType, ProFormInstance, RequestData } from '@ant-design/pro-components'
-import { SortOrder } from 'antd/lib/table/interface'
-import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
+<h2 id="heading">先定义稳定的边界</h2>
+<p>下面不从 Ant Design 的内部文件路径导入 <code>SortOrder</code>，而是只依赖 ProTable 所需的结构。这样可以降低组件库目录调整带来的升级成本。</p>
+<pre><code class="language-ts">import { useCallback } from 'react'
 
-type Params&lt;U&gt; = U &amp; {
-  pageSize?: number
+type SortValue = 'ascend' | 'descend' | null
+type Sorter = Record&lt;string, SortValue&gt;
+type Filter = Record&lt;
+  string,
+  Array&lt;string | number | boolean&gt; | null
+&gt;
+
+type TableParams = {
   current?: number
-  keyword?: string
+  pageSize?: number
+  [key: string]: unknown
 }
 
-type Sort = Record&lt;string, SortOrder&gt;
+type ProTableResult&lt;T&gt; = {
+  data: T[]
+  success: boolean
+  total: number
+}
 
-type Filter = Record&lt;string, React.ReactText[] | null&gt;
-
-type Fn&lt;U, T&gt; = (
-  params: any,
-  sort: Sort,
+type ProTableRequest&lt;T, P extends TableParams&gt; = (
+  params: P,
+  sort: Sorter,
   filter: Filter
-) =&gt; Promise&lt;{ code?: number; msg?: string; data?: { list?: T[]; total?: number } }&gt;
+) =&gt; Promise&lt;ProTableResult&lt;T&gt;&gt;
 
-export interface IUseProTableRequestOption&lt;T, U = T&gt; {
-
-  /** 需要缓存的目标链接地址
-   *  目的: 缓存列表页的请求参数，例如分页、排序、搜索等参数，方便详情回列表页时自动恢复
-   *  @example [routeNames.userManagementUserListUserDetail]
-   */
-  cacheUrls?: string[]
-  /**
-   * 格式化数据
-   * 你可以对返回的数据做一些处理
-   */
-  dataFormat?: (data: T[]) =&gt; U[]
-  /**
-   * 格式化参数
-   *
-   * 前置处理请求参数。如果你需要传递给导出时。这会很有用
-   * @param params 将要传递给接口的参数
-   */
-  paramsFormat?(params: any): any
+interface PageResult&lt;T&gt; {
+  records: T[]
+  total: number
 }
 
-/**
- * antd pro table请求封装钩子
- * @param fn
- * @param option
- * @returns
- */
-export default function useProTableRequest&lt;T, U extends Record&lt;string, any&gt; = {}&gt;(
-  fn: Fn&lt;U, T&gt;,
-  option: IUseProTableRequestOption&lt;T&gt; = {}
-) {
-  const { dataFormat, cacheUrls } = option
-
-  // Table action 的引用，便于自定义触发
-  const actionRef = useRef&lt;ActionType&gt;()
-
-  const formRef = useRef&lt;ProFormInstance&gt;()
-  // 缓存请求参数
-  const requestParams = useRef&lt;Record&lt;string, any&gt;&gt;({})
-  // 数据缓存参数
-  const dataSourceRef = useRef&lt;T[]&gt;([])
-
-  /** 缓存参数 */
-  const _cacheData = useRef&lt;any&gt;(undefined)
-  /** 缓存key */
-  const cacheKey = genCacheKey()
-  /** 当前是否需要缓存 */
-  const needCache = !!cacheUrls?.length
-
-  // 表格请求
-  const tableRequst = useCallback(async (params: Params&lt;U&gt;, sort: Sort, filter: Filter) =&gt; {
-    const { current, ...rest } = params as Record&lt;string, any&gt;
-    const newParams: any = { ...rest, pageNum: current ?? params?.pageNum ?? 1 }
-
-    // 重置数据
-    let total = 0
-    let data: T[] = []
-
-    requestParams.current = option.paramsFormat ? option.paramsFormat(newParams) : newParams
-
-    try {
-      // 参数长度过长不处理
-      if (JSON.stringify(requestParams.current).length &lt; 1000) {
-        const res = await fn(requestParams.current, sort, filter)
-        // 如果当前列表为空并且pageNum不为1.则重新发起请求
-        if (!res.data?.list?.length &amp;&amp; requestParams.current.pageNum !== 1) {
-          setTimeout(() =&gt; {
-            actionRef.current?.reload(true)
-          })
-        }
-        const { list = [] as T[] } = res.data || {}
-        total = res.data?.total || 0
-        data = dataFormat ? dataFormat(list) : list
-        // 缓存数据
-        _cacheData.current = { ...requestParams.current }
-
-        dataSourceRef.current = data
-      }
-    } catch (error) {}
-    // }
-
-    return { data, success: true, total } as Partial&lt;RequestData&lt;T&gt;&gt;
-  }, [])
-
-  /** 恢复缓存 */
-  const restoreCache = () =&gt; {
-    if (needCache) {
-      const cacheString = window.sessionStorage.getItem(cacheKey)
-
-      if (cacheString) {
-        try {
-          const cacheParams = JSON.parse(cacheString)
-
-          /** 恢复请求参数 */
-          _cacheData.current = cacheParams
-          /** 恢复搜索表单 */
-          formRef.current?.setFieldsValue(cacheParams)
-          /** 恢复分页信息 */
-          actionRef.current?.setPageInfo?.({
-            current: cacheParams?.current ?? cacheParams?.pageNum ?? 1,
-            pageSize: cacheParams?.pageSize
-          })
-        } catch (error) {
-        } finally {
-          window.sessionStorage.removeItem(cacheKey) // 清除缓存数据
-        }
-      }
-    }
-  }
-  useLayoutEffect(() =&gt; {
-    restoreCache()
-  }, [])
-  /**
-   * 表格数据缓存处理
-   */
-  useEffect(() =&gt; {
-    return () =&gt; {
-      if (!needCache) {
-        return
-      }
-
-      // 组件卸载时将数据缓存至sessionStorage
-      const to = pick(window.location, ['hash', 'href', 'protocol', 'port', 'search', 'pathname', 'hostname'])
-
-      const toCache = cacheUrls?.some((url) =&gt; to?.href?.includes(url))
-      if (toCache) {
-        window.sessionStorage.setItem(cacheKey, JSON.stringify(_cacheData.current))
-      }
-    }
-  }, [])
-
-  return {
-    formRef,
-    actionRef,
-    /**
-     * 表格请求
-     */
-    request: tableRequst,
-    /**
-     * 表格query参数
-     */
-    params: requestParams,
-
-    /**
-     * 表格数据缓存
-     */
-    dataSource: dataSourceRef
-  }
+interface UseProTableRequestOptions&lt;T, P extends TableParams&gt; {
+  request: (
+    params: P,
+    sort: Sorter,
+    filter: Filter
+  ) =&gt; Promise&lt;PageResult&lt;T&gt;&gt;
+  onError?: (error: unknown) =&gt; void
 }
 
-/**
- * 从对象中选择指定的属性
- * @param obj
- * @param keys
- * @returns
- */
-function pick&lt;T extends Object, K extends keyof T&gt;(obj: T, keys: K[]): Pick&lt;T, K&gt; {
-  const result = {} as Pick&lt;T, K&gt;
-  keys.forEach((key) =&gt; {
-    if (key in obj) {
-      result[key] = obj[key]
+export function useProTableRequest&lt;
+  T,
+  P extends TableParams = TableParams
+&gt;(
+  options: UseProTableRequestOptions&lt;T, P&gt;
+): ProTableRequest&lt;T, P&gt; {
+  const { request, onError } = options
+
+  return useCallback(
+    async (params, sort, filter) =&gt; {
+      try {
+        const result = await request(params, sort, filter)
+
+        return {
+          data: result.records,
+          total: result.total,
+          success: true
+        }
+      } catch (error) {
+        onError?.(error)
+
+        return {
+          data: [],
+          total: 0,
+          success: false
+        }
+      }
+    },
+    [request, onError]
+  )
+}
+</code></pre>
+<p>这个 Hook 只做两件事：</p>
+<ol>
+<li>把项目接口的 <code>records/total</code> 转成 ProTable 的返回结构。</li>
+<li>统一失败结果，并把错误交给页面或监控处理。</li>
+</ol>
+<h2 id="heading-1">使用示例</h2>
+<pre><code class="language-tsx">import { useCallback } from 'react'
+import { ProTable } from '@ant-design/pro-components'
+import { message } from 'antd'
+
+export function UserTable() {
+  const queryUsers = useCallback(
+    async (
+      params: TableParams,
+      sort: Sorter,
+      filter: Filter
+    ) =&gt; {
+      const response = await userService.page({
+        page: params.current ?? 1,
+        pageSize: params.pageSize ?? 20,
+        keyword: params.keyword,
+        sort,
+        filter
+      })
+
+      return {
+        records: response.records,
+        total: response.total
+      }
+    },
+    []
+  )
+
+  const request = useProTableRequest({
+    request: queryUsers,
+    onError: () =&gt; {
+      message.error('用户列表加载失败')
     }
   })
-  return result
-}
 
-/**
- * 生成缓存键值
- * @param key key
- * @returns
- */
-function genCacheKey(key?: string | ((ok: string) =&gt; string)) {
-  const hostKey = encodeURIComponent(window.location.href.replace(/http(s)?:\/\//, ''))
-  if (typeof key === 'function') {
-    return key(hostKey)
-  }
-  return key || hostKey
+  return (
+    &lt;ProTable&lt;User&gt;
+      rowKey=&quot;id&quot;
+      columns={columns}
+      request={request}
+      pagination={{ defaultPageSize: 20 }}
+    /&gt;
+  )
 }
 </code></pre>
-<h3 id="heading-1">简单实例</h3>
-<pre><code> const { request, actionRef, formRef } = useProTableRequest(api['/admin/mall/banner/queryList_GET'])
+<p>传入 Hook 的 <code>request</code> 和 <code>onError</code> 应保持稳定。若直接在 JSX 每次创建新函数，<code>useCallback</code> 无法带来稳定引用，表格还可能因依赖变化产生额外请求。</p>
+<h2 id="heading-2">排序参数需要显式翻译</h2>
+<p>前端通常使用 <code>ascend/descend</code>，后端可能使用 <code>asc/desc</code>，字段名也未必相同。不要把整个 <code>sort</code> 对象原样透传给服务端：</p>
+<pre><code class="language-ts">function toOrderBy(sort: Sorter) {
+  const allowedFields = new Set(['createdAt', 'name'])
+
+  return Object.entries(sort)
+    .filter(
+      (entry): entry is [string, 'ascend' | 'descend'] =&gt;
+        allowedFields.has(entry[0]) &amp;&amp;
+        entry[1] !== null
+    )
+    .map(([field, order]) =&gt; ({
+      field,
+      direction: order === 'ascend' ? 'asc' : 'desc'
+    }))
+}
 </code></pre>
-<p><img src="https://ihopefulchina.github.io/post-images/1739777358410.png" alt="" /></p>
+<p>字段白名单不仅是类型问题，也能避免把任意客户端字段拼进数据库排序语句。</p>
+<h2 id="-hook-">不建议放进这个 Hook 的能力</h2>
+<ul>
+<li><strong>请求缓存：</strong> ProTable 自己管理请求触发；跨页面缓存应由数据层负责。</li>
+<li><strong>自动重置页码：</strong> 表单提交、重置和 <code>actionRef.current?.reloadAndRest?.()</code> 的语义应由页面明确选择。</li>
+<li><strong>静默成功：</strong> 捕获异常后仍返回 <code>success: true</code> 会让空数据和失败无法区分。</li>
+<li><strong>私有类型导入：</strong> <code>antd/es/...</code> 下的实现路径不是稳定的公共契约。</li>
+<li><strong>业务参数拼装：</strong> 门店、租户和权限范围应在业务请求函数中清晰出现。</li>
+</ul>
+<p>ProTable 官方文档：<a href="https://procomponents.ant.design/components/table">ProTable</a>。升级组件库时，应以项目锁定版本对应的 API 为准。</p>
 
     </article>
 
@@ -511,13 +438,13 @@ function genCacheKey(key?: string | ((ok: string) =&gt; string)) {
       
       <a class="post-nav__card" href="/post/ZxMrztTo35/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">插件: 自动生成 Vue 3 项目中的路由配置</span>
+        <span class="post-nav__title">从 pages.json 生成 uni-app 类型化路由</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/aJA508HwI4/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装</span>
+        <span class="post-nav__title">Vue 3 useMutate：封装可控的命令式异步请求</span>
       </a>
       
     </nav>
@@ -573,6 +500,6 @@ function genCacheKey(key?: string | ((ok: string) =&gt; string)) {
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

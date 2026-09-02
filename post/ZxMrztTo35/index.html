@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>插件: 自动生成 Vue 3 项目中的路由配置 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>从 pages.json 生成 uni-app 类型化路由 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。">
+<meta name="description" content="这篇文章讨论的不是 Vue Router，而是 uni-app 项目如何从 pages.json 生成可复用、可推导类型的路由常量。在 uni-app 中，pages.json 才是页面入口事实源；生成器的职责是减少业务代码里的路径字符串，而不是再维护一份独立路由表。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/ZxMrztTo35/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"插件: 自动生成 Vue 3 项目中的路由配置","url":"https://ihopefulchina.github.io/post/ZxMrztTo35/","description":"在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。","image":"/post-images/ZxMrztTo35.png","datePublished":"2024-07-17T16:50:37+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/ZxMrztTo35/","name":"插件: 自动生成 Vue 3 项目中的路由配置","position":2}]}</script>
-<meta property="og:title" content="插件: 自动生成 Vue 3 项目中的路由配置">
-<meta property="og:description" content="在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"从 pages.json 生成 uni-app 类型化路由","url":"https://ihopefulchina.github.io/post/ZxMrztTo35/","description":"这篇文章讨论的不是 Vue Router，而是 uni-app 项目如何从 pages.json 生成可复用、可推导类型的路由常量。在 uni-app 中，pages.json 才是页面入口事实源；生成器的职责是减少业务代码里的路径字符串，而不是再维护一份独立路由表。","datePublished":"2024-07-17T16:50:37+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/ZxMrztTo35/","name":"从 pages.json 生成 uni-app 类型化路由","position":2}]}</script>
+<meta property="og:title" content="从 pages.json 生成 uni-app 类型化路由">
+<meta property="og:description" content="这篇文章讨论的不是 Vue Router，而是 uni-app 项目如何从 pages.json 生成可复用、可推导类型的路由常量。在 uni-app 中，pages.json 才是页面入口事实源；生成器的职责是减少业务代码里的路径字符串，而不是再维护一份独立路由表。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/ZxMrztTo35/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/ZxMrztTo35.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/ZxMrztTo35/">
-<meta name="twitter:title" content="插件: 自动生成 Vue 3 项目中的路由配置">
-<meta name="twitter:description" content="在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。">
-<meta name="twitter:image" content="/post-images/ZxMrztTo35.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="从 pages.json 生成 uni-app 类型化路由">
+<meta name="twitter:description" content="这篇文章讨论的不是 Vue Router，而是 uni-app 项目如何从 pages.json 生成可复用、可推导类型的路由常量。在 uni-app 中，pages.json 才是页面入口事实源；生成器的职责是减少业务代码里的路径字符串，而不是再维护一份独立路由表。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">插件: 自动生成 Vue 3 项目中的路由配置</h1>
+  <h1 class="msg__bubble msg__bubble--title">从 pages.json 生成 uni-app 类型化路由</h1>
 </div>
 
 
@@ -246,115 +233,162 @@
     <div class="post-meta">
       <time datetime="2024-07-17T16:50:37+08:00">2024-07-17</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>2539 字</span>
+      <span>3732 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 4 分钟</span>
+      <span>约 6 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/ZxMrztTo35.png" alt="插件: 自动生成 Vue 3 项目中的路由配置">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。</p>
+      <p>这篇文章讨论的不是 Vue Router，而是 <strong>uni-app 项目如何从 <code>pages.json</code> 生成可复用、可推导类型的路由常量</strong>。在 uni-app 中，<code>pages.json</code> 才是页面入口事实源；生成器的职责是减少业务代码里的路径字符串，而不是再维护一份独立路由表。</p>
 <!-- more -->
-<p>我写了一个如何通过自动化脚本生成 Vue 3 项目的路由配置文件。具体来说，将根据 pages.json 文件动态生成路由映射，并且支持分包和 tabBar 配置。</p>
-<h3 id="heading">背景</h3>
-<p>在某些小程序框架（如 Taro 或 WeChat 小程序）中，路由配置是通过 pages.json 文件来维护的。这个文件定义了页面的路径、tabBar 配置、分包等信息。为了提高开发效率，我们希望能够自动从 pages.json 文件中读取这些信息，并生成对应的路由配置文件，而不需要手动去编写。</p>
-<h3 id="heading-1">实现思路</h3>
-<p>我们可以编写一个 Node.js 脚本，它会：<br />
-1.	读取 pages.json 文件。<br />
-2.	提取主包和分包的页面路由信息。<br />
-3.	生成符合 Vue 3 项目路由要求的配置。<br />
-4.	自动生成一个 TypeScript 文件来保存路由映射。</p>
-<h3 id="heading-2">代码实现</h3>
-<p>我们通过以下脚本实现自动生成路由配置的功能：</p>
-<pre><code>
-/* eslint-disable id-length */
-/* eslint-disable @typescript-eslint/no-var-requires */
-const fs = require('fs');
-const pagesJson = require('../src/pages.json');
+<p>完整实践可参考我的 <a href="https://github.com/ihopefulChina/uniapp-template">uniapp-template</a>。</p>
+<h2 id="heading">推荐的目标产物</h2>
+<p>假设 <code>pages.json</code> 中有首页、登录页和一个分包协议页，推荐生成结果如下：</p>
+<pre><code class="language-ts">// 此文件为路由映射，由脚本自动生成，请勿手动修改
+export const routeNames = {
+  pagesTabbarHomeIndex: '/pages/tabbar/home/index',
+  pagesLoginIndex: '/pages/login/index',
+  pagesCommonAgreementIndex: '/pages/common/agreement/index'
+} as const
 
-const tabBar = (pagesJson?.tabBar ?? [])?.list.map((item) =&gt; ({ url: `/${item.pagePath}` }));
+export const tabbar = [
+  { text: '首页', url: '/pages/tabbar/home/index' }
+] as const
 
-const mainPages = pagesJson?.pages?.map((it) =&gt; ({ name: it.name || '', path: it.path }));
+export type RouteKey = keyof typeof routeNames
+export type RoutePath =
+  (typeof routeNames)[keyof typeof routeNames]
+</code></pre>
+<p>业务代码从常量读取路径：</p>
+<pre><code class="language-ts">uni.navigateTo({
+  url: routeNames.pagesCommonAgreementIndex
+})
+</code></pre>
+<p>这样改页面路径时，生成文件的差异和 TypeScript 报错会暴露受影响调用处。</p>
+<p><code>as const</code> 不能省略；缺少它时，对象属性值通常会扩大成普通 <code>string</code>，<code>RoutePath</code> 就失去字面量联合的约束。我的模板仓库仍应把这一项和后文的重复键检查补进生成器，所以本文展示的是经过收紧的目标设计，而不是宣称旧脚本已经覆盖全部边界。</p>
+<h2 id="-jsonc-jsonparse">读取 JSONC，而不是直接 JSON.parse</h2>
+<p>uni-app 的配置文件可能包含注释。用 <code>jsonc-parser</code> 解析能保留这种使用习惯：</p>
+<pre><code class="language-js">import fs from 'node:fs/promises'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { parse } from 'jsonc-parser'
 
-const subPackages = [];
-/** 获取分包的路由 */
-pagesJson?.subPackages
-    ?.map((it) =&gt; {
-        if (it.pages) {
-            return it.pages.map((vl) =&gt; ({ name: vl.name || '', path: it.root + '/' + vl.path }));
-        }
-    })
-    ?.map((it) =&gt; {
-        if (it) {
-            subPackages.push(...it);
-        }
-    });
-const pages = [...mainPages, ...subPackages]; // 所有路由
+const currentDir = path.dirname(fileURLToPath(import.meta.url))
+const pagesJsonPath = path.resolve(
+  currentDir,
+  '../src/pages.json'
+)
 
-const tab = '  ';
-let str = `
-/**
- * 页面路由映射.
- * 请不要在此文件添加任何代码。因为生成后会全量覆盖
- * 运行 npm run route 或者 yarn route 自动生成
- */
+const raw = await fs.readFile(pagesJsonPath, 'utf8')
+const config = parse(raw)
+</code></pre>
+<p>如果解析结果不是对象、页面路径缺失或存在重复键，生成器应直接失败并返回非零退出码，避免把不完整文件当成成功结果提交。</p>
+<h2 id="heading-1">合并主包与分包</h2>
+<pre><code class="language-js">function collectPages(config) {
+  const mainPages = (config.pages ?? []).map((page) =&gt; ({
+    ...page,
+    fullPath: page.path
+  }))
 
-export const routeNames = {\n`;
+  const subPages = (config.subPackages ?? []).flatMap(
+    (pkg) =&gt;
+      (pkg.pages ?? []).map((page) =&gt; ({
+        ...page,
+        fullPath: [pkg.root, page.path]
+          .filter(Boolean)
+          .join('/')
+      }))
+  )
 
-str += pages
-    .map(({ name, path }, index) =&gt; {
-        const key = path.replace(/^\//, '').replace(/\/([a-zA-Z0-9])/g, (_m, p) =&gt; p.toUpperCase());
-        return `${tab}${tab}/** ${name} */\n${tab}${tab}${key}: '/${path}'${index !== pages.length - 1 ? ',' : ''}`;
-    })
-    .join('\n');
-
-str += '\n};\n\n';
-
-if (tabBar.length) {
-    str +=
-        'export const tabbar = ' +
-        JSON.stringify(tabBar, undefined, 4)
-            .replace(/&quot;(.+)&quot;:/g, '$1:')
-            .replace(/: &quot;(.+)&quot;/g, &quot;:'$1'&quot;);
-    str += ';\n\n';
+  return [...mainPages, ...subPages]
 }
-
-fs.writeFile('./src/routes.ts', str, (error) =&gt; {
-    // 创建失败
-    if (error) {
-        console.log(`生成失败❌：${error}`);
-    }
-    // 创建成功
-    console.log('🎉🎉🎉🎉路由生成✅');
-});
-
 </code></pre>
-<h3 id="heading-3">如何使用</h3>
-<ol>
-<li>将上述脚本文件保存为 generate-routes.js，并放置在项目的根目录中。</li>
-<li>在 package.json 中添加一个脚本命令来执行这个脚本：</li>
-</ol>
-<pre><code>       &quot;scripts&quot;: {
-       &quot;route&quot;: &quot;node generate-routes.js&quot;
-       }
+<p>这里要兼容 <code>subPackages</code> 不存在的项目，也要避免生成双斜杠。路径拼接应使用配置里的 URL 语义，而不是文件系统的 <code>path.join</code>；后者在 Windows 上可能生成反斜杠。</p>
+<h2 id="heading-2">生成稳定键名</h2>
+<pre><code class="language-js">function formatRouteKey(routePath) {
+  return routePath
+    .split('/')
+    .filter(Boolean)
+    .map((segment, index) =&gt;
+      index === 0
+        ? segment
+        : segment[0].toUpperCase() + segment.slice(1)
+    )
+    .join('')
+    .replace(/[^a-zA-Z0-9_$]/g, '')
+}
 </code></pre>
-<ol start="3">
-<li>运行命令生成路由配置：<br />
-<code>npm run route</code></li>
-</ol>
-<h3 id="heading-4">总结</h3>
-<p>通过这个自动化脚本，我们能够轻松地根据 pages.json 文件生成项目中的路由配置。这大大提高了开发效率，避免了手动维护路由的繁琐工作。每当 pages.json 文件更新时，我们只需重新运行脚本，路由配置就会自动更新。<br />
-<img src="https://ihopefulchina.github.io/post-images/1739757236685.png" alt="" /></p>
+<p>生成后还应检查：</p>
+<pre><code class="language-js">const seen = new Map()
+
+for (const page of collectPages(config)) {
+  const key = formatRouteKey(page.fullPath)
+
+  if (!key) {
+    throw new Error(
+      `无法从路径生成路由键：${page.fullPath}`
+    )
+  }
+
+  if (seen.has(key)) {
+    throw new Error(
+      `路由键冲突：${seen.get(key)} 与 ${page.fullPath}`
+    )
+  }
+
+  seen.set(key, page.fullPath)
+}
+</code></pre>
+<p>路径在清理特殊字符后可能得到同一个键。静默覆盖会让导航指向错误页面，所以冲突必须阻止生成。</p>
+<h2 id="heading-3">路由参数类型</h2>
+<p>模板同时维护 <code>RouteParams.d.ts</code>：</p>
+<pre><code class="language-ts">type DefaultParam = Record&lt;string, string&gt;
+
+export interface RouteParams {
+  /** 登录 */
+  pagesLoginIndex: {
+    redirect?: string
+  }
+
+  /** 协议 */
+  pagesCommonAgreementIndex: {
+    type: 'privacy' | 'service'
+  }
+}
+</code></pre>
+<p>新增路由时可以先生成 <code>DefaultParam</code>，但参数一旦进入真实业务，就应改成具体类型。生成器要保留开发者已经收紧的字段，不能每次执行都把接口覆盖回宽泛类型。</p>
+<h2 id="tabbar-">TabBar 页面</h2>
+<p>TabBar 页面通常不能使用普通的 <code>navigateTo</code>。生成器可以从 <code>config.tabBar?.list ?? []</code> 输出清单，导航封装据此选择 <code>switchTab</code>：</p>
+<pre><code class="language-ts">const tabbarPaths = new Set(
+  tabbar.map((item) =&gt; item.url)
+)
+
+export function navigate(path: RoutePath) {
+  if (tabbarPaths.has(path)) {
+    return uni.switchTab({ url: path })
+  }
+
+  return uni.navigateTo({ url: path })
+}
+</code></pre>
+<p>这里只根据路径决定导航方式；权限、登录重定向和业务参数不应该被隐藏在代码生成器里。</p>
+<h2 id="heading-4">监听文件变化</h2>
+<p>开发模式可以用 <code>chokidar</code> 监听 <code>pages.json</code>，然后以子进程执行同一生成脚本。实现时需要：</p>
+<ul>
+<li>对连续保存做防抖，避免多个生成进程同时写文件。</li>
+<li>使用临时文件写完后原子替换，避免开发服务器读到半个文件。</li>
+<li>生成失败时保留旧文件，并把错误清楚打印到终端。</li>
+<li>处理进程退出，关闭 watcher 与子进程。</li>
+<li>在 CI 中再执行一次生成，并检查工作区是否产生未提交差异。</li>
+</ul>
+<p>自动生成的价值来自“单一事实源 + 可验证产物”。如果生成器只是把手写错误复制到另一个文件，它反而会扩大维护成本。</p>
 
     </article>
 
@@ -392,13 +426,13 @@ fs.writeFile('./src/routes.ts', str, (error) =&gt; {
       
       <a class="post-nav__card" href="/post/7dtD7wCIDd/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">🙋🙋🙋AvatarCropper: 头像裁剪组件</span>
+        <span class="post-nav__title">AvatarCropper：Taro 头像裁剪组件的工程设计</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/vrE64S-kvU/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装</span>
+        <span class="post-nav__title">ProTable 请求封装：明确协议适配与错误边界</span>
       </a>
       
     </nav>
@@ -454,6 +488,6 @@ fs.writeFile('./src/routes.ts', str, (error) =&gt; {
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

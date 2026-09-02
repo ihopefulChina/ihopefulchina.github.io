@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>Wordpress theme主题结构解析 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>WordPress 主题结构：经典主题与区块主题 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="Wordpress定制站，结构不复杂，了解更多建议去多看看官方文档，下面这个图片是我的定制站需要的文件结构。">
+<meta name="description" content="WordPress 主题负责站点的展示层。现在需要先区分经典主题与区块主题：两者都使用模板层级，但文件类型、编辑方式和最小结构不同。把所有 PHP 功能都堆进 functions.php 的做法也需要重新审视。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/wordpress-theme-zhu-ti-jie-gou-jie-xi/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Wordpress theme主题结构解析","url":"https://ihopefulchina.github.io/post/wordpress-theme-zhu-ti-jie-gou-jie-xi/","description":"Wordpress定制站，结构不复杂，了解更多建议去多看看官方文档，下面这个图片是我的定制站需要的文件结构。","image":"/post-images/wordpress-theme-zhu-ti-jie-gou-jie-xi.png","datePublished":"2019-04-09T14:38:40+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/wordpress-theme-zhu-ti-jie-gou-jie-xi/","name":"Wordpress theme主题结构解析","position":2}]}</script>
-<meta property="og:title" content="Wordpress theme主题结构解析">
-<meta property="og:description" content="Wordpress定制站，结构不复杂，了解更多建议去多看看官方文档，下面这个图片是我的定制站需要的文件结构。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"WordPress 主题结构：经典主题与区块主题","url":"https://ihopefulchina.github.io/post/wordpress-theme-zhu-ti-jie-gou-jie-xi/","description":"WordPress 主题负责站点的展示层。现在需要先区分经典主题与区块主题：两者都使用模板层级，但文件类型、编辑方式和最小结构不同。把所有 PHP 功能都堆进 functions.php 的做法也需要重新审视。","datePublished":"2019-04-09T14:38:40+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/wordpress-theme-zhu-ti-jie-gou-jie-xi/","name":"WordPress 主题结构：经典主题与区块主题","position":2}]}</script>
+<meta property="og:title" content="WordPress 主题结构：经典主题与区块主题">
+<meta property="og:description" content="WordPress 主题负责站点的展示层。现在需要先区分经典主题与区块主题：两者都使用模板层级，但文件类型、编辑方式和最小结构不同。把所有 PHP 功能都堆进 functions.php 的做法也需要重新审视。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/wordpress-theme-zhu-ti-jie-gou-jie-xi/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/wordpress-theme-zhu-ti-jie-gou-jie-xi.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/wordpress-theme-zhu-ti-jie-gou-jie-xi/">
-<meta name="twitter:title" content="Wordpress theme主题结构解析">
-<meta name="twitter:description" content="Wordpress定制站，结构不复杂，了解更多建议去多看看官方文档，下面这个图片是我的定制站需要的文件结构。">
-<meta name="twitter:image" content="/post-images/wordpress-theme-zhu-ti-jie-gou-jie-xi.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="WordPress 主题结构：经典主题与区块主题">
+<meta name="twitter:description" content="WordPress 主题负责站点的展示层。现在需要先区分经典主题与区块主题：两者都使用模板层级，但文件类型、编辑方式和最小结构不同。把所有 PHP 功能都堆进 functions.php 的做法也需要重新审视。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">Wordpress theme主题结构解析</h1>
+  <h1 class="msg__bubble msg__bubble--title">WordPress 主题结构：经典主题与区块主题</h1>
 </div>
 
 
@@ -246,28 +233,107 @@
     <div class="post-meta">
       <time datetime="2019-04-09T14:38:40+08:00">2019-04-09</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>371 字</span>
+      <span>2381 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 1 分钟</span>
+      <span>约 3 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/wordpress-theme-zhu-ti-jie-gou-jie-xi.png" alt="Wordpress theme主题结构解析">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>Wordpress定制站，结构不复杂，了解更多建议去多看看官方文档，下面这个图片是我的定制站需要的文件结构。</p>
+      <p>WordPress 主题负责站点的展示层。现在需要先区分经典主题与区块主题：两者都使用模板层级，但文件类型、编辑方式和最小结构不同。把所有 PHP 功能都堆进 <code>functions.php</code> 的做法也需要重新审视。</p>
 <!-- more -->
-<p><img src="https://ihopefulchina.github.io/post-images/1566455945226.png" alt="" /></p>
-<p>需要注意的是product-content.php这个几个文件，是我随便创建的，是因为用到了判断，不同的判断逻辑对应不同的PHP文件，不用在意，index.php和style.css这2个文件必须有，不然挂不上主题。</p>
-<p>可能有人注意到了，我这里居然没有function函数，是因为我采用<a href="https://wordpress.org/plugins/code-snippets/">函数模块化的设计</a>，是在后台编写的，这是我必备插件，所以我没有function函数。</p>
+<p><img src="https://ihopefulchina.github.io/post-images/1566455945226.png" alt="早期主题结构示意" /></p>
+<h2 id="heading">经典主题</h2>
+<p>最小可运行结构：</p>
+<pre><code class="language-text">my-classic-theme/
+├── style.css
+└── index.php
+</code></pre>
+<p><code>style.css</code> 根目录文件用于注册主题信息，<code>index.php</code> 是最终回退模板。常见项目还会包含：</p>
+<pre><code class="language-text">my-classic-theme/
+├── assets/
+│   ├── css/
+│   ├── images/
+│   └── js/
+├── inc/
+├── template-parts/
+├── 404.php
+├── archive.php
+├── footer.php
+├── front-page.php
+├── functions.php
+├── header.php
+├── page.php
+├── search.php
+├── single.php
+├── style.css
+└── index.php
+</code></pre>
+<p>WordPress 按模板层级寻找最具体的文件，找不到时逐级回退到 <code>index.php</code>。不是每个文件都必需，也不应复制相同 Loop 到所有模板。</p>
+<h2 id="heading-1">区块主题</h2>
+<p>最小结构：</p>
+<pre><code class="language-text">my-block-theme/
+├── style.css
+└── templates/
+    └── index.html
+</code></pre>
+<p>实际项目通常还包括：</p>
+<pre><code class="language-text">my-block-theme/
+├── parts/
+├── patterns/
+├── styles/
+├── templates/
+├── functions.php
+├── style.css
+└── theme.json
+</code></pre>
+<p><code>theme.json</code> 统一配置设计 token、编辑器能力和全局样式；<code>templates/*.html</code> 与 <code>parts/*.html</code> 使用区块标记。区块主题允许在站点编辑器中修改模板，因此还要规划代码版本和数据库中用户自定义模板之间的关系。</p>
+<h2 id="stylecss-">style.css 不是普通注释文件</h2>
+<pre><code class="language-css">/*
+Theme Name: Acme Site
+Description: Acme 企业站主题
+Version: 1.0.0
+Text Domain: acme-site
+Requires at least: 6.5
+Requires PHP: 8.1
+License: GNU General Public License v2 or later
+*/
+</code></pre>
+<p><code>Requires at least</code> 和 <code>Requires PHP</code> 必须来自真实测试基线，不能照抄示例。公开发布主题还需要遵守 WordPress.org 的更多元数据和审查要求。</p>
+<h2 id="functionsphp-">functions.php 的边界</h2>
+<p>适合放在主题中的内容：</p>
+<ul>
+<li>注册主题支持、菜单位置和图片尺寸。</li>
+<li>加载主题 CSS 与 JavaScript。</li>
+<li>注册与展示紧密相关的区块样式、区块变体和模板辅助函数。</li>
+</ul>
+<p>更适合站点专用插件的内容：</p>
+<ul>
+<li>自定义文章类型与分类法。</li>
+<li>订单、表单、同步任务和外部 API。</li>
+<li>与当前主题无关的权限与业务规则。</li>
+<li>切换主题后仍必须保留的数据能力。</li>
+</ul>
+<p><code>functions.php</code> 会在主题启用时自动加载，但它不是一个无边界的全局工具箱。可以拆到 <code>inc/</code>，不过拆文件只是组织方式，真正要解决的是职责、命名空间、依赖和测试。</p>
+<p>需要临时管理小段代码时，可以评估 <a href="https://wordpress.org/plugins/code-snippets/">Code Snippets</a> 这类工具；生产使用仍要审查权限、备份、错误恢复与插件维护状态。</p>
+<h2 id="heading-2">资源加载</h2>
+<p>不要在 <code>header.php</code> 里硬编码多个 <code>&lt;script&gt;</code>。使用 <code>wp_enqueue_scripts</code>、<code>wp_enqueue_style()</code> 和 <code>wp_enqueue_script()</code>，声明依赖和版本，并只在需要的页面加载大资源。</p>
+<h2 id="heading-3">建议的开发检查</h2>
+<ul>
+<li>开启 <code>WP_DEBUG</code> 的开发环境，但不要向公网访客显示错误。</li>
+<li>使用 WordPress Coding Standards、PHP 静态分析和前端 lint。</li>
+<li>验证模板层级、404、搜索、分页、无内容状态和评论。</li>
+<li>检查键盘导航、标题层级、语言属性和图片替代文本。</li>
+<li>在暂存环境验证 WordPress、PHP 和关键插件升级。</li>
+<li>不直接修改父主题或 WordPress Core。</li>
+</ul>
+<p>官方参考：<a href="https://developer.wordpress.org/themes/">Theme Handbook</a>、<a href="https://developer.wordpress.org/themes/core-concepts/theme-structure/">Theme Structure</a>、<a href="https://developer.wordpress.org/themes/classic-themes/basics/template-hierarchy/">Classic Template Hierarchy</a>。</p>
 
     </article>
 
@@ -307,13 +373,13 @@
       
       <a class="post-nav__card" href="/post/wordpress-han-shu-dai-ma-mo-kuai-hua/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">WordPress函数代码模块化</span>
+        <span class="post-nav__title">WordPress 站点功能模块化：从 functions.php 到专用插件</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/guan-yu-ji-yu-wordpress-de-qi-ye-wang-zhan-da-jian-yi-xie-gan-xiang/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">关于基于Wordpress的企业网站搭建一些感想</span>
+        <span class="post-nav__title">关于 WordPress 企业网站建设的一些复盘</span>
       </a>
       
     </nav>
@@ -369,6 +435,6 @@
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

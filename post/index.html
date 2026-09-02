@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
   <title>博客 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -64,17 +64,6 @@
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/">
 <meta name="twitter:title" content="ihopeful Blog">
 <meta name="twitter:description" content="🧑‍💻切图仔">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </head>
 <body data-typewriter="True">
 
@@ -268,18 +257,17 @@
 
   官网
   &amp;nbsp;·&amp;nbsp;
-  下载 Ossuno
+  下载 Apple Silicon 版
   &amp;nbsp;·&amp;nbsp;
-  使用 ossuno-mcp
-  &amp;nbsp;·&amp;nbsp;
-  使...</p>
+  下载 Intel 版
+  &amp;nbsp;·&amp;nbs...</p>
       
       
       <div class="post-card__meta">
-        <time datetime="2026-08-18T13:27:33+08:00">14 天前</time>
+        <time datetime="2026-08-18T13:27:33+08:00">15 天前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>8 分钟</span>
+        <span>9 分钟</span>
         
         
       </div>
@@ -299,29 +287,23 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        uniapp-template 
+        uniapp-template：一个面向业务的 uni-app 工程模板
       </h3>
       
-      <p class="post-card__excerpt">一个基于 Vue 3 + TypeScript + Pinia 的 UniApp 跨平台开发模板项目，集成了完整的开发工具链和组件库。
+      <p class="post-card__excerpt">uniapp-template 是我从实际跨端项目中整理出的 uni-app Monorepo 模板。它的目标不是堆叠依赖，而是把页面、路由、接口生成、状态管理和多端构建这些高频基础工作组织清楚，让新项目从一套可检查的工程基线开始。
 
-项目特性
 
-🚀 Vue 3 - 使用最新的 Vue 3 Composition API
-📱 跨平台 -...</p>
+这...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2025-08-15T15:45:50+08:00">1 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>15 分钟</span>
+        <span>5 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/uniapp_template .png" alt="uniapp-template " loading="lazy">
     </div>
     
   </a>
@@ -334,34 +316,28 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        👉👉👉爬蓝湖原型目录结构
+        把蓝湖原型目录导出为 CSV：一段用户脚本实践
       </h3>
       
-      <p class="post-card__excerpt">本插件用于爬 蓝湖原型目录结构，导出csv文件，可以用于飞书等 开发项目在线文档。
+      <p class="post-card__excerpt">“爬蓝湖原型目录结构”是一段运行在蓝湖网页中的用户脚本。它读取当前原型的目录层级，为每个页面生成“接口开发、页面开发、接口联调”三类任务，并导出 CSV，方便导入飞书多维表格继续分工和跟踪。
 
 
-原型
-
-在公司发现一个痛点, 需求是这样的:
-
-蓝湖原型，需要按照目录下来，然后生成飞书在线开发文档
-传统上，只能手动copy
-
-针对以上，写一个油猴脚...</p>
+它解决了什么问题
+原型评审结束后，团队通常还...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2025-02-14T17:47:03+08:00">1 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>1 分钟</span>
+        <span>3 分钟</span>
         
         
       </div>
     </div>
     
     <div class="post-card__thumb">
-      <img src="/post-images/qn_PbZX5g6.png" alt="👉👉👉爬蓝湖原型目录结构" loading="lazy">
+      <img src="/post-images/qn_PbZX5g6.png" alt="把蓝湖原型目录导出为 CSV：一段用户脚本实践" loading="lazy">
     </div>
     
   </a>
@@ -374,24 +350,23 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能
+        Vue 3 分页列表：用 usePullToRefresh 处理刷新与加载更多
       </h3>
       
-      <p class="post-card__excerpt">在 Vue 3 中，我们可以通过自定义 Hook 来将业务逻辑从组件中抽离出来，使得我们的组件更加简洁和易于维护。今天，我们将介绍如何实现一个自定义的 PullToRefresh Hook，该 Hook 可以帮助我们在列表组件中轻松实现下拉...</p>
+      <p class="post-card__excerpt">下拉刷新和上拉加载看似只是两个事件，真正容易出错的是状态一致性：刷新与翻页同时发生怎么办、失败后页码是否回退、列表总数如何判断、旧请求晚回来能不能覆盖新数据。下面用 Vue 3 组合式函数把这些边界集中处理。
+
+先定义接口契约
+不要让 Ho...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2024-12-20T09:32:47+08:00">1 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>20 分钟</span>
+        <span>7 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/4PEcn6ZhYy.png" alt="自定义Hooks: usePullToRefresh(Vue3) - 列表组件中轻松实现下拉刷新和上拉加载更多功能" loading="lazy">
     </div>
     
   </a>
@@ -404,24 +379,23 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装
+        Vue 3 useMutate：封装可控的命令式异步请求
       </h3>
       
-      <p class="post-card__excerpt">在 Vue 3 中，组合式 API（Composition API）为我们提供了更灵活的方式来组织代码。今天，我们将实现一个通用的 useMutate Hook，用于处理数据请求并更新组件中的数据状态。这个 Hook 将帮助我们封装数据获取...</p>
+      <p class="post-card__excerpt">useMutate 适合封装“由用户动作触发一次异步请求”的场景，例如提交表单、重新获取详情或执行预览。一个可靠的版本至少要回答四个问题：数据的空值是什么、错误如何交给界面、并发时谁可以更新状态、组件卸载后是否还写状态。
+
+实现
+impor...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2024-10-17T13:39:42+08:00">1 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>3 分钟</span>
+        <span>4 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/aJA508HwI4.png" alt="自定义Hooks: useMutate(Vue3) - 简单的获取数据方法的一个封装" loading="lazy">
     </div>
     
   </a>
@@ -434,24 +408,21 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装
+        ProTable 请求封装：明确协议适配与错误边界
       </h3>
       
-      <p class="post-card__excerpt">在开发中，我们常常需要处理表格数据的请求、缓存、导出等功能。为了提高代码的复用性和简洁性，我们可以将这些逻辑封装到一个自定义 Hook 中。本文将介绍一个基于 Ant Design Pro Table 的表格请求封装 Hook —— use...</p>
+      <p class="post-card__excerpt">Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。
+...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2024-08-06T15:26:46+08:00">2 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>8 分钟</span>
+        <span>5 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/vrE64S-kvU.png" alt="自定义Hooks: useProTableRequest —— Ant Design Pro Table 请求封装" loading="lazy">
     </div>
     
   </a>
@@ -464,26 +435,20 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        插件: 自动生成 Vue 3 项目中的路由配置
+        从 pages.json 生成 uni-app 类型化路由
       </h3>
       
-      <p class="post-card__excerpt">在开发大型应用时，手动管理路由配置文件可能会非常繁琐且容易出错。特别是在多页面应用或使用分包的项目中，页面和路由路径可能会不断增加或变化。如果每次都手动更新路由配置文件，开发效率将会大大降低。
-
-我写了一个如何通过自动化脚本生成 Vue 3...</p>
+      <p class="post-card__excerpt">这篇文章讨论的不是 Vue Router，而是 uni-app 项目如何从 pages.json 生成可复用、可推导类型的路由常量。在 uni-app 中，pages.json 才是页面入口事实源；生成器的职责是减少业务代码里的路径字符串，...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2024-07-17T16:50:37+08:00">2 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>4 分钟</span>
+        <span>6 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/ZxMrztTo35.png" alt="插件: 自动生成 Vue 3 项目中的路由配置" loading="lazy">
     </div>
     
   </a>
@@ -496,24 +461,23 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        🙋🙋🙋AvatarCropper: 头像裁剪组件
+        AvatarCropper：Taro 头像裁剪组件的工程设计
       </h3>
       
-      <p class="post-card__excerpt">在这篇文章中，我们将深入探讨如何实现一个头像裁剪组件 (AvatarCropper)，它不仅可以裁剪图片，还能处理缩放、旋转等操作。该组件基于 Taro 框架构建，可以在多种环境中运行（如微信、支付宝小程序和Web）。我们将分析其核心功能，...</p>
+      <p class="post-card__excerpt">头像裁剪不是“给图片加一个圆形遮罩”这么简单。可用于生产的组件需要把手势坐标、原图像素、Canvas 导出、文件体积和多端差异放在同一个模型里。本文不再把早期的样式原型描述成完整组件，而是整理一套可实现、可测试的设计。
+
+组件的职责
+一个边...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2024-07-09T14:51:15+08:00">2 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>11 分钟</span>
+        <span>6 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/7dtD7wCIDd.png" alt="🙋🙋🙋AvatarCropper: 头像裁剪组件" loading="lazy">
     </div>
     
   </a>
@@ -526,24 +490,20 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数
+        React URL 查询参数：解析与路由订阅
       </h3>
       
-      <p class="post-card__excerpt">在 React 中，我们经常需要获取和处理 URL 中的查询参数。特别是在单页应用（SPA）中，路由参数的管理和转换非常常见。为了提高代码的复用性和可维护性，我们可以使用 React 的 Hook 来封装这类逻辑，确保代码简洁、易于维护。通...</p>
+      <p class="post-card__excerpt">在 React 应用中读取 URL 查询参数，难点不在字符串解析，而在“URL 变化后组件何时重新渲染”。正则表达式通常会漏掉重复参数、+、编码字符和空值；直接读取 window.location.search 又不会自动订阅前端路由变化。...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2024-06-12T14:36:43+08:00">2 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>3 分钟</span>
+        <span>5 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/p9E7d0w867.png" alt="自定义Hooks: useRouterParams(Web) - 获取 URL 中的查询参数" loading="lazy">
     </div>
     
   </a>
@@ -556,25 +516,23 @@
     <div class="post-card__body">
       <h3 class="post-card__title">
         
-        自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用
+        Vue 3 useLockFn：为异步操作增加互斥锁
       </h3>
       
-      <p class="post-card__excerpt">在现代前端开发中，防止用户快速重复点击按钮或执行某些操作是一个常见的需求。例如，用户在短时间内连续点击按钮时，我们可能只想执行第一次点击的操作，而忽略后续的重复点击。
-为了解决这个问题，我们可以使用一个 锁定机制 来防止函数的多次调用。本文...</p>
+      <p class="post-card__excerpt">useLockFn 用来保证同一个异步动作在完成前不会再次进入，适合保存、支付前确认、生成文件等操作。它解决的是“执行中互斥”，不是搜索输入防抖，也不是固定频率节流。
+
+实现
+import { readonly, ref } from &#39;v...</p>
       
       
       <div class="post-card__meta">
         <time datetime="2024-05-08T09:45:15+08:00">2 年前</time>
         
         <span class="dot" aria-hidden="true">·</span>
-        <span>2 分钟</span>
+        <span>4 分钟</span>
         
         
       </div>
-    </div>
-    
-    <div class="post-card__thumb">
-      <img src="/post-images/mHHMm1wDV3.png" alt="自定义Hooks: useLockFn(Vue3) - 防止频繁触发函数调用" loading="lazy">
     </div>
     
   </a>
@@ -654,6 +612,6 @@
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

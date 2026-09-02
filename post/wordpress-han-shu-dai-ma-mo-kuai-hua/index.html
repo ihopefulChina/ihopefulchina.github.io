@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>WordPress函数代码模块化 - ihopeful Blog</title>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>WordPress 站点功能模块化：从 functions.php 到专用插件 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="函数模块化，以简单、简洁、简约的方式添加代码片段到您的站点。再也没有必要去编辑主题的 functions.php 文件。">
+<meta name="description" content="我早期做过一个 WordPress-function-modular 项目，用来把常用函数按模块开关。它记录了当时解决 functions.php 膨胀问题的思路，但仓库多年未维护，不应直接当作现代生产插件安装。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/wordpress-han-shu-dai-ma-mo-kuai-hua/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"WordPress函数代码模块化","url":"https://ihopefulchina.github.io/post/wordpress-han-shu-dai-ma-mo-kuai-hua/","description":"函数模块化，以简单、简洁、简约的方式添加代码片段到您的站点。再也没有必要去编辑主题的 functions.php 文件。","image":"/post-images/wordpress-han-shu-dai-ma-mo-kuai-hua.jpg","datePublished":"2019-03-20T16:51:09+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/wordpress-han-shu-dai-ma-mo-kuai-hua/","name":"WordPress函数代码模块化","position":2}]}</script>
-<meta property="og:title" content="WordPress函数代码模块化">
-<meta property="og:description" content="函数模块化，以简单、简洁、简约的方式添加代码片段到您的站点。再也没有必要去编辑主题的 functions.php 文件。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"WordPress 站点功能模块化：从 functions.php 到专用插件","url":"https://ihopefulchina.github.io/post/wordpress-han-shu-dai-ma-mo-kuai-hua/","description":"我早期做过一个 WordPress-function-modular 项目，用来把常用函数按模块开关。它记录了当时解决 functions.php 膨胀问题的思路，但仓库多年未维护，不应直接当作现代生产插件安装。","datePublished":"2019-03-20T16:51:09+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/wordpress-han-shu-dai-ma-mo-kuai-hua/","name":"WordPress 站点功能模块化：从 functions.php 到专用插件","position":2}]}</script>
+<meta property="og:title" content="WordPress 站点功能模块化：从 functions.php 到专用插件">
+<meta property="og:description" content="我早期做过一个 WordPress-function-modular 项目，用来把常用函数按模块开关。它记录了当时解决 functions.php 膨胀问题的思路，但仓库多年未维护，不应直接当作现代生产插件安装。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/wordpress-han-shu-dai-ma-mo-kuai-hua/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/wordpress-han-shu-dai-ma-mo-kuai-hua.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/wordpress-han-shu-dai-ma-mo-kuai-hua/">
-<meta name="twitter:title" content="WordPress函数代码模块化">
-<meta name="twitter:description" content="函数模块化，以简单、简洁、简约的方式添加代码片段到您的站点。再也没有必要去编辑主题的 functions.php 文件。">
-<meta name="twitter:image" content="/post-images/wordpress-han-shu-dai-ma-mo-kuai-hua.jpg">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:title" content="WordPress 站点功能模块化：从 functions.php 到专用插件">
+<meta name="twitter:description" content="我早期做过一个 WordPress-function-modular 项目，用来把常用函数按模块开关。它记录了当时解决 functions.php 膨胀问题的思路，但仓库多年未维护，不应直接当作现代生产插件安装。">
 </head>
 <body data-typewriter="True">
 
@@ -236,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">WordPress函数代码模块化</h1>
+  <h1 class="msg__bubble msg__bubble--title">WordPress 站点功能模块化：从 functions.php 到专用插件</h1>
 </div>
 
 
@@ -246,26 +233,104 @@
     <div class="post-meta">
       <time datetime="2019-03-20T16:51:09+08:00">2019-03-20</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>146 字</span>
+      <span>2185 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 1 分钟</span>
+      <span>约 3 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/wordpress-han-shu-dai-ma-mo-kuai-hua.jpg" alt="WordPress函数代码模块化">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>函数模块化，以简单、简洁、简约的方式添加代码片段到您的站点。再也没有必要去编辑主题的 functions.php 文件。</p>
+      <p>我早期做过一个 <a href="https://github.com/ihopefulChina/Wordpress-function-modular">WordPress-function-modular</a> 项目，用来把常用函数按模块开关。它记录了当时解决 <code>functions.php</code> 膨胀问题的思路，但仓库多年未维护，不应直接当作现代生产插件安装。</p>
 <!-- more -->
-<p>Github地址：https://github.com/ihopefulChina/Wordpress-function-modular</p>
+<h2 id="heading">旧项目值得保留的想法</h2>
+<ul>
+<li>不把所有站点定制塞进一个巨大文件。</li>
+<li>不同功能可以独立启用、停用。</li>
+<li>公共入口集中加载模块，便于知道当前启用了什么。</li>
+<li>把可复用代码从具体主题中抽离。</li>
+</ul>
+<p>这些目标仍然成立，但“把很多代码片段 include 起来”还不等于可靠插件。现代实现还需要权限、nonce、命名冲突、升级、卸载、测试和依赖边界。</p>
+<h2 id="heading-1">一个小型站点插件结构</h2>
+<pre><code class="language-text">site-features/
+├── site-features.php
+├── src/
+│   ├── Admin.php
+│   ├── ContentTypes.php
+│   └── Security.php
+├── uninstall.php
+└── readme.txt
+</code></pre>
+<p>入口文件：</p>
+<pre><code class="language-php">&lt;?php
+/**
+ * Plugin Name: Site Features
+ * Description: 当前站点的内容类型与业务功能。
+ * Version: 1.0.0
+ * Requires PHP: 8.1
+ * Text Domain: site-features
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+require_once __DIR__ . '/src/ContentTypes.php';
+require_once __DIR__ . '/src/Admin.php';
+require_once __DIR__ . '/src/Security.php';
+
+add_action(
+    'plugins_loaded',
+    static function (): void {
+        Site_Features_Content_Types::register();
+        Site_Features_Admin::register();
+        Site_Features_Security::register();
+    }
+);
+</code></pre>
+<p>示例使用长前缀避免全局类名冲突。项目规模更大时可以使用 Composer PSR-4 自动加载，但新增依赖前要确认部署环境能够执行并提交构建产物或安装生产依赖。</p>
+<h2 id="heading-2">模块注册，而不是执行副作用</h2>
+<pre><code class="language-php">&lt;?php
+final class Site_Features_Admin {
+    public static function register(): void {
+        add_action(
+            'admin_menu',
+            array( self::class, 'add_menu' )
+        );
+    }
+
+    public static function add_menu(): void {
+        // 注册菜单，不在文件加载时直接输出。
+    }
+}
+</code></pre>
+<p>每个模块公开一个 <code>register()</code>，只负责挂接 hook。这样测试可以先加载类，再决定是否注册；代码阅读者也能从入口看清生命周期。</p>
+<h2 id="heading-3">功能开关的层级</h2>
+<ul>
+<li><strong>构建级：</strong> 某部署永远不需要的模块，不加载文件。</li>
+<li><strong>站点级：</strong> 由受权管理员配置，值存在 Options API。</li>
+<li><strong>用户级：</strong> 个人偏好存在 User Meta。</li>
+<li><strong>请求级：</strong> 由 capability、页面条件或业务状态决定。</li>
+</ul>
+<p>开关不是权限。即使后台不显示模块入口，服务端处理器仍必须检查 capability 和 nonce。</p>
+<h2 id="heading-4">数据与卸载</h2>
+<p>停用插件应该停止功能，但通常不删除数据；卸载才根据明确策略清理。重要业务数据默认保留，并在文档中说明如何导出和手动删除。</p>
+<p>数据库结构升级需要版本号、可重入迁移和失败恢复。不要在每次普通请求无条件运行重建逻辑。</p>
+<h2 id="heading-5">现代化旧仓库时的检查</h2>
+<ul>
+<li>删除已废弃或从 PHP 移除的 API，例如 <code>create_function()</code>。</li>
+<li>所有输入按语义验证和清洗，所有输出靠近渲染点转义。</li>
+<li>所有写操作检查 capability、nonce 和对象级权限。</li>
+<li>REST 路由提供真实 <code>permission_callback</code>。</li>
+<li>后台、前台、Cron、CLI 和 AJAX 有清楚入口。</li>
+<li>外部请求设置超时、错误处理和敏感日志边界。</li>
+<li>给关键 hook、迁移和卸载行为补自动化测试。</li>
+<li>声明并验证 WordPress/PHP 最低支持版本。</li>
+</ul>
+<p>旧仓库可以作为个人学习记录，但项目状态应写清楚。读者需要知道它是历史代码、实验项目还是持续维护的软件，这比一句“代码模块化”更重要。</p>
 
     </article>
 
@@ -308,7 +373,7 @@
       
       <a class="post-nav__card post-nav__card--next" href="/post/wordpress-theme-zhu-ti-jie-gou-jie-xi/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">Wordpress theme主题结构解析</span>
+        <span class="post-nav__title">WordPress 主题结构：经典主题与区块主题</span>
       </a>
       
     </nav>
@@ -364,6 +429,6 @@
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
   <title>获取指定分类的所有子分类链接、Description、Slug、自定义字段 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -52,32 +52,19 @@
   
 
 
-<meta name="description" content="Wordpress很难获取指定分类下的所有子分类。这需要我们绕路获取。 以下的方法适用于任何页面来获取所有子分类，仅供参考，如果不懂，可以联系我，或者多看几遍官方文档。 分类的标题、Description、Slug是Wordpress自带函数可以直接获取，自定义字段和链接需要通过ID的方式获取。">
+<meta name="description" content="已知父分类的 slug 或 ID 时，可以用 get_term_by() 定位父项，再用 get_terms() 查询子项。链接必须由 get_term_link() 生成，不要拼接 /products/{slug}/ 之类的路径。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"获取指定分类的所有子分类链接、Description、Slug、自定义字段","url":"https://ihopefulchina.github.io/post/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/","description":"Wordpress很难获取指定分类下的所有子分类。这需要我们绕路获取。 以下的方法适用于任何页面来获取所有子分类，仅供参考，如果不懂，可以联系我，或者多看几遍官方文档。 分类的标题、Description、Slug是Wordpress自带函数可以直接获取，自定义字段和链接需要通过ID的方式获取。","image":"/post-images/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan.png","datePublished":"2019-08-22T13:06:15+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"获取指定分类的所有子分类链接、Description、Slug、自定义字段","url":"https://ihopefulchina.github.io/post/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/","description":"已知父分类的 slug 或 ID 时，可以用 get_term_by() 定位父项，再用 get_terms() 查询子项。链接必须由 get_term_link() 生成，不要拼接 /products/{slug}/ 之类的路径。","datePublished":"2019-08-22T13:06:15+08:00","dateModified":"2026-05-02T21:11:22+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/","name":"获取指定分类的所有子分类链接、Description、Slug、自定义字段","position":2}]}</script>
 <meta property="og:title" content="获取指定分类的所有子分类链接、Description、Slug、自定义字段">
-<meta property="og:description" content="Wordpress很难获取指定分类下的所有子分类。这需要我们绕路获取。 以下的方法适用于任何页面来获取所有子分类，仅供参考，如果不懂，可以联系我，或者多看几遍官方文档。 分类的标题、Description、Slug是Wordpress自带函数可以直接获取，自定义字段和链接需要通过ID的方式获取。">
+<meta property="og:description" content="已知父分类的 slug 或 ID 时，可以用 get_term_by() 定位父项，再用 get_terms() 查询子项。链接必须由 get_term_link() 生成，不要拼接 /products/{slug}/ 之类的路径。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/">
 <meta name="twitter:title" content="获取指定分类的所有子分类链接、Description、Slug、自定义字段">
-<meta name="twitter:description" content="Wordpress很难获取指定分类下的所有子分类。这需要我们绕路获取。 以下的方法适用于任何页面来获取所有子分类，仅供参考，如果不懂，可以联系我，或者多看几遍官方文档。 分类的标题、Description、Slug是Wordpress自带函数可以直接获取，自定义字段和链接需要通过ID的方式获取。">
-<meta name="twitter:image" content="/post-images/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+<meta name="twitter:description" content="已知父分类的 slug 或 ID 时，可以用 get_term_by() 定位父项，再用 get_terms() 查询子项。链接必须由 get_term_link() 生成，不要拼接 /products/{slug}/ 之类的路径。">
 </head>
 <body data-typewriter="True">
 
@@ -246,55 +233,123 @@
     <div class="post-meta">
       <time datetime="2019-08-22T13:06:15+08:00">2019-08-22</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>1153 字</span>
+      <span>2972 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 1 分钟</span>
+      <span>约 4 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan.png" alt="获取指定分类的所有子分类链接、Description、Slug、自定义字段">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>Wordpress很难获取指定分类下的所有子分类。这需要我们绕路获取。<br />
-以下的方法适用于任何页面来获取所有子分类，仅供参考，如果不懂，可以联系我，或者多看几遍官方文档。<br />
-分类的标题、Description、Slug是Wordpress自带函数可以直接获取，自定义字段和链接需要通过ID的方式获取。</p>
+      <p>已知父分类的 slug 或 ID 时，可以用 <code>get_term_by()</code> 定位父项，再用 <code>get_terms()</code> 查询子项。链接必须由 <code>get_term_link()</code> 生成，不要拼接 <code>/products/{slug}/</code> 之类的路径。</p>
 <!-- more -->
-<p>Demo</p>
-<pre><code>&lt;?php
-$test = get_categories(&quot;taxonomy=product&amp;hide_empty=0&quot;);
-$cats=array(); 
-foreach($test as $tmpcat){
-	if($tmpcat-&gt;parent==0){
-		$cats[$tmpcat-&gt;term_id]['name']=$tmpcat-&gt;name;
-		$cats[$tmpcat-&gt;term_id]['slug']=$tmpcat-&gt;slug;
-		$cats[$tmpcat-&gt;term_id]['term_id']=$tmpcat-&gt;term_id;
-		$cats[$tmpcat-&gt;term_id]['description']=$tmpcat-&gt;description;
-	}
+<p>以下示例假设分类法名为 <code>product_category</code>，父分类 slug 为 <code>hardware</code>。</p>
+<pre><code class="language-php">&lt;?php
+$taxonomy = 'product_category';
+$parent   = get_term_by( 'slug', 'hardware', $taxonomy );
+
+if ( ! $parent instanceof WP_Term ) {
+    return;
 }
-ksort($cats);
-foreach($cats as $key=&gt;$val){
-	$id = 'term_'.$cats[$key]['term_id'];
-	?&gt;
-	&lt;div class=&quot;swiper-slide product-content&quot;&gt;
-		&lt;div class=&quot;element-item&quot;&gt;
-			&lt;img src=&quot;&lt;?php echo get_field('products_cate_img', $id); ?&gt;&quot; alt=&quot;&lt;?php echo $cats[$key]['name']; ?&gt;&quot; width=&quot;400&quot; height=&quot;300&quot;&gt;
-			&lt;div class=&quot;content&quot;&gt;
-				&lt;a href=&quot;/products/&lt;?php echo $cats[$key]['slug']; ?&gt;/&quot;&gt;&lt;?php echo $cats[$key]['name']; ?&gt;&lt;/a&gt;
-			&lt;/div&gt;
-		&lt;/div&gt;
-		&lt;p class=&quot;product-cate-des&quot;&gt;&lt;?php echo $cats[$key]['description']; ?&gt;&lt;/p&gt;
-		&lt;a class=&quot;product-more&quot; href=&quot;/products/&lt;?php echo $cats[$key]['slug']; ?&gt;/&quot;&gt;VIEW MORE&lt;/a&gt;
-	&lt;/div&gt;
-	&lt;?php } ?&gt;
+
+$terms = get_terms(
+    array(
+        'taxonomy'   =&gt; $taxonomy,
+        'parent'     =&gt; $parent-&gt;term_id,
+        'hide_empty' =&gt; false,
+        'orderby'    =&gt; 'name',
+    )
+);
+
+if ( is_wp_error( $terms ) ) {
+    return;
+}
+?&gt;
+
+&lt;ul class=&quot;product-categories&quot;&gt;
+    &lt;?php foreach ( $terms as $term ) : ?&gt;
+        &lt;?php
+        $url = get_term_link( $term );
+
+        if ( is_wp_error( $url ) ) {
+            continue;
+        }
+
+        $icon_id = (int) get_term_meta(
+            $term-&gt;term_id,
+            'category_icon_id',
+            true
+        );
+        ?&gt;
+
+        &lt;li&gt;
+            &lt;a href=&quot;&lt;?php echo esc_url( $url ); ?&gt;&quot;&gt;
+                &lt;?php
+                if ( $icon_id ) {
+                    echo wp_get_attachment_image(
+                        $icon_id,
+                        'thumbnail',
+                        false,
+                        array(
+                            'alt' =&gt; $term-&gt;name,
+                        )
+                    );
+                }
+                ?&gt;
+
+                &lt;span&gt;
+                    &lt;?php echo esc_html( $term-&gt;name ); ?&gt;
+                &lt;/span&gt;
+            &lt;/a&gt;
+
+            &lt;code&gt;&lt;?php echo esc_html( $term-&gt;slug ); ?&gt;&lt;/code&gt;
+
+            &lt;?php if ( $term-&gt;description ) : ?&gt;
+                &lt;div class=&quot;term-description&quot;&gt;
+                    &lt;?php
+                    echo wp_kses_post(
+                        term_description(
+                            $term-&gt;term_id,
+                            $taxonomy
+                        )
+                    );
+                    ?&gt;
+                &lt;/div&gt;
+            &lt;?php endif; ?&gt;
+        &lt;/li&gt;
+    &lt;?php endforeach; ?&gt;
+&lt;/ul&gt;
 </code></pre>
+<h2 id="-acf-">使用 ACF 分类字段</h2>
+<p>若图标由 ACF 管理，建议把图片字段的返回格式设为“图片 ID”。模板仍可交给 WordPress 生成 <code>srcset</code>、宽高和合适尺寸：</p>
+<pre><code class="language-php">$icon_id = (int) get_field(
+    'category_icon',
+    $term
+);
+
+if ( $icon_id ) {
+    echo wp_get_attachment_image(
+        $icon_id,
+        'thumbnail'
+    );
+}
+</code></pre>
+<p>ACF 也支持 <code>{$taxonomy}_{$term_id}</code> 形式，但直接传 <code>WP_Term</code> 可读性更好。字段不存在时要有无图状态，不要假设数组下标一定存在。</p>
+<h2 id="heading">常见问题</h2>
+<ul>
+<li><code>description</code> 可能包含允许的 HTML，输出时使用 <code>wp_kses_post()</code>，名称和 slug 则使用 <code>esc_html()</code>。</li>
+<li>WordPress Core 的 term 默认没有通用 <code>menu_order</code>；需要人工排序时，应使用经过审计的排序插件或明确的 term meta，再实现对应查询策略。</li>
+<li><code>get_term_link()</code> 可能返回 <code>WP_Error</code>，不要直接传给 <code>esc_url()</code>。</li>
+<li>如果只需要 ID 或 slug，可使用 <code>fields</code> 减少返回数据。</li>
+<li>分类数量大时，应分页或缓存；后台每次请求遍历全部分类会拖慢页面。</li>
+<li>分类层级属于内容数据，不应该从 URL 层级反推。</li>
+</ul>
+<p>官方参考：<a href="https://developer.wordpress.org/reference/functions/get_terms/">get_terms()</a>、<a href="https://developer.wordpress.org/reference/functions/get_term_meta/">get_term_meta()</a>、<a href="https://developer.wordpress.org/reference/functions/wp_get_attachment_image/">wp_get_attachment_image()</a>。</p>
 
     </article>
 
@@ -334,13 +389,13 @@ foreach($cats as $key=&gt;$val){
       
       <a class="post-nav__card" href="/post/jie-jue-wordpress-zi-ding-yi-er-ji-mu-lu-he-san-ji-mu-lu-cai-yong-bu-tong-de-yang-shi/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">解决Wordpress自定义二级目录和三级目录采用不同的样式</span>
+        <span class="post-nav__title">解决 WordPress 分层分类在不同层级使用不同样式</span>
       </a>
       
       
       <a class="post-nav__card post-nav__card--next" href="/post/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/" rel="next">
         <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">在非当前页面获取指定多个自定义分类下的文章</span>
+        <span class="post-nav__title">在任意页面查询满足 ACF 条件的自定义文章</span>
       </a>
       
     </nav>
@@ -396,6 +451,6 @@ foreach($cats as $key=&gt;$val){
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>
