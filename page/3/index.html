@@ -64,6 +64,18 @@
     
     {
       "@type": "BlogPosting",
+      "headline": "在任意页面查询满足 ACF 条件的自定义文章",
+      "url": "https://ihopefulchina.github.io/post/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/",
+      "datePublished": "2019-08-22T13:34:48+08:00",
+      "description": "在首页、落地页或其他非归档模板中查询自定义文章，应创建独立的 WP_Query。不要使用 query_posts() 覆盖主查询，也不要把 ACF 字段名和值直接拼接成 SQL。\n\n假设要显示属于多个产品分类、并且 ACF 状态字段为 featured 的产品：\n\u0026lt;?php\n$category_ids = arr...",
+      "author": { "@type": "Person", "name": "ihopeful Blog" }
+    }
+    
+    
+    
+    ,
+    {
+      "@type": "BlogPosting",
       "headline": "获取指定分类的所有子分类链接、Description、Slug、自定义字段",
       "url": "https://ihopefulchina.github.io/post/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/",
       "datePublished": "2019-08-22T13:06:15+08:00",
@@ -164,18 +176,6 @@
       "url": "https://ihopefulchina.github.io/post/ye-mian-url-jie-wei-tian-jia-xie-gang/",
       "datePublished": "2019-08-22T08:46:52+08:00",
       "description": "URL 末尾是否使用斜杠没有通用的“更好”答案，重要的是同一资源只保留一个 canonical 形式，并让站内链接、重定向、站点地图、缓存和搜索引擎信号保持一致。\n\n先使用固定链接设置\nWordPress 后台“设置 → 固定链接”的结构决定文章与页面 URL。主题和插件输出链接时，应调用：\n\nget_permalin...",
-      "author": { "@type": "Person", "name": "ihopeful Blog" }
-    }
-    
-    
-    
-    ,
-    {
-      "@type": "BlogPosting",
-      "headline": "WordPress 登录后按请求与权限安全跳转",
-      "url": "https://ihopefulchina.github.io/post/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/",
-      "datePublished": "2019-08-22T08:42:52+08:00",
-      "description": "WordPress 的 login_redirect 过滤器会提供最终跳转地址、用户原始请求地址和登录结果。实现时要处理 WP_Error、避免开放重定向，并尽量保留用户登录前真正想访问的页面。\n\n示例：管理员进入后台，普通用户进入账户页\n\u0026lt;?php\nadd_filter(\n    'login_redirect...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -372,6 +372,18 @@
   <div class="msg__body">
     <div class="post-list">
       
+      <a class="post-item" href="/post/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/">
+        <span class="post-item__main">
+          <span class="post-item__title">在任意页面查询满足 ACF 条件的自定义文章</span>
+          
+          
+          <span class="post-item__excerpt">在首页、落地页或其他非归档模板中查询自定义文章，应创建独立的 WP_Query。不要使用 query_posts() 覆盖主查询，也不要把 ACF 字段名和值直...</span>
+          
+          
+        </span>
+        <time class="post-item__time" datetime="2019-08-22T13:34:48+08:00">7 年前</time>
+      </a>
+      
       <a class="post-item" href="/post/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/">
         <span class="post-item__main">
           <span class="post-item__title">获取指定分类的所有子分类链接、Description、Slug、自定义字段</span>
@@ -478,18 +490,6 @@
           
         </span>
         <time class="post-item__time" datetime="2019-08-22T08:46:52+08:00">7 年前</time>
-      </a>
-      
-      <a class="post-item" href="/post/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/">
-        <span class="post-item__main">
-          <span class="post-item__title">WordPress 登录后按请求与权限安全跳转</span>
-          
-          
-          <span class="post-item__excerpt">WordPress 的 login_redirect 过滤器会提供最终跳转地址、用户原始请求地址和登录结果。实现时要处理 WP_Error、避免开放重定向，并尽...</span>
-          
-          
-        </span>
-        <time class="post-item__time" datetime="2019-08-22T08:42:52+08:00">7 年前</time>
       </a>
       
     </div>

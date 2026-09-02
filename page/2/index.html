@@ -64,6 +64,18 @@
     
     {
       "@type": "BlogPosting",
+      "headline": "Vue 3 useLockFn：为异步操作增加互斥锁",
+      "url": "https://ihopefulchina.github.io/post/mHHMm1wDV3/",
+      "datePublished": "2024-05-08T09:45:15+08:00",
+      "description": "useLockFn 用来保证同一个异步动作在完成前不会再次进入，适合保存、支付前确认、生成文件等操作。它解决的是“执行中互斥”，不是搜索输入防抖，也不是固定频率节流。\n\n实现\nimport { readonly, ref } from 'vue'\n\ninterface UseLockFnOptions {\n  /**\n...",
+      "author": { "@type": "Person", "name": "ihopeful Blog" }
+    }
+    
+    
+    
+    ,
+    {
+      "@type": "BlogPosting",
       "headline": "ProTable 跨页选择：用 useRowSelection 保存稳定状态",
       "url": "https://ihopefulchina.github.io/post/KIr9bupcA9/",
       "datePublished": "2024-04-01T09:21:53+08:00",
@@ -164,18 +176,6 @@
       "url": "https://ihopefulchina.github.io/post/ye-mian-shi-xian-lei-si-yu-tao-bao-de-tu-chuang-gong-neng/",
       "datePublished": "2019-08-22T13:40:21+08:00",
       "description": "商品详情常见的“主图 + 缩略图”可以用 ACF Gallery 管理图片，用 Swiper 同步两个轮播。旧版 Swiper 3 的初始化方式和资源路径已经过时；下面采用当前模块化 API 的思路，并把无障碍和图片性能一起考虑。\n\n\n本文假设主题有自己的前端构建流程。Swiper 应作为锁定版本的项目依赖打包，不要在...",
-      "author": { "@type": "Person", "name": "ihopeful Blog" }
-    }
-    
-    
-    
-    ,
-    {
-      "@type": "BlogPosting",
-      "headline": "在任意页面查询满足 ACF 条件的自定义文章",
-      "url": "https://ihopefulchina.github.io/post/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/",
-      "datePublished": "2019-08-22T13:34:48+08:00",
-      "description": "在首页、落地页或其他非归档模板中查询自定义文章，应创建独立的 WP_Query。不要使用 query_posts() 覆盖主查询，也不要把 ACF 字段名和值直接拼接成 SQL。\n\n假设要显示属于多个产品分类、并且 ACF 状态字段为 featured 的产品：\n\u0026lt;?php\n$category_ids = arr...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -372,6 +372,18 @@
   <div class="msg__body">
     <div class="post-list">
       
+      <a class="post-item" href="/post/mHHMm1wDV3/">
+        <span class="post-item__main">
+          <span class="post-item__title">Vue 3 useLockFn：为异步操作增加互斥锁</span>
+          
+          
+          <span class="post-item__excerpt">useLockFn 用来保证同一个异步动作在完成前不会再次进入，适合保存、支付前确认、生成文件等操作。它解决的是“执行中互斥”，不是搜索输入防抖，也不是固定频率...</span>
+          
+          
+        </span>
+        <time class="post-item__time" datetime="2024-05-08T09:45:15+08:00">2 年前</time>
+      </a>
+      
       <a class="post-item" href="/post/KIr9bupcA9/">
         <span class="post-item__main">
           <span class="post-item__title">ProTable 跨页选择：用 useRowSelection 保存稳定状态</span>
@@ -478,18 +490,6 @@
           
         </span>
         <time class="post-item__time" datetime="2019-08-22T13:40:21+08:00">7 年前</time>
-      </a>
-      
-      <a class="post-item" href="/post/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/">
-        <span class="post-item__main">
-          <span class="post-item__title">在任意页面查询满足 ACF 条件的自定义文章</span>
-          
-          
-          <span class="post-item__excerpt">在首页、落地页或其他非归档模板中查询自定义文章，应创建独立的 WP_Query。不要使用 query_posts() 覆盖主查询，也不要把 ACF 字段名和值直...</span>
-          
-          
-        </span>
-        <time class="post-item__time" datetime="2019-08-22T13:34:48+08:00">7 年前</time>
       </a>
       
     </div>
