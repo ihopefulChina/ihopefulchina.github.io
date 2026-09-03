@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title desc">
+  <title id="title">ihopeful Blog mark</title>
+  <desc id="desc">A folded document with a blue code cursor.</desc>
+  <path fill="#0F172A" d="M30 10h44l26 26v54c0 11-9 20-20 20H30c-11 0-20-9-20-20V30c0-11 9-20 20-20Z"/>
+  <path fill="#E2E8F0" d="M74 10v18c0 4 4 8 8 8h18L74 10Z"/>
+  <path fill="#FFF" d="M34 34h22v10H34zm0 20h52v8H34zm0 16h52v8H34zm0 16h34v8H34z"/>
+  <path fill="#2563EB" d="m23 54 9 8-9 8-6-6 3-2-3-2 6-6Zm67 28h13v8H90z"/>
+</svg>
