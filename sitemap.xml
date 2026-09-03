@@ -2,331 +2,460 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://ihopefulchina.github.io/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/pro-components-vue2/</loc>
-    <lastmod>2026-09-02T16:46:32+08:00</lastmod>
+    <loc>https://ihopefulchina.github.io/post/async-race-governance/</loc>
+    <lastmod>2026-09-03T09:38:52+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/async-race-governance-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/YJuTn5/</loc>
+    <loc>https://ihopefulchina.github.io/post/contract-first-openapi-client/</loc>
+    <lastmod>2026-09-03T09:38:52+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/contract-first-openapi-client-cover.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ihopefulchina.github.io/post/pro-components-vue2/</loc>
+    <lastmod>2026-09-02T16:48:52+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/pro-components-vue2-cover.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://ihopefulchina.github.io/post/ossuno-macos-oss-client/</loc>
     <lastmod>2026-08-18T14:05:19+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://ihopefulchina.github.io/post-images/YJuTn5.png</image:loc>
+      <image:loc>https://ihopefulchina.github.io/post-images/ossuno-macos-oss-client-cover.png</image:loc>
     </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/uniapp_template%20/</loc>
+    <loc>https://ihopefulchina.github.io/post/uniapp-business-template/</loc>
     <lastmod>2026-05-12T08:32:38+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/uniapp-business-template-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/qn_PbZX5g6/</loc>
+    <loc>https://ihopefulchina.github.io/post/export-lanhu-prototype-to-csv/</loc>
     <lastmod>2026-05-02T21:11:21+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
-      <image:loc>https://ihopefulchina.github.io/post-images/qn_PbZX5g6.png</image:loc>
+      <image:loc>https://ihopefulchina.github.io/post-images/export-lanhu-prototype-to-csv-cover.png</image:loc>
     </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/4PEcn6ZhYy/</loc>
+    <loc>https://ihopefulchina.github.io/post/vue-use-pull-to-refresh/</loc>
     <lastmod>2026-05-02T21:11:21+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/vue-use-pull-to-refresh-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/aJA508HwI4/</loc>
+    <loc>https://ihopefulchina.github.io/post/vue-use-mutate/</loc>
     <lastmod>2026-05-02T21:11:21+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/vue-use-mutate-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/vrE64S-kvU/</loc>
+    <loc>https://ihopefulchina.github.io/post/protable-request-adapter/</loc>
     <lastmod>2026-05-02T21:11:21+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/protable-request-adapter-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/ZxMrztTo35/</loc>
+    <loc>https://ihopefulchina.github.io/post/uniapp-typed-routes/</loc>
     <lastmod>2026-05-02T21:11:21+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/uniapp-typed-routes-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/7dtD7wCIDd/</loc>
+    <loc>https://ihopefulchina.github.io/post/taro-avatar-cropper/</loc>
     <lastmod>2026-05-02T21:11:21+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/taro-avatar-cropper-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/p9E7d0w867/</loc>
+    <loc>https://ihopefulchina.github.io/post/react-url-query-params/</loc>
     <lastmod>2026-05-02T21:11:21+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/react-url-query-params-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/mHHMm1wDV3/</loc>
+    <loc>https://ihopefulchina.github.io/post/vue-use-lock-fn/</loc>
     <lastmod>2026-05-02T21:11:21+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/vue-use-lock-fn-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/KIr9bupcA9/</loc>
+    <loc>https://ihopefulchina.github.io/post/protable-cross-page-selection/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/protable-cross-page-selection-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/481vcXjEdn/</loc>
+    <loc>https://ihopefulchina.github.io/post/react-use-mutate/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/react-use-mutate-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/dBAsSzkYF/</loc>
+    <loc>https://ihopefulchina.github.io/post/react-function-vs-class-rendering/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/react-function-vs-class-rendering-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/huo-qu-dang-qian-fen-lei-xia-de-suo-you-zi-fen-lei/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-current-category-children/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-current-category-children-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/ru-he-jie-jue-ye-mian-wen-zhang-xiang-qing-ye-xu-yao-bu-tong-yang-shi-mo-ban-de-wen-ti/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-page-layout-templates/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-page-layout-templates-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/liu-yan-biao-dan-zhi-chi-you-xiang-zhuan-fa/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-comment-email-forwarding/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-comment-email-forwarding-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/ru-he-shu-chu-gen-ju-fen-lei-luo-lie-wen-zhang-dang-qian-ye-mian-gao-liang-xian-shi/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-category-post-navigation/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-category-post-navigation-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/ru-he-yong-tag-fang-shi-chuan-lian-zi-ding-yi-fen-lei-shi-xian-xiang-guan-wen-zhang-chuan-lian-gong-neng/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-related-posts-by-tag-and-acf/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-related-posts-by-tag-and-acf-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/ye-mian-shi-xian-lei-si-yu-tao-bao-de-tu-chuang-gong-neng/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-acf-swiper-product-gallery/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-acf-swiper-product-gallery-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/zai-fei-dang-qian-ye-mian-huo-qu-zhi-ding-duo-ge-zi-ding-yi-fen-lei-xia-de-wen-zhang/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-query-custom-posts-by-acf/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-query-custom-posts-by-acf-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/huo-qu-zhi-ding-fen-lei-de-suo-you-zi-fen-lei-lian-jie-descriptionslugzi-ding-yi-zi-duan/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-category-children-fields/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-category-children-fields-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-er-ji-mu-lu-he-san-ji-mu-lu-cai-yong-bu-tong-de-yang-shi/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-hierarchical-category-styles/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-hierarchical-category-styles-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/wordpress-ru-he-tian-jia-ding-ji-cai-dan-he-yi-chu-yin-cang-ding-ji-cai-dan/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-admin-menu-permissions/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-admin-menu-permissions-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/yi-chu-yin-cang-shan-chu-wordpres-yi-xie-xiao-gong-ju-he-gong-neng/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-admin-ui-cleanup/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-admin-ui-cleanup-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/yin-cang-jin-zhi-shan-chu-wordpress-zi-dai-de-geng-xin-he-yi-biao-pan/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-dashboard-cleanup/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-dashboard-cleanup-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/jin-zhi-shan-chu-mou-xie-ye-mian/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-protect-critical-pages/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-protect-critical-pages-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/ru-he-zai-dao-hang-lan-tian-jia-tu-pian/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-navigation-menu-images/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-navigation-menu-images-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/wordpress-tian-jia-zi-ding-yi-fen-lei/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-custom-post-types-and-taxonomies/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-custom-post-types-and-taxonomies-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/ye-mian-url-jie-wei-tian-jia-xie-gang/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-trailing-slash-canonicalization/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-trailing-slash-canonicalization-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/xiu-gai-wordpress-deng-lu-hou-tiao-zhuan-zhi-ding-ye-mian/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-login-redirects/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-login-redirects-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/php-dong-tai-nei-rong-ru-he-tian-jia-class/</loc>
+    <loc>https://ihopefulchina.github.io/post/php-email-content-styling/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/php-email-content-styling-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/wordpress-mian-bao-xie-yi-xie-wen-ti/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-breadcrumbs-structured-data/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-breadcrumbs-structured-data-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/jie-jue-wordpress-zi-ding-yi-fen-lei-archive-ye-mian-wu-fa-tong-guo-fen-lei-luo-lie-wen-zhang-de-wen-ti/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-custom-post-archive-taxonomy-groups/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-custom-post-archive-taxonomy-groups-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/lnmp-on-pagespeed/</loc>
+    <loc>https://ihopefulchina.github.io/post/nginx-pagespeed-modern-optimization/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/nginx-pagespeed-modern-optimization-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/jie-jue-tong-yi-zhang-tu-pian-xu-yao-zai-bu-tong-chi-cun-ti-gong-bu-tong-de-shui-yin/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-image-size-watermarks/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-image-size-watermarks-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/guan-yu-ji-yu-wordpress-de-qi-ye-wang-zhan-da-jian-yi-xie-gan-xiang/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-enterprise-site-retrospective/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-enterprise-site-retrospective-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/wordpress-theme-zhu-ti-jie-gou-jie-xi/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-theme-structure/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-theme-structure-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
-    <loc>https://ihopefulchina.github.io/post/wordpress-han-shu-dai-ma-mo-kuai-hua/</loc>
+    <loc>https://ihopefulchina.github.io/post/wordpress-functions-modularization/</loc>
     <lastmod>2026-05-02T21:11:22+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://ihopefulchina.github.io/post-images/wordpress-functions-modularization-cover.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/post/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/tags/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/archives/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/tag/vue/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/tag/linux/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/tag/wordpress/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/tag/php/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/tag/wei-xin-xiao-cheng-xu/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/tag/javascript/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/tag/react/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/tag/typescript/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/tag/oss/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/tag/swift/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://ihopefulchina.github.io/links/</loc>
-    <lastmod>2026-09-02T16:49:54+08:00</lastmod>
+    <lastmod>2026-09-03T10:27:33+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>

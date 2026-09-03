@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <title>不只是防抖：复杂前端异步竞态的四层治理 - ihopeful Blog</title>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="generator" content="Gridea Pro">
+<link rel="stylesheet" href="/styles/main.min.css">
+
+
+
+<link rel="icon" href="/favicon.ico">
+
+
+
+
+
+
+<style>:root { --accent: #FFFF00; --content-w: 56rem; }</style>
+
+
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('chatgpt-theme');
+      var mode = saved || 'dark';
+      if (mode === 'auto') {
+        mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', mode);
+      if (localStorage.getItem('chatgpt-sidebar') === 'collapsed') {
+        document.documentElement.classList.add('sidebar-collapsed');
+      }
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/styles/github.min.css" id="hljs-theme-light">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/styles/github-dark.min.css" id="hljs-theme-dark" disabled>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/highlight.min.js" defer></script>
+
+
+
+
+
+
+  
+
+
+<meta name="description" content="很多异步问题，最初都被描述成“用户点得太快”。于是我们加防抖、禁用按钮，或者在请求期间显示一个 loading。页面看起来安静了，问题却没有真正消失：先发出的请求仍可能后返回，用户也可能在等待期间切换了工作区；更麻烦的是，另一个客户端可能已经改过同一份数据。 这类问题的核心不是请求太多，而是异步任务完成时，它是否仍有资格修改当前状态。">
+<link rel="canonical" href="https://ihopefulchina.github.io/post/async-race-governance/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"不只是防抖：复杂前端异步竞态的四层治理","url":"https://ihopefulchina.github.io/post/async-race-governance/","description":"很多异步问题，最初都被描述成“用户点得太快”。于是我们加防抖、禁用按钮，或者在请求期间显示一个 loading。页面看起来安静了，问题却没有真正消失：先发出的请求仍可能后返回，用户也可能在等待期间切换了工作区；更麻烦的是，另一个客户端可能已经改过同一份数据。 这类问题的核心不是请求太多，而是异步任务完成时，它是否仍有资格修改当前状态。","image":"/post-images/async-race-governance-cover.png","datePublished":"2026-09-03T09:36:46+08:00","dateModified":"2026-09-03T09:38:52+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/async-race-governance/","name":"不只是防抖：复杂前端异步竞态的四层治理","position":2}]}</script>
+<meta property="og:title" content="不只是防抖：复杂前端异步竞态的四层治理">
+<meta property="og:description" content="很多异步问题，最初都被描述成“用户点得太快”。于是我们加防抖、禁用按钮，或者在请求期间显示一个 loading。页面看起来安静了，问题却没有真正消失：先发出的请求仍可能后返回，用户也可能在等待期间切换了工作区；更麻烦的是，另一个客户端可能已经改过同一份数据。 这类问题的核心不是请求太多，而是异步任务完成时，它是否仍有资格修改当前状态。">
+<meta property="og:url" content="https://ihopefulchina.github.io/post/async-race-governance/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ihopeful Blog">
+<meta property="og:image" content="/post-images/async-race-governance-cover.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://ihopefulchina.github.io/post/async-race-governance/">
+<meta name="twitter:title" content="不只是防抖：复杂前端异步竞态的四层治理">
+<meta name="twitter:description" content="很多异步问题，最初都被描述成“用户点得太快”。于是我们加防抖、禁用按钮，或者在请求期间显示一个 loading。页面看起来安静了，问题却没有真正消失：先发出的请求仍可能后返回，用户也可能在等待期间切换了工作区；更麻烦的是，另一个客户端可能已经改过同一份数据。 这类问题的核心不是请求太多，而是异步任务完成时，它是否仍有资格修改当前状态。">
+<meta name="twitter:image" content="/post-images/async-race-governance-cover.png">
+</head>
+<body data-typewriter="True">
+
+  <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+<aside class="sidebar" id="sidebar" aria-label="侧边栏">
+
+  
+  <div class="sidebar__top">
+    <a class="sidebar__brand" href="/" aria-label="ihopeful Blog 首页">
+      
+      <span class="sidebar__brand-logo sidebar__brand-logo--fallback" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </span>
+      
+    </a>
+    <button class="icon-btn sidebar__collapse" id="sidebar-collapse" type="button" aria-label="收起侧边栏" title="收起侧边栏">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="9.5" y1="3" x2="9.5" y2="21"/></svg>
+    </button>
+  </div>
+
+  
+  <button class="sidebar__search" id="sidebar-search" type="button">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.2" y2="16.2"/></svg>
+    <span>搜索</span>
+    <kbd class="sidebar__search-kbd">⌘K</kbd>
+  </button>
+
+  
+  <nav class="sidebar__nav" aria-label="站点导航">
+    
+    <a class="sidebar__nav-item" href="/" data-link="/">
+      <span class="sidebar__nav-icon" aria-hidden="true">
+        
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+        
+      </span>
+      <span class="sidebar__nav-label">首页</span>
+    </a>
+    
+    <a class="sidebar__nav-item" href="/archives" data-link="/archives">
+      <span class="sidebar__nav-icon" aria-hidden="true">
+        
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5" rx="1"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+        
+      </span>
+      <span class="sidebar__nav-label">归档</span>
+    </a>
+    
+    <a class="sidebar__nav-item" href="/tags" data-link="/tags">
+      <span class="sidebar__nav-icon" aria-hidden="true">
+        
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        
+      </span>
+      <span class="sidebar__nav-label">标签</span>
+    </a>
+    
+    <a class="sidebar__nav-item" href="/post/about" data-link="/post/about">
+      <span class="sidebar__nav-icon" aria-hidden="true">
+        
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-1.5a4.5 4.5 0 0 0-4.5-4.5h-5A4.5 4.5 0 0 0 5 19.5V21"/><circle cx="12" cy="7.5" r="3.5"/></svg>
+        
+      </span>
+      <span class="sidebar__nav-label">关于</span>
+    </a>
+    
+  </nav>
+
+  
+  <div class="sidebar__recent">
+    <div class="sidebar__recent-title">最近</div>
+    <ul class="sidebar__recent-list" id="sidebar-recent" data-count="20"></ul>
+  </div>
+
+  
+  <div class="sidebar__foot">
+    <button class="sidebar__user" id="user-menu-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+      
+      <span class="sidebar__user-avatar sidebar__user-avatar--fallback" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-1.5a4.5 4.5 0 0 0-4.5-4.5h-5A4.5 4.5 0 0 0 5 19.5V21"/><circle cx="12" cy="7.5" r="3.5"/></svg>
+      </span>
+      
+      <span class="sidebar__user-meta">
+        <span class="sidebar__user-name">ihopeful Blog</span>
+        
+        <span class="sidebar__user-desc">🧑‍💻切图仔</span>
+        
+      </span>
+      <svg class="sidebar__user-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 15 12 10 17 15"/></svg>
+    </button>
+
+    
+    <div class="user-menu" id="user-menu" hidden>
+      
+      <a class="user-menu__item" href="/post/about">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-1.5a4.5 4.5 0 0 0-4.5-4.5h-5A4.5 4.5 0 0 0 5 19.5V21"/><circle cx="12" cy="7.5" r="3.5"/></svg>
+        <span>关于我</span>
+      </a>
+      
+      <button class="user-menu__item" id="user-menu-theme" type="button">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        <span class="user-menu__theme-label">切换深浅模式</span>
+      </button>
+      
+      
+      
+      
+      
+    </div>
+  </div>
+
+</aside>
+
+
+  <div class="main">
+    <header class="topbar">
+  <div class="topbar__left">
+    
+    <button class="icon-btn topbar__menu" id="sidebar-open" type="button" aria-label="打开侧边栏" title="打开侧边栏">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="9.5" y1="3" x2="9.5" y2="21"/></svg>
+    </button>
+    
+    <a class="topbar__title" href="/">
+      <span>ihopeful Blog</span>
+      <svg class="topbar__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+  </div>
+  <div class="topbar__right">
+    
+    <button class="icon-btn" id="theme-toggle" type="button" aria-label="切换深浅模式" title="切换深浅模式">
+      <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12ZM12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9Z"></path>
+        <path d="M13 20C13 19.4477 12.5523 19 12 19C11.4477 19 11 19.4477 11 20V22C11 22.5523 11.4477 23 12 23C12.5523 23 13 22.5523 13 22V20Z"></path>
+        <path d="M4.22282 4.22289C4.61335 3.83236 5.24651 3.83236 5.63704 4.22289L7.04704 5.63289C7.43756 6.02341 7.43756 6.65658 7.04704 7.0471C6.65651 7.43762 6.02335 7.43762 5.63283 7.0471L4.22282 5.6371C3.8323 5.24658 3.8323 4.61341 4.22282 4.22289Z"></path>
+        <path d="M23 12C23 12.5523 22.5523 13 22 13H20C19.4477 13 19 12.5523 19 12C19 11.4477 19.4477 11 20 11H22C22.5523 11 23 11.4477 23 12Z"></path>
+        <path d="M5 12C5 12.5523 4.55228 13 4 13H2C1.44772 13 1 12.5523 1 12C1 11.4477 1.44772 11 2 11H4C4.55228 11 5 11.4477 5 12Z"></path>
+        <path d="M19.7772 4.22289C20.1677 4.61341 20.1677 5.24658 19.7772 5.6371L18.3672 7.0471C17.9767 7.43762 17.3435 7.43762 16.953 7.0471C16.5624 6.65658 16.5624 6.02341 16.953 5.63289L18.363 4.22289C18.7535 3.83236 19.3867 3.83236 19.7772 4.22289Z"></path>
+        <path d="M7.04704 16.953C7.43756 17.3435 7.43756 17.9767 7.04704 18.3672L5.63704 19.7772C5.24651 20.1677 4.61335 20.1677 4.22282 19.7772C3.8323 19.3867 3.8323 18.7535 4.22282 18.363L5.63283 16.953C6.02335 16.5624 6.65651 16.5624 7.04704 16.953Z"></path>
+        <path d="M19.7772 18.363C20.1677 18.7535 20.1677 19.3867 19.7772 19.7772C19.3867 20.1677 18.7535 20.1677 18.363 19.7772L16.953 18.3672C16.5624 17.9767 16.5624 17.3435 16.953 16.953C17.3435 16.5624 17.9767 16.5624 18.3672 16.953L19.7772 18.363Z"></path>
+      </svg>
+      <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17317C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8079C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 11.5955 21.7564 11.2309 21.3827 11.0761C21.009 10.9213 20.5789 11.0069 20.2929 11.2929C19.287 12.2988 17.9226 12.864 16.5 12.864C15.0774 12.864 13.713 12.2988 12.7071 11.2929C11.7012 10.287 11.136 8.92261 11.136 7.5C11.136 6.07739 11.7012 4.71304 12.7071 3.70711C12.9931 3.42111 13.0787 2.99099 12.9239 2.61732C12.7691 2.24364 12.4045 2 12 2ZM7.55544 5.34824C8.27036 4.87055 9.05353 4.51389 9.87357 4.28778C9.39271 5.27979 9.13604 6.37666 9.13604 7.5C9.13604 9.45304 9.91189 11.3261 11.2929 12.7071C12.6739 14.0881 14.547 14.864 16.5 14.864C17.6233 14.864 18.7202 14.6073 19.7122 14.1264C19.4861 14.9465 19.1295 15.7296 18.6518 16.4446C17.7727 17.7602 16.5233 18.7855 15.0615 19.391C13.5997 19.9965 11.9911 20.155 10.4393 19.8463C8.88743 19.5376 7.46197 18.7757 6.34315 17.6569C5.21447 16.538 4.4624 15.1126 4.15372 13.5607C3.84504 12.0089 4.00347 10.4003 4.60897 8.93853C5.21447 7.47672 6.23985 6.22729 7.55544 5.34824Z"></path>
+        <path d="M19 2C19.5523 2 20 2.44772 20 3V4H21C21.5523 4 22 4.44772 22 5C22 5.55228 21.5523 6 21 6H20V7C20 7.55228 19.5523 8 19 8C18.4477 8 18 7.55228 18 7V6H17C16.4477 6 16 5.55228 16 5C16 4.44772 16.4477 4 17 4H18V3C18 2.44772 18.4477 2 19 2Z"></path>
+      </svg>
+    </button>
+  </div>
+</header>
+
+
+    <main class="content" id="content">
+      <div class="chat-thread" id="chat-thread">
+        
+
+
+<div class="msg msg--user">
+  <h1 class="msg__bubble msg__bubble--title">不只是防抖：复杂前端异步竞态的四层治理</h1>
+</div>
+
+
+<div class="msg msg--assistant">
+  <div class="msg__head">
+    
+    <div class="post-meta">
+      <time datetime="2026-09-03T09:36:46+08:00">2026-09-03</time>
+      <span class="dot" aria-hidden="true">·</span>
+      <span>5535 字</span>
+      <span class="dot" aria-hidden="true">·</span>
+      <span>约 9 分钟</span>
+      
+    </div>
+  </div>
+  <div class="msg__body">
+
+    
+    <figure class="post-feature">
+      <img src="/post-images/async-race-governance-cover.png" alt="不只是防抖：复杂前端异步竞态的四层治理">
+    </figure>
+    
+
+    
+
+    <article class="article-content" id="article-content">
+      <p>很多异步问题，最初都被描述成“用户点得太快”。于是我们加防抖、禁用按钮，或者在请求期间显示一个 loading。页面看起来安静了，问题却没有真正消失：先发出的请求仍可能后返回，用户也可能在等待期间切换了工作区；更麻烦的是，另一个客户端可能已经改过同一份数据。</p>
+<p>这类问题的核心不是请求太多，而是<strong>异步任务完成时，它是否仍有资格修改当前状态</strong>。</p>
+<!-- more -->
+<p>最近整理一个同时包含管理后台和移动端的项目时，我把分散在页面里的竞态处理收成了四层：最新请求令牌、上下文身份校验、写操作串行队列，以及服务端版本校验。它们处理的是四种不同的问题，不能互相替代。</p>
+<p>本文代码经过简化和脱敏，变量、接口与数据结构都是通用示例。</p>
+<h2 id="heading">先看一个防抖解决不了的问题</h2>
+<p>假设页面根据用户选择的资源加载列表：</p>
+<ol>
+<li>用户选择资源 A，发出请求 A；</li>
+<li>很快切换到资源 B，发出请求 B；</li>
+<li>请求 B 先返回，页面显示 B；</li>
+<li>请求 A 后返回，又把页面覆盖成 A。</li>
+</ol>
+<p>把搜索框设置为 300ms 防抖，只能减少请求数量，不能保证响应顺序。禁用下拉框虽然可以阻止切换，却是拿交互体验替系统正确性买单。正确的约束应该是：</p>
+<blockquote>
+<p>只有属于当前页面上下文、并且仍是最新一轮的任务，才允许提交结果。</p>
+</blockquote>
+<p>这句话看似简单，落到复杂页面上至少有四道边界。</p>
+<h2 id="heading-1">第一层：用令牌确定“最新一轮”</h2>
+<p>对读取请求，最实用的策略通常不是让旧 Promise 消失，而是让旧结果失去写入资格。一个很小的序列令牌就够了：</p>
+<pre><code class="language-ts">export function createLatestRequestGuard() {
+  let sequence = 0
+
+  return {
+    begin() {
+      sequence += 1
+      return sequence
+    },
+    isCurrent(token: number) {
+      return token === sequence
+    },
+    invalidate() {
+      sequence += 1
+    }
+  }
+}
+</code></pre>
+<p>每次发起请求先取得令牌。新的请求会递增序列，之前的令牌自然失效；页面卸载或主动清空时，也可以调用 <code>invalidate()</code>。</p>
+<pre><code class="language-ts">const requestGuard = createLatestRequestGuard()
+
+async function loadRows() {
+  const token = requestGuard.begin()
+  const result = await api.queryRows()
+
+  if (!requestGuard.isCurrent(token)) {
+    return
+  }
+
+  setRows(result.list)
+}
+</code></pre>
+<p>这里的目标不是取消网络传输，而是保护状态提交。<code>AbortController</code> 能中断支持取消的 <code>fetch</code>、响应体读取或流，适合节省资源；令牌守卫则负责保证“即使取消没有生效，旧结果也不能落地”。两者是互补关系，不是二选一。</p>
+<p>还有一个容易遗漏的细节：旧请求失败后，也不应该在新页面上弹出“加载失败”。错误提示同样是一次状态提交，也要经过令牌校验。</p>
+<h2 id="heading-2">第二层：校验结果属于哪个上下文</h2>
+<p>只比较请求先后仍然不够。页面可能在请求期间切换了工作区、租户、项目或选中的记录，而新的上下文未必立即触发同一种请求。令牌仍是最新的，结果却已经不属于当前页面。</p>
+<p>所以发起请求时要冻结关键身份，提交前再比较一次：</p>
+<pre><code class="language-ts">async function loadRows() {
+  const token = requestGuard.begin()
+  const requestedWorkspaceId = workspaceIdRef.current
+  const requestedResourceId = resourceIdRef.current
+
+  if (!requestedWorkspaceId || !requestedResourceId) {
+    setRows([])
+    return
+  }
+
+  const result = await api.queryRows({
+    workspaceId: requestedWorkspaceId,
+    resourceId: requestedResourceId
+  })
+
+  const contextChanged =
+    workspaceIdRef.current !== requestedWorkspaceId ||
+    resourceIdRef.current !== requestedResourceId
+
+  if (!requestGuard.isCurrent(token) || contextChanged) {
+    return
+  }
+
+  setRows(result.list)
+}
+</code></pre>
+<p>令牌回答“这是不是最后一次请求”，身份校验回答“它是不是当前资源的请求”。我倾向于把这两项都保留，因为它们表达了不同的不变量。只依赖组件是否挂载、闭包里的旧 state，或者在回调里猜测当前上下文，最终都会留下模糊地带。</p>
+<p>身份字段也不是越多越好。选择真正决定数据归属的最小集合即可，例如 <code>workspaceId + resourceId</code>。如果把筛选文案、分页对象等所有值都塞进判断，守卫本身会变成另一个难以维护的状态机。</p>
+<h2 id="heading-3">第三层：把同一资源的写操作串行化</h2>
+<p>读取通常可以“最新结果获胜”，写入却不能简单丢掉旧操作。用户连续点击两次“增加”，两次意图都可能有效；真正危险的是它们同时基于同一个旧快照计算。</p>
+<p>一种稳妥的做法，是为同一业务资源维护 Promise 尾队列：</p>
+<pre><code class="language-ts">function createMutationQueue() {
+  let tail = Promise.resolve()
+  let generation = 0
+
+  return {
+    reset() {
+      generation += 1
+      tail = Promise.resolve()
+    },
+    enqueue&lt;T&gt;(task: () =&gt; Promise&lt;T&gt;): Promise&lt;T | undefined&gt; {
+      const ticket = generation
+
+      const run = tail.then(async () =&gt; {
+        if (ticket !== generation) return undefined
+        return task()
+      })
+
+      tail = run.then(
+        () =&gt; undefined,
+        () =&gt; undefined
+      )
+
+      return run
+    }
+  }
+}
+</code></pre>
+<p>这里有三个刻意的设计：</p>
+<ul>
+<li>队列只保证同一资源内的顺序，不应该把整个应用锁成一条全局队列；</li>
+<li>前一个任务失败后，尾队列仍回到 resolved，后续任务不会被永久阻塞；</li>
+<li>切换资源时递增 <code>generation</code>，尚未执行的旧任务会被丢弃。</li>
+</ul>
+<p>串行队列解决的是本客户端的顺序问题。它不是分布式锁，也无法阻止另一台设备或服务端任务同时修改数据。</p>
+<h2 id="heading-4">第四层：用版本号拒绝过期写入</h2>
+<p>跨客户端并发必须由服务端裁决。前端在读取资源时拿到版本号，写入时把自己基于的版本一起提交：</p>
+<pre><code class="language-ts">interface CartSnapshot {
+  version: number
+  lines: Array&lt;{ id: string; quantity: number }&gt;
+}
+
+interface ChangeQuantityCommand {
+  lineId: string
+  quantity: number
+  expectedVersion: number
+}
+
+async function changeQuantity(command: ChangeQuantityCommand) {
+  const nextSnapshot = await api.changeQuantity(command)
+  applyAuthoritativeSnapshot(nextSnapshot)
+}
+</code></pre>
+<p>服务端只有在 <code>expectedVersion</code> 等于当前版本时才接受修改，否则返回冲突。HTTP 自身也有类似的条件请求语义：<code>If-Match</code> 可以用实体标签阻止 lost update。业务版本号不一定要直接映射成 ETag，但背后的原则相同——写入者必须说明“我是基于哪个版本做的决定”。</p>
+<p>前端收到冲突后，不要在本地把数量强行加一，也不要偷偷改成服务端最新版本重试。正确策略取决于业务：</p>
+<ul>
+<li>可安全重放的简单操作，可以刷新后重新计算并明确重试；</li>
+<li>涉及价格、库存、权益或审批的操作，应展示冲突并让用户确认；</li>
+<li>服务端已经返回完整新快照时，以该快照替换本地状态，而不是字段级猜测合并。</li>
+</ul>
+<p>这一层还有一个常被忽视的前提：用于写入的版本必须来自<strong>已经应用到当前界面的快照</strong>。如果 WebSocket 已通知版本 12，而页面仍展示版本 11，就不应该拿 12 作为“最新版本”绕过冲突；那会让用户提交一个并非基于其可见状态的修改。</p>
+<h2 id="heading-5">四层分别守住什么</h2>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>要阻止的问题</th>
+<th>不能替代什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最新请求令牌</td>
+<td>慢响应覆盖新响应</td>
+<td>不能识别资源归属</td>
+</tr>
+<tr>
+<td>上下文身份</td>
+<td>旧资源结果写入新页面</td>
+<td>不能处理写入顺序</td>
+</tr>
+<tr>
+<td>串行写队列</td>
+<td>本客户端写操作乱序</td>
+<td>不能处理跨客户端并发</td>
+</tr>
+<tr>
+<td>服务端版本校验</td>
+<td>过期快照覆盖新事实</td>
+<td>不能改善前端交互编排</td>
+</tr>
+</tbody>
+</table>
+<p>把四层都叫作“防重复提交”，会让设计讨论失去精度。读请求竞态、上下文漂移、本地写入顺序和分布式并发，本来就是四类问题。</p>
+<h2 id="loading-">loading 也应该服从同一套模型</h2>
+<p>一旦允许排队，<code>loading: boolean</code> 往往不再可靠。第一个请求完成就把 loading 设为 false，可能会掩盖仍在等待的第二个请求。更稳定的模型是记录当前 generation 下的 pending 数：</p>
+<pre><code class="language-ts">let pending = 0
+
+function begin() {
+  pending += 1
+}
+
+function settle() {
+  pending = Math.max(0, pending - 1)
+}
+
+const busy = pending &gt; 0
+</code></pre>
+<p>切换资源时，旧 generation 的任务即使最终进入 <code>finally</code>，也不能减少新 generation 的计数。否则旧任务会把新页面的 loading 提前关闭。</p>
+<h2 id="heading-6">如何验证，而不是靠快速点击碰运气</h2>
+<p>竞态测试最怕依赖真实网络速度。我通常用可控制 resolve 顺序的 Promise，固定验证下面几组场景：</p>
+<ol>
+<li>请求 A 先发、请求 B 后发，B 先返回，最终只能看到 B；</li>
+<li>请求发出后切换资源，即使它成功返回也不能写入或弹错；</li>
+<li>连续两个写操作严格按入队顺序执行，前一个失败不阻断后一个；</li>
+<li>切换资源后，旧队列尚未执行的任务全部失效；</li>
+<li>服务端版本冲突时不做静默覆盖，并能恢复到权威快照；</li>
+<li>WebSocket 新快照与 HTTP 旧响应交错时，版本只能单调前进。</li>
+</ol>
+<p>这些用例比“按钮快速点十次没有报错”更接近我们真正想守住的不变量。</p>
+<h2 id="heading-7">最后：先定义所有权，再选择工具</h2>
+<p>我不建议把四层一开始就做成一套庞大的通用框架。先在具体页面里写清楚三件事：状态属于谁、什么情况下结果过期、冲突由谁裁决。出现稳定重复后，再抽出令牌守卫、队列和版本策略。</p>
+<p>防抖适合控制输入频率，取消适合节省无效工作，令牌与身份校验负责前端状态所有权，服务端版本负责最终一致性。把边界说清楚以后，代码反而不会复杂；真正复杂的，是让几种语义混在一个 loading 和一个 <code>try/catch</code> 里。</p>
+<p>延伸阅读：</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController/abort">MDN：AbortController.abort()</a></li>
+<li><a href="https://tanstack.com/query/v4/docs/react/guides/query-cancellation">TanStack Query：Query Cancellation</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/If-Match">MDN：If-Match</a></li>
+</ul>
+
+    </article>
+
+    
+    <p class="post-byline">本文由 <span class="post-byline__name">ihopeful Blog</span> 亲笔撰写 · <a href="/post/about" rel="author">关于作者</a></p>
+
+    
+
+    
+    <div class="post-tags">
+      
+      <a class="chip" href="/tag/typescript/">#TypeScript</a>
+      
+      <a class="chip" href="/tag/react/">#React</a>
+      
+    </div>
+    
+
+    
+    <div class="msg-actions">
+      <button class="msg-action" id="copy-link" type="button" data-link="https://ihopefulchina.github.io/post/async-race-governance/" aria-label="复制链接" title="复制链接">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      </button>
+      <button class="msg-action" id="copy-text" type="button" aria-label="复制全文" title="复制全文">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      </button>
+      <button class="msg-action" id="back-top" type="button" aria-label="回到顶部" title="回到顶部">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+      </button>
+    </div>
+
+    
+    
+    <nav class="post-nav" aria-label="相邻文章">
+      
+      <a class="post-nav__card" href="/post/contract-first-openapi-client/" rel="prev">
+        <span class="post-nav__label">← 上一篇</span>
+        <span class="post-nav__title">契约优先的前端开发：从 Java OpenAPI 到生成客户端</span>
+      </a>
+      
+      
+    </nav>
+    
+
+    
+
+
+
+  </div>
+</div>
+
+
+      </div>
+    </main>
+
+    
+<div class="composer-wrap">
+  <form class="composer" id="composer" action="javascript:void(0)" autocomplete="off">
+    <button class="composer__plus" type="button" tabindex="-1" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
+    <input class="composer__input" id="composer-input" type="text" name="q" placeholder="有问题，尽管搜…" aria-label="站内搜索" enterkeyhint="search">
+    <button class="composer__send" id="composer-send" type="submit" aria-label="搜索">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+    </button>
+  </form>
+  <p class="composer__note">
+    ihopeful Blog 由博主亲笔撰写，重要信息可放心引用。
+  </p>
+</div>
+
+
+  </div>
+
+  
+<div class="search-overlay" id="search-overlay" hidden>
+  <div class="search-modal" role="dialog" aria-modal="true" aria-label="站内搜索">
+    <div class="search-modal__head">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.2" y2="16.2"/></svg>
+      <input class="search-modal__input" id="search-modal-input" type="text" placeholder="搜索文章…" autocomplete="off">
+      <kbd class="search-modal__kbd">Esc</kbd>
+      <button class="icon-btn search-modal__close" id="search-modal-close" type="button" aria-label="关闭搜索">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="search-modal__results" id="search-modal-results" role="listbox"></div>
+  </div>
+</div>
+
+
+  <script src="/scripts/app.js" defer></script>
+  <script src="/scripts/search.js" defer></script>
+  
+  
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+</body>
+</html>
