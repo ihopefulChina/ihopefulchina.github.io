@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta name="generator" content="Gridea Pro 0.0.0-dev">
-  <title>ProTable 请求封装：明确协议适配与错误边界 - ihopeful Blog</title>
+  <title>Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -52,21 +52,19 @@
   
 
 
-<meta name="description" content="Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。">
-<link rel="canonical" href="https://ihopefulchina.github.io/post/protable-request-adapter/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"ProTable 请求封装：明确协议适配与错误边界","url":"https://ihopefulchina.github.io/post/protable-request-adapter/","description":"Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。","image":"/post-images/protable-request-adapter-cover.png","datePublished":"2024-08-06T15:26:46+08:00","dateModified":"2026-05-02T21:11:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/protable-request-adapter/","name":"ProTable 请求封装：明确协议适配与错误边界","position":2}]}</script>
-<meta property="og:title" content="ProTable 请求封装：明确协议适配与错误边界">
-<meta property="og:description" content="Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。">
-<meta property="og:url" content="https://ihopefulchina.github.io/post/protable-request-adapter/">
+<meta name="description" content="Cloudflare Tunnel 的命令行并不难。真正让日常使用变得零碎的，是命令之外的那些状态：cloudflared 装在哪里、当前使用哪份 YAML、Ingress 规则是否有效、哪个进程由谁启动、Edge 是否连通、源站是否还活着，以及一条 DNS 命令究竟会改动什么。 Tunnelful &amp;hellip;">
+<link rel="canonical" href="https://ihopefulchina.github.io/post/tunnelful-macos-control-plane/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS","url":"https://ihopefulchina.github.io/post/tunnelful-macos-control-plane/","description":"Cloudflare Tunnel 的命令行并不难。真正让日常使用变得零碎的，是命令之外的那些状态：cloudflared 装在哪里、当前使用哪份 YAML、Ingress 规则是否有效、哪个进程由谁启动、Edge 是否连通、源站是否还活着，以及一条 DNS 命令究竟会改动什么。 Tunnelful \u0026hellip;","datePublished":"2026-09-03T15:33:26+08:00","dateModified":"2026-09-03T15:33:26+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/tunnelful-macos-control-plane/","name":"Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS","position":2}]}</script>
+<meta property="og:title" content="Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS">
+<meta property="og:description" content="Cloudflare Tunnel 的命令行并不难。真正让日常使用变得零碎的，是命令之外的那些状态：cloudflared 装在哪里、当前使用哪份 YAML、Ingress 规则是否有效、哪个进程由谁启动、Edge 是否连通、源站是否还活着，以及一条 DNS 命令究竟会改动什么。 Tunnelful &amp;hellip;">
+<meta property="og:url" content="https://ihopefulchina.github.io/post/tunnelful-macos-control-plane/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/protable-request-adapter-cover.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://ihopefulchina.github.io/post/protable-request-adapter/">
-<meta name="twitter:title" content="ProTable 请求封装：明确协议适配与错误边界">
-<meta name="twitter:description" content="Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。">
-<meta name="twitter:image" content="/post-images/protable-request-adapter-cover.png">
+<meta name="twitter:url" content="https://ihopefulchina.github.io/post/tunnelful-macos-control-plane/">
+<meta name="twitter:title" content="Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS">
+<meta name="twitter:description" content="Cloudflare Tunnel 的命令行并不难。真正让日常使用变得零碎的，是命令之外的那些状态：cloudflared 装在哪里、当前使用哪份 YAML、Ingress 规则是否有效、哪个进程由谁启动、Edge 是否连通、源站是否还活着，以及一条 DNS 命令究竟会改动什么。 Tunnelful &amp;hellip;">
 </head>
 <body data-typewriter="True">
 
@@ -225,7 +223,7 @@
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">ProTable 请求封装：明确协议适配与错误边界</h1>
+  <h1 class="msg__bubble msg__bubble--title">Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS</h1>
 </div>
 
 
@@ -233,180 +231,146 @@
   <div class="msg__head">
     
     <div class="post-meta">
-      <time datetime="2024-08-06T15:26:46+08:00">2024-08-06</time>
+      <time datetime="2026-09-03T15:33:26+08:00">2026-09-03</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>3583 字</span>
+      <span>5915 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 5 分钟</span>
+      <span>约 9 分钟</span>
       
     </div>
   </div>
   <div class="msg__body">
 
     
-    <figure class="post-feature">
-      <img src="/post-images/protable-request-adapter-cover.png" alt="ProTable 请求封装：明确协议适配与错误边界">
-    </figure>
-    
 
     
 
     <article class="article-content" id="article-content">
-      <p>Ant Design ProTable 的 <code>request</code> 约定很简单：接收分页、表单、排序和筛选参数，返回 <code>data</code>、<code>success</code> 与 <code>total</code>。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。</p>
+      <p>Cloudflare Tunnel 的命令行并不难。真正让日常使用变得零碎的，是命令之外的那些状态：<code>cloudflared</code> 装在哪里、当前使用哪份 YAML、Ingress 规则是否有效、哪个进程由谁启动、Edge 是否连通、源站是否还活着，以及一条 DNS 命令究竟会改动什么。</p>
+<p><a href="https://github.com/ihopefulChina/Tunnelful">Tunnelful</a> 是我为这类本地运维工作写的原生 macOS 应用。它不重新实现 Tunnel 协议，也不把 Cloudflare 控制台复制到桌面；它做的是更克制的一层——把分散在终端、配置文件和进程日志里的操作，收拢成一个能检查、能确认、能追溯的本地控制面。</p>
 <!-- more -->
-<h2 id="heading">先定义稳定的边界</h2>
-<p>下面不从 Ant Design 的内部文件路径导入 <code>SortOrder</code>，而是只依赖 ProTable 所需的结构。这样可以降低组件库目录调整带来的升级成本。</p>
-<pre><code class="language-ts">import { useCallback } from 'react'
-
-type SortValue = 'ascend' | 'descend' | null
-type Sorter = Record&lt;string, SortValue&gt;
-type Filter = Record&lt;
-  string,
-  Array&lt;string | number | boolean&gt; | null
-&gt;
-
-type TableParams = {
-  current?: number
-  pageSize?: number
-  [key: string]: unknown
-}
-
-type ProTableResult&lt;T&gt; = {
-  data: T[]
-  success: boolean
-  total: number
-}
-
-type ProTableRequest&lt;T, P extends TableParams&gt; = (
-  params: P,
-  sort: Sorter,
-  filter: Filter
-) =&gt; Promise&lt;ProTableResult&lt;T&gt;&gt;
-
-interface PageResult&lt;T&gt; {
-  records: T[]
-  total: number
-}
-
-interface UseProTableRequestOptions&lt;T, P extends TableParams&gt; {
-  request: (
-    params: P,
-    sort: Sorter,
-    filter: Filter
-  ) =&gt; Promise&lt;PageResult&lt;T&gt;&gt;
-  onError?: (error: unknown) =&gt; void
-}
-
-export function useProTableRequest&lt;
-  T,
-  P extends TableParams = TableParams
-&gt;(
-  options: UseProTableRequestOptions&lt;T, P&gt;
-): ProTableRequest&lt;T, P&gt; {
-  const { request, onError } = options
-
-  return useCallback(
-    async (params, sort, filter) =&gt; {
-      try {
-        const result = await request(params, sort, filter)
-
-        return {
-          data: result.records,
-          total: result.total,
-          success: true
-        }
-      } catch (error) {
-        onError?.(error)
-
-        return {
-          data: [],
-          total: 0,
-          success: false
-        }
-      }
-    },
-    [request, onError]
-  )
-}
-</code></pre>
-<p>这个 Hook 只做两件事：</p>
+<p align="center">
+  <a href="https://ihopefulchina.github.io/Tunnelful/"><strong>项目官网</strong></a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/ihopefulChina/Tunnelful/releases/latest"><strong>下载 0.1.0</strong></a>
+  &nbsp;·&nbsp;
+  <a href="https://github.com/ihopefulChina/Tunnelful"><strong>GitHub</strong></a>
+</p>
+<p><img src="https://ihopefulchina.github.io/post-images/tunnelful-overview-light.png" alt="Tunnelful 浅色模式概览，截图已开启隐私遮罩" /></p>
+<p><em>浅色模式概览。公开截图使用中性示例数据，并开启隐私遮罩。</em></p>
+<h2 id="-tunnel-">为什么不是再写一套 Tunnel 客户端</h2>
+<p>Cloudflare Tunnel 的核心模型很清楚：<code>cloudflared</code> 从源站侧主动连接 Cloudflare 网络，不要求把源站直接暴露在公网。对于本地管理的命名 Tunnel，官方 CLI 已经负责登录、创建、校验、路由和运行。</p>
+<p>因此，Tunnelful 的架构选择不是“替代 <code>cloudflared</code>”，而是把责任切开：</p>
+<table>
+<thead>
+<tr>
+<th>层次</th>
+<th>负责什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cloudflare 与 <code>cloudflared</code></td>
+<td>Tunnel 协议、认证、Edge 连接与流量转发</td>
+</tr>
+<tr>
+<td>Tunnelful</td>
+<td>本机环境发现、配置编辑、命令编排、进程生命周期与状态展示</td>
+</tr>
+<tr>
+<td>使用者</td>
+<td>账户权限、域名、源站安全、上线判断与最终确认</td>
+</tr>
+</tbody>
+</table>
+<p>这个边界很重要。桌面应用如果偷偷捆绑一个长期不更新的二进制，或者自己解释一套与官方 CLI 不一致的协议，短期看似“开箱即用”，长期却会制造版本、安全和责任上的第二套事实。Tunnelful 只发现或选择用户安装的官方 <code>cloudflared</code>，并显示版本与来源；安装和升级仍由使用者掌控。</p>
+<h2 id="heading">一个状态灯不够描述真实运行状态</h2>
+<p>很多运维界面喜欢给服务放一个绿色圆点，但“绿色”经常混合了至少三件不同的事：</p>
 <ol>
-<li>把项目接口的 <code>records/total</code> 转成 ProTable 的返回结构。</li>
-<li>统一失败结果，并把错误交给页面或监控处理。</li>
+<li>本地进程是否存在；</li>
+<li>连接器是否已经连到 Cloudflare Edge；</li>
+<li>本地源站是否能响应。</li>
 </ol>
-<h2 id="heading-1">使用示例</h2>
-<pre><code class="language-tsx">import { useCallback } from 'react'
-import { ProTable } from '@ant-design/pro-components'
-import { message } from 'antd'
+<p>这三者并不等价。进程运行不代表 Edge 已连通，Edge 已连通也不代表 <code>127.0.0.1:3000</code> 背后的应用没有崩溃。反过来，本地源站正常时，Tunnel 也可能仍未启动。</p>
+<p>Tunnelful 将它们拆成独立状态，并刻意限制措辞：只说“本 App 管理的进程”，不会因为自己没有进程句柄，就断言系统里不存在其他 <code>cloudflared</code> 服务。源站检查也单独执行，避免一次 Tunnel 连接抖动覆盖真正的应用故障。</p>
+<p>这不是视觉上的信息增量，而是故障定位边界。状态一旦混在一起，用户下一步该检查本机、网络还是业务服务，就只能靠猜。</p>
+<h2 id="heading-1">配置编辑的重点不是表单，而是写入协议</h2>
+<p>把 YAML 映射成几个输入框并不难。难的是在真实配置上做到“不丢、不抢、不写坏”。</p>
+<p>Tunnelful 目前只结构化编辑 Ingress 中的 <code>hostname</code>、<code>path</code> 和 <code>service</code>。其他配置段、注释以及规则内的高级字段不会因为 GUI 不认识就被删除。保存时则经过一条明确的流水线：</p>
+<ol>
+<li>在内存中检查必填字段、兜底规则和基本结构；</li>
+<li>生成临时预览文件；</li>
+<li>调用官方 <code>cloudflared tunnel ingress validate</code> 校验；</li>
+<li>检查源文件在编辑期间是否被外部修改；</li>
+<li>备份原文件，保留权限，再原子替换目标文件。</li>
+</ol>
+<p>典型的本地配置仍然是官方格式：</p>
+<pre><code class="language-yaml">tunnel: &lt;TUNNEL_ID&gt;
+credentials-file: &lt;CREDENTIALS_FILE&gt;
 
-export function UserTable() {
-  const queryUsers = useCallback(
-    async (
-      params: TableParams,
-      sort: Sorter,
-      filter: Filter
-    ) =&gt; {
-      const response = await userService.page({
-        page: params.current ?? 1,
-        pageSize: params.pageSize ?? 20,
-        keyword: params.keyword,
-        sort,
-        filter
-      })
-
-      return {
-        records: response.records,
-        total: response.total
-      }
-    },
-    []
-  )
-
-  const request = useProTableRequest({
-    request: queryUsers,
-    onError: () =&gt; {
-      message.error('用户列表加载失败')
-    }
-  })
-
-  return (
-    &lt;ProTable&lt;User&gt;
-      rowKey=&quot;id&quot;
-      columns={columns}
-      request={request}
-      pagination={{ defaultPageSize: 20 }}
-    /&gt;
-  )
-}
+ingress:
+  - hostname: preview.example.com
+    service: http://127.0.0.1:3000
+  - service: http_status:404
 </code></pre>
-<p>传入 Hook 的 <code>request</code> 和 <code>onError</code> 应保持稳定。若直接在 JSX 每次创建新函数，<code>useCallback</code> 无法带来稳定引用，表格还可能因依赖变化产生额外请求。</p>
-<h2 id="heading-2">排序参数需要显式翻译</h2>
-<p>前端通常使用 <code>ascend/descend</code>，后端可能使用 <code>asc/desc</code>，字段名也未必相同。不要把整个 <code>sort</code> 对象原样透传给服务端：</p>
-<pre><code class="language-ts">function toOrderBy(sort: Sorter) {
-  const allowedFields = new Set(['createdAt', 'name'])
-
-  return Object.entries(sort)
-    .filter(
-      (entry): entry is [string, 'ascend' | 'descend'] =&gt;
-        allowedFields.has(entry[0]) &amp;&amp;
-        entry[1] !== null
-    )
-    .map(([field, order]) =&gt; ({
-      field,
-      direction: order === 'ascend' ? 'asc' : 'desc'
-    }))
-}
+<p>“先生成、再校验、最后提交”比直接覆盖文件多了几步，却避免 GUI 成为配置损坏的来源。外部修改检测同样不能省：编辑期间如果终端或其他工具已经更新原文件，应用应停止覆盖，让用户重新载入，而不是用旧快照赢下最后一次写入。</p>
+<h2 id="heading-2">远端副作用必须在界面上暴露</h2>
+<p>编辑本地 YAML 与修改 Cloudflare DNS 不是同一种操作。前者有本地备份和恢复路径，后者会改变账户里的远端状态。</p>
+<p>所以 Tunnelful 将 DNS 路由处理成一项独立动作：先生成并展示命令，可以只复制；如果要由应用执行，必须关闭隐私遮罩核对真实目标，并再次确认。当前命令显式带上 <code>--overwrite-dns=false</code>：</p>
+<pre><code class="language-bash">cloudflared tunnel route dns --overwrite-dns=false demo preview.example.com
 </code></pre>
-<p>字段白名单不仅是类型问题，也能避免把任意客户端字段拼进数据库排序语句。</p>
-<h2 id="-hook-">不建议放进这个 Hook 的能力</h2>
+<p>这条限制不是为了增加点击次数，而是为了让副作用可见：应用不会静默覆盖同名 DNS 记录。命令超时时，远端结果仍可能已经生效，正确做法是先到 DNS 中核对，而不是无条件重试。</p>
+<p>同样的原则也用于进程管理。Tunnelful 只停止或重启自己创建的子进程，不会扫描后杀掉所有同名进程。桌面工具可以提高操作效率，但不应该借“自动化”扩大控制范围。</p>
+<h2 id="heading-3">把安全做成默认工作流</h2>
+<p>Tunnelful 不读取或上传 credentials 和 <code>cert.pem</code> 的内容，只检查完成当前工作流所需的文件元数据与账户可用性。命令使用参数数组直接启动，不把用户输入拼接成 shell 字符串；日志对常见 Token、用户目录等信息做尽力遮罩。</p>
+<p>应用还提供单独的截图隐私模式。开启后，路径中的用户名、Tunnel 标识、域名、源站和 YAML 凭据位置都会换成中性示例值，相关编辑也会锁定。这个功能的出发点很实际：日志和运维界面经常要发给同事或贴进 Issue，泄漏往往不是发生在网络上传，而是发生在一张未经检查的截图里。</p>
+<p>当然，脱敏只能降低误操作概率，不能代替人工审查。分享配置、日志或截图前，最终责任仍在使用者。</p>
+<h2 id="heading-4">原生体验不是换一套皮肤</h2>
+<p>Tunnelful 使用 SwiftUI 编写，主窗口按照日常任务分成概览、Tunnel、发布服务、Ingress 配置、环境检查和日志六个入口。窗口打开时，它是标准 macOS 应用，提供系统菜单；全部窗口关闭后隐藏 Dock 图标，继续常驻菜单栏。</p>
+<p>外观支持跟随系统、浅色和深色。登录 Mac 时打开应用、应用启动后运行当前 Tunnel 是两个独立开关：前者只决定应用是否启动，后者只有在 <code>cloudflared</code>、配置和 Tunnel 条件完整时才会执行。</p>
+<p><img src="https://ihopefulchina.github.io/post-images/tunnelful-overview-dark.png" alt="Tunnelful 深色模式概览，截图已开启隐私遮罩" /></p>
+<p><em>深色模式与浅色模式使用同一信息结构，不靠颜色单独表达状态。</em></p>
+<h2 id="heading-5">安装与第一次运行</h2>
+<p>Tunnelful 0.1.0 支持 macOS 14 或更高版本，GitHub Release 分别提供 Apple 芯片 <code>arm64</code> 与 Intel <code>x86_64</code> 安装包。先在“关于本机”确认芯片，再下载对应 DMG 和同名校验文件：</p>
+<pre><code class="language-bash">shasum -a 256 -c Tunnelful-0.1.0-arm64.dmg.sha256
+</code></pre>
+<p>应用不捆绑 <code>cloudflared</code>。可以先用 Homebrew 安装：</p>
+<pre><code class="language-bash">brew install cloudflared
+cloudflared --version
+</code></pre>
+<p>随后在 Tunnelful 的“环境检查”中完成可执行文件、配置、凭据和账户状态检查。需要登录时，应用运行官方命令并打开 Cloudflare 页面：</p>
+<pre><code class="language-bash">cloudflared tunnel login
+</code></pre>
+<p>当前安装包采用 ad-hoc 签名，尚未使用 Developer ID 签名，也没有经过 Apple 公证。首次启动应只对从本项目 GitHub Release 下载并已核对 SHA-256 的应用，在访达中按住 Control 点按后选择“打开”；不建议运行来源不明的命令绕过系统安全检查。</p>
+<h2 id="010-">0.1.0 的边界</h2>
+<p>这是一个可以使用的首个正式版本，但不是 Cloudflare 管理平台的桌面替代品。当前主要服务于已有本地 YAML 的 locally-managed 命名 Tunnel，并明确不包含：</p>
 <ul>
-<li><strong>请求缓存：</strong> ProTable 自己管理请求触发；跨页面缓存应由数据层负责。</li>
-<li><strong>自动重置页码：</strong> 表单提交、重置和 <code>actionRef.current?.reloadAndRest?.()</code> 的语义应由页面明确选择。</li>
-<li><strong>静默成功：</strong> 捕获异常后仍返回 <code>success: true</code> 会让空数据和失败无法区分。</li>
-<li><strong>私有类型导入：</strong> <code>antd/es/...</code> 下的实现路径不是稳定的公共契约。</li>
-<li><strong>业务参数拼装：</strong> 门店、租户和权限范围应在业务请求函数中清晰出现。</li>
+<li>GUI 内创建或删除命名 Tunnel；</li>
+<li>Quick Tunnel 与 remotely-managed Tunnel Token 工作流；</li>
+<li>Cloudflare API、Access 策略、私网路由与多主机副本管理；</li>
+<li><code>cloudflared</code> 自动安装或自动更新；</li>
+<li>Developer ID 签名、Apple 公证和静默更新。</li>
 </ul>
-<p>ProTable 官方文档：<a href="https://procomponents.ant.design/components/table">ProTable</a>。升级组件库时，应以项目锁定版本对应的 API 为准。</p>
+<p>Cloudflare 当前更推荐大多数场景使用 remotely-managed Tunnel，本地管理模式更适合本地开发、测试或遗留配置。Tunnelful 选择先把这一条工作流做扎实，不意味着它适合所有生产拓扑。多副本、高可用、企业权限与远程配置需要另一套更完整的控制面设计，不能靠桌面 GUI 模糊带过。</p>
+<h2 id="heading-6">为什么开源</h2>
+<p>运维工具会接触可执行文件路径、配置位置、进程输出和账户相关命令。即使它宣称“不上传”，用户也应该能够检查这句话如何落到代码里。</p>
+<p>Tunnelful 以 Apache License 2.0 开源。仓库包含 SwiftUI 应用、单元测试、公开内容检查、双架构构建脚本和发布流程。原生应用当前没有额外的第三方 Swift Package 依赖。可以从源码运行：</p>
+<pre><code class="language-bash">git clone https://github.com/ihopefulChina/Tunnelful.git
+cd Tunnelful
+swift test --package-path app
+open app/TunnelApp.xcodeproj
+</code></pre>
+<p>静态检查和构建通过不等于真实 Cloudflare 账户、DNS 或公网链路已经完成 UAT。项目把这些验证边界写进 README 与发布文档，是希望“可下载”和“已在你的环境中可上线”不要被混为一谈。</p>
+<h2 id="heading-7">写在最后</h2>
+<p>我更愿意把 Tunnelful 看成一个边界清楚的小型控制面：它尊重 <code>cloudflared</code> 的权威性，把本地配置当作需要事务保护的数据，把远端变更当作必须确认的副作用，也承认一个进程状态无法代表整条链路。</p>
+<p>如果你正在 macOS 上维护 locally-managed Cloudflare Tunnel，可以从 <a href="https://github.com/ihopefulChina/Tunnelful/releases/tag/v0.1.0">0.1.0 Release</a> 开始。使用中遇到可复现的问题，欢迎在 <a href="https://github.com/ihopefulChina/Tunnelful/issues">GitHub Issues</a> 提交；涉及凭据或安全边界的问题，请按照仓库中的 <a href="https://github.com/ihopefulChina/Tunnelful/blob/main/SECURITY.md">安全政策</a> 私下报告。</p>
+<p>延伸阅读：</p>
+<ul>
+<li><a href="https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/">Cloudflare Tunnel 工作原理</a></li>
+<li><a href="https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/create-local-tunnel/">创建 locally-managed Tunnel</a></li>
+<li><a href="https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/">Locally-managed Tunnel 的适用范围</a></li>
+<li><a href="https://github.com/ihopefulChina/Tunnelful">Tunnelful 源码与完整安全边界</a></li>
+</ul>
 
     </article>
 
@@ -414,20 +378,20 @@ export function UserTable() {
     <p class="post-byline">本文由 <span class="post-byline__name">ihopeful Blog</span> 亲笔撰写 · <a href="/post/about" rel="author">关于作者</a></p>
 
     
-    <p class="post-updated">最后更新于 <time datetime="2026-05-02T21:11:21+08:00">2026-05-02</time></p>
-    
 
     
     <div class="post-tags">
       
-      <a class="chip" href="/tag/react/">#React</a>
+      <a class="chip" href="/tag/swift/">#Swift</a>
+      
+      <a class="chip" href="/tag/system/">#系统</a>
       
     </div>
     
 
     
     <div class="msg-actions">
-      <button class="msg-action" id="copy-link" type="button" data-link="https://ihopefulchina.github.io/post/protable-request-adapter/" aria-label="复制链接" title="复制链接">
+      <button class="msg-action" id="copy-link" type="button" data-link="https://ihopefulchina.github.io/post/tunnelful-macos-control-plane/" aria-label="复制链接" title="复制链接">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
       </button>
       <button class="msg-action" id="copy-text" type="button" aria-label="复制全文" title="复制全文">
@@ -442,16 +406,11 @@ export function UserTable() {
     
     <nav class="post-nav" aria-label="相邻文章">
       
-      <a class="post-nav__card" href="/post/uniapp-typed-routes/" rel="prev">
+      <a class="post-nav__card" href="/post/async-race-governance/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
-        <span class="post-nav__title">从 pages.json 生成 uni-app 类型化路由</span>
+        <span class="post-nav__title">不只是防抖：复杂前端异步竞态的四层治理</span>
       </a>
       
-      
-      <a class="post-nav__card post-nav__card--next" href="/post/vue-use-mutate/" rel="next">
-        <span class="post-nav__label">下一篇 →</span>
-        <span class="post-nav__title">Vue 3 useMutate：封装可控的命令式异步请求</span>
-      </a>
       
     </nav>
     
