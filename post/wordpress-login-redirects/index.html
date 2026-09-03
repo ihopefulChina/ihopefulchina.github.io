@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 0.0.0-dev">
+  <meta name="generator" content="Gridea Pro 1.2.2">
   <title>WordPress 登录后按请求与权限安全跳转 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -67,6 +67,17 @@
 <meta name="twitter:title" content="WordPress 登录后按请求与权限安全跳转">
 <meta name="twitter:description" content="WordPress 的 login_redirect 过滤器会提供最终跳转地址、用户原始请求地址和登录结果。实现时要处理 WP_Error、避免开放重定向，并尽量保留用户登录前真正想访问的页面。">
 <meta name="twitter:image" content="/post-images/wordpress-login-redirects-cover.png">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </head>
 <body data-typewriter="True">
 
@@ -125,7 +136,7 @@
       <span class="sidebar__nav-label">标签</span>
     </a>
     
-    <a class="sidebar__nav-item" href="/post/about" data-link="/post/about">
+    <a class="sidebar__nav-item" href="/about" data-link="/about">
       <span class="sidebar__nav-icon" aria-hidden="true">
         
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-1.5a4.5 4.5 0 0 0-4.5-4.5h-5A4.5 4.5 0 0 0 5 19.5V21"/><circle cx="12" cy="7.5" r="3.5"/></svg>
@@ -162,7 +173,7 @@
     
     <div class="user-menu" id="user-menu" hidden>
       
-      <a class="user-menu__item" href="/post/about">
+      <a class="user-menu__item" href="/about">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-1.5a4.5 4.5 0 0 0-4.5-4.5h-5A4.5 4.5 0 0 0 5 19.5V21"/><circle cx="12" cy="7.5" r="3.5"/></svg>
         <span>关于我</span>
       </a>
@@ -316,7 +327,7 @@ return $_GET['redirect_to'];
     </article>
 
     
-    <p class="post-byline">本文由 <span class="post-byline__name">ihopeful Blog</span> 亲笔撰写 · <a href="/post/about" rel="author">关于作者</a></p>
+    <p class="post-byline">本文由 <span class="post-byline__name">ihopeful Blog</span> 亲笔撰写 · <a href="/about" rel="author">关于作者</a></p>
 
     
     <p class="post-updated">最后更新于 <time datetime="2026-05-02T21:11:22+08:00">2026-05-02</time></p>
@@ -413,6 +424,6 @@ return $_GET['redirect_to'];
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>
