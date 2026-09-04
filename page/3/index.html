@@ -70,6 +70,18 @@
     
     {
       "@type": "BlogPosting",
+      "headline": "WordPress 留言表单与邮件转发：安全、送达和隐私",
+      "url": "https://ihopefulchina.github.io/post/wordpress-comment-email-forwarding/",
+      "datePublished": "2019-08-22T14:25:47+08:00",
+      "description": "我早期为企业站写过一个留言表单项目，支持后台查看和邮箱通知。原始仓库现在是非公开的历史项目，不能把当年的实现当成可安装、可维护的公开插件。下面重新整理一个生产表单真正需要考虑的边界。\n\n表单不只是 wp_mail()\n完整流程包括：\n\n浏览器提交姓名、邮箱、主题和留言。\n服务端验证来源、字段、频率和权限。\n保存最少必要...",
+      "author": { "@type": "Person", "name": "ihopeful Blog" }
+    }
+
+
+
+    ,
+    {
+      "@type": "BlogPosting",
       "headline": "按分类输出文章，并可靠高亮当前分类与文章",
       "url": "https://ihopefulchina.github.io/post/wordpress-category-post-navigation/",
       "datePublished": "2019-08-22T14:13:54+08:00",
@@ -170,18 +182,6 @@
       "url": "https://ihopefulchina.github.io/post/wordpress-dashboard-cleanup/",
       "datePublished": "2019-08-22T09:30:48+08:00",
       "description": "早期版本建议通过过滤 transient、移除检查 action 和关闭自动更新来“保持稳定”，这会让站点错过安全修复，也让管理员看不到真实风险。现代做法是精简无关仪表盘组件，同时建立可回滚的更新流程，而不是让更新系统失明。\n\n安全地移除仪表盘组件\n\u0026lt;?php\nadd_action(\n    'wp_dashbo...",
-      "author": { "@type": "Person", "name": "ihopeful Blog" }
-    }
-    
-    
-    
-    ,
-    {
-      "@type": "BlogPosting",
-      "headline": "保护 WordPress 关键页面，避免被移入回收站或永久删除",
-      "url": "https://ihopefulchina.github.io/post/wordpress-protect-critical-pages/",
-      "datePublished": "2019-08-22T09:22:15+08:00",
-      "description": "隐私政策、结算页、会员中心等关键页面可能被主题、插件或业务配置引用。保护它们不能靠在删除按钮点击后 exit：那会留下不完整响应，也无法覆盖批量操作、REST、WP-CLI 或其他代码路径。\n\n先维护明确的受保护 ID\n不同环境的文章 ID 可能不同。生产项目可把这些 ID 存进站点选项，或直接读取 WordPress...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -389,6 +389,18 @@
   <div class="msg__body">
     <div class="post-list">
       
+      <a class="post-item" href="/post/wordpress-comment-email-forwarding/">
+        <span class="post-item__main">
+          <span class="post-item__title">WordPress 留言表单与邮件转发：安全、送达和隐私</span>
+
+
+          <span class="post-item__excerpt">我早期为企业站写过一个留言表单项目，支持后台查看和邮箱通知。原始仓库现在是非公开的历史项目，不能把当年的实现当成可安装、可维护的公开插件。下面重新整理一个生产表...</span>
+
+
+        </span>
+        <time class="post-item__time" datetime="2019-08-22T14:25:47+08:00">7 年前</time>
+      </a>
+
       <a class="post-item" href="/post/wordpress-category-post-navigation/">
         <span class="post-item__main">
           <span class="post-item__title">按分类输出文章，并可靠高亮当前分类与文章</span>
@@ -495,18 +507,6 @@
           
         </span>
         <time class="post-item__time" datetime="2019-08-22T09:30:48+08:00">7 年前</time>
-      </a>
-      
-      <a class="post-item" href="/post/wordpress-protect-critical-pages/">
-        <span class="post-item__main">
-          <span class="post-item__title">保护 WordPress 关键页面，避免被移入回收站或永久删除</span>
-          
-          
-          <span class="post-item__excerpt">隐私政策、结算页、会员中心等关键页面可能被主题、插件或业务配置引用。保护它们不能靠在删除按钮点击后 exit：那会留下不完整响应，也无法覆盖批量操作、REST、...</span>
-          
-          
-        </span>
-        <time class="post-item__time" datetime="2019-08-22T09:22:15+08:00">7 年前</time>
       </a>
       
     </div>

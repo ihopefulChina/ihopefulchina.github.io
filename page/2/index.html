@@ -70,6 +70,18 @@
     
     {
       "@type": "BlogPosting",
+      "headline": "ProTable 请求封装：明确协议适配与错误边界",
+      "url": "https://ihopefulchina.github.io/post/protable-request-adapter/",
+      "datePublished": "2024-08-06T15:26:46+08:00",
+      "description": "Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得封装的是项目后端协议的适配，而不是在 Hook 内再造一套缓存或吞掉所有错误。\n\n先定义稳定的边界\n下面不从 Ant Design 的内部文件路径导入 Sort...",
+      "author": { "@type": "Person", "name": "ihopeful Blog" }
+    }
+
+
+
+    ,
+    {
+      "@type": "BlogPosting",
       "headline": "从 pages.json 生成 uni-app 类型化路由",
       "url": "https://ihopefulchina.github.io/post/uniapp-typed-routes/",
       "datePublished": "2024-07-17T16:50:37+08:00",
@@ -170,18 +182,6 @@
       "url": "https://ihopefulchina.github.io/post/wordpress-page-layout-templates/",
       "datePublished": "2019-08-22T14:48:25+08:00",
       "description": "页面、文章或自定义文章详情需要不同布局时，先使用 WordPress 模板层级和页面模板；只有当编辑需要在后台选择有限的展示变体时，再加入 ACF 字段。不要把字段值直接拼进 include 路径。\n\n方案一：模板层级\n经典主题会按从具体到通用的顺序查找模板。例如：\nsingle-product-special.php...",
-      "author": { "@type": "Person", "name": "ihopeful Blog" }
-    }
-    
-    
-    
-    ,
-    {
-      "@type": "BlogPosting",
-      "headline": "WordPress 留言表单与邮件转发：安全、送达和隐私",
-      "url": "https://ihopefulchina.github.io/post/wordpress-comment-email-forwarding/",
-      "datePublished": "2019-08-22T14:25:47+08:00",
-      "description": "我早期为企业站写过一个留言表单项目，支持后台查看和邮箱通知。原始仓库现在是非公开的历史项目，不能把当年的实现当成可安装、可维护的公开插件。下面重新整理一个生产表单真正需要考虑的边界。\n\n表单不只是 wp_mail()\n完整流程包括：\n\n浏览器提交姓名、邮箱、主题和留言。\n服务端验证来源、字段、频率和权限。\n保存最少必要...",
       "author": { "@type": "Person", "name": "ihopeful Blog" }
     }
     
@@ -389,6 +389,18 @@
   <div class="msg__body">
     <div class="post-list">
       
+      <a class="post-item" href="/post/protable-request-adapter/">
+        <span class="post-item__main">
+          <span class="post-item__title">ProTable 请求封装：明确协议适配与错误边界</span>
+
+
+          <span class="post-item__excerpt">Ant Design ProTable 的 request 约定很简单：接收分页、表单、排序和筛选参数，返回 data、success 与 total。真正值得...</span>
+
+
+        </span>
+        <time class="post-item__time" datetime="2024-08-06T15:26:46+08:00">2 年前</time>
+      </a>
+
       <a class="post-item" href="/post/uniapp-typed-routes/">
         <span class="post-item__main">
           <span class="post-item__title">从 pages.json 生成 uni-app 类型化路由</span>
@@ -495,18 +507,6 @@
           
         </span>
         <time class="post-item__time" datetime="2019-08-22T14:48:25+08:00">7 年前</time>
-      </a>
-      
-      <a class="post-item" href="/post/wordpress-comment-email-forwarding/">
-        <span class="post-item__main">
-          <span class="post-item__title">WordPress 留言表单与邮件转发：安全、送达和隐私</span>
-          
-          
-          <span class="post-item__excerpt">我早期为企业站写过一个留言表单项目，支持后台查看和邮箱通知。原始仓库现在是非公开的历史项目，不能把当年的实现当成可安装、可维护的公开插件。下面重新整理一个生产表...</span>
-          
-          
-        </span>
-        <time class="post-item__time" datetime="2019-08-22T14:25:47+08:00">7 年前</time>
       </a>
       
     </div>
