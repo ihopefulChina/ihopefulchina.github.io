@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta name="generator" content="Gridea Pro 1.2.2">
-  <title>FeishuDevTools：从设备仿真到 MCP 的飞书 H5 调试工作台 - ihopeful Blog</title>
+  <title>Larto：从设备仿真到 MCP 的飞书 H5 调试工作台 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="generator" content="Gridea Pro">
@@ -49,23 +49,23 @@
 
 
 
+  
 
 
-
-<meta name="description" content="调试飞书 H5 应用时，页面能在浏览器里打开，往往只是第一步。布局取决于视口和安全区，JSSDK 会识别容器环境，登录涉及账号与租户，授权又依赖应用配置和平台响应。一个问题横跨这几层时，仅凭页面上的“调用失败”，很难判断应该从哪里查起。 我写了 FeishuDevTools，希望把设备模拟、Chromium DevTools、飞书登录与 JSAPI 调用记录放进同一个桌面工作台，再通过 MCP 把这套调试环境开放给 AI 客户端。 这篇文章记录它的几个实现选择：设备参数何时生效、原生 DevTools 如何嵌入、哪些能力连接真实平台，以及界面操作变成工具调用后，需要补上什么完成语义。">
+<meta name="description" content="调试飞书 H5 应用时，页面能在浏览器里打开，往往只是第一步。布局取决于视口和安全区，JSSDK 会识别容器环境，登录涉及账号与租户，授权又依赖应用配置和平台响应。一个问题横跨这几层时，仅凭页面上的“调用失败”，很难判断应该从哪里查起。 我写了 Larto，希望把设备模拟、Chromium DevTools、飞书登录与 JSAPI 调用记录放进同一个桌面工作台，再通过 MCP 把这套调试环境开放给 AI 客户端。 这篇文章记录它的几个实现选择：设备参数何时生效、原生 DevTools 如何嵌入、哪些能力连接真实平台，以及界面操作变成工具调用后，需要补上什么完成语义。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/feishu-devtools-h5-debugging/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"FeishuDevTools：从设备仿真到 MCP 的飞书 H5 调试工作台","url":"https://ihopefulchina.github.io/post/feishu-devtools-h5-debugging/","description":"调试飞书 H5 应用时，页面能在浏览器里打开，往往只是第一步。布局取决于视口和安全区，JSSDK 会识别容器环境，登录涉及账号与租户，授权又依赖应用配置和平台响应。一个问题横跨这几层时，仅凭页面上的“调用失败”，很难判断应该从哪里查起。 我写了 FeishuDevTools，希望把设备模拟、Chromium DevTools、飞书登录与 JSAPI 调用记录放进同一个桌面工作台，再通过 MCP 把这套调试环境开放给 AI 客户端。 这篇文章记录它的几个实现选择：设备参数何时生效、原生 DevTools 如何嵌入、哪些能力连接真实平台，以及界面操作变成工具调用后，需要补上什么完成语义。","image":"/post-images/feishu-devtools-cover.png","datePublished":"2026-09-05T07:03:20+08:00","dateModified":"2026-09-05T07:03:20+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/feishu-devtools-h5-debugging/","name":"FeishuDevTools：从设备仿真到 MCP 的飞书 H5 调试工作台","position":2}]}</script>
-<meta property="og:title" content="FeishuDevTools：从设备仿真到 MCP 的飞书 H5 调试工作台">
-<meta property="og:description" content="调试飞书 H5 应用时，页面能在浏览器里打开，往往只是第一步。布局取决于视口和安全区，JSSDK 会识别容器环境，登录涉及账号与租户，授权又依赖应用配置和平台响应。一个问题横跨这几层时，仅凭页面上的“调用失败”，很难判断应该从哪里查起。 我写了 FeishuDevTools，希望把设备模拟、Chromium DevTools、飞书登录与 JSAPI 调用记录放进同一个桌面工作台，再通过 MCP 把这套调试环境开放给 AI 客户端。 这篇文章记录它的几个实现选择：设备参数何时生效、原生 DevTools 如何嵌入、哪些能力连接真实平台，以及界面操作变成工具调用后，需要补上什么完成语义。">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Larto：从设备仿真到 MCP 的飞书 H5 调试工作台","url":"https://ihopefulchina.github.io/post/feishu-devtools-h5-debugging/","description":"调试飞书 H5 应用时，页面能在浏览器里打开，往往只是第一步。布局取决于视口和安全区，JSSDK 会识别容器环境，登录涉及账号与租户，授权又依赖应用配置和平台响应。一个问题横跨这几层时，仅凭页面上的“调用失败”，很难判断应该从哪里查起。 我写了 Larto，希望把设备模拟、Chromium DevTools、飞书登录与 JSAPI 调用记录放进同一个桌面工作台，再通过 MCP 把这套调试环境开放给 AI 客户端。 这篇文章记录它的几个实现选择：设备参数何时生效、原生 DevTools 如何嵌入、哪些能力连接真实平台，以及界面操作变成工具调用后，需要补上什么完成语义。","image":"/post-images/feishu-devtools-cover.png","datePublished":"2026-09-05T07:03:20+08:00","dateModified":"2026-09-07T09:50:46+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/feishu-devtools-h5-debugging/","name":"Larto：从设备仿真到 MCP 的飞书 H5 调试工作台","position":2}]}</script>
+<meta property="og:title" content="Larto：从设备仿真到 MCP 的飞书 H5 调试工作台">
+<meta property="og:description" content="调试飞书 H5 应用时，页面能在浏览器里打开，往往只是第一步。布局取决于视口和安全区，JSSDK 会识别容器环境，登录涉及账号与租户，授权又依赖应用配置和平台响应。一个问题横跨这几层时，仅凭页面上的“调用失败”，很难判断应该从哪里查起。 我写了 Larto，希望把设备模拟、Chromium DevTools、飞书登录与 JSAPI 调用记录放进同一个桌面工作台，再通过 MCP 把这套调试环境开放给 AI 客户端。 这篇文章记录它的几个实现选择：设备参数何时生效、原生 DevTools 如何嵌入、哪些能力连接真实平台，以及界面操作变成工具调用后，需要补上什么完成语义。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/feishu-devtools-h5-debugging/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
 <meta property="og:image" content="/post-images/feishu-devtools-cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/feishu-devtools-h5-debugging/">
-<meta name="twitter:title" content="FeishuDevTools：从设备仿真到 MCP 的飞书 H5 调试工作台">
-<meta name="twitter:description" content="调试飞书 H5 应用时，页面能在浏览器里打开，往往只是第一步。布局取决于视口和安全区，JSSDK 会识别容器环境，登录涉及账号与租户，授权又依赖应用配置和平台响应。一个问题横跨这几层时，仅凭页面上的“调用失败”，很难判断应该从哪里查起。 我写了 FeishuDevTools，希望把设备模拟、Chromium DevTools、飞书登录与 JSAPI 调用记录放进同一个桌面工作台，再通过 MCP 把这套调试环境开放给 AI 客户端。 这篇文章记录它的几个实现选择：设备参数何时生效、原生 DevTools 如何嵌入、哪些能力连接真实平台，以及界面操作变成工具调用后，需要补上什么完成语义。">
+<meta name="twitter:title" content="Larto：从设备仿真到 MCP 的飞书 H5 调试工作台">
+<meta name="twitter:description" content="调试飞书 H5 应用时，页面能在浏览器里打开，往往只是第一步。布局取决于视口和安全区，JSSDK 会识别容器环境，登录涉及账号与租户，授权又依赖应用配置和平台响应。一个问题横跨这几层时，仅凭页面上的“调用失败”，很难判断应该从哪里查起。 我写了 Larto，希望把设备模拟、Chromium DevTools、飞书登录与 JSAPI 调用记录放进同一个桌面工作台，再通过 MCP 把这套调试环境开放给 AI 客户端。 这篇文章记录它的几个实现选择：设备参数何时生效、原生 DevTools 如何嵌入、哪些能力连接真实平台，以及界面操作变成工具调用后，需要补上什么完成语义。">
 <meta name="twitter:image" content="/post-images/feishu-devtools-cover.png">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#ffffff">
@@ -85,109 +85,109 @@
 
 <aside class="sidebar" id="sidebar" aria-label="侧边栏">
 
-
+  
   <div class="sidebar__top">
     <a class="sidebar__brand" href="/" aria-label="ihopeful Blog 首页">
-
+      
       <span class="sidebar__brand-logo sidebar__brand-logo--fallback" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
       </span>
-
+      
     </a>
     <button class="icon-btn sidebar__collapse" id="sidebar-collapse" type="button" aria-label="收起侧边栏" title="收起侧边栏">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="9.5" y1="3" x2="9.5" y2="21"/></svg>
     </button>
   </div>
 
-
+  
   <button class="sidebar__search" id="sidebar-search" type="button">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.2" y2="16.2"/></svg>
     <span>搜索</span>
     <kbd class="sidebar__search-kbd">⌘K</kbd>
   </button>
 
-
+  
   <nav class="sidebar__nav" aria-label="站点导航">
-
+    
     <a class="sidebar__nav-item" href="/" data-link="/">
       <span class="sidebar__nav-icon" aria-hidden="true">
-
+        
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
-
+        
       </span>
       <span class="sidebar__nav-label">首页</span>
     </a>
-
+    
     <a class="sidebar__nav-item" href="/archives" data-link="/archives">
       <span class="sidebar__nav-icon" aria-hidden="true">
-
+        
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5" rx="1"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
-
+        
       </span>
       <span class="sidebar__nav-label">归档</span>
     </a>
-
+    
     <a class="sidebar__nav-item" href="/tags" data-link="/tags">
       <span class="sidebar__nav-icon" aria-hidden="true">
-
+        
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-
+        
       </span>
       <span class="sidebar__nav-label">标签</span>
     </a>
-
+    
     <a class="sidebar__nav-item" href="/post/about" data-link="/post/about">
       <span class="sidebar__nav-icon" aria-hidden="true">
-
+        
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-1.5a4.5 4.5 0 0 0-4.5-4.5h-5A4.5 4.5 0 0 0 5 19.5V21"/><circle cx="12" cy="7.5" r="3.5"/></svg>
-
+        
       </span>
       <span class="sidebar__nav-label">关于</span>
     </a>
-
+    
   </nav>
 
-
+  
   <div class="sidebar__recent">
     <div class="sidebar__recent-title">最近</div>
     <ul class="sidebar__recent-list" id="sidebar-recent" data-count="20"></ul>
   </div>
 
-
+  
   <div class="sidebar__foot">
     <button class="sidebar__user" id="user-menu-toggle" type="button" aria-haspopup="true" aria-expanded="false">
-
+      
       <span class="sidebar__user-avatar sidebar__user-avatar--fallback" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-1.5a4.5 4.5 0 0 0-4.5-4.5h-5A4.5 4.5 0 0 0 5 19.5V21"/><circle cx="12" cy="7.5" r="3.5"/></svg>
       </span>
-
+      
       <span class="sidebar__user-meta">
         <span class="sidebar__user-name">ihopeful Blog</span>
-
+        
         <span class="sidebar__user-desc">🧑‍💻切图仔</span>
-
+        
       </span>
       <svg class="sidebar__user-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="7 15 12 10 17 15"/></svg>
     </button>
 
-
+    
     <div class="user-menu" id="user-menu" hidden>
-
+      
       <a class="user-menu__item" href="/post/about">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-1.5a4.5 4.5 0 0 0-4.5-4.5h-5A4.5 4.5 0 0 0 5 19.5V21"/><circle cx="12" cy="7.5" r="3.5"/></svg>
         <span>关于我</span>
       </a>
-
+      
       <button class="user-menu__item" id="user-menu-theme" type="button">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
         <span class="user-menu__theme-label">切换深浅模式</span>
       </button>
-
-
-
-
-
+      
+      
+      
+      
+      
     </div>
   </div>
 
@@ -197,18 +197,18 @@
   <div class="main">
     <header class="topbar">
   <div class="topbar__left">
-
+    
     <button class="icon-btn topbar__menu" id="sidebar-open" type="button" aria-label="打开侧边栏" title="打开侧边栏">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><line x1="9.5" y1="3" x2="9.5" y2="21"/></svg>
     </button>
-
+    
     <a class="topbar__title" href="/">
       <span>ihopeful Blog</span>
       <svg class="topbar__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
     </a>
   </div>
   <div class="topbar__right">
-
+    
     <button class="icon-btn" id="theme-toggle" type="button" aria-label="切换深浅模式" title="切换深浅模式">
       <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 1C12.5523 1 13 1.44772 13 2V4C13 4.55228 12.5523 5 12 5C11.4477 5 11 4.55228 11 4V2C11 1.44772 11.4477 1 12 1Z"></path>
@@ -232,46 +232,46 @@
 
     <main class="content" id="content">
       <div class="chat-thread" id="chat-thread">
-
+        
 
 
 <div class="msg msg--user">
-  <h1 class="msg__bubble msg__bubble--title">FeishuDevTools：从设备仿真到 MCP 的飞书 H5 调试工作台</h1>
+  <h1 class="msg__bubble msg__bubble--title">Larto：从设备仿真到 MCP 的飞书 H5 调试工作台</h1>
 </div>
 
 
 <div class="msg msg--assistant">
   <div class="msg__head">
-
+    
     <div class="post-meta">
       <time datetime="2026-09-05T07:03:20+08:00">2026-09-05</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>7213 字</span>
+      <span>6730 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 12 分钟</span>
-
+      <span>约 11 分钟</span>
+      
     </div>
   </div>
   <div class="msg__body">
 
-
+    
     <figure class="post-feature">
-      <img src="/post-images/feishu-devtools-cover.png" alt="FeishuDevTools：从设备仿真到 MCP 的飞书 H5 调试工作台">
+      <img src="/post-images/feishu-devtools-cover.png" alt="Larto：从设备仿真到 MCP 的飞书 H5 调试工作台">
     </figure>
+    
 
-
-
+    
 
     <article class="article-content" id="article-content">
       <p>调试飞书 H5 应用时，页面能在浏览器里打开，往往只是第一步。布局取决于视口和安全区，JSSDK 会识别容器环境，登录涉及账号与租户，授权又依赖应用配置和平台响应。一个问题横跨这几层时，仅凭页面上的“调用失败”，很难判断应该从哪里查起。</p>
-<p>我写了 <a href="https://github.com/ihopefulChina/FeishuDevTools">FeishuDevTools</a>，希望把设备模拟、Chromium DevTools、飞书登录与 JSAPI 调用记录放进同一个桌面工作台，再通过 MCP 把这套调试环境开放给 AI 客户端。</p>
+<p>我写了 <a href="https://github.com/ihopefulChina/Larto">Larto</a>，希望把设备模拟、Chromium DevTools、飞书登录与 JSAPI 调用记录放进同一个桌面工作台，再通过 MCP 把这套调试环境开放给 AI 客户端。</p>
 <p>这篇文章记录它的几个实现选择：设备参数何时生效、原生 DevTools 如何嵌入、哪些能力连接真实平台，以及界面操作变成工具调用后，需要补上什么完成语义。</p>
 <!-- more -->
-<p><a href="https://ihopefulchina.github.io/FeishuDevTools/">项目官网</a> · <a href="https://github.com/ihopefulChina/FeishuDevTools/releases/tag/v0.1.1">下载 v0.1.1</a> · <a href="https://github.com/ihopefulChina/FeishuDevTools">GitHub 源码</a> · <a href="https://www.npmjs.com/package/feishu-devtools-mcp">MCP npm 包</a></p>
-<p><img src="/post-images/feishu-devtools-workbench.webp" alt="FeishuDevTools 浅色模式：左侧设备模拟器，右侧停靠的 Chromium DevTools" /></p>
+<p><a href="https://ihopefulchina.github.io/Larto/">项目官网</a> · <a href="https://github.com/ihopefulChina/Larto/releases/tag/v0.1.1">下载 v0.1.1</a> · <a href="https://github.com/ihopefulChina/Larto">GitHub 源码</a> · <a href="https://www.npmjs.com/package/larto-mcp">MCP npm 包</a></p>
+<p><img src="/post-images/feishu-devtools-workbench.webp" alt="Larto 浅色模式：左侧设备模拟器，右侧停靠的 Chromium DevTools" /></p>
 <p><em>实际应用截图，来自仓库使用匿名诊断页生成的公开资源。左侧检查设备环境，右侧直接查看同一页面的 DOM 与样式。文章封面为概念插画。</em></p>
 <h2 id="heading">先把一条调试流程接起来</h2>
-<p>FeishuDevTools 的范围是飞书 / Lark H5 网页调试。应用可以加载本地开发地址或远程页面，切换 iPhone、Android、iPad、PC 预设，在同一窗口使用 Elements、Console、Sources、Network、Application 等 Chromium 面板。</p>
+<p>Larto 的范围是飞书 / Lark H5 网页调试。应用可以加载本地开发地址或远程页面，切换 iPhone、Android、iPad、PC 预设，在同一窗口使用 Elements、Console、Sources、Network、Application 等 Chromium 面板。</p>
 <p>一条日常流程可以这样进行：</p>
 <ol>
 <li>启动自己的 H5 开发服务，在地址栏打开页面。</li>
@@ -285,14 +285,14 @@
 <h2 id="heading-1">设备仿真，关键在首个脚本执行之前</h2>
 <p>手机外框很容易做，但它不能决定网页真正看到的环境。</p>
 <p>以响应式页面为例，启动脚本可能马上读取 <code>innerWidth</code>，组件可能根据 <code>devicePixelRatio</code> 选择资源，手势库可能在初始化时检查 <code>navigator.maxTouchPoints</code>。如果先加载页面，再补设备参数，这些逻辑就可能已经按桌面环境完成了初始化。后面即使看起来像手机，也不能证明首屏运行在正确的设备条件下。</p>
-<p>因此，FeishuDevTools 的初始化顺序是：</p>
+<p>因此，Larto 的初始化顺序是：</p>
 <pre><code class="language-text">about:blank
     → 等待 guest 附着与布局稳定
     → 设置 UA、viewport、DPR 和触摸仿真
     → 加载目标 URL
     → 报告 guest 就绪
 </code></pre>
-<p>主进程通过 Chrome DevTools Protocol 应用 <code>Emulation.setDeviceMetricsOverride</code>、<code>Emulation.setTouchEmulationEnabled</code> 等指令。PC 自适应模式还要先测量面板的实际尺寸。配置失败时保留空白页并进入重试，而不是让页面在一组只应用了一半的参数下继续运行。具体逻辑可以看 <a href="https://github.com/ihopefulChina/FeishuDevTools/blob/f41ad85eff90aa46bf2e131252eb65e284fe0865/src/renderer/src/components/Simulator.tsx#L100">Simulator 初始化</a> 和 <a href="https://github.com/ihopefulChina/FeishuDevTools/blob/f41ad85eff90aa46bf2e131252eb65e284fe0865/src/main/guest.ts#L556">主进程仿真实现</a>。</p>
+<p>主进程通过 Chrome DevTools Protocol 应用 <code>Emulation.setDeviceMetricsOverride</code>、<code>Emulation.setTouchEmulationEnabled</code> 等指令。PC 自适应模式还要先测量面板的实际尺寸。配置失败时保留空白页并进入重试，而不是让页面在一组只应用了一半的参数下继续运行。具体逻辑可以看 <a href="https://github.com/ihopefulChina/Larto/blob/main/src/renderer/src/components/Simulator.tsx#L100">Simulator 初始化</a> 和 <a href="https://github.com/ihopefulChina/Larto/blob/main/src/main/guest.ts#L556">主进程仿真实现</a>。</p>
 <p>这里还有一个容易混淆的区别：<strong>工作台里的显示缩放，与网页的 CSS 视口是两件事。</strong></p>
 <p>把设备缩小到能在笔记本屏幕上完整显示，不应该顺便改变媒体查询的断点。当前实现通过 CSS transform 缩放设备的显示尺寸，网页仍使用设备配置对应的视口。这样，显示空间不足时可以调整工作台，而不必改变正在验证的布局条件。</p>
 <p>当然，桌面 Chromium 的设备仿真不等于手机上的真实内核、系统权限与客户端行为。它适合尽早发现问题；真机仍然负责最后一段兼容性验证。</p>
@@ -328,33 +328,33 @@
 <pre><code class="language-ts">guest.setDevToolsWebContents(view.webContents)
 guest.openDevTools({ mode: 'detach', activate: false })
 </code></pre>
-<p>这里的 <code>detach</code> 配合的是已经指定的 DevTools WebContents。主进程把它所属的原生视图加入窗口，再按照 React 占位区域上报的坐标设置边界，最终形成右侧停靠布局。实现见 <a href="https://github.com/ihopefulChina/FeishuDevTools/blob/f41ad85eff90aa46bf2e131252eb65e284fe0865/src/main/devtools-dock.ts#L136">devtools-dock.ts</a>。</p>
+<p>这里的 <code>detach</code> 配合的是已经指定的 DevTools WebContents。主进程把它所属的原生视图加入窗口，再按照 React 占位区域上报的坐标设置边界，最终形成右侧停靠布局。实现见 <a href="https://github.com/ihopefulChina/Larto/blob/main/src/main/devtools-dock.ts#L136">devtools-dock.ts</a>。</p>
 <p>真正花功夫的是叠层：<strong>原生 WebContentsView 位于 DOM 之上，CSS 的 <code>z-index</code> 无法让普通弹窗跨过它。</strong></p>
-<p>账号菜单或设置弹窗覆盖到调试面板时，当前实现先截取 DevTools 的画面，放到 React 占位区里，再暂时隐藏原生视图。弹层关闭后恢复原来的调试视图。用户看到的是暂时静止的面板，而不是突然出现的一块空白。这段处理集中在 <a href="https://github.com/ihopefulChina/FeishuDevTools/blob/f41ad85eff90aa46bf2e131252eb65e284fe0865/src/renderer/src/components/DevToolsPane.tsx#L59">DevToolsPane.tsx</a>。</p>
+<p>账号菜单或设置弹窗覆盖到调试面板时，当前实现先截取 DevTools 的画面，放到 React 占位区里，再暂时隐藏原生视图。弹层关闭后恢复原来的调试视图。用户看到的是暂时静止的面板，而不是突然出现的一块空白。这段处理集中在 <a href="https://github.com/ihopefulChina/Larto/blob/main/src/renderer/src/components/DevToolsPane.tsx#L59">DevToolsPane.tsx</a>。</p>
 <p>选择元素也有类似的协调问题。移动设备开启触摸仿真后，鼠标事件会被转换，影响检查器的悬停高亮与点击选取。工具在进入元素检查模式时临时关闭触摸仿真，退出后恢复设备设置。做一个调试工作台，需要同时考虑被调试页面和调试器本身怎样使用同一组输入事件。</p>
 <h2 id="jsapi-">JSAPI 要明确区分真实鉴权与本机模拟</h2>
 <p>容器开发最容易产生误判的地方，是把“回调成功”理解成“平台链路已经验证”。</p>
-<p>FeishuDevTools 将 JSAPI 分成几类处理。涉及 <code>tt.config</code>、<code>requestAuthCode</code> 和 <code>requestAccess</code> 的流程，由主进程使用真实登录会话请求平台；需要用户确认的授权，再通过界面收集决定并提交。Toast、Modal、ActionSheet、导航栏等能力由桌面界面承接；剪贴板等系统能力交给主进程。另有一部分设备、传感器相关调用使用明确列出的固定模拟值，定位也来自设置中的模拟位置。</p>
+<p>Larto 将 JSAPI 分成几类处理。涉及 <code>tt.config</code>、<code>requestAuthCode</code> 和 <code>requestAccess</code> 的流程，由主进程使用真实登录会话请求平台；需要用户确认的授权，再通过界面收集决定并提交。Toast、Modal、ActionSheet、导航栏等能力由桌面界面承接；剪贴板等系统能力交给主进程。另有一部分设备、传感器相关调用使用明确列出的固定模拟值，定位也来自设置中的模拟位置。</p>
 <p>这些能力的验证价值不同：鉴权请求能暴露应用配置与平台响应的问题，界面模拟便于联调调用参数和交互，固定返回值则只能帮助页面跑过对应分支。不能因为某个 JSAPI 在工作台中返回了成功，就认定它已经在手机上获得了真实权限或访问了真实传感器。</p>
-<p>桥接入口位于 guest preload，调用经宿主路由到主进程或界面层，再把结果送回页面。调用和应答同时进入日志缓冲，可通过 MCP 的 <code>get_jsapi_log</code> 读取。关于支持范围与处理方式，可以直接查看仓库中的 <a href="https://github.com/ihopefulChina/FeishuDevTools/blob/f41ad85eff90aa46bf2e131252eb65e284fe0865/src/shared/jsapi.ts">JSAPI 定义</a> 与 <a href="https://github.com/ihopefulChina/FeishuDevTools/blob/f41ad85eff90aa46bf2e131252eb65e284fe0865/src/shared/jsapi-mocks.ts">固定模拟值</a>。</p>
+<p>桥接入口位于 guest preload，调用经宿主路由到主进程或界面层，再把结果送回页面。调用和应答同时进入日志缓冲，可通过 MCP 的 <code>get_jsapi_log</code> 读取。关于支持范围与处理方式，可以直接查看仓库中的 <a href="https://github.com/ihopefulChina/Larto/blob/main/src/shared/jsapi.ts">JSAPI 定义</a> 与 <a href="https://github.com/ihopefulChina/Larto/blob/main/src/shared/jsapi-mocks.ts">固定模拟值</a>。</p>
 <p>登录本身也有独立的生命周期。扫码窗口使用临时会话分区，H5 使用持久的 guest 分区；这属于按角色隔离，当前并没有按项目建立独立 profile。登录 Cookie 只有在受保护的 <code>safeStorage</code> 后端可用时才持久化。Linux 下若落到 <code>basic_text</code>、<code>unknown</code> 或没有可用的安全后端，新会话只保留在当前进程内。</p>
 <p>之所以检查后端类型，是因为“调用了加密 API”不足以说明凭证得到了怎样的保护。Electron 的 <a href="https://www.electronjs.org/docs/latest/api/safe-storage">safeStorage 文档</a> 也明确说明，Linux 的实际保护方式取决于桌面环境提供的存储后端。</p>
 <h2 id="mcp-">MCP 接入之后，完成语义成为接口的一部分</h2>
-<p>FeishuDevTools 内置 18 个 MCP 工具，覆盖页面导航、设备切换、截图、DOM、脚本执行、控制台与 JSAPI 日志。应用启动后，默认在本机提供 Streamable HTTP 端点：</p>
+<p>Larto 内置 18 个 MCP 工具，覆盖页面导航、设备切换、截图、DOM、脚本执行、控制台与 JSAPI 日志。应用启动后，默认在本机提供 Streamable HTTP 端点：</p>
 <pre><code class="language-json">{
   &quot;mcpServers&quot;: {
-    &quot;feishu-devtools&quot;: {
+    &quot;larto&quot;: {
       &quot;url&quot;: &quot;http://127.0.0.1:17331/mcp&quot;
     }
   }
 }
 </code></pre>
-<p>需要 stdio 桥接或自动拉起桌面应用时，可以使用已发布的 <code>feishu-devtools-mcp@0.1.1</code>。例如，为支持的客户端写入配置：</p>
-<pre><code class="language-bash">npx --yes feishu-devtools-mcp@0.1.1 install cursor
+<p>需要 stdio 桥接或自动拉起桌面应用时，可以使用 <code>larto-mcp</code>。例如，为支持的客户端写入配置：</p>
+<pre><code class="language-bash">npx --yes larto-mcp@latest install cursor
 </code></pre>
 <p>MCP 带来的价值，是让 AI 可以围绕当前页面收集证据：查看控制台、读取 DOM、切换设备、截图比较，再读取 JSAPI 的调用结果。讨论可以落在同一份运行状态上，而不必只根据转述猜测。</p>
 <p>但把按钮包装成工具还不够。以 <code>set_device</code> 为例，命令发出时，UA 更新、CDP 参数应用和页面重载可能都还没结束。如果立刻返回成功，紧接着的截图就可能捕获旧设备或切换中的画面。</p>
-<p>当前实现为每次切机创建 request ID，先订阅对应的完成或失败事件，再发出操作；新的切机请求会明确淘汰仍在等待的旧请求。回执要和发起它的那次操作匹配，后台尺寸上报也不能误满足等待条件。相关代码见 <a href="https://github.com/ihopefulChina/FeishuDevTools/blob/f41ad85eff90aa46bf2e131252eb65e284fe0865/src/main/mcp.ts#L306">MCP 切机处理</a>。</p>
+<p>当前实现为每次切机创建 request ID，先订阅对应的完成或失败事件，再发出操作；新的切机请求会明确淘汰仍在等待的旧请求。回执要和发起它的那次操作匹配，后台尺寸上报也不能误满足等待条件。相关代码见 <a href="https://github.com/ihopefulChina/Larto/blob/main/src/main/mcp.ts#L306">MCP 切机处理</a>。</p>
 <p>这也是我在工具接口上很看重的一点：成功应该表达具体的完成条件。目前 <code>navigate</code>、<code>reload</code> 仍属于命令已发送的回执，不能把它们理解成页面和业务数据都已加载完成；自动化调用者需要继续观察页面状态。</p>
 <p>MCP 服务只绑定 <code>127.0.0.1</code>，并检查 Host。它包含 <code>evaluate</code>、<code>click</code>、<code>fill</code> 等有实际操作能力的接口，应连接给自己信任的本机客户端；当前没有逐工具授权或令牌认证层。回环监听限定了网络暴露范围，并不等于为所有本地进程建立了权限隔离。</p>
 <h2 id="heading-2">调试便利性需要有明确的权限边界</h2>
@@ -363,7 +363,7 @@ guest.openDevTools({ mode: 'detach', activate: false })
 <p>这与 Electron <a href="https://www.electronjs.org/docs/latest/tutorial/security">安全文档</a> 对远程内容隔离、权限处理和 IPC 来源校验的建议一致。这里的重点是运行时检查：TypeScript 可以约束调用代码的形状，却不能替主进程判断一条消息来自哪个页面。</p>
 <p>Linux 打包也保留 Chromium 沙箱要求。应用发现无沙箱启动参数或对应环境开关时会拒绝启动，安装环境的问题需要在系统层解决。这些约束会影响一部分机器的首次运行体验，但它们是一个可以加载网页的桌面工具必须认真处理的边界。</p>
 <h2 id="011-">0.1.1 的发布状态与使用范围</h2>
-<p>截至本文发布，GitHub Releases 已提供 v0.1.1，npm 上的 MCP 包也为 0.1.1。下载包按平台和架构区分：</p>
+<p>截至本文更新，GitHub Releases 提供跨平台桌面包，MCP 桥接包为 <code>larto-mcp</code>。下载包按平台和架构区分：</p>
 <table>
 <thead>
 <tr>
@@ -390,35 +390,37 @@ guest.openDevTools({ mode: 'detach', activate: false })
 </tr>
 </tbody>
 </table>
-<p>安装包与 <code>SHA256SUMS.txt</code> 均在 <a href="https://github.com/ihopefulChina/FeishuDevTools/releases/tag/v0.1.1">v0.1.1 Release</a> 中。选择与系统架构匹配的文件，并核对同名条目的 SHA-256。macOS 应用目前仅做 ad-hoc 签名且未经公证，Windows、Linux 包尚未签名，具体安装说明以项目 README 为准。</p>
+<p>安装包与 <code>SHA256SUMS.txt</code> 均在 <a href="https://github.com/ihopefulChina/Larto/releases/tag/v0.1.1">v0.1.1 Release</a> 中。选择与系统架构匹配的文件，并核对同名条目的 SHA-256。macOS 应用目前仅做 ad-hoc 签名且未经公证，Windows、Linux 包尚未签名，具体安装说明以项目 README 为准。</p>
 <p>0.1.1 仍处于早期阶段。跨平台构建和启动冒烟检查已有发布流程支撑，真实飞书账号、多租户、应用鉴权，以及各平台安装与更新体验仍需要持续 UAT。本文描述的是当前代码与已发布产物的能力范围，不把自动化检查等同于这些场景已经全部验收。</p>
 <p>仓库采用 MIT License，包含桌面应用、MCP 桥接包、测试和发布脚本。如果想从源码运行，准备 Node.js 22.12+、pnpm 10+，在仓库目录执行：</p>
 <pre><code class="language-bash">pnpm install
 pnpm dev
 </code></pre>
-<p>对我来说，调试工具的价值在于缩短从现象到证据的距离。页面看到什么设备环境、JSAPI 经过了哪一层、一个操作是否真的完成，这些信息越明确，开发者越容易判断下一步。FeishuDevTools 就沿着这条方向继续迭代。</p>
-<p>欢迎通过 <a href="https://github.com/ihopefulChina/FeishuDevTools/issues">GitHub Issues</a> 反馈可复现的问题。提供系统与架构、应用版本、复现步骤和脱敏后的日志，会比一张孤立的报错截图更有帮助。</p>
+<p>对我来说，调试工具的价值在于缩短从现象到证据的距离。页面看到什么设备环境、JSAPI 经过了哪一层、一个操作是否真的完成，这些信息越明确，开发者越容易判断下一步。Larto 就沿着这条方向继续迭代。</p>
+<p>欢迎通过 <a href="https://github.com/ihopefulChina/Larto/issues">GitHub Issues</a> 反馈可复现的问题。提供系统与架构、应用版本、复现步骤和脱敏后的日志，会比一张孤立的报错截图更有帮助。</p>
 
     </article>
 
-
+    
     <p class="post-byline">本文由 <span class="post-byline__name">ihopeful Blog</span> 亲笔撰写 · <a href="/post/about" rel="author">关于作者</a></p>
 
+    
+    <p class="post-updated">最后更新于 <time datetime="2026-09-07T09:50:46+08:00">2026-09-07</time></p>
+    
 
-
-
+    
     <div class="post-tags">
-
+      
       <a class="chip" href="/tag/typescript/">#TypeScript</a>
-
+      
       <a class="chip" href="/tag/react/">#React</a>
-
+      
       <a class="chip" href="/tag/system/">#系统</a>
-
+      
     </div>
+    
 
-
-
+    
     <div class="msg-actions">
       <button class="msg-action" id="copy-link" type="button" data-link="https://ihopefulchina.github.io/post/feishu-devtools-h5-debugging/" aria-label="复制链接" title="复制链接">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
@@ -431,20 +433,20 @@ pnpm dev
       </button>
     </div>
 
-
-
+    
+    
     <nav class="post-nav" aria-label="相邻文章">
-
+      
       <a class="post-nav__card" href="/post/tunnelful-macos-control-plane/" rel="prev">
         <span class="post-nav__label">← 上一篇</span>
         <span class="post-nav__title">Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS</span>
       </a>
-
-
+      
+      
     </nav>
+    
 
-
-
+    
 
 
 
@@ -455,7 +457,7 @@ pnpm dev
       </div>
     </main>
 
-
+    
 <div class="composer-wrap">
   <form class="composer" id="composer" action="javascript:void(0)" autocomplete="off">
     <button class="composer__plus" type="button" tabindex="-1" aria-hidden="true">
@@ -474,7 +476,7 @@ pnpm dev
 
   </div>
 
-
+  
 <div class="search-overlay" id="search-overlay" hidden>
   <div class="search-modal" role="dialog" aria-modal="true" aria-label="站内搜索">
     <div class="search-modal__head">
@@ -492,8 +494,8 @@ pnpm dev
 
   <script src="/scripts/app.js" defer></script>
   <script src="/scripts/search.js" defer></script>
-
-
+  
+  
 <script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>
