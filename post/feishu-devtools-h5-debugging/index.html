@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta name="generator" content="Gridea Pro 1.2.2">
+  <meta name="generator" content="Gridea Pro 0.0.0-dev">
   <title>Larto：从设备仿真到 MCP 的飞书 H5 调试工作台 - ihopeful Blog</title>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -67,17 +67,6 @@
 <meta name="twitter:title" content="Larto：从设备仿真到 MCP 的飞书 H5 调试工作台">
 <meta name="twitter:description" content="调试飞书 H5 应用时，页面能在浏览器里打开，往往只是第一步。布局取决于视口和安全区，JSSDK 会识别容器环境，登录涉及账号与租户，授权又依赖应用配置和平台响应。一个问题横跨这几层时，仅凭页面上的“调用失败”，很难判断应该从哪里查起。 我写了 Larto，希望把设备模拟、Chromium DevTools、飞书登录与 JSAPI 调用记录放进同一个桌面工作台，再通过 MCP 把这套调试环境开放给 AI 客户端。 这篇文章记录它的几个实现选择：设备参数何时生效、原生 DevTools 如何嵌入、哪些能力连接真实平台，以及界面操作变成工具调用后，需要补上什么完成语义。">
 <meta name="twitter:image" content="/post-images/feishu-devtools-cover.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#ffffff">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="ihopeful Blog">
-<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/images/icons/icon-192x192.png">
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </head>
 <body data-typewriter="True">
 
@@ -246,7 +235,7 @@
     <div class="post-meta">
       <time datetime="2026-09-05T07:03:20+08:00">2026-09-05</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>6730 字</span>
+      <span>6731 字</span>
       <span class="dot" aria-hidden="true">·</span>
       <span>约 11 分钟</span>
       
@@ -267,7 +256,7 @@
 <p>我写了 <a href="https://github.com/ihopefulChina/Larto">Larto</a>，希望把设备模拟、Chromium DevTools、飞书登录与 JSAPI 调用记录放进同一个桌面工作台，再通过 MCP 把这套调试环境开放给 AI 客户端。</p>
 <p>这篇文章记录它的几个实现选择：设备参数何时生效、原生 DevTools 如何嵌入、哪些能力连接真实平台，以及界面操作变成工具调用后，需要补上什么完成语义。</p>
 <!-- more -->
-<p><a href="https://ihopefulchina.github.io/Larto/">项目官网</a> · <a href="https://github.com/ihopefulChina/Larto/releases/tag/v0.1.1">下载 v0.1.1</a> · <a href="https://github.com/ihopefulChina/Larto">GitHub 源码</a> · <a href="https://www.npmjs.com/package/larto-mcp">MCP npm 包</a></p>
+<p><a href="https://ihopefulchina.github.io/Larto/">项目官网</a> · <a href="https://github.com/ihopefulChina/Larto/releases/tag/v0.1.2">下载 v0.1.2</a> · <a href="https://github.com/ihopefulChina/Larto">GitHub 源码</a> · <a href="https://www.npmjs.com/package/larto-mcp">MCP npm 包</a></p>
 <p><img src="/post-images/feishu-devtools-workbench.webp" alt="Larto 浅色模式：左侧设备模拟器，右侧停靠的 Chromium DevTools" /></p>
 <p><em>实际应用截图，来自仓库使用匿名诊断页生成的公开资源。左侧检查设备环境，右侧直接查看同一页面的 DOM 与样式。文章封面为概念插画。</em></p>
 <h2 id="heading">先把一条调试流程接起来</h2>
@@ -362,7 +351,7 @@ guest.openDevTools({ mode: 'detach', activate: false })
 <p>当前 guest 保持 <code>contextIsolation=true</code>、<code>sandbox=true</code>、<code>nodeIntegration=false</code>；shell preload 暴露 IPC 白名单，主进程进一步检查发送者是否来自主窗口、主 frame 和可信的 shell URL。敏感浏览器权限按来源询问，未知权限默认拒绝；JSAPI 剪贴板访问同样经过主进程确认。</p>
 <p>这与 Electron <a href="https://www.electronjs.org/docs/latest/tutorial/security">安全文档</a> 对远程内容隔离、权限处理和 IPC 来源校验的建议一致。这里的重点是运行时检查：TypeScript 可以约束调用代码的形状，却不能替主进程判断一条消息来自哪个页面。</p>
 <p>Linux 打包也保留 Chromium 沙箱要求。应用发现无沙箱启动参数或对应环境开关时会拒绝启动，安装环境的问题需要在系统层解决。这些约束会影响一部分机器的首次运行体验，但它们是一个可以加载网页的桌面工具必须认真处理的边界。</p>
-<h2 id="011-">0.1.1 的发布状态与使用范围</h2>
+<h2 id="012-">0.1.2 的发布状态与使用范围</h2>
 <p>截至本文更新，GitHub Releases 提供跨平台桌面包，MCP 桥接包为 <code>larto-mcp</code>。下载包按平台和架构区分：</p>
 <table>
 <thead>
@@ -390,8 +379,8 @@ guest.openDevTools({ mode: 'detach', activate: false })
 </tr>
 </tbody>
 </table>
-<p>安装包与 <code>SHA256SUMS.txt</code> 均在 <a href="https://github.com/ihopefulChina/Larto/releases/tag/v0.1.1">v0.1.1 Release</a> 中。选择与系统架构匹配的文件，并核对同名条目的 SHA-256。macOS 应用目前仅做 ad-hoc 签名且未经公证，Windows、Linux 包尚未签名，具体安装说明以项目 README 为准。</p>
-<p>0.1.1 仍处于早期阶段。跨平台构建和启动冒烟检查已有发布流程支撑，真实飞书账号、多租户、应用鉴权，以及各平台安装与更新体验仍需要持续 UAT。本文描述的是当前代码与已发布产物的能力范围，不把自动化检查等同于这些场景已经全部验收。</p>
+<p>安装包与 <code>SHA256SUMS.txt</code> 均在 <a href="https://github.com/ihopefulChina/Larto/releases/tag/v0.1.2">v0.1.2 Release</a> 中。选择与系统架构匹配的文件，并核对同名条目的 SHA-256。macOS 应用目前仅做 ad-hoc 签名且未经公证，Windows、Linux 包尚未签名，具体安装说明以项目 README 为准。</p>
+<p>0.1.2 仍处于早期阶段。跨平台构建和启动冒烟检查已有发布流程支撑，真实飞书账号、多租户、应用鉴权，以及各平台安装与更新体验仍需要持续 UAT。本文描述的是当前代码与已发布产物的能力范围，不把自动化检查等同于这些场景已经全部验收。</p>
 <p>仓库采用 MIT License，包含桌面应用、MCP 桥接包、测试和发布脚本。如果想从源码运行，准备 Node.js 22.12+、pnpm 10+，在仓库目录执行：</p>
 <pre><code class="language-bash">pnpm install
 pnpm dev
@@ -496,6 +485,6 @@ pnpm dev
   <script src="/scripts/search.js" defer></script>
   
   
-<script>console.log("\n%c ✦ Gridea Pro v1.2.2 %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
+<script>console.log("\n%c ✦ Gridea Pro v0.0.0-dev %c · Theme: chatgpt v1.2.0 · https://gridea.pro %c\n","color:#fadfa3;background:#111111;padding:9px 14px;border-radius:4px 0 0 4px;font-weight:500;font-size:12px","color:#e05c00;background:#fff3ec;padding:9px 14px;border-radius:0 4px 4px 0;font-size:11px","")</script>
 </body>
 </html>
