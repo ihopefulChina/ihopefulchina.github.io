@@ -54,19 +54,19 @@
 
 <meta name="description" content="Ossuno 是一个原生的 macOS OSS 客户端。它不打算把控制台搬进桌面，只做日常最常用的事：查找、预览、整理、传输和恢复，都在一个安静、熟悉的 Mac 窗口里完成。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/ossuno-macos-oss-client/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"在 Mac 上，像用访达一样用阿里云 OSS。","url":"https://ihopefulchina.github.io/post/ossuno-macos-oss-client/","description":"Ossuno 是一个原生的 macOS OSS 客户端。它不打算把控制台搬进桌面，只做日常最常用的事：查找、预览、整理、传输和恢复，都在一个安静、熟悉的 Mac 窗口里完成。","image":"/post-images/ossuno-macos-oss-client-cover.png","datePublished":"2026-08-18T13:27:33+08:00","dateModified":"2026-08-18T14:05:19+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"在 Mac 上，像用访达一样用阿里云 OSS。","url":"https://ihopefulchina.github.io/post/ossuno-macos-oss-client/","description":"Ossuno 是一个原生的 macOS OSS 客户端。它不打算把控制台搬进桌面，只做日常最常用的事：查找、预览、整理、传输和恢复，都在一个安静、熟悉的 Mac 窗口里完成。","image":"/post-images/ossuno-macos-oss-client.png","datePublished":"2026-08-18T13:27:33+08:00","dateModified":"2026-09-18T14:07:29+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/ossuno-macos-oss-client/","name":"在 Mac 上，像用访达一样用阿里云 OSS。","position":2}]}</script>
 <meta property="og:title" content="在 Mac 上，像用访达一样用阿里云 OSS。">
 <meta property="og:description" content="Ossuno 是一个原生的 macOS OSS 客户端。它不打算把控制台搬进桌面，只做日常最常用的事：查找、预览、整理、传输和恢复，都在一个安静、熟悉的 Mac 窗口里完成。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/ossuno-macos-oss-client/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/ossuno-macos-oss-client-cover.png">
+<meta property="og:image" content="/post-images/ossuno-macos-oss-client.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/ossuno-macos-oss-client/">
 <meta name="twitter:title" content="在 Mac 上，像用访达一样用阿里云 OSS。">
 <meta name="twitter:description" content="Ossuno 是一个原生的 macOS OSS 客户端。它不打算把控制台搬进桌面，只做日常最常用的事：查找、预览、整理、传输和恢复，都在一个安静、熟悉的 Mac 窗口里完成。">
-<meta name="twitter:image" content="/post-images/ossuno-macos-oss-client-cover.png">
+<meta name="twitter:image" content="/post-images/ossuno-macos-oss-client.png">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -246,9 +246,9 @@
     <div class="post-meta">
       <time datetime="2026-08-18T13:27:33+08:00">2026-08-18</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>5543 字</span>
+      <span>6049 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 9 分钟</span>
+      <span>约 10 分钟</span>
       
     </div>
   </div>
@@ -256,7 +256,7 @@
 
     
     <figure class="post-feature">
-      <img src="/post-images/ossuno-macos-oss-client-cover.png" alt="在 Mac 上，像用访达一样用阿里云 OSS。">
+      <img src="/post-images/ossuno-macos-oss-client.png" alt="在 Mac 上，像用访达一样用阿里云 OSS。">
     </figure>
     
 
@@ -270,9 +270,7 @@
 <p align="center">
   <a href="https://ihopefulchina.github.io/Ossuno/"><strong>官网</strong></a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/ihopefulChina/Ossuno/releases/latest/download/Ossuno-1.0.3-arm64.dmg"><strong>下载 Apple Silicon 版</strong></a>
-  &nbsp;·&nbsp;
-  <a href="https://github.com/ihopefulChina/Ossuno/releases/latest/download/Ossuno-1.0.3-x86_64.dmg"><strong>下载 Intel 版</strong></a>
+  <a href="https://github.com/ihopefulChina/Ossuno/releases/latest"><strong>下载最新版</strong></a>
   &nbsp;·&nbsp;
   <a href="https://www.npmjs.com/package/ossuno-mcp"><strong>使用 ossuno-mcp</strong></a>
   &nbsp;·&nbsp;
@@ -288,26 +286,29 @@
 <pre><code class="language-bash">npx ossuno-mcp auth     # 配置 OSS 凭证，只保存到 macOS 钥匙串
 npx ossuno-mcp install  # 一键注册到本机已安装的 AI 客户端
 </code></pre>
-<p>需要 macOS 与 Node.js 18 或更高版本。npm 包会按 Mac 架构安装 arm64 或 x64 预编译二进制。服务器提供 5 个工具和 2 个提示词（OSS 专家模式、批量上传工作流），凭证与 Ossuno App 账号相互独立。</p>
+<p>需要 macOS 与 Node.js 18 或更高版本。npm 包会按 Mac 架构安装 arm64 或 x64 预编译二进制。服务器提供 5 个工具和 2 个提示词（OSS 专家模式、批量上传工作流）；大于数兆的文件会先在本机暂存再分片上传，避免整文件读进内存。凭证与 Ossuno App 账号相互独立。上传默认拒绝覆盖，只有明确确认后才应使用 <code>overwrite=true</code>。它不提供删除对象、创建 Bucket 或修改权限策略的工具。</p>
 <blockquote>
 <p>把桌面上的 hero.png 上传到 ossuno-assets 的 assets/2026/ 目录，再给我一个 24 小时有效的链接。</p>
 </blockquote>
 <p>完整命令、客户端配置与安全边界见 <a href="https://github.com/ihopefulChina/Ossuno/blob/main/docs/mcp.md">MCP 使用指南</a>和<a href="https://ihopefulchina.github.io/Ossuno/mcp.html">官网 AI · MCP 页面</a>。</p>
 <h2 id="heading">从找到文件开始</h2>
-<p>当前文件夹的搜索即时出结果；切到「当前 Bucket」后，Ossuno 会分页扫描整个 Bucket 并显示进度。结果可以按类型、大小和修改日期筛选，双击回到所在文件夹，空格快速查看。</p>
-<p>常用的 OSS 文件夹可以收藏到侧边栏。</p>
+<p>当前文件夹的搜索即时出结果；切到「当前 Bucket」后，Ossuno 会分页扫描整个 Bucket 并显示进度。结果可以按类型、大小和修改日期筛选，双击回到所在文件夹，空格快速查看。网格和列表会渲染 SVG，并为 WebP / HEIC / GIF 尽量给出缩略图；HEIC / HEIF 预览按文件头识别格式。</p>
+<p>常用的 OSS 文件夹可以收藏到侧边栏。也可以复制对象原地址的直链、Markdown 或 HTML；私有对象打开该地址会被拒绝访问，链接本身不再附带临时签名参数。</p>
 <h2 id="heading-1">像访达一样整理</h2>
 <ul>
 <li>单击选中，Command 多选，Shift 连选，Return 原地重命名。</li>
 <li>网格与列表、路径栏、方向键、空格快速查看和 <code>⌘I</code> 信息窗口，都是熟悉的 Mac 操作。</li>
-<li>在 Bucket 内拖放、复制或移动文件夹；目标冲突可以询问、跳过或「保留两者」，已开启版本控制时还可安全替换。</li>
-<li>把对象或整个文件夹直接拖到访达。多选时会生成一个「Ossuno 下载」文件夹，保留云端目录结构。</li>
+<li>在 Bucket 内拖放、复制或移动文件夹；目标冲突可以询问、跳过或「保留两者」，已开启版本控制时还可安全替换。「保留两者」按整组文件夹改名，不会把子文件单独编号到目标根路径。</li>
+<li>同 Bucket 复制、移动和重命名超过单次 CopyObject 上限的大对象时，改为分片复制。</li>
+<li>把对象或整个文件夹直接拖到访达。多选时会生成一个「Ossuno 下载」文件夹，保留云端目录结构。JSON、文本、源码、SVG 按普通文件导出，不会被当成文本剪贴。</li>
 <li>复制后切换 Bucket 再粘贴，就能跨 Bucket 整理。同账号同地域走云端复制；其他情况会先说明清楚，再经由这台 Mac 中转。</li>
+<li>整理锁按真实 Bucket 生效。另一窗口正在整理同一空间时，菜单、粘贴和撤销会禁用。</li>
 </ul>
 <p>覆盖只在目标 Bucket 已开启版本控制、OSS 返回精确 <code>versionId</code> 时执行；未开启时可选择「保留两者」或跳过。移动永远先完成全部复制，再按精确 <code>versionId</code> 删除来源；只有来源和目标 Bucket 都开启版本控制、且能确认两个精确版本时才会自动删源。未开启、已暂停或无法读取版本状态时会安全取消移动，你仍可先复制并在 OSS 控制台核对后手动删除来源。</p>
 <h2 id="heading-2">传输可以停下来，再继续</h2>
-<p>大文件上传会持久保存 multipart upload ID 和已完成的分片；下载按固定字节范围写入隐藏临时文件。暂停、退出或短暂断网后，可以从最近的检查点继续。完成时会在 OSS 提供校验值的情况下核对 CRC64，再原子发布下载文件。</p>
-<p>传输中心提供上传/下载独立并发数、暂停与继续、失败重试、队列置顶、速度、剩余时间、方向限速和完成通知。下载从不静默覆盖本地同名文件。</p>
+<p>大文件上传会持久保存 multipart upload ID 和已完成的分片；下载按固定字节范围写入隐藏临时文件。暂停、退出或短暂断网后，可以从最近的检查点继续。完成时会在 OSS 提供校验值的情况下核对 CRC64，再原子发布下载文件。对象缺少 ETag 或 CRC64 时改为整文件下载，而不是报无法分片。</p>
+<p>覆盖确认对话框打开时，后续拖入的上传会排队等待处理，不会被直接取消。下载和快速查看会把本地文件名里的冒号等非法字符换成安全字符，避免 APFS 路径失败。</p>
+<p>传输中心提供上传/下载独立并发数、暂停与继续、失败重试、队列置顶、速度、剩余时间、方向限速和完成通知。传输进行时也可在菜单栏查看状态。下载从不静默覆盖本地同名文件。</p>
 <h2 id="heading-3">对象属性</h2>
 <p>「对象属性」可以编辑 Content-Type、Cache-Control、Content-Disposition、用户元数据和最多十个 OSS 标签。重复键、空键和换行注入会在提交前被拦下；只改标签时不会重写元数据。为避免并发改写无法恢复，保存对象属性需要 Bucket 已开启版本控制。Bucket 开了版本控制的话，刚删除的项目也可以立即撤销。</p>
 <h2 id="heading-4">安全边界</h2>
@@ -321,14 +322,14 @@ npx ossuno-mcp install  # 一键注册到本机已安装的 AI 客户端
 </ul>
 <h2 id="heading-5">安装</h2>
 <ol>
-<li>按这台 Mac 的芯片下载 Ossuno：<a href="https://github.com/ihopefulChina/Ossuno/releases/latest/download/Ossuno-1.0.3-arm64.dmg">Apple Silicon（M 系列）</a>或 <a href="https://github.com/ihopefulChina/Ossuno/releases/latest/download/Ossuno-1.0.3-x86_64.dmg">Intel</a>。不确定时，可在苹果菜单的「关于本机」中查看芯片或处理器。</li>
+<li>从<a href="https://ihopefulchina.github.io/Ossuno/">官网</a>或 <a href="https://github.com/ihopefulChina/Ossuno/releases/latest">GitHub 最新 Release</a> 按这台 Mac 的芯片下载：文件名以 <code>-arm64.dmg</code>（Apple Silicon）或 <code>-x86_64.dmg</code>（Intel）结尾。不确定时，可在苹果菜单的「关于本机」中查看芯片或处理器。</li>
 <li>打开 DMG，把 Ossuno 拖进「应用程序」。</li>
 <li>添加权限最小化的 RAM 子账号，选择地域，然后打开 Bucket。</li>
 </ol>
 <blockquote>
 <p><strong>分发说明：</strong> 两个 DMG 均采用 ad-hoc 代码签名（没有开发者身份），不是 Developer ID 签名，且未经 Apple 公证。因此 macOS 无法验证开发者或确认安装包已经过 Apple 恶意软件检查，首次打开通常会触发 Gatekeeper。仅在确认安装包来自本仓库的 GitHub Releases 时按上述步骤放行。参见 <a href="https://support.apple.com/zh-cn/102445">Apple 的安全打开说明</a>。</p>
 </blockquote>
-<p>装好带自动更新功能的版本后，可以在「Ossuno → 检查更新…」直接升级，也可以在设置里开启自动检查。</p>
+<p>装好后可以在「Ossuno → 检查更新…」升级，也可以在设置里开启自动检查。更新包经 Sparkle Ed25519 校验完整性，这不等于 Developer ID 签名或 Apple 公证。较早版本若检查更新只显示迁移说明，需要手动下载一次最新包：正式 Bundle ID 已更正为 <code>app.ihopeful.Ossuno</code>，Sparkle 不能用不同身份直接替换旧应用。新身份会迁移旧偏好与账号显示配置，并继续查找原钥匙串凭证；macOS 可能会要求允许访问这些钥匙串项目，也可能再次请求通知权限。</p>
 <h3 id="ram-">RAM 权限提示</h3>
 <p>Ossuno 在复制、移动、覆盖和撤销前会读取 Bucket 版本控制状态与对象 ACL，并在版本控制 Bucket 中按具体版本执行复制或清理。已有的自定义 RAM 策略除了列举、读取、上传、复制和删除对象等基础动作，还需要按使用场景加入：</p>
 <ul>
@@ -352,6 +353,10 @@ npx ossuno-mcp install  # 一键注册到本机已安装的 AI 客户端
 <tr>
 <td>添加账号</td>
 <td><code>⇧⌘A</code></td>
+</tr>
+<tr>
+<td>新建窗口</td>
+<td><code>⌘N</code></td>
 </tr>
 <tr>
 <td>剪切 / 复制 / 粘贴</td>
@@ -413,6 +418,8 @@ open Ossuno.xcodeproj
     
     <p class="post-byline">本文由 <span class="post-byline__name">ihopeful Blog</span> 亲笔撰写 · <a href="/post/about" rel="author">关于作者</a></p>
 
+    
+    <p class="post-updated">最后更新于 <time datetime="2026-09-18T14:07:29+08:00">2026-09-18</time></p>
     
 
     

@@ -54,19 +54,19 @@
 
 <meta name="description" content="Cloudflare Tunnel 的命令行并不难。真正让日常使用变得零碎的，是命令之外的那些状态：cloudflared 装在哪里、当前使用哪份 YAML、Ingress 规则是否有效、哪个进程由谁启动、Edge 是否连通、源站是否还活着，以及一条 DNS 命令究竟会改动什么。 Tunnelful 是我为这类本地运维工作写的原生 macOS 应用。它不重新实现 Tunnel 协议，也不把 Cloudflare 控制台复制到桌面；它做的是更克制的一层——把分散在终端、配置文件和进程日志里的操作，收拢成一个能检查、能确认、能追溯的本地控制面。">
 <link rel="canonical" href="https://ihopefulchina.github.io/post/tunnelful-macos-control-plane/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS","url":"https://ihopefulchina.github.io/post/tunnelful-macos-control-plane/","description":"Cloudflare Tunnel 的命令行并不难。真正让日常使用变得零碎的，是命令之外的那些状态：cloudflared 装在哪里、当前使用哪份 YAML、Ingress 规则是否有效、哪个进程由谁启动、Edge 是否连通、源站是否还活着，以及一条 DNS 命令究竟会改动什么。 Tunnelful 是我为这类本地运维工作写的原生 macOS 应用。它不重新实现 Tunnel 协议，也不把 Cloudflare 控制台复制到桌面；它做的是更克制的一层——把分散在终端、配置文件和进程日志里的操作，收拢成一个能检查、能确认、能追溯的本地控制面。","image":"/post-images/tunnelful-macos-control-plane-cover.png","datePublished":"2026-09-03T15:33:26+08:00","dateModified":"2026-09-03T15:33:26+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS","url":"https://ihopefulchina.github.io/post/tunnelful-macos-control-plane/","description":"Cloudflare Tunnel 的命令行并不难。真正让日常使用变得零碎的，是命令之外的那些状态：cloudflared 装在哪里、当前使用哪份 YAML、Ingress 规则是否有效、哪个进程由谁启动、Edge 是否连通、源站是否还活着，以及一条 DNS 命令究竟会改动什么。 Tunnelful 是我为这类本地运维工作写的原生 macOS 应用。它不重新实现 Tunnel 协议，也不把 Cloudflare 控制台复制到桌面；它做的是更克制的一层——把分散在终端、配置文件和进程日志里的操作，收拢成一个能检查、能确认、能追溯的本地控制面。","image":"/post-images/tunnelful-macos-control-plane.png","datePublished":"2026-09-03T15:33:26+08:00","dateModified":"2026-09-18T14:07:21+08:00","author":{"@type":"Person","name":"ihopeful Blog"},"publisher":{"@type":"Organization","name":"ihopeful Blog"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","item":"https://ihopefulchina.github.io","name":"ihopeful Blog","position":1},{"@type":"ListItem","item":"https://ihopefulchina.github.io/post/tunnelful-macos-control-plane/","name":"Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS","position":2}]}</script>
 <meta property="og:title" content="Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS">
 <meta property="og:description" content="Cloudflare Tunnel 的命令行并不难。真正让日常使用变得零碎的，是命令之外的那些状态：cloudflared 装在哪里、当前使用哪份 YAML、Ingress 规则是否有效、哪个进程由谁启动、Edge 是否连通、源站是否还活着，以及一条 DNS 命令究竟会改动什么。 Tunnelful 是我为这类本地运维工作写的原生 macOS 应用。它不重新实现 Tunnel 协议，也不把 Cloudflare 控制台复制到桌面；它做的是更克制的一层——把分散在终端、配置文件和进程日志里的操作，收拢成一个能检查、能确认、能追溯的本地控制面。">
 <meta property="og:url" content="https://ihopefulchina.github.io/post/tunnelful-macos-control-plane/">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ihopeful Blog">
-<meta property="og:image" content="/post-images/tunnelful-macos-control-plane-cover.png">
+<meta property="og:image" content="/post-images/tunnelful-macos-control-plane.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:url" content="https://ihopefulchina.github.io/post/tunnelful-macos-control-plane/">
 <meta name="twitter:title" content="Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS">
 <meta name="twitter:description" content="Cloudflare Tunnel 的命令行并不难。真正让日常使用变得零碎的，是命令之外的那些状态：cloudflared 装在哪里、当前使用哪份 YAML、Ingress 规则是否有效、哪个进程由谁启动、Edge 是否连通、源站是否还活着，以及一条 DNS 命令究竟会改动什么。 Tunnelful 是我为这类本地运维工作写的原生 macOS 应用。它不重新实现 Tunnel 协议，也不把 Cloudflare 控制台复制到桌面；它做的是更克制的一层——把分散在终端、配置文件和进程日志里的操作，收拢成一个能检查、能确认、能追溯的本地控制面。">
-<meta name="twitter:image" content="/post-images/tunnelful-macos-control-plane-cover.png">
+<meta name="twitter:image" content="/post-images/tunnelful-macos-control-plane.png">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -246,9 +246,9 @@
     <div class="post-meta">
       <time datetime="2026-09-03T15:33:26+08:00">2026-09-03</time>
       <span class="dot" aria-hidden="true">·</span>
-      <span>5915 字</span>
+      <span>6412 字</span>
       <span class="dot" aria-hidden="true">·</span>
-      <span>约 9 分钟</span>
+      <span>约 10 分钟</span>
       
     </div>
   </div>
@@ -256,7 +256,7 @@
 
     
     <figure class="post-feature">
-      <img src="/post-images/tunnelful-macos-control-plane-cover.png" alt="Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS">
+      <img src="/post-images/tunnelful-macos-control-plane.png" alt="Tunnelful：把 Cloudflare Tunnel 的本地运维收进 macOS">
     </figure>
     
 
@@ -269,12 +269,12 @@
 <p align="center">
   <a href="https://ihopefulchina.github.io/Tunnelful/"><strong>项目官网</strong></a>
   &nbsp;·&nbsp;
-  <a href="https://github.com/ihopefulChina/Tunnelful/releases/latest"><strong>下载 0.1.0</strong></a>
+  <a href="https://github.com/ihopefulChina/Tunnelful/releases/latest"><strong>下载最新版</strong></a>
   &nbsp;·&nbsp;
   <a href="https://github.com/ihopefulChina/Tunnelful"><strong>GitHub</strong></a>
 </p>
-<p><img src="https://ihopefulchina.github.io/post-images/tunnelful-overview-light.png" alt="Tunnelful 浅色模式概览，截图已开启隐私遮罩" /></p>
-<p><em>浅色模式概览。公开截图使用中性示例数据，并开启隐私遮罩。</em></p>
+<p><img src="https://ihopefulchina.github.io/post-images/tunnelful-overview-light.png" alt="Tunnelful 浅色模式概览" /></p>
+<p><em>浅色模式概览。公开截图使用中性示例数据。</em></p>
 <h2 id="-tunnel-">为什么不是再写一套 Tunnel 客户端</h2>
 <p>Cloudflare Tunnel 的核心模型很清楚：<code>cloudflared</code> 从源站侧主动连接 Cloudflare 网络，不要求把源站直接暴露在公网。对于本地管理的命名 Tunnel，官方 CLI 已经负责登录、创建、校验、路由和运行。</p>
 <p>因此，Tunnelful 的架构选择不是“替代 <code>cloudflared</code>”，而是把责任切开：</p>
@@ -309,7 +309,7 @@
 <li>本地源站是否能响应。</li>
 </ol>
 <p>这三者并不等价。进程运行不代表 Edge 已连通，Edge 已连通也不代表 <code>127.0.0.1:3000</code> 背后的应用没有崩溃。反过来，本地源站正常时，Tunnel 也可能仍未启动。</p>
-<p>Tunnelful 将它们拆成独立状态，并刻意限制措辞：只说“本 App 管理的进程”，不会因为自己没有进程句柄，就断言系统里不存在其他 <code>cloudflared</code> 服务。源站检查也单独执行，避免一次 Tunnel 连接抖动覆盖真正的应用故障。</p>
+<p>Tunnelful 将它们拆成独立状态，并刻意限制措辞：只说“本 App 管理的进程”，不会因为自己没有进程句柄，就断言系统里不存在其他 <code>cloudflared</code> 服务。源站检查也单独执行，避免一次 Tunnel 连接抖动覆盖真正的应用故障。Edge 按仍注册的连接判断，单条 HA 重连不等于整条隧道断开；QUIC 与 HTTP/2 也可以分开查看，一条传输被拦时不必把另一条可用路径标成失败。</p>
 <p>这不是视觉上的信息增量，而是故障定位边界。状态一旦混在一起，用户下一步该检查本机、网络还是业务服务，就只能靠猜。</p>
 <h2 id="heading-1">配置编辑的重点不是表单，而是写入协议</h2>
 <p>把 YAML 映射成几个输入框并不难。难的是在真实配置上做到“不丢、不抢、不写坏”。</p>
@@ -330,26 +330,25 @@ ingress:
     service: http://127.0.0.1:3000
   - service: http_status:404
 </code></pre>
-<p>“先生成、再校验、最后提交”比直接覆盖文件多了几步，却避免 GUI 成为配置损坏的来源。外部修改检测同样不能省：编辑期间如果终端或其他工具已经更新原文件，应用应停止覆盖，让用户重新载入，而不是用旧快照赢下最后一次写入。</p>
+<p>“先生成、再校验、最后提交”比直接覆盖文件多了几步，却避免 GUI 成为配置损坏的来源。外部修改检测同样不能省：编辑期间如果终端或其他工具已经更新原文件，应用应停止覆盖，让用户重新载入，而不是用旧快照赢下最后一次写入。专属 credentials 也不能错配给另一个 Tunnel；切换 Tunnel 时必须先导入与其对应的本地配置。</p>
 <h2 id="heading-2">远端副作用必须在界面上暴露</h2>
 <p>编辑本地 YAML 与修改 Cloudflare DNS 不是同一种操作。前者有本地备份和恢复路径，后者会改变账户里的远端状态。</p>
-<p>所以 Tunnelful 将 DNS 路由处理成一项独立动作：先生成并展示命令，可以只复制；如果要由应用执行，必须关闭隐私遮罩核对真实目标，并再次确认。当前命令显式带上 <code>--overwrite-dns=false</code>：</p>
+<p>所以 Tunnelful 将 DNS 路由处理成一项独立动作。保存 Ingress 或发布服务后，会立刻弹出确认；也可以只复制命令，不让应用执行。要由应用执行时，界面会展示真实 Tunnel 与域名，必须再次确认。命令显式带上 <code>--overwrite-dns=false</code>：</p>
 <pre><code class="language-bash">cloudflared tunnel route dns --overwrite-dns=false demo preview.example.com
 </code></pre>
 <p>这条限制不是为了增加点击次数，而是为了让副作用可见：应用不会静默覆盖同名 DNS 记录。命令超时时，远端结果仍可能已经生效，正确做法是先到 DNS 中核对，而不是无条件重试。</p>
-<p>同样的原则也用于进程管理。Tunnelful 只停止或重启自己创建的子进程，不会扫描后杀掉所有同名进程。桌面工具可以提高操作效率，但不应该借“自动化”扩大控制范围。</p>
+<p>同样的原则也用于进程管理。Tunnelful 只停止或重启自己创建的子进程，不会扫描后杀掉所有同名进程；正式版同时只保留一个窗口实例，同名 Tunnel 也不会被第二个 Tunnelful 再拉起。强制退出时，由应用拉起的 <code>cloudflared</code> 会随看门狗一起结束，避免留下孤儿进程。桌面工具可以提高操作效率，但不应该借“自动化”扩大控制范围。</p>
 <h2 id="heading-3">把安全做成默认工作流</h2>
-<p>Tunnelful 不读取或上传 credentials 和 <code>cert.pem</code> 的内容，只检查完成当前工作流所需的文件元数据与账户可用性。命令使用参数数组直接启动，不把用户输入拼接成 shell 字符串；日志对常见 Token、用户目录等信息做尽力遮罩。</p>
-<p>应用还提供单独的截图隐私模式。开启后，路径中的用户名、Tunnel 标识、域名、源站和 YAML 凭据位置都会换成中性示例值，相关编辑也会锁定。这个功能的出发点很实际：日志和运维界面经常要发给同事或贴进 Issue，泄漏往往不是发生在网络上传，而是发生在一张未经检查的截图里。</p>
-<p>当然，脱敏只能降低误操作概率，不能代替人工审查。分享配置、日志或截图前，最终责任仍在使用者。</p>
+<p>Tunnelful 不读取或上传 credentials 和 <code>cert.pem</code> 的内容，只检查完成当前工作流所需的文件元数据与账户可用性。<code>cert.pem</code> 仅在本机校验官方结构，内容不会写入日志。命令使用参数数组直接启动，不把用户输入拼接成 shell 字符串；启动时还会去掉可能暗中改变账户、Token 或 DNS 覆盖行为的 Cloudflare 环境变量。</p>
+<p>界面、DNS 命令和 YAML 预览直接显示真实内容，不再提供截图隐私模式。日志仍会尽力遮罩常见 Token 与用户目录。脱敏只能降低误操作概率，不能代替人工审查。分享配置、日志或截图前，最终责任仍在使用者。</p>
 <h2 id="heading-4">原生体验不是换一套皮肤</h2>
-<p>Tunnelful 使用 SwiftUI 编写，主窗口按照日常任务分成概览、Tunnel、发布服务、Ingress 配置、环境检查和日志六个入口。窗口打开时，它是标准 macOS 应用，提供系统菜单；全部窗口关闭后隐藏 Dock 图标，继续常驻菜单栏。</p>
-<p>外观支持跟随系统、浅色和深色。登录 Mac 时打开应用、应用启动后运行当前 Tunnel 是两个独立开关：前者只决定应用是否启动，后者只有在 <code>cloudflared</code>、配置和 Tunnel 条件完整时才会执行。</p>
-<p><img src="https://ihopefulchina.github.io/post-images/tunnelful-overview-dark.png" alt="Tunnelful 深色模式概览，截图已开启隐私遮罩" /></p>
-<p><em>深色模式与浅色模式使用同一信息结构，不靠颜色单独表达状态。</em></p>
+<p>Tunnelful 使用 SwiftUI 编写，主窗口按照日常任务分成概览、Tunnel、发布服务、Ingress 配置、环境检查和日志等入口。窗口打开时，它是标准 macOS 应用，提供系统菜单；全部窗口关闭后隐藏 Dock 图标，继续常驻菜单栏。侧栏与标题栏跟随当前系统的原生样式。</p>
+<p>外观支持跟随系统、浅色和深色。登录 Mac 时打开应用、应用启动后运行当前 Tunnel 是两个独立开关：前者只决定应用是否启动，后者只有在 <code>cloudflared</code>、配置和 Tunnel 条件完整时才会执行。软件更新通过 Sparkle 检查官方更新源，发现新版本后由你确认安装。</p>
+<p><img src="https://ihopefulchina.github.io/post-images/tunnelful-overview-dark.png" alt="Tunnelful 深色模式概览" /></p>
+<p><em>深色模式与浅色模式使用同一信息结构，不靠颜色单独表达状态。公开截图使用中性示例数据。</em></p>
 <h2 id="heading-5">安装与第一次运行</h2>
-<p>Tunnelful 0.1.0 支持 macOS 14 或更高版本，GitHub Release 分别提供 Apple 芯片 <code>arm64</code> 与 Intel <code>x86_64</code> 安装包。先在“关于本机”确认芯片，再下载对应 DMG 和同名校验文件：</p>
-<pre><code class="language-bash">shasum -a 256 -c Tunnelful-0.1.0-arm64.dmg.sha256
+<p>Tunnelful 支持 macOS 14 或更高版本，<a href="https://github.com/ihopefulChina/Tunnelful/releases/latest">最新 Release</a> 分别提供 Apple 芯片 <code>arm64</code> 与 Intel <code>x86_64</code> 安装包。先在“关于本机”确认芯片，再下载对应 DMG 和同名校验文件：</p>
+<pre><code class="language-bash">shasum -a 256 -c 'Tunnelful-&lt;version&gt;-&lt;arch&gt;.dmg.sha256'
 </code></pre>
 <p>应用不捆绑 <code>cloudflared</code>。可以先用 Homebrew 安装：</p>
 <pre><code class="language-bash">brew install cloudflared
@@ -359,8 +358,9 @@ cloudflared --version
 <pre><code class="language-bash">cloudflared tunnel login
 </code></pre>
 <p>当前安装包采用 ad-hoc 签名，尚未使用 Developer ID 签名，也没有经过 Apple 公证。首次启动应只对从本项目 GitHub Release 下载并已核对 SHA-256 的应用，在访达中按住 Control 点按后选择“打开”；不建议运行来源不明的命令绕过系统安全检查。</p>
-<h2 id="010-">0.1.0 的边界</h2>
-<p>这是一个可以使用的首个正式版本，但不是 Cloudflare 管理平台的桌面替代品。当前主要服务于已有本地 YAML 的 locally-managed 命名 Tunnel，并明确不包含：</p>
+<p>较早版本若“检查更新…”只显示迁移说明，需要手动下载一次最新包：正式 Bundle ID 已调整为 <code>app.ihopeful.Tunnelful</code>，Sparkle 不能用不同身份直接替换旧应用。若旧版启用了“登录 Mac 时自动打开”，请先关闭再替换。</p>
+<h2 id="heading-6">当前边界</h2>
+<p>它已经可以完成一条本地 Tunnel 的日常工作流，但不是 Cloudflare 管理平台的桌面替代品。当前主要服务于已有本地 YAML 的 locally-managed 命名 Tunnel，并明确不包含：</p>
 <ul>
 <li>GUI 内创建或删除命名 Tunnel；</li>
 <li>Quick Tunnel 与 remotely-managed Tunnel Token 工作流；</li>
@@ -369,18 +369,18 @@ cloudflared --version
 <li>Developer ID 签名、Apple 公证和静默更新。</li>
 </ul>
 <p>Cloudflare 当前更推荐大多数场景使用 remotely-managed Tunnel，本地管理模式更适合本地开发、测试或遗留配置。Tunnelful 选择先把这一条工作流做扎实，不意味着它适合所有生产拓扑。多副本、高可用、企业权限与远程配置需要另一套更完整的控制面设计，不能靠桌面 GUI 模糊带过。</p>
-<h2 id="heading-6">为什么开源</h2>
+<h2 id="heading-7">为什么开源</h2>
 <p>运维工具会接触可执行文件路径、配置位置、进程输出和账户相关命令。即使它宣称“不上传”，用户也应该能够检查这句话如何落到代码里。</p>
-<p>Tunnelful 以 Apache License 2.0 开源。仓库包含 SwiftUI 应用、单元测试、公开内容检查、双架构构建脚本和发布流程。原生应用当前没有额外的第三方 Swift Package 依赖。可以从源码运行：</p>
+<p>Tunnelful 以 Apache License 2.0 开源。仓库包含 SwiftUI 应用、单元测试、公开内容检查、双架构构建脚本和发布流程。原生应用通过 Swift Package Manager 引入 Sparkle，用于应用内更新；除此之外没有其他第三方 Swift Package 依赖。可以从源码运行：</p>
 <pre><code class="language-bash">git clone https://github.com/ihopefulChina/Tunnelful.git
 cd Tunnelful
 swift test --package-path app
 open app/TunnelApp.xcodeproj
 </code></pre>
 <p>静态检查和构建通过不等于真实 Cloudflare 账户、DNS 或公网链路已经完成 UAT。项目把这些验证边界写进 README 与发布文档，是希望“可下载”和“已在你的环境中可上线”不要被混为一谈。</p>
-<h2 id="heading-7">写在最后</h2>
+<h2 id="heading-8">写在最后</h2>
 <p>我更愿意把 Tunnelful 看成一个边界清楚的小型控制面：它尊重 <code>cloudflared</code> 的权威性，把本地配置当作需要事务保护的数据，把远端变更当作必须确认的副作用，也承认一个进程状态无法代表整条链路。</p>
-<p>如果你正在 macOS 上维护 locally-managed Cloudflare Tunnel，可以从 <a href="https://github.com/ihopefulChina/Tunnelful/releases/tag/v0.1.0">0.1.0 Release</a> 开始。使用中遇到可复现的问题，欢迎在 <a href="https://github.com/ihopefulChina/Tunnelful/issues">GitHub Issues</a> 提交；涉及凭据或安全边界的问题，请按照仓库中的 <a href="https://github.com/ihopefulChina/Tunnelful/blob/main/SECURITY.md">安全政策</a> 私下报告。</p>
+<p>如果你正在 macOS 上维护 locally-managed Cloudflare Tunnel，可以从 <a href="https://github.com/ihopefulChina/Tunnelful/releases/latest">最新 Release</a> 开始。使用中遇到可复现的问题，欢迎在 <a href="https://github.com/ihopefulChina/Tunnelful/issues">GitHub Issues</a> 提交；涉及凭据或安全边界的问题，请按照仓库中的 <a href="https://github.com/ihopefulChina/Tunnelful/blob/main/SECURITY.md">安全政策</a> 私下报告。</p>
 <p>延伸阅读：</p>
 <ul>
 <li><a href="https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/">Cloudflare Tunnel 工作原理</a></li>
@@ -394,6 +394,8 @@ open app/TunnelApp.xcodeproj
     
     <p class="post-byline">本文由 <span class="post-byline__name">ihopeful Blog</span> 亲笔撰写 · <a href="/post/about" rel="author">关于作者</a></p>
 
+    
+    <p class="post-updated">最后更新于 <time datetime="2026-09-18T14:07:21+08:00">2026-09-18</time></p>
     
 
     
